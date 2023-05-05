@@ -5,18 +5,17 @@ import {
   HeaderCenterStyle,
   HeaderRightStyle,
   HeaderStyle,
-  SearchInputStyle,
   LogOutStyle,
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
+import { SearchInput } from "../forms/search-input/SearchInput";
 
 export const Header = () => {
   return (
     <HeaderStyle>
       <HeaderLeftStyle>
         <i className="bx bxs-id-card"></i>
-        <i className="bx bx-search"></i>
-        <SearchInputStyle type="text" placeholder="Search..." />
+        <SearchInput />
       </HeaderLeftStyle>
 
       <HeaderCenterStyle>
