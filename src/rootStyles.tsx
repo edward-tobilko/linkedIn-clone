@@ -89,16 +89,17 @@ export default createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    margin-bottom: 0 !important;
 
     :root {
       /* Colors */
-      --blackColor: #333333;
+      --blackColor: #000000;
       --orangeColor: #ea6422;
       --errorColor: #f10d0d;
       --greenColor: #127a04;
-      --greyColor: #ada7a788;
+      --greyColor: rgba(255, 255, 255, 0.2);
+      --lightGreyColor: rgba(255, 255, 255, 0.5);
       --whiteColor: #ffffff;
+      --headerBackgroundColor: #1d2226;
     }
   }
 
@@ -115,7 +116,8 @@ export default createGlobalStyle`
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    color: var(--blackColor);
+    color: var(--whiteColor);
+    background-color: var(--blackColor);
   }
 
   :focus {
@@ -352,3 +354,18 @@ export default createGlobalStyle`
 
 // App component
 export const AppStyle = styled.div``;
+
+// Container component'
+export const ContainerStyle = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 15px;
+`;
+
+// Avatar img component
+export const AvatarImgStyle = styled.img<{ width: string; height: string }>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border-radius: 50%;
+  border: 2px solid var(--orangeColor);
+`;
