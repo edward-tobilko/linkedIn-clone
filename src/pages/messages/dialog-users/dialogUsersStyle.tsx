@@ -3,7 +3,6 @@ import { themeVars } from "../../../themeVars";
 
 export const DialogUsersStyle = styled.div`
   width: 70%;
-  padding: 0 15px 0 0;
   list-style: none;
   height: 600px;
   overflow-y: scroll;
@@ -28,18 +27,23 @@ export const DialogUsersStyle = styled.div`
 `;
 
 export const DialogUserStyle = styled.li`
-  margin-bottom: 20px;
+  padding: 15px;
   display: flex;
 
   .dialog__user {
-    background: ${themeVars.colors.headerBackgroundColor};
-    padding-left: 20px;
-    width: 100%;
+    background: ${themeVars.colors.headerBackgroundColorLighter};
+    padding: 15px;
+    margin-left: 10px;
+    opacity: 0.8;
+    border-radius: 10px;
+    min-width: 150px;
+    max-width: 380px;
 
     &-header {
-      padding-bottom: 20px;
+      padding-bottom: 10px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       position: relative;
 
       a {
@@ -53,6 +57,11 @@ export const DialogUserStyle = styled.li`
       span {
         font-size: 11px;
         font-style: italic;
+        // max-width: 50px;
+        // width: 100%;
+        // overflow: hidden;
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
       }
 
       &:after {

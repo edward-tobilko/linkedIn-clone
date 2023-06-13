@@ -3,7 +3,6 @@ import { FC } from "react";
 import { ContainerStyle, ContentStyle, HeaderStyle } from "./rootStyles";
 
 import { Header } from "./components/header/Header";
-
 import AppRoutes from "./AppRoutes";
 import { Sidebar } from "./components/sidebar/Sidebar";
 

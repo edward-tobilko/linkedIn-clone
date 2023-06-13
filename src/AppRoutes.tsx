@@ -37,7 +37,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<LogIn />} />
 
         {/* Redirect */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </>
   );

@@ -8,5 +8,6 @@ export const themeVars = {
     lightGreyColor: "rgba(255, 255, 255, 0.5)",
     whiteColor: "#ffffff",
     headerBackgroundColor: "#1d2226",
+    headerBackgroundColorLighter: "#1b415f",
   },
 };

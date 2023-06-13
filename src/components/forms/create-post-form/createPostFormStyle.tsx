@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { themeVars } from "../../../themeVars";
 
 // CreatePostForm component

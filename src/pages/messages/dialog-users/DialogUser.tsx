@@ -10,8 +10,8 @@ export const DialogUser = ({ dialogUser }: any) => {
   return (
     <DialogUserStyle>
       <AvatarImgStyle
-        width="50px"
-        height="50px"
+        width="40px"
+        height="40px"
         src="https://place-hold.it/60"
         alt="DialogUsersAvatar"
       />

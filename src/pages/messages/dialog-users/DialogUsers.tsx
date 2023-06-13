@@ -31,7 +31,7 @@ export const DialogUsers = () => {
       say: "that s cool I wish I were you",
       dataTime: "4 hour ago",
     },
-    { id: 2, name: "John Doe", say: "ok :)", dataTime: "23 days ago" },
+    { id: 2, name: "John Doe", say: "ok", dataTime: "23 days ago" },
   ]);
 
   return (

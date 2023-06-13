@@ -12,7 +12,7 @@ export const ChatUser = ({ chatUser }: any) => {
       <AvatarImgStyle
         width="40px"
         height="40px"
-        src="https://place-hold.it/50"
+        src="https://place-hold.it/60"
         alt="ChatUsersAvatar"
       />
       <NavLink to={pathChatUser}>{chatUser.name}</NavLink>
