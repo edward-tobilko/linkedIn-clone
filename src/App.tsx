@@ -1,25 +1,27 @@
 import { FC } from "react";
 
-import { AppStyle, ContainerStyle } from "./rootStyles";
+import { ContainerStyle, ContentStyle, HeaderStyle } from "./rootStyles";
 
 import { Header } from "./components/header/Header";
 
 import AppRoutes from "./AppRoutes";
+import { Sidebar } from "./components/sidebar/Sidebar";
 
 const App: FC = () => {
   return (
     <>
-      <AppStyle>
-        <div style={{ background: "var(--headerBackgroundColor" }}>
-          <ContainerStyle>
-            <Header />
-          </ContainerStyle>
-        </div>
-
+      <HeaderStyle>
         <ContainerStyle>
-          <AppRoutes />
+          <Header />
         </ContainerStyle>
-      </AppStyle>
+      </HeaderStyle>
+
+      <ContainerStyle>
+        <ContentStyle>
+          <Sidebar />
+          <AppRoutes />
+        </ContentStyle>
+      </ContainerStyle>
     </>
   );
 };

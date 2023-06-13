@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle } from "styled-components";
 
+import { themeVars } from "./themeVars";
+
 // Global styles
 export default createGlobalStyle`
   html,
@@ -89,18 +91,6 @@ export default createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-
-    :root {
-      /* Colors */
-      --blackColor: #000000;
-      --orangeColor: #ea6422;
-      --errorColor: #f10d0d;
-      --greenColor: #127a04;
-      --greyColor: rgba(255, 255, 255, 0.2);
-      --lightGreyColor: rgba(255, 255, 255, 0.5);
-      --whiteColor: #ffffff;
-      --headerBackgroundColor: #1d2226;
-    }
   }
 
   body {
@@ -116,8 +106,8 @@ export default createGlobalStyle`
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    color: var(--whiteColor);
-    background-color: var(--blackColor);
+    color: ${themeVars.colors.whiteColor};
+    background-color: ${themeVars.colors.blackColor};
   }
 
   :focus {
@@ -353,7 +343,9 @@ export default createGlobalStyle`
 `;
 
 // App component
-export const AppStyle = styled.div``;
+export const HeaderStyle = styled.div`
+  background: ${themeVars.colors.headerBackgroundColor};
+`;
 
 // Container component'
 export const ContainerStyle = styled.div`
@@ -367,5 +359,11 @@ export const AvatarImgStyle = styled.img<{ width: string; height: string }>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 50%;
-  border: 2px solid var(--orangeColor);
+  border: 2px solid ${themeVars.colors.orangeColor};
+`;
+
+export const ContentStyle = styled.div`
+  display: flex;
+  padding: 20px 0;
+  width: 100%;
 `;

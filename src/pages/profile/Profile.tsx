@@ -1,20 +1,18 @@
 import { CreatePostForm } from "../../components/forms/create-post-form/CreatePostForm";
 import { CreatePostFormList } from "../../components/forms/create-post-form/CreatePostFormList";
-import { Sidebar } from "../../components/sidebar/Sidebar";
+import { PostsList } from "../../components/posts/PostsList";
 
-import { ContentStyle, ProfileStyle, CreatePostStyle } from "./profileStyle";
+import { ProfileStyle, CreatePostStyle } from "./profileStyle";
 
 const Profile = () => {
   return (
     <ProfileStyle>
-      <Sidebar />
+      <CreatePostStyle>
+        <CreatePostForm />
+        <CreatePostFormList />
+      </CreatePostStyle>
 
-      <ContentStyle>
-        <CreatePostStyle>
-          <CreatePostForm />
-          <CreatePostFormList />
-        </CreatePostStyle>
-      </ContentStyle>
+      <PostsList />
     </ProfileStyle>
   );
 };

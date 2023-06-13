@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { themeVars } from "../../themeVars";
+
 export const HeaderStyle = styled.header`
   min-height: 70px;
   display: flex;
@@ -27,16 +29,30 @@ export const HeaderLeftStyle = styled.div`
 export const HeaderCenterStyle = styled.div`
   ul {
     display: inline-flex;
+
     a {
+      position: relative;
       text-align: center;
       padding: 0 15px;
       text-decoration: none;
-      color: var(--whiteColor);
-
+      color: ${themeVars.colors.whiteColor};
       &:hover {
         cursor: pointer;
         filter: brightness(80%);
       }
+
+      &.active {
+        &:after {
+          content: "";
+          width: 100%;
+          height: 1px;
+          background-color: ${themeVars.colors.whiteColor};
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+        }
+      }
+
       i {
         font-size: 22px;
       }
@@ -49,13 +65,13 @@ export const HeaderRightStyle = styled.div`
   align-items: center;
 
   p {
-    color: var(--lightGreyColor);
+    color: ${themeVars.colors.lightGreyColor};
     padding: 0 15px;
   }
 `;
 
 export const LogOutStyle = styled.button`
-  color: var(--whiteColor);
+  color: ${themeVars.colors.whiteColor};
   background: inherit;
   border: none;
   cursor: pointer;
@@ -63,6 +79,6 @@ export const LogOutStyle = styled.button`
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: var(--orangeColor);
+    color: ${themeVars.colors.orangeColor};
   }
 `;

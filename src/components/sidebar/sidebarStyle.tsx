@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
+import { themeVars } from "../../themeVars";
+
 // Sidebar component
 export const SidebarStyle = styled.aside`
-  max-width: 300px;
+  max-width: 240px;
+  width: 100%;
 
   .sidebar__top {
-    background-color: var(--headerBackgroundColor);
+    background-color: ${themeVars.colors.headerBackgroundColor};
 
     &-header {
       height: 170px;
@@ -33,7 +36,7 @@ export const SidebarStyle = styled.aside`
         p {
           font-size: 13px;
           font-weight: 400;
-          color: var(--lightGreyColor);
+          color: ${themeVars.colors.lightGreyColor};
         }
       }
     }
@@ -50,7 +53,7 @@ export const SidebarStyle = styled.aside`
         content: "";
         width: 100%;
         height: 1px;
-        background-color: var(--lightGreyColor);
+        background-color: ${themeVars.colors.lightGreyColor};
         opacity: 0.5;
         position: absolute;
         left: 0;
@@ -61,7 +64,7 @@ export const SidebarStyle = styled.aside`
         content: "";
         width: 100%;
         height: 1px;
-        background-color: var(--lightGreyColor);
+        background-color: ${themeVars.colors.lightGreyColor};
         opacity: 0.5;
         position: absolute;
         left: 0;
@@ -82,7 +85,7 @@ export const SidebarStyle = styled.aside`
         }
 
         &:hover {
-          background-color: var(--lightGreyColor);
+          background-color: ${themeVars.colors.lightGreyColor};
           opacity: 0.7;
         }
       }
@@ -103,7 +106,7 @@ export const SidebarStyle = styled.aside`
       }
 
       &:hover {
-        background-color: var(--lightGreyColor);
+        background-color: ${themeVars.colors.lightGreyColor};
         opacity: 0.7;
       }
     }

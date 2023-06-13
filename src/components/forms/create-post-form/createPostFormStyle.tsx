@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { themeVars } from "../../../themeVars";
+
 // CreatePostForm component
 export const CreatePostFormStyle = styled.form`
   display: flex;
@@ -11,12 +13,12 @@ export const TextareaStyle = styled.input`
   margin-left: 10px;
   background-color: inherit;
   border-radius: 20px;
-  color: var(--whiteColor);
+  color: ${themeVars.colors.whiteColor};
   font-size: 14px;
   font-weight: 500;
   padding: 12px 15px;
   border: none;
-  border: 1px solid var(--whiteColor);
+  border: 1px solid ${themeVars.colors.whiteColor};
   letter-spacing: 1px;
 `;
 
@@ -36,7 +38,7 @@ export const CreatePostFormListStyle = styled.ul`
     border-radius: 5px;
     font-size: 16.5px;
     &:hover {
-      background-color: var(--greyColor);
+      background-color: ${themeVars.colors.greyColor};
     }
 
     input {
@@ -58,12 +60,3 @@ export const CreatePostFormListStyle = styled.ul`
     }
   }
 `;
-
-// --blackColor: #000000;
-// --orangeColor: #ea6422;
-// --errorColor: #f10d0d;
-// --greenColor: #127a04;
-// --greyColor: rgba(255, 255, 255, 0.2);
-// --lightGreyColor: rgba(255, 255, 255, 0.5);
-// --whiteColor: #ffffff;
-// --headerBackgroundColor: #1d2226;

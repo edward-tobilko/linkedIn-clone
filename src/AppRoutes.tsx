@@ -6,6 +6,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Profile from "./pages/profile/Profile";
 import Social from "./pages/social/Social";
 import LogIn from "./pages/logIn/LogIn";
+import Messages from "./pages/messages/Messages";
+import Setting from "./pages/setting/Setting";
 
 const AppRoutes = () => {
   // const [isAuth, setIsAuth] = useState(false);
@@ -29,7 +31,12 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Profile />} />
         <Route path="/social" element={<Social />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/messages/:name/:id" element={<Messages />} />
+        <Route path="/setting" element={<Setting />} />
         <Route path="/login" element={<LogIn />} />
+
+        {/* Redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>

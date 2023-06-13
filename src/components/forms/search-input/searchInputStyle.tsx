@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
+import { themeVars } from "../../../themeVars";
+
 export const SearchInputStyle = styled.input`
-  background: var(--greyColor);
+  background: ${themeVars.colors.greyColor};
   border: 0;
   box-shadow: none;
   min-width: 235px;
-  color: var(--whiteColor);
+  color: ${themeVars.colors.whiteColor};
   height: 26px;
   border-radius: 6px;
   font-size: 13px;
