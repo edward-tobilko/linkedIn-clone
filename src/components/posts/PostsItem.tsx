@@ -1,26 +1,40 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
+import axios from "axios";
+
+import { IPostComment } from "../../type-models";
 
 import { AvatarImgStyle } from "../../rootStyles";
 import {
   PostsItemAboutStyle,
   PostsItemAddressStyle,
-  PostsItemComments,
+  PostsItemCommentsStyle,
   PostsItemDescriptionStyle,
   PostsItemStyle,
 } from "./postsListStyle";
 
 export const PostsItem = ({ user }: any) => {
-  const [userComments, setUserComments] = useState<any>([]);
+  const [userComments, setUserComments] = useState<IPostComment[]>([]);
+  console.log(userComments);
 
-  async function getUserComments() {
+  async function getUserComments(limit = 5) {
     try {
-      const data = await fetch(
-        "https://jsonplaceholder.typicode.com/posts/7/comments",
-      )
-        .then((response) => response.json())
-        .then((data) => setUserComments(data));
+      const { data } = await axios.get(
+        "https://jsonplaceholder.typicode.com/comments",
+        {
+          params: {
+            _limit: limit,
+          },
+          headers: {
+            Accept: "application/json",
+          },
+        },
+      );
+      setUserComments(data);
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        return error.message;
+      }
     }
   }
 
@@ -59,11 +73,11 @@ export const PostsItem = ({ user }: any) => {
           </PostsItemAddressStyle>
         </PostsItemDescriptionStyle>
 
-        <PostsItemComments>
+        <PostsItemCommentsStyle>
           {userComments.map((comment: any) => (
             <p key={comment.id}> {comment.body} </p>
           ))}
-        </PostsItemComments>
+        </PostsItemCommentsStyle>
       </PostsItemStyle>
     </>
   );

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 
+import { IPostsUser } from "../../type-models";
+
 import { PostsListStyle } from "./postsListStyle";
 import { PostsItem } from "./PostsItem";
 
 export const PostsList = () => {
-  const [users, setUsers] = useState<any>([]);
+  const [users, setUsers] = useState<IPostsUser[]>([]);
 
-  async function getUsers() {
+  async function getUsers(limit: any = 3) {
     try {
-      const data = await fetch("https://jsonplaceholder.typicode.com/users")
+      const data = await fetch(
+        "https://jsonplaceholder.typicode.com/users?" +
+          new URLSearchParams({
+            _limit: limit,
+          }),
+      )
         .then((response) => response.json())
         .then((data) => setUsers(data));
     } catch (error) {
@@ -22,7 +29,7 @@ export const PostsList = () => {
 
   return (
     <PostsListStyle>
-      {users.map((user: any) => (
+      {users.map((user) => (
         <PostsItem key={user.id} user={user} />
       ))}
     </PostsListStyle>

@@ -50,6 +50,6 @@ export const PostsItemAddressStyle = styled.div`
   }
 `;
 
-export const PostsItemComments = styled.div`
+export const PostsItemCommentsStyle = styled.div`
   padding-top: 15px;
 `;

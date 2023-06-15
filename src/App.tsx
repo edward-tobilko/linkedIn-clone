@@ -2,13 +2,15 @@ import { FC } from "react";
 
 import { ContainerStyle, ContentStyle, HeaderStyle } from "./rootStyles";
 
+import { ContextProvider } from "./context/Context";
+
 import { Header } from "./components/header/Header";
 import AppRoutes from "./AppRoutes";
 import { Sidebar } from "./components/sidebar/Sidebar";
 
 const App: FC = () => {
   return (
-    <>
+    <ContextProvider>
       <HeaderStyle>
         <ContainerStyle>
           <Header />
@@ -21,7 +23,7 @@ const App: FC = () => {
           <AppRoutes />
         </ContentStyle>
       </ContainerStyle>
-    </>
+    </ContextProvider>
   );
 };
 
