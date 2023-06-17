@@ -38,6 +38,8 @@ export const DialogUserStyle = styled.li`
     border-radius: 10px;
     min-width: 150px;
     max-width: 380px;
+    word-break: break-word;
+    height: auto;
 
     &-header {
       padding-bottom: 10px;
@@ -57,11 +59,6 @@ export const DialogUserStyle = styled.li`
       span {
         font-size: 11px;
         font-style: italic;
-        // max-width: 50px;
-        // width: 100%;
-        // overflow: hidden;
-        // white-space: nowrap;
-        // text-overflow: ellipsis;
       }
 
       &:after {

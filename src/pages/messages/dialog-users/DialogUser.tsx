@@ -1,10 +1,16 @@
-import React from "react";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-export const DialogUser = ({ dialogUser }: any) => {
+import { IDialogUsersType } from "../../../type-models";
+
+interface IDialogUserProps {
+  dialogUser: IDialogUsersType;
+}
+
+export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
   let pathDialogUser = "/messages/" + dialogUser.name + "/" + dialogUser.id;
 
   return (

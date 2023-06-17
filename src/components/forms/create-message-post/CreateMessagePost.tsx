@@ -1,4 +1,4 @@
-import { useRef, useState, MouseEvent } from "react";
+import { useRef, useState, MouseEvent, ChangeEvent } from "react";
 import { v4 as uniqueID } from "uuid";
 
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
@@ -12,7 +12,7 @@ const minutes = date.getMinutes();
 const hour = date.getHours();
 
 export const CreateMessagePost = () => {
-  const [message, setMessage] = useState<any>({
+  const [message, setMessage] = useState({
     say: "",
   });
 
@@ -42,13 +42,13 @@ export const CreateMessagePost = () => {
 
   return (
     <CreateMessagePostStyle>
-      <form>
+      <form method="post">
         <div className="create__message__post-textarea">
           <textarea
             value={message.say}
             name="text"
             placeholder="Add new message"
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
               setMessage({ ...message, say: event.target.value })
             }
           ></textarea>

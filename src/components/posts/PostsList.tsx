@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
-
-import { IPostsUser } from "../../type-models";
+import { useEffect } from "react";
 
 import { PostsListStyle } from "./postsListStyle";
 import { PostsItem } from "./PostsItem";
+import { useMyContext } from "../../context/Context";
 
 export const PostsList = () => {
-  const [users, setUsers] = useState<IPostsUser[]>([]);
+  const props = useMyContext();
 
   async function getUsers(limit: any = 3) {
     try {
-      const data = await fetch(
+      await fetch(
         "https://jsonplaceholder.typicode.com/users?" +
           new URLSearchParams({
             _limit: limit,
           }),
       )
         .then((response) => response.json())
-        .then((data) => setUsers(data));
+        .then((data) => props?.setUsers(data));
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +28,7 @@ export const PostsList = () => {
 
   return (
     <PostsListStyle>
-      {users.map((user) => (
+      {props?.users.map((user) => (
         <PostsItem key={user.id} user={user} />
       ))}
     </PostsListStyle>

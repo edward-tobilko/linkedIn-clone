@@ -4,7 +4,8 @@ import { themeVars } from "../../themeVars";
 
 // Profile component
 export const ProfileStyle = styled.main`
-  padding-left: 20px;
+  width: 100%;
+  max-width: 720px;
 `;
 
 export const CreatePostStyle = styled.div`

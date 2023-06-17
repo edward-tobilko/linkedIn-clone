@@ -12,6 +12,13 @@ export const PostsItemStyle = styled.div`
   background: ${themeVars.colors.headerBackgroundColor};
   border-radius: 10px;
   padding: 20px 10px;
+  height: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
 
 export const PostsItemDescriptionStyle = styled.div`
@@ -25,6 +32,10 @@ export const PostsItemAboutStyle = styled.div`
   h2 {
     font-weight: 600;
     font-size: 15px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     span {
       color: ${themeVars.colors.lightGreyColor};
       padding-left: 5px;
@@ -51,5 +62,6 @@ export const PostsItemAddressStyle = styled.div`
 `;
 
 export const PostsItemCommentsStyle = styled.div`
-  padding-top: 15px;
+  padding: 20px 15px 0 15px;
+  letter-spacing: 1px;
 `;

@@ -364,6 +364,7 @@ export const AvatarImgStyle = styled.img<{ width: string; height: string }>`
 
 export const ContentStyle = styled.div`
   display: flex;
+  justify-content: space-between;
   padding: 20px 0;
   width: 100%;
 `;

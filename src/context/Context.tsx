@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, PropsWithChildren } from "react";
 
-import { IState } from "../type-models";
+import { IPostsUser, IState } from "../type-models";
 
 export const Context = createContext<IState | null>(null);
 
-export const ContextProvider = ({ children }: PropsWithChildren) => {
+export const ContextProvider = ({ children }: PropsWithChildren<{}>) => {
   const [dialogUsers, setDialogUsers] = useState([
     {
       id: 7,
@@ -41,10 +41,19 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
     { id: 5, name: "Richard Bell" },
     { id: 2, name: "John Doe" },
   ]);
+  const [users, setUsers] = useState<IPostsUser[]>([]);
+  console.log(users);
 
   return (
     <Context.Provider
-      value={{ dialogUsers, chatUsers, setDialogUsers, setChatUsers }}
+      value={{
+        dialogUsers,
+        chatUsers,
+        users,
+        setDialogUsers,
+        setChatUsers,
+        setUsers,
+      }}
     >
       {children}
     </Context.Provider>

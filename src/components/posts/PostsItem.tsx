@@ -1,7 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
-import axios from "axios";
-
-import { IPostComment } from "../../type-models";
+import { FC } from "react";
 
 import { AvatarImgStyle } from "../../rootStyles";
 import {
@@ -12,36 +9,13 @@ import {
   PostsItemStyle,
 } from "./postsListStyle";
 
-export const PostsItem = ({ user }: any) => {
-  const [userComments, setUserComments] = useState<IPostComment[]>([]);
-  console.log(userComments);
+import { IPostsUser } from "../../type-models";
 
-  async function getUserComments(limit = 5) {
-    try {
-      const { data } = await axios.get(
-        "https://jsonplaceholder.typicode.com/comments",
-        {
-          params: {
-            _limit: limit,
-          },
-          headers: {
-            Accept: "application/json",
-          },
-        },
-      );
-      setUserComments(data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error);
-        return error.message;
-      }
-    }
-  }
+interface IPostItemProps {
+  user: IPostsUser;
+}
 
-  useEffect(() => {
-    getUserComments();
-  }, []);
-
+export const PostsItem: FC<IPostItemProps> = ({ user }) => {
   return (
     <>
       <PostsItemStyle>
@@ -56,7 +30,7 @@ export const PostsItem = ({ user }: any) => {
 
             <PostsItemAboutStyle>
               <h2>
-                {user.name} <span> {user.id}+ </span>
+                {user.name} <span> {user.id} </span>
               </h2>
               <p>
                 {user.company.catchPhrase} | <span> {user.company.name} </span>
@@ -73,11 +47,7 @@ export const PostsItem = ({ user }: any) => {
           </PostsItemAddressStyle>
         </PostsItemDescriptionStyle>
 
-        <PostsItemCommentsStyle>
-          {userComments.map((comment: any) => (
-            <p key={comment.id}> {comment.body} </p>
-          ))}
-        </PostsItemCommentsStyle>
+        <PostsItemCommentsStyle>{user.company.bs}</PostsItemCommentsStyle>
       </PostsItemStyle>
     </>
   );

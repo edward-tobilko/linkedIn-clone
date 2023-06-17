@@ -5,11 +5,12 @@ import { themeVars } from "../../../themeVars";
 export const CreatePostFormStyle = styled.form`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const TextareaStyle = styled.input`
+  max-width: 450px;
   width: 100%;
-  margin-left: 10px;
   background-color: inherit;
   border-radius: 20px;
   color: ${themeVars.colors.whiteColor};
