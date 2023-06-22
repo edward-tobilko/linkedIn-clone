@@ -5,7 +5,7 @@ import App from "./App";
 
 import GlobalStyle from "./rootStyles";
 
-import store from "./store";
+import store from "./custom-redux/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

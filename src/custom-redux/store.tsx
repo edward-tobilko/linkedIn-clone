@@ -1,13 +1,4 @@
-import { v4 as uniqueID } from "uuid";
-
-declare global {
-  interface Window {
-    store: any;
-  }
-}
-
-export const CREATE_NEW_POST = "CREATE-NEW-POST";
-export const CHANGE_POST = "CHANGE-POST";
+import profileReducer from "./profileReducer";
 
 const store: any = {
   _state: {
@@ -123,66 +114,11 @@ const store: any = {
     this._callSubscriber = observer;
   },
 
-  _addNewPost() {
-    if (this._state.profilePosts.newText.trim() !== "") {
-      let myNewPost = {
-        id: uniqueID(),
-        name: "eduard.tobilko",
-        username: "",
-        email: "email@gmail.com",
-        address: {
-          street: "Academic queen str.",
-          suite: "",
-          city: "Cherkasy",
-          zipcode: "",
-          geo: {
-            lat: "",
-            lng: "",
-          },
-        },
-        phone: "38-073-234-56-11",
-        website: "",
-        company: {
-          name: "Romaguera-Crona",
-          catchPhrase: "Multi-layered client-server neural-net",
-          bs: this._state.profilePosts.newText,
-        },
-      };
-
-      this._state.profilePosts.postUsers.push(myNewPost);
-      this._state.profilePosts.newText = "";
-      this._callSubscriber(this._state);
-    }
-  },
-
-  _changePost(text: string) {
-    this._state.profilePosts.newText = text;
-    this._callSubscriber(this._state);
-  },
-
   dispatch(action: any) {
-    if (action.type === CREATE_NEW_POST) {
-      this._addNewPost();
-    } else if (action.type === CHANGE_POST) {
-      this._changePost(action.text);
-    }
+    profileReducer(this._state.profilePosts, action);
+
+    this._callSubscriber(this._state);
   },
 };
 
 export default store;
-
-// Action Creators (AC)
-export const addNewPostAC = () => {
-  return {
-    type: CREATE_NEW_POST,
-  };
-};
-
-export const changePostAC = (text: string) => {
-  return {
-    type: CHANGE_POST,
-    text: text,
-  };
-};
-
-window.store = store;

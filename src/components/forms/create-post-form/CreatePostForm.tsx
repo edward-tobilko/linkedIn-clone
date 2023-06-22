@@ -4,7 +4,10 @@ import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
 import { CreatePostBtn } from "../../UI/btns/CreatePostBtn";
-import { changePostAC, addNewPostAC } from "../../../store";
+import {
+  changePostAC,
+  addNewPostAC,
+} from "../../../custom-redux/profileReducer";
 
 export const CreatePostForm: FC<any> = ({ newText, dispatch }) => {
   let refElement = useRef<any>();

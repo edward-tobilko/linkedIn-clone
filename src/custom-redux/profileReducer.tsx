@@ -1,0 +1,163 @@
+import { v4 as uniqueID } from "uuid";
+
+export const CREATE_NEW_POST = "CREATE-NEW-POST";
+export const CHANGE_POST = "CHANGE-POST";
+
+const initialState = {
+  profilePosts: {
+    postUsers: [
+      {
+        id: 1,
+        name: "Leanne Graham",
+        username: "Bret",
+        email: "Sincere@april.biz",
+        address: {
+          street: "Kulas Light",
+          suite: "Apt. 556",
+          city: "Gwenborough",
+          zipcode: "92998-3874",
+          geo: {
+            lat: "-37.3159",
+            lng: "81.1496",
+          },
+        },
+        phone: "1-770-736-8031 x56442",
+        website: "hildegard.org",
+        company: {
+          name: "Romaguera-Crona",
+          catchPhrase: "Multi-layered client-server neural-net",
+          bs: "harness real-time e-markets",
+        },
+      },
+      {
+        id: 2,
+        name: "Ervin Howell",
+        username: "Antonette",
+        email: "Shanna@melissa.tv",
+        address: {
+          street: "Victor Plains",
+          suite: "Suite 879",
+          city: "Wisokyburgh",
+          zipcode: "90566-7771",
+          geo: {
+            lat: "-43.9509",
+            lng: "-34.4618",
+          },
+        },
+        phone: "010-692-6593 x09125",
+        website: "anastasia.net",
+        company: {
+          name: "Deckow-Crist",
+          catchPhrase: "Proactive didactic contingency",
+          bs: "synergize scalable supply-chains",
+        },
+      },
+      {
+        id: 3,
+        name: "Clementine Bauch",
+        username: "Samantha",
+        email: "Nathan@yesenia.net",
+        address: {
+          street: "Douglas Extension",
+          suite: "Suite 847",
+          city: "McKenziehaven",
+          zipcode: "59590-4157",
+          geo: {
+            lat: "-68.6102",
+            lng: "-47.0653",
+          },
+        },
+        phone: "1-463-123-4447",
+        website: "ramiro.info",
+        company: {
+          name: "Romaguera-Jacobson",
+          catchPhrase: "Face to face bifurcated interface",
+          bs: "e-enable strategic applications",
+        },
+      },
+      {
+        id: 4,
+        name: "Patricia Lebsack",
+        username: "Karianne",
+        email: "Julianne.OConner@kory.org",
+        address: {
+          street: "Hoeger Mall",
+          suite: "Apt. 692",
+          city: "South Elvis",
+          zipcode: "53919-4257",
+          geo: {
+            lat: "29.4572",
+            lng: "-164.2990",
+          },
+        },
+        phone: "493-170-9623 x156",
+        website: "kale.biz",
+        company: {
+          name: "Robel-Corkery",
+          catchPhrase: "Multi-tiered zero tolerance productivity",
+          bs: "transition cutting-edge web services",
+        },
+      },
+    ],
+
+    newText: "",
+  },
+};
+
+const profileReducer = (state: any, action: any) => {
+  switch (action.type) {
+    case CREATE_NEW_POST:
+      if (state.newText.trim() !== "") {
+        let myNewPost = {
+          id: uniqueID(),
+          name: "eduard.tobilko",
+          username: "",
+          email: "email@gmail.com",
+          address: {
+            street: "Academic queen str.",
+            suite: "",
+            city: "Cherkasy",
+            zipcode: "",
+            geo: {
+              lat: "",
+              lng: "",
+            },
+          },
+          phone: "38-073-234-56-11",
+          website: "",
+          company: {
+            name: "Romaguera-Crona",
+            catchPhrase: "Multi-layered client-server neural-net",
+            bs: state.newText,
+          },
+        };
+
+        state.postUsers.push(myNewPost);
+        state.newText = "";
+      }
+      break;
+
+    case CHANGE_POST:
+      state.newText = action.text;
+      break;
+
+    default:
+      return state;
+  }
+};
+
+export default profileReducer;
+
+// Action Creators (AC)
+export const addNewPostAC = () => {
+  return {
+    type: CREATE_NEW_POST,
+  };
+};
+
+export const changePostAC = (text: string) => {
+  return {
+    type: CHANGE_POST,
+    text: text,
+  };
+};
