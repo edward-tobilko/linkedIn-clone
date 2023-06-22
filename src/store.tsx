@@ -124,33 +124,35 @@ const store: any = {
   },
 
   _addNewPost() {
-    let myNewPost = {
-      id: uniqueID(),
-      name: "eduard.tobilko",
-      username: "",
-      email: "email@gmail.com",
-      address: {
-        street: "Academic queen str.",
-        suite: "",
-        city: "Cherkasy",
-        zipcode: "",
-        geo: {
-          lat: "",
-          lng: "",
+    if (this._state.profilePosts.newText.trim() !== "") {
+      let myNewPost = {
+        id: uniqueID(),
+        name: "eduard.tobilko",
+        username: "",
+        email: "email@gmail.com",
+        address: {
+          street: "Academic queen str.",
+          suite: "",
+          city: "Cherkasy",
+          zipcode: "",
+          geo: {
+            lat: "",
+            lng: "",
+          },
         },
-      },
-      phone: "38-073-234-56-11",
-      website: "",
-      company: {
-        name: "Romaguera-Crona",
-        catchPhrase: "Multi-layered client-server neural-net",
-        bs: this._state.profilePosts.newText,
-      },
-    };
+        phone: "38-073-234-56-11",
+        website: "",
+        company: {
+          name: "Romaguera-Crona",
+          catchPhrase: "Multi-layered client-server neural-net",
+          bs: this._state.profilePosts.newText,
+        },
+      };
 
-    this._state.profilePosts.postUsers.push(myNewPost);
-    this._state.profilePosts.newText = "";
-    this._callSubscriber(this._state);
+      this._state.profilePosts.postUsers.push(myNewPost);
+      this._state.profilePosts.newText = "";
+      this._callSubscriber(this._state);
+    }
   },
 
   _changePost(text: string) {

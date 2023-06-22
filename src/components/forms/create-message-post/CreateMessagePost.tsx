@@ -29,16 +29,18 @@ export const CreateMessagePost = () => {
   const addNewMessage = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    let myNewMessage = {
-      ...message,
-      id: uniqueID(),
-      name: "eduard.tobilko",
-      dataTime: `${hour}:${minutes}:${seconds}`,
-    };
+    if (message.voice.say.trim() !== "") {
+      let myNewMessage = {
+        ...message,
+        id: uniqueID(),
+        name: "eduard.tobilko",
+        dataTime: `${hour}:${minutes}:${seconds}`,
+      };
 
-    if (newMessagePathRef.current !== null) {
-      createMessage(myNewMessage);
-      setMessage({ voice: { say: "" } });
+      if (newMessagePathRef.current !== null) {
+        createMessage(myNewMessage);
+        setMessage({ voice: { say: "" } });
+      }
     }
   };
 
