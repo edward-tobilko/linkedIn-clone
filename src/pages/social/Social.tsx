@@ -1,7 +1,8 @@
-import React from "react";
+import { FC } from "react";
+import SocialItem from "./SocialItem";
 
-const Social = () => {
-  return <div>Social</div>;
+const Social: FC = () => {
+  return <SocialItem />;
 };
 
 export default Social;

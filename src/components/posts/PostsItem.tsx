@@ -30,7 +30,7 @@ export const PostsItem: FC<IPostItemProps> = ({ user }) => {
 
             <PostsItemAboutStyle>
               <h2>
-                {user.name} <span> {user.id} </span>
+                {user.name} <span> id: {user.id} </span>
               </h2>
               <p>
                 {user.company.catchPhrase} | <span> {user.company.name} </span>

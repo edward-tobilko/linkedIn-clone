@@ -1,31 +1,41 @@
 import { Dispatch, SetStateAction } from "react";
 
 // Context component
-export interface IDialogUsersType {
+export interface IDialogUsers {
   id: number;
   name: string;
-  say: string;
+  voice: IVoice;
   dataTime: string;
 }
-export interface IChatUsersType {
+
+interface IVoice {
+  say: string;
+}
+export interface IChatUsers {
   id: number;
   name: string;
 }
-export interface IState {
-  dialogUsers: IDialogUsersType[];
-  setDialogUsers: Dispatch<SetStateAction<IDialogUsersType[]>>;
+export interface IStateContext {
+  dialogUsers: IDialogUsers[];
+  setDialogUsers: Dispatch<SetStateAction<IDialogUsers[]>>;
   // setDialogUsers: (dialogUsers: Array<IDialogUsersType>) => void;
 
-  chatUsers: IChatUsersType[];
-  setChatUsers: Dispatch<SetStateAction<IChatUsersType[]>>;
-  //   setChatUsers: (chatUsers: Array<IChatUsersType>) => void;
+  chatUsers: IChatUsers[];
+  setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
+  // setChatUsers: (chatUsers: Array<IChatUsersType>) => void;
 
-  users: IPostsUser[];
-  setUsers: Dispatch<SetStateAction<IPostsUser[]>>;
+  // users: IPostsUser[];
+  // setUsers: Dispatch<SetStateAction<IPostsUser[]>>;
   //   setUsers: (users: IPostsUser[]) => void;
 }
 
 // PostsList component
+export interface IPostUserState {
+  postUsers: IPostsUser[];
+  newText: string;
+  addNewPostState: () => void;
+  updatePostState: (newtext: string) => void;
+}
 export interface IPostsUser {
   id: number;
   name: string;

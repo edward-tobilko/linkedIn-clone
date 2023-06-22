@@ -1,55 +1,25 @@
-import { useState, ChangeEvent, MouseEvent } from "react";
-import { v4 as uniqueID } from "uuid";
+import { ChangeEvent, MouseEvent, FC, useRef } from "react";
 
 import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
-import { useMyContext } from "../../../context/Context";
 import { CreatePostBtn } from "../../UI/btns/CreatePostBtn";
+import { changePostAC, addNewPostAC } from "../../../store";
 
-import { IPostsUser } from "../../../type-models";
+export const CreatePostForm: FC<any> = ({ newText, dispatch }) => {
+  let refElement = useRef<any>();
 
-export const CreatePostForm = () => {
-  const [newPost, setNewPost] = useState<IPostsUser[] | any>({
-    company: {
-      // name: "Frontend",
-      bs: "",
-      // catchPhrase: "Web developer",
-    },
-  });
-
-  const props = useMyContext();
-
-  function createNewPost(post: string | any) {
-    props?.setUsers([...props.users, post]);
-  }
-
-  function addNewPost(event: MouseEvent<HTMLButtonElement>) {
+  const addNewPostFunc = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    let myNewPost = {
-      ...newPost,
-      id: uniqueID(),
-      name: "eduard.tobilko",
-      username: "",
-      email: "email@gmail.com",
-      address: {
-        street: "Academic queen str.",
-        suite: "",
-        city: "Cherkasy",
-        zipcode: "",
-        geo: {
-          lat: "",
-          lng: "",
-        },
-      },
-      phone: "38-073-234-56-11",
-      website: "",
-    };
+    dispatch(addNewPostAC());
+  };
 
-    createNewPost(myNewPost);
-    setNewPost({ company: { bs: "" } });
-  }
+  const changePostFunc = () => {
+    if (refElement.current !== null) {
+      dispatch(changePostAC(refElement.current.value));
+    }
+  };
 
   return (
     <CreatePostFormStyle>
@@ -60,24 +30,16 @@ export const CreatePostForm = () => {
         height="50px"
       />
       <TextareaStyle
+        ref={refElement}
         type="text"
         name="text"
-        value={newPost.company.bs}
+        value={newText}
         placeholder="Add new post"
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setNewPost({
-            ...newPost,
-            company: {
-              catchPhrase: "Web developer",
-              name: "Frontend",
-              bs: e.target.value,
-            },
-          })
-        }
+        onChange={changePostFunc}
         autoComplete="off"
       />
 
-      <CreatePostBtn addNewPost={addNewPost}>Add post</CreatePostBtn>
+      <CreatePostBtn addNewPost={addNewPostFunc}>Add post</CreatePostBtn>
     </CreatePostFormStyle>
   );
 };

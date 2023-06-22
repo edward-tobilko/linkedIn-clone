@@ -1,34 +1,31 @@
-import { useEffect } from "react";
+import { FC } from "react";
 
 import { PostsListStyle } from "./postsListStyle";
 import { PostsItem } from "./PostsItem";
-import { useMyContext } from "../../context/Context";
 
-export const PostsList = () => {
-  const props = useMyContext();
+export const PostsList: FC<any> = ({ posts }) => {
+  // async function getUsers(limit: any = 3) {
+  //   try {
+  //     await fetch(
+  //       "https://jsonplaceholder.typicode.com/users?" +
+  //         new URLSearchParams({
+  //           _limit: limit,
+  //         }),
+  //     )
+  //       .then((response) => response.json())
+  //       .then((data) => props?.setUsers(data));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  async function getUsers(limit: any = 3) {
-    try {
-      await fetch(
-        "https://jsonplaceholder.typicode.com/users?" +
-          new URLSearchParams({
-            _limit: limit,
-          }),
-      )
-        .then((response) => response.json())
-        .then((data) => props?.setUsers(data));
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getUsers();
-  }, []);
+  // useEffect(() => {
+  //   getUsers();
+  // }, []);
 
   return (
     <PostsListStyle>
-      {props?.users.map((user) => (
+      {posts.map((user: any) => (
         <PostsItem key={user.id} user={user} />
       ))}
     </PostsListStyle>

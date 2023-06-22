@@ -5,12 +5,20 @@ import App from "./App";
 
 import GlobalStyle from "./rootStyles";
 
+import store from "./store";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
-root.render(
-  <Router>
-    <GlobalStyle />
-    <App />
-  </Router>,
-);
+
+const rerenderTree = (state: any) => {
+  root.render(
+    <Router>
+      <GlobalStyle />
+      <App state={state} dispatch={store.dispatch.bind(store)} />
+    </Router>,
+  );
+};
+
+rerenderTree(store.getState());
+store.subscribe(rerenderTree);

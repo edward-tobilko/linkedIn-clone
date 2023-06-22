@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 import { ChatUserStyle } from "./chatUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-import { IChatUsersType } from "../../../type-models";
+import { IChatUsers } from "../../../type-models";
 
 interface IChatUserProps {
-  chatUser: IChatUsersType;
+  chatUser: IChatUsers;
 }
 
 export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {

@@ -13,12 +13,14 @@ const hour = date.getHours();
 
 export const CreateMessagePost = () => {
   const [message, setMessage] = useState({
-    say: "",
+    voice: {
+      say: "",
+    },
   });
 
   const props = useMyContext();
 
-  const newMessagePathRef = useRef<string>(message.say);
+  const newMessagePathRef = useRef<string>(message.voice.say);
 
   function createMessage(message: string | any) {
     props?.setDialogUsers([...props.dialogUsers, message]);
@@ -36,7 +38,7 @@ export const CreateMessagePost = () => {
 
     if (newMessagePathRef.current !== null) {
       createMessage(myNewMessage);
-      setMessage({ say: "" });
+      setMessage({ voice: { say: "" } });
     }
   };
 
@@ -45,11 +47,14 @@ export const CreateMessagePost = () => {
       <form method="post">
         <div className="create__message__post-textarea">
           <textarea
-            value={message.say}
+            value={message.voice.say}
             name="text"
             placeholder="Add new message"
             onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-              setMessage({ ...message, say: event.target.value })
+              setMessage({
+                ...message,
+                voice: { say: event.target.value },
+              })
             }
           ></textarea>
         </div>

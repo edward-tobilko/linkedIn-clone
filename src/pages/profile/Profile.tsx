@@ -1,18 +1,20 @@
+import { FC } from "react";
+
 import { CreatePostForm } from "../../components/forms/create-post-form/CreatePostForm";
 import { CreatePostFormList } from "../../components/forms/create-post-form/CreatePostFormList";
 import { PostsList } from "../../components/posts/PostsList";
 
 import { ProfileStyle, CreatePostStyle } from "./profileStyle";
 
-const Profile = () => {
+const Profile: FC<any> = ({ state, dispatch }) => {
   return (
     <ProfileStyle>
       <CreatePostStyle>
-        <CreatePostForm />
+        <CreatePostForm newText={state.newText} dispatch={dispatch} />
         <CreatePostFormList />
       </CreatePostStyle>
 
-      <PostsList />
+      <PostsList posts={state.postUsers} />
     </ProfileStyle>
   );
 };

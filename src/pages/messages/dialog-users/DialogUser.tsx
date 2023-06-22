@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-import { IDialogUsersType } from "../../../type-models";
+import { IDialogUsers } from "../../../type-models";
 
 interface IDialogUserProps {
-  dialogUser: IDialogUsersType;
+  dialogUser: IDialogUsers;
 }
 
 export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
@@ -29,7 +29,7 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
         </div>
 
         <div className="dialog__user-content">
-          <p> {dialogUser.say} </p>
+          <p> {dialogUser.voice.say} </p>
         </div>
       </div>
     </DialogUserStyle>
