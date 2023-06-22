@@ -5,7 +5,7 @@ import App from "./App";
 
 import GlobalStyle from "./rootStyles";
 
-import store from "./custom-redux/store";
+import customStore from "./custom-redux/customStore";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -15,10 +15,10 @@ const rerenderTree = (state: any) => {
   root.render(
     <Router>
       <GlobalStyle />
-      <App state={state} dispatch={store.dispatch.bind(store)} />
+      <App state={state} dispatch={customStore.dispatch.bind(customStore)} />
     </Router>,
   );
 };
 
-rerenderTree(store.getState());
-store.subscribe(rerenderTree);
+rerenderTree(customStore.getState());
+customStore.subscribe(rerenderTree);

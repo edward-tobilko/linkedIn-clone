@@ -1,4 +1,4 @@
-import profileReducer from "./profileReducer";
+import profileReducer from "./customProfileReducer";
 
 const store: any = {
   _state: {

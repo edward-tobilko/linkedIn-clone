@@ -7,7 +7,7 @@ import { CreatePostBtn } from "../../UI/btns/CreatePostBtn";
 import {
   changePostAC,
   addNewPostAC,
-} from "../../../custom-redux/profileReducer";
+} from "../../../custom-redux/customProfileReducer";
 
 export const CreatePostForm: FC<any> = ({ newText, dispatch }) => {
   let refElement = useRef<any>();
