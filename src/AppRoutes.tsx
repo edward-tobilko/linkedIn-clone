@@ -9,7 +9,7 @@ import LogIn from "./pages/logIn/LogIn";
 import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
 
-const AppRoutes: FC<any> = ({ state, dispatch }) => {
+const AppRoutes: FC<any> = () => {
   // const [isAuth, setIsAuth] = useState(false);
 
   return (
@@ -29,10 +29,7 @@ const AppRoutes: FC<any> = ({ state, dispatch }) => {
       )} */}
 
       <Routes>
-        <Route
-          path="/"
-          element={<Profile state={state.profilePosts} dispatch={dispatch} />}
-        />
+        <Route path="/" element={<Profile />} />
         <Route path="/social" element={<Social />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/:name/:id" element={<Messages />} />

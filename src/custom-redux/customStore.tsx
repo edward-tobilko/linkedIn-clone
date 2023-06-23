@@ -1,6 +1,6 @@
 import profileReducer from "./customProfileReducer";
 
-const store: any = {
+const customStore: any = {
   _state: {
     profilePosts: {
       postUsers: [
@@ -121,4 +121,4 @@ const store: any = {
   },
 };
 
-export default store;
+export default customStore;

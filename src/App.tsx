@@ -8,7 +8,7 @@ import { Header } from "./components/header/Header";
 import AppRoutes from "./AppRoutes";
 import { Sidebar } from "./components/sidebar/Sidebar";
 
-const App: FC<any> = ({ state, dispatch }) => {
+const App: FC<any> = () => {
   return (
     <ContextProvider>
       <HeaderStyle>
@@ -20,7 +20,7 @@ const App: FC<any> = ({ state, dispatch }) => {
       <ContainerStyle>
         <ContentStyle>
           <Sidebar />
-          <AppRoutes state={state} dispatch={dispatch} />
+          <AppRoutes />
         </ContentStyle>
       </ContainerStyle>
     </ContextProvider>

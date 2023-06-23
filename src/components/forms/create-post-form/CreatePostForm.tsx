@@ -1,29 +1,54 @@
-import { ChangeEvent, MouseEvent, FC, useRef } from "react";
+import { MouseEvent, FC, useRef } from "react";
+import { useDispatch } from "react-redux";
 
 import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
 import { CreatePostBtn } from "../../UI/btns/CreatePostBtn";
+import { useTypeSelector } from "../../../hooks/useTypeSelector";
+
 import {
-  changePostAC,
   addNewPostAC,
-} from "../../../custom-redux/customProfileReducer";
+  changePostAC,
+} from "../../../redux/reducers/profileReducer";
 
-export const CreatePostForm: FC<any> = ({ newText, dispatch }) => {
-  let refElement = useRef<any>();
+// Container component
+export const CreatePostFormContainer: FC<any> = () => {
+  const state = useTypeSelector((state) => state.profilePage);
 
-  const addNewPostFunc = (event: MouseEvent<HTMLButtonElement>) => {
+  const refElement = useRef<any>();
+
+  const dispatch = useDispatch();
+
+  const addNewPost = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     dispatch(addNewPostAC());
   };
 
-  const changePostFunc = () => {
+  const changePost = () => {
     if (refElement.current !== null) {
       dispatch(changePostAC(refElement.current.value));
     }
   };
 
+  return (
+    <CreatePostForm
+      addNewPost={addNewPost}
+      changePost={changePost}
+      state={state}
+      refElement={refElement}
+    />
+  );
+};
+
+// Pure component
+const CreatePostForm: FC<any> = ({
+  addNewPost,
+  changePost,
+  state,
+  refElement,
+}) => {
   return (
     <CreatePostFormStyle>
       <AvatarImgStyle
@@ -36,13 +61,13 @@ export const CreatePostForm: FC<any> = ({ newText, dispatch }) => {
         ref={refElement}
         type="text"
         name="text"
-        value={newText}
+        value={state.newText}
         placeholder="Add new post"
-        onChange={changePostFunc}
+        onChange={changePost}
         autoComplete="off"
       />
 
-      <CreatePostBtn addNewPost={addNewPostFunc}>Add post</CreatePostBtn>
+      <CreatePostBtn addNewPost={addNewPost}>Add post</CreatePostBtn>
     </CreatePostFormStyle>
   );
 };

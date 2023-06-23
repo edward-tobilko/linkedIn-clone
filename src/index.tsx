@@ -1,24 +1,22 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import App from "./App";
 
 import GlobalStyle from "./rootStyles";
 
-import customStore from "./custom-redux/customStore";
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 
-const rerenderTree = (state: any) => {
-  root.render(
-    <Router>
+root.render(
+  <Router>
+    <Provider store={store}>
       <GlobalStyle />
-      <App state={state} dispatch={customStore.dispatch.bind(customStore)} />
-    </Router>,
-  );
-};
-
-rerenderTree(customStore.getState());
-customStore.subscribe(rerenderTree);
+      <App />
+    </Provider>
+  </Router>,
+);

@@ -2,8 +2,11 @@ import { FC } from "react";
 
 import { PostsListStyle } from "./postsListStyle";
 import { PostsItem } from "./PostsItem";
+import { useTypeSelector } from "../../hooks/useTypeSelector";
 
-export const PostsList: FC<any> = ({ posts }) => {
+export const PostsList: FC<any> = () => {
+  const props = useTypeSelector((state) => state.profilePage);
+
   // async function getUsers(limit: any = 3) {
   //   try {
   //     await fetch(
@@ -25,7 +28,7 @@ export const PostsList: FC<any> = ({ posts }) => {
 
   return (
     <PostsListStyle>
-      {posts.map((user: any) => (
+      {props.postUsers.map((user: any) => (
         <PostsItem key={user.id} user={user} />
       ))}
     </PostsListStyle>
