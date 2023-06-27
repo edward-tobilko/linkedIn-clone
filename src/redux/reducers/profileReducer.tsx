@@ -98,51 +98,50 @@ const initialState = {
       },
     },
   ],
-  newText: "",
+  newPostText: "",
+  name: "eduard.tobilko",
 };
 
 const profileReducer = (state: any = initialState, action: any) => {
   switch (action.type) {
     case CREATE_NEW_POST:
-      if (state.newText.trim() !== "") {
-        let myNewPost = {
-          id: uniqueID(),
-          name: "eduard.tobilko",
-          username: "",
-          email: "email@gmail.com",
-          address: {
-            street: "Academic queen str.",
-            suite: "",
-            city: "Cherkasy",
-            zipcode: "",
-            geo: {
-              lat: "",
-              lng: "",
+      // вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
+      return {
+        ...state,
+        postUsers: [
+          ...state.postUsers,
+          {
+            id: uniqueID(),
+            name: state.name,
+            username: "",
+            email: "email@gmail.com",
+            address: {
+              street: "Academic queen str.",
+              suite: "",
+              city: "Cherkasy",
+              zipcode: "",
+              geo: {
+                lat: "",
+                lng: "",
+              },
+            },
+            phone: "38-073-234-56-11",
+            website: "",
+            company: {
+              name: "Romaguera-Crona",
+              catchPhrase: "Multi-layered client-server neural-net",
+              bs: state.newPostText,
             },
           },
-          phone: "38-073-234-56-11",
-          website: "",
-          company: {
-            name: "Romaguera-Crona",
-            catchPhrase: "Multi-layered client-server neural-net",
-            bs: state.newText,
-          },
-        };
-
-        let stateCopy = { ...state };
-
-        stateCopy.postUsers.push(myNewPost);
-        stateCopy.newText = "";
-
-        return stateCopy;
-      }
-      return state;
+        ],
+        newPostText: "",
+      };
 
     case CHANGE_POST:
-      let stateCopy = { ...state };
-      stateCopy.newText = action.text;
-
-      return stateCopy;
+      return {
+        ...state,
+        newPostText: action.text,
+      };
 
     default:
       return state;

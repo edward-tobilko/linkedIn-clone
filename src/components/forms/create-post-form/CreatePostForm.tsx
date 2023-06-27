@@ -1,11 +1,11 @@
-import { MouseEvent, FC, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { FC, MouseEvent, ChangeEvent } from "react";
+import { connect } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
 import { CreatePostBtn } from "../../UI/btns/CreatePostBtn";
-import { useTypeSelector } from "../../../hooks/useTypeSelector";
 
 import {
   addNewPostAC,
@@ -13,42 +13,40 @@ import {
 } from "../../../redux/reducers/profileReducer";
 
 // Container component
-export const CreatePostFormContainer: FC<any> = () => {
-  const state = useTypeSelector((state) => state.profilePage);
+const mapState = (state: RootState) => {
+  return {
+    newPostText: state.profilePage.newPostText,
+  };
+};
 
-  const refElement = useRef<any>();
+const mapDispatch = (dispatch: any) => {
+  return {
+    addNewPostDispatch() {
+      dispatch(addNewPostAC());
+    },
 
-  const dispatch = useDispatch();
+    changePostDispatch(newPostText: string) {
+      dispatch(changePostAC(newPostText));
+    },
+  };
+};
+
+const CreatePostFormContainer = connect(mapState, mapDispatch);
+
+// Pure component
+const CreatePostForm: FC<any> = (props) => {
+  const changePost = (event: ChangeEvent<HTMLInputElement>) => {
+    props.changePostDispatch(event.target.value);
+  };
 
   const addNewPost = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    dispatch(addNewPostAC());
-  };
-
-  const changePost = () => {
-    if (refElement.current !== null) {
-      dispatch(changePostAC(refElement.current.value));
+    if (props.newPostText.trim() !== "") {
+      props.addNewPostDispatch();
     }
   };
 
-  return (
-    <CreatePostForm
-      addNewPost={addNewPost}
-      changePost={changePost}
-      state={state}
-      refElement={refElement}
-    />
-  );
-};
-
-// Pure component
-const CreatePostForm: FC<any> = ({
-  addNewPost,
-  changePost,
-  state,
-  refElement,
-}) => {
   return (
     <CreatePostFormStyle>
       <AvatarImgStyle
@@ -58,10 +56,9 @@ const CreatePostForm: FC<any> = ({
         height="50px"
       />
       <TextareaStyle
-        ref={refElement}
         type="text"
         name="text"
-        value={state.newText}
+        value={props.newPostText}
         placeholder="Add new post"
         onChange={changePost}
         autoComplete="off"
@@ -71,3 +68,5 @@ const CreatePostForm: FC<any> = ({
     </CreatePostFormStyle>
   );
 };
+
+export default CreatePostFormContainer(CreatePostForm);

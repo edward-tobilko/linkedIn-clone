@@ -7,7 +7,6 @@ import { useMyContext } from "../../../context/Context";
 
 const date = new Date();
 
-const seconds = date.getSeconds();
 const minutes = date.getMinutes();
 const hour = date.getHours();
 
@@ -34,7 +33,7 @@ export const CreateMessagePost = () => {
         ...message,
         id: uniqueID(),
         name: "eduard.tobilko",
-        dataTime: `${hour}:${minutes}:${seconds}`,
+        dataTime: `${hour} : ${minutes}`,
       };
 
       if (newMessagePathRef.current !== null) {

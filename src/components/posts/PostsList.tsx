@@ -1,36 +1,29 @@
 import { FC } from "react";
+import { connect } from "react-redux";
 
 import { PostsListStyle } from "./postsListStyle";
+
 import { PostsItem } from "./PostsItem";
-import { useTypeSelector } from "../../hooks/useTypeSelector";
+import { RootState } from "../../redux/store";
 
-export const PostsList: FC<any> = () => {
-  const props = useTypeSelector((state) => state.profilePage);
+// Container component
+const mapState = (state: RootState) => {
+  return {
+    postUsers: state.profilePage.postUsers,
+  };
+};
 
-  // async function getUsers(limit: any = 3) {
-  //   try {
-  //     await fetch(
-  //       "https://jsonplaceholder.typicode.com/users?" +
-  //         new URLSearchParams({
-  //           _limit: limit,
-  //         }),
-  //     )
-  //       .then((response) => response.json())
-  //       .then((data) => props?.setUsers(data));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+const PostsListContainer = connect(mapState, null);
 
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
-
+// Pure component
+const PostsList: FC<any> = ({ postUsers }) => {
   return (
     <PostsListStyle>
-      {props.postUsers.map((user: any) => (
+      {postUsers.map((user: any) => (
         <PostsItem key={user.id} user={user} />
       ))}
     </PostsListStyle>
   );
 };
+
+export default PostsListContainer(PostsList);
