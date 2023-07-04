@@ -25,7 +25,7 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
       <div className="dialog__user">
         <div className="dialog__user-header">
           <NavLink to={pathDialogUser}> {dialogUser.name} </NavLink>
-          <span> {dialogUser.dataTime} </span>
+          <p> {dialogUser.dataTime} </p>
         </div>
 
         <div className="dialog__user-content">

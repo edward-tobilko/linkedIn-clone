@@ -9,7 +9,7 @@ import {
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { SearchInput } from "../forms/search-input/SearchInput";
+import SearchInput from "../forms/search-input/SearchInput";
 
 export const Header = () => {
   return (

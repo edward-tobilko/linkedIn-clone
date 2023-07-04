@@ -5,10 +5,15 @@ import { CreateMessagePostStyle } from "./createMessagePostStyle";
 
 import { useMyContext } from "../../../context/Context";
 
-const date = new Date();
+const date = new Date().toLocaleTimeString();
 
-const minutes = date.getMinutes();
-const hour = date.getHours();
+// console.log(date.toDateString());
+// console.log(date.toTimeString());
+// console.log(date.toLocaleDateString());
+// console.log(date.toLocaleTimeString());
+
+// const minutes = date.getMinutes();
+// const hour = date.getHours();
 
 export const CreateMessagePost = () => {
   const [message, setMessage] = useState({
@@ -33,7 +38,7 @@ export const CreateMessagePost = () => {
         ...message,
         id: uniqueID(),
         name: "eduard.tobilko",
-        dataTime: `${hour} : ${minutes}`,
+        dataTime: date,
       };
 
       if (newMessagePathRef.current !== null) {

@@ -6,6 +6,14 @@ export const PostsListStyle = styled.div`
   margin: 25px 0;
 `;
 
+export const PostsListEmptyStyle = styled.h1`
+  text-align: center;
+  color: ${themeVars.colors.errorColor};
+  font-size: 16px;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+`;
+
 // PostsItem component
 export const PostsItemStyle = styled.div`
   margin-bottom: 15px;

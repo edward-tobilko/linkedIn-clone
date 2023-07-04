@@ -15,6 +15,7 @@ export interface IChatUsers {
   id: number;
   name: string;
 }
+
 export interface IStateContext {
   dialogUsers: IDialogUsers[];
   setDialogUsers: Dispatch<SetStateAction<IDialogUsers[]>>;
@@ -24,9 +25,8 @@ export interface IStateContext {
   setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
   // setChatUsers: (chatUsers: Array<IChatUsersType>) => void;
 
-  // users: IPostsUser[];
-  // setUsers: Dispatch<SetStateAction<IPostsUser[]>>;
-  //   setUsers: (users: IPostsUser[]) => void;
+  searchUsers: string;
+  setSearchUsers: Dispatch<SetStateAction<string>>;
 }
 
 // PostsList component

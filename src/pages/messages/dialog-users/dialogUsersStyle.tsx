@@ -43,9 +43,6 @@ export const DialogUserStyle = styled.li`
 
     &-header {
       padding-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       position: relative;
 
       a {
@@ -56,19 +53,22 @@ export const DialogUserStyle = styled.li`
         }
       }
 
-      span {
+      p {
         font-size: 11px;
         font-style: italic;
+        padding-top: 10px;
       }
 
       &:after {
         content: "";
         display: block;
-        width: 100%;
+        width: 30%;
         height: 1px;
         background-color: ${themeVars.colors.lightGreyColor};
         position: absolute;
-        bottom: 0;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
 

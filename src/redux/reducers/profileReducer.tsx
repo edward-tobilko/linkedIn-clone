@@ -2,6 +2,7 @@ import { v4 as uniqueID } from "uuid";
 
 export const CREATE_NEW_POST = "CREATE-NEW-POST";
 export const CHANGE_POST = "CHANGE-POST";
+export const UPDATE_SEARCH_POST = "UPDATE-SEARCH-POST";
 
 const initialState = {
   postUsers: [
