@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { AvatarImgStyle } from "../../rootStyles";
 import { SidebarStyle } from "./sidebarStyle";
 
 import { MdVisibility } from "react-icons/md";
+import { CardProfile } from "../../pages/profile/CardProfile";
 
 // UI time elements
 function UITimeElements() {
@@ -65,23 +65,7 @@ export const Sidebar = () => {
   return (
     <SidebarStyle>
       <div className="sidebar">
-        <div className="sidebar-header">
-          <img
-            src="./images/the-lamp.png"
-            alt="Wrapper"
-            className="sidebar-header__wrapper"
-          />
-          <div className="sidebar-header__desc">
-            <AvatarImgStyle
-              src="./images/avatar.png"
-              alt="Avatar"
-              width="70px"
-              height="70px"
-            />
-            <h1>Eduard Tobilko</h1>
-            <p>Front-end developer | HTML / CSS / JavaScript / React</p>
-          </div>
-        </div>
+        <CardProfile />
 
         <div className="sidebar-followers">
           <p>

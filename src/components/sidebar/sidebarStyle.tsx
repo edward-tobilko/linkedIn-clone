@@ -10,37 +10,6 @@ export const SidebarStyle = styled.aside`
   .sidebar {
     background-color: ${themeVars.colors.headerBackgroundColor};
 
-    &-header {
-      height: 170px;
-      position: relative;
-
-      &__wrapper {
-        width: 100%;
-        height: 85px;
-        border-radius: 12px;
-      }
-
-      &__desc {
-        text-align: center;
-        position: absolute;
-        top: 25%;
-        left: 0;
-        padding: 0 15px;
-
-        h1 {
-          padding: 10px 0 5px 0;
-          font-size: 18px;
-          font-weight: 600;
-        }
-
-        p {
-          font-size: 13px;
-          font-weight: 400;
-          color: ${themeVars.colors.lightGreyColor};
-        }
-      }
-    }
-
     &-followers {
       position: relative;
       height: 170px;

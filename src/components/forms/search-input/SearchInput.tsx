@@ -15,7 +15,7 @@ const mapState = (state: RootState) => {
 
 const SearchInputContainer = connect(mapState, null);
 
-const SearchInput: FC<any> = ({ postUsers }) => {
+const SearchInput: FC<any> = () => {
   const props = useMyContext();
 
   return (
@@ -23,7 +23,7 @@ const SearchInput: FC<any> = ({ postUsers }) => {
       <i className="bx bx-search"></i>
       <SearchInputStyle
         type="text"
-        placeholder="Search..."
+        placeholder="Search by name..."
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           props?.setSearchUsers(event.target.value)
         }

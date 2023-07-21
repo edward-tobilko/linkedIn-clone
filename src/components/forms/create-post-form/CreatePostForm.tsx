@@ -5,7 +5,7 @@ import { RootState } from "../../../redux/store";
 import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
-import { CreatePostBtn } from "../../UI/btns/CreatePostBtn";
+import { CreatePostBtn } from "../../UI/btns/createPostBtn/CreatePostBtn";
 
 import {
   addNewPostAC,
