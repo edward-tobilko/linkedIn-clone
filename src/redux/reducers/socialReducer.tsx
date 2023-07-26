@@ -1,3 +1,7 @@
+const FOLLOW = "follow";
+const UNFOLLOW = "un-follow";
+const SETUSERS = "set-users";
+
 const initialState = {
   socialUsers: [
     {
@@ -77,9 +81,68 @@ const initialState = {
 
 const socialReducer = (state: any = initialState, action: any) => {
   switch (action.type) {
+    // Додаємо користувача
+    case FOLLOW:
+      return {
+        ...state,
+        socialUsers: [
+          state.socialUsers.map((socialUser: any) => {
+            if (socialUser.id === action.userId) {
+              return { ...socialUser, followed: true };
+            }
+
+            return socialUser;
+          }),
+        ],
+      };
+
+    // Видаляємо користувача
+    case UNFOLLOW:
+      return {
+        ...state,
+        socialUsers: [
+          ...state.socialUsers.map((socialUser: any) => {
+            if (socialUser.id === action.userId) {
+              return { ...socialUser, followed: false };
+            }
+
+            return socialUser;
+          }),
+        ],
+      };
+
+    // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
+    case SETUSERS:
+      return {
+        ...state,
+        newUsers: [...action.users],
+      };
+
     default:
       return state;
   }
+};
+
+// ACs
+export const followUserAC = (userId: any) => {
+  return {
+    type: FOLLOW,
+    userId,
+  };
+};
+
+export const unFollowUserAC = (userId: any) => {
+  return {
+    type: UNFOLLOW,
+    userId,
+  };
+};
+
+export const setUsersAC = (newUsers: any) => {
+  return {
+    type: SETUSERS,
+    newUsers,
+  };
 };
 
 export default socialReducer;

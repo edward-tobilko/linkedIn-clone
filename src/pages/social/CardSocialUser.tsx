@@ -3,9 +3,16 @@ import { connect } from "react-redux";
 
 import { AvatarImgStyle } from "../../rootStyles";
 import { CardSocialUserStyle, RemoveCardSocialUserStyle } from "./socialStyle";
+
 import { FollowBtn } from "../../components/UI/btns/followBtn/FollowBtn";
 
 import { useTypeSelector } from "../../hooks/useTypeSelector";
+
+import {
+  followUserAC,
+  unFollowUserAC,
+  setUsersAC,
+} from "../../redux/reducers/socialReducer";
 
 // Container component
 const mapState = (state: any) => {
@@ -14,7 +21,26 @@ const mapState = (state: any) => {
   };
 };
 
-const CardSocialUserContainer = connect(mapState, null);
+const mapDispatch = (dispatch: any) => {
+  return {
+    // Додаємо користувача
+    followDispatch(userId: any) {
+      dispatch(followUserAC(userId));
+    },
+
+    // Видаляємо користувача
+    unFollowDispatch(userId: any) {
+      dispatch(unFollowUserAC(userId));
+    },
+
+    // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
+    setUsersDispatch(newUsers: any) {
+      dispatch(setUsersAC(newUsers));
+    },
+  };
+};
+
+const CardSocialUserContainer = connect(mapState, mapDispatch);
 
 // Pure component
 const CardSocialUser: FC = () => {
@@ -48,7 +74,7 @@ const CardSocialUser: FC = () => {
                 </div>
               </div>
 
-              <FollowBtn />
+              <FollowBtn socialUser={socialUser} />
 
               <RemoveCardSocialUserStyle>
                 <img src="./svg/remove_icon.svg" alt="Remove-icon" />
