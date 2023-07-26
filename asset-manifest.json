@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/theWay-of-theSamurai/static/js/main.0a1dfb20.js",
+    "main.js": "/theWay-of-theSamurai/static/js/main.7abe7ebe.js",
     "index.html": "/theWay-of-theSamurai/index.html",
-    "main.0a1dfb20.js.map": "/theWay-of-theSamurai/static/js/main.0a1dfb20.js.map"
+    "main.7abe7ebe.js.map": "/theWay-of-theSamurai/static/js/main.7abe7ebe.js.map"
   },
   "entrypoints": [
-    "static/js/main.0a1dfb20.js"
+    "static/js/main.7abe7ebe.js"
   ]
 }
