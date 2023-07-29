@@ -1,15 +1,9 @@
 import { FC } from "react";
 
-import { SocialStyle } from "./socialStyle";
-
-import CardSocialUser from "./CardSocialUser";
+import CardSocialUsers from "./CardSocialUsers";
 
 const Social: FC = () => {
-  return (
-    <SocialStyle>
-      <CardSocialUser />
-    </SocialStyle>
-  );
+  return <CardSocialUsers />;
 };
 
 export default Social;

@@ -19,7 +19,7 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
         width="40px"
         height="40px"
         src="https://place-hold.it/60"
-        alt="DialogUsersAvatar"
+        alt=""
       />
 
       <div className="dialog__user">

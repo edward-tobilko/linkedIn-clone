@@ -1,21 +1,28 @@
 import { FC } from "react";
 
-import { FollowStyle } from "./followBtnStyle";
+import { FollowBtnStyle } from "./followBtnStyle";
 
-export const FollowBtn: FC<any> = ({ socialUser, followDispatch }) => {
+import followUserIcon from "../../../../img/svg/followUser_icon.svg";
+import unFollowUserIcon from "../../../../img/svg/unFollowUser_icon.svg";
+
+export const FollowBtn: FC<any> = ({
+  socialUser,
+  followDispatch,
+  unFollowDispatch,
+}) => {
   return (
-    <FollowStyle>
+    <>
       {socialUser.followed ? (
-        <button onClick={() => followDispatch(socialUser.id)}>
-          <img src="./svg/followUser_icon.svg" alt="Follow-user" />
-          Follow
-        </button>
+        <FollowBtnStyle onClick={() => unFollowDispatch(socialUser.id)}>
+          <img src={unFollowUserIcon} alt="" />
+          Unfollow
+        </FollowBtnStyle>
       ) : (
-        <button>
-          <img src="./svg/unFollowUser_icon.svg" alt="Un-follow-user" />
-          Un follow
-        </button>
+        <FollowBtnStyle onClick={() => followDispatch(socialUser.id)}>
+          <img src={followUserIcon} alt="" />
+          Follow
+        </FollowBtnStyle>
       )}
-    </FollowStyle>
+    </>
   );
 };

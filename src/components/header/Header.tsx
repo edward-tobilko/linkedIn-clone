@@ -11,6 +11,8 @@ import { AvatarImgStyle } from "../../rootStyles";
 
 import SearchInput from "../forms/search-input/SearchInput";
 
+import avatarIcon from "../../img/images/avatar.png";
+
 export const Header = () => {
   return (
     <HeaderStyle>
@@ -42,12 +44,7 @@ export const Header = () => {
 
       <HeaderRightStyle>
         <>
-          <AvatarImgStyle
-            src="./images/avatar.png"
-            alt="Avatar"
-            width="40px"
-            height="40px"
-          />
+          <AvatarImgStyle src={avatarIcon} alt="" width="40px" height="40px" />
           <p> Eduard Tobilko </p>
         </>
         <LogOutStyle>Log out</LogOutStyle>

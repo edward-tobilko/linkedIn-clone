@@ -12,6 +12,8 @@ import {
   changePostAC,
 } from "../../../redux/reducers/profileReducer";
 
+import avatarIcon from "../../../img/images/avatar.png";
+
 // Container component
 const mapState = (state: RootState) => {
   return {
@@ -49,12 +51,7 @@ const CreatePostForm: FC<any> = (props) => {
 
   return (
     <CreatePostFormStyle>
-      <AvatarImgStyle
-        src="./images/avatar.png"
-        alt="Avatar"
-        width="50px"
-        height="50px"
-      />
+      <AvatarImgStyle src={avatarIcon} alt="" width="50px" height="50px" />
       <TextareaStyle
         type="text"
         name="text"

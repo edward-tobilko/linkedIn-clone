@@ -1,82 +1,14 @@
 const FOLLOW = "follow";
-const UNFOLLOW = "un-follow";
-const SETUSERS = "set-users";
+const UN_FOLLOW = "un-follow";
+const SET_USERS = "set-users";
+const SET_CURRENT_PAGE = "set-current-page";
+const SET_TOTAL_USERS_COUNT = "set-total-users-count";
 
 const initialState = {
-  socialUsers: [
-    {
-      id: 1,
-      fullName: "John",
-      status: "status-1",
-      wrapper: "https://place-hold.it/170",
-      img: "https://place-hold.it/90",
-      location: {
-        city: "London",
-        country: "United Kingdom",
-      },
-      followed: false,
-    },
-    {
-      id: 2,
-      fullName: "Ben",
-      status: "status-2",
-      wrapper: "https://place-hold.it/170",
-      img: "https://place-hold.it/90",
-      location: {
-        city: "New York",
-        country: "United Sates",
-      },
-      followed: true,
-    },
-    {
-      id: 3,
-      fullName: "Max",
-      status: "status-3",
-      wrapper: "https://place-hold.it/170",
-      img: "https://place-hold.it/90",
-      location: {
-        city: "Cherkasy",
-        country: "Ukraine",
-      },
-      followed: true,
-    },
-    {
-      id: 4,
-      fullName: "Max",
-      status: "status-3",
-      wrapper: "https://place-hold.it/170",
-      img: "https://place-hold.it/90",
-      location: {
-        city: "Cherkasy",
-        country: "Ukraine",
-      },
-      followed: true,
-    },
-    {
-      id: 5,
-      fullName: "Max",
-      status: "status-3",
-      wrapper: "https://place-hold.it/170",
-      img: "https://place-hold.it/90",
-      location: {
-        city: "Cherkasy",
-        country: "Ukraine",
-      },
-      followed: true,
-    },
-    {
-      id: 6,
-      fullName: "Max",
-      status: "status-3",
-      wrapper: "https://place-hold.it/170",
-      img: "https://place-hold.it/90",
-      location: {
-        city: "Cherkasy",
-        country: "Ukraine",
-      },
-      followed: true,
-    },
-  ],
+  socialUsers: [],
+  totalUsersCount: 0, // загальна к-сть користувачів
+  usersCount: 18, // к-сть користувачів на одній сторінці
+  currentPage: 1, // поточна активна сторінка
 };
 
 const socialReducer = (state: any = initialState, action: any) => {
@@ -85,38 +17,40 @@ const socialReducer = (state: any = initialState, action: any) => {
     case FOLLOW:
       return {
         ...state,
-        socialUsers: [
-          state.socialUsers.map((socialUser: any) => {
-            if (socialUser.id === action.userId) {
-              return { ...socialUser, followed: true };
-            }
+        socialUsers: state.socialUsers.map((socialUser: any) => {
+          if (socialUser.id === action.userId) {
+            return { ...socialUser, followed: true };
+          }
 
-            return socialUser;
-          }),
-        ],
+          return socialUser;
+        }),
       };
 
     // Видаляємо користувача
-    case UNFOLLOW:
+    case UN_FOLLOW:
       return {
         ...state,
-        socialUsers: [
-          ...state.socialUsers.map((socialUser: any) => {
-            if (socialUser.id === action.userId) {
-              return { ...socialUser, followed: false };
-            }
+        socialUsers: state.socialUsers.map((socialUser: any) => {
+          if (socialUser.id === action.userId) {
+            return { ...socialUser, followed: false };
+          }
 
-            return socialUser;
-          }),
-        ],
+          return socialUser;
+        }),
       };
 
-    // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
-    case SETUSERS:
+    // Додаємо (відображаємо) користувачів в стейт (на сторінці)
+    case SET_USERS:
       return {
         ...state,
-        newUsers: [...action.users],
+        socialUsers: [...action.newUsers],
       };
+
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: action.currentPage };
+
+    case SET_TOTAL_USERS_COUNT:
+      return { ...state, totalUsersCount: action.totalUsersCount };
 
     default:
       return state;
@@ -133,15 +67,29 @@ export const followUserAC = (userId: any) => {
 
 export const unFollowUserAC = (userId: any) => {
   return {
-    type: UNFOLLOW,
+    type: UN_FOLLOW,
     userId,
   };
 };
 
 export const setUsersAC = (newUsers: any) => {
   return {
-    type: SETUSERS,
+    type: SET_USERS,
     newUsers,
+  };
+};
+
+export const setCurrentPageAC = (currentPage: any) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    currentPage,
+  };
+};
+
+export const setTotalUsersCountAC = (totalUsersCount: any) => {
+  return {
+    type: SET_TOTAL_USERS_COUNT,
+    totalUsersCount,
   };
 };
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { themeVars } from "../../../../themeVars";
 
 export const CreatePostBtnStyle = styled.button<{ disabled: boolean }>`

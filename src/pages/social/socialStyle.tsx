@@ -2,8 +2,14 @@ import styled from "styled-components";
 
 import { themeVars } from "../../themeVars";
 
-// Social component
-export const SocialStyle = styled.ul`
+// CardSocialUser component
+export const CardSocialUsersStyle = styled.div`
+  display: block;
+  text-align: center;
+`;
+
+export const CardSocialUsersListStyle = styled.ul`
+  position: relative;
   display: flex;
   justify-content: space-around;
   max-width: 700px;
@@ -16,8 +22,8 @@ export const SocialStyle = styled.ul`
   flex-shrink: 0;
 `;
 
-// CardSocialUser component
-export const CardSocialUserStyle = styled.li`
+// CardSocialUsersList component
+export const CardSocialUserItemStyle = styled.li`
   max-width: 180px;
   width: 100%;
   height: 300px;
@@ -28,6 +34,11 @@ export const CardSocialUserStyle = styled.li`
 
   .cardSocial {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
 
     &__wrapper {
       width: 100%;
@@ -38,7 +49,7 @@ export const CardSocialUserStyle = styled.li`
       text-align: center;
       width: 100%;
       position: absolute;
-      top: 10%;
+      top: 5%;
       left: 50%;
       transform: translateX(-50%);
 
@@ -52,34 +63,10 @@ export const CardSocialUserStyle = styled.li`
         font-size: 13px;
         font-weight: 400;
         color: ${themeVars.colors.lightGreyColor};
-      }
+        padding-top: 5px;
 
-      &-location {
-        padding: 15px 0 20px 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 150px;
-        width: 100%;
-        margin: 0 auto;
-
-        &-names {
-          max-width: 120px;
-          width: 100%;
-          margin: 0 auto;
-        }
-
-        img {
-          width: 40px;
-          height: 40px;
-        }
-
-        p {
-          font-size: 14px;
-          color: ${themeVars.colors.whiteColor};
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
+        span {
+          color: ${themeVars.colors.errorColor};
         }
       }
     }
