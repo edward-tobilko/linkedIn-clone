@@ -1,16 +1,13 @@
 import { FC } from "react";
 
-import {
-  CardSocialUserItemStyle,
-  RemoveCardSocialUserStyle,
-} from "./socialStyle";
+import { SocialUserItemStyle, RemoveCardSocialUserStyle } from "./socialStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
 import { FollowBtn } from "../../components/UI/btns/followBtn/FollowBtn";
 
 import removeIcon from "../../img/svg/remove_icon.svg";
 
-const CardSocialUsersList: FC<any> = ({
+const SocialUsersList: FC<any> = ({
   socialUsers,
   followDispatch,
   unFollowDispatch,
@@ -18,7 +15,7 @@ const CardSocialUsersList: FC<any> = ({
   return (
     <>
       {socialUsers.map((socialUser: any) => (
-        <CardSocialUserItemStyle key={socialUser.id}>
+        <SocialUserItemStyle key={socialUser.id}>
           <div className="cardSocial">
             <img
               src={
@@ -60,10 +57,10 @@ const CardSocialUsersList: FC<any> = ({
               unFollowDispatch={unFollowDispatch}
             />
           </div>
-        </CardSocialUserItemStyle>
+        </SocialUserItemStyle>
       ))}
     </>
   );
 };
 
-export default CardSocialUsersList;
+export default SocialUsersList;

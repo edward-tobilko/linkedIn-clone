@@ -2,18 +2,20 @@ import styled from "styled-components";
 
 import { themeVars } from "../../themeVars";
 
-// CardSocialUser component
-export const CardSocialUsersStyle = styled.div`
+// Social component
+export const SocialStyle = styled.div`
+  position: relative;
   display: block;
   text-align: center;
+  width: 100%;
 `;
 
-export const CardSocialUsersListStyle = styled.ul`
-  position: relative;
+export const SocialUsersListStyle = styled.ul`
   display: flex;
   justify-content: space-around;
   max-width: 700px;
   width: 100%;
+  margin: 0 auto;
   height: auto;
   background-color: ${themeVars.colors.headerBackgroundColor};
   padding: 20px 0 30px 0;
@@ -22,8 +24,8 @@ export const CardSocialUsersListStyle = styled.ul`
   flex-shrink: 0;
 `;
 
-// CardSocialUsersList component
-export const CardSocialUserItemStyle = styled.li`
+// SocialUsersList component
+export const SocialUserItemStyle = styled.li`
   max-width: 180px;
   width: 100%;
   height: 300px;

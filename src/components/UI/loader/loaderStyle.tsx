@@ -3,6 +3,16 @@ import styled from "styled-components";
 import { themeVars } from "../../../themeVars";
 
 export const LoaderStyle = styled.div`
+  opacity: 0.5;
+  background: ${themeVars.colors.blackColor};
+  height: 100%;
+  width: 100%;
+  border-radius: 7px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
   .spinner {
     font-size: 32px;
     display: inline-block;
@@ -14,8 +24,7 @@ export const LoaderStyle = styled.div`
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
-    bottom: 0;
+    top: 15%;
     margin: auto;
   }
 
@@ -131,7 +140,7 @@ export const LoaderStyle = styled.div`
 
   @keyframes spinner-fade9234 {
     0% {
-      background-color: ${themeVars.colors.lightGreyColor};
+      background-color: ${themeVars.colors.whiteColor};
     }
 
     100% {
