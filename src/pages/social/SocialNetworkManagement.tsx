@@ -92,7 +92,7 @@ const SocialNetworkManagement: FC = () => {
 
         <div className="copyright">
           <i className="bx bxs-id-card"></i>
-          <span>App Corporation &#169; 2023</span>
+          <span>My own App Corporation &#169; 2023</span>
         </div>
       </NetworkManagementPersonalFooterStyle>
     </SocialNetworkManagementStyle>
