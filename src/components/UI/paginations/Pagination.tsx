@@ -24,7 +24,7 @@ export const Pagination: FC<any> = ({
 
   return (
     <PaginationStyle>
-      {paginationLengthCount > 1 && (
+      {lengthNumber > 1 && (
         <i
           className="bx bx-chevron-left"
           onClick={() => setLengthNumber(lengthNumber - 1)}

@@ -9,5 +9,7 @@ export const themeVars = {
     whiteColor: "#ffffff",
     headerBackgroundColor: "#1d2226",
     headerBackgroundColorLighter: "#1b415f",
+    blueColor: "#116ce3",
+    lightBlueColor: "#34abd3",
   },
 };

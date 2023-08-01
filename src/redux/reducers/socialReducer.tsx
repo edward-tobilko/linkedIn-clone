@@ -56,6 +56,7 @@ const socialReducer = (state: any = initialState, action: any) => {
     case SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.totalUsersCount };
 
+    // Додаємо загрузчик
     case LOADING:
       return { ...state, loading: action.loading };
 

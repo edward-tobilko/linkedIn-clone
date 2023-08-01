@@ -349,7 +349,7 @@ export const HeaderStyle = styled.div`
 
 // Container component'
 export const ContainerStyle = styled.div`
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
 `;

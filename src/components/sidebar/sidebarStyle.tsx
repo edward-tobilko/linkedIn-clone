@@ -4,7 +4,7 @@ import { themeVars } from "../../themeVars";
 
 // Sidebar component
 export const SidebarStyle = styled.aside`
-  max-width: 240px;
+  max-width: 280px;
   width: 100%;
 
   .sidebar {
@@ -65,11 +65,12 @@ export const SidebarStyle = styled.aside`
         padding: 0 0 15px 0;
         display: flex;
         justify-content: space-around;
+        
         .button {
           --width: 100px;
           --height: 35px;
           --tooltip-height: 35px;
-          --tooltip-width: 90px;
+          --tooltip-width: 120px;
           --gap-between-tooltip-to-button: 12px;
           --button-color: #1b415f;
           --tooltip-color: #ffffff;

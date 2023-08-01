@@ -5,7 +5,7 @@ import { themeVars } from "../../themeVars";
 // Profile component
 export const ProfileStyle = styled.main`
   width: 100%;
-  max-width: 720px;
+  max-width: 820px;
 `;
 
 export const CreatePostStyle = styled.div`

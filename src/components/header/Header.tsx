@@ -23,7 +23,7 @@ export const Header = () => {
 
       <HeaderCenterStyle>
         <ul>
-          <NavLink to="/">
+          <NavLink to="/profile">
             <i className="bx bxs-home"></i>
             <p>Home</p>
           </NavLink>

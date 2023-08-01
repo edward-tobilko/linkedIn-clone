@@ -1,9 +1,10 @@
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 import { SocialUserItemStyle, RemoveCardSocialUserStyle } from "./socialStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { FollowBtn } from "../../components/UI/btns/followBtn/FollowBtn";
+import { FollowBtn } from "../../components/UI/btns/follow/FollowBtn";
 
 import removeIcon from "../../img/svg/remove_icon.svg";
 
@@ -37,7 +38,12 @@ const SocialUsersList: FC<any> = ({
                 width="90px"
                 height="90px"
               />
-              <h1> {socialUser.name} </h1>
+              <p>
+                <NavLink to={`/profile/${socialUser.id}`}>
+                  {socialUser.name}
+                </NavLink>
+              </p>
+
               <p>
                 {socialUser.status != null ? (
                   socialUser.status

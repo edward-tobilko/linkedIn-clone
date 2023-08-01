@@ -5,8 +5,8 @@ import { ContainerStyle, ContentStyle, HeaderStyle } from "./rootStyles";
 import { ContextProvider } from "./context/Context";
 
 import { Header } from "./components/header/Header";
+
 import AppRoutes from "./AppRoutes";
-import { Sidebar } from "./components/sidebar/Sidebar";
 
 const App: FC<any> = () => {
   return (
@@ -19,7 +19,6 @@ const App: FC<any> = () => {
 
       <ContainerStyle>
         <ContentStyle>
-          <Sidebar />
           <AppRoutes />
         </ContentStyle>
       </ContainerStyle>

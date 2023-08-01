@@ -8,6 +8,7 @@ import Social from "./pages/social/Social";
 import LogIn from "./pages/logIn/LogIn";
 import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
+import { Sidebar } from "./components/sidebar/Sidebar";
 
 const AppRoutes: FC<any> = () => {
   // const [isAuth, setIsAuth] = useState(false);
@@ -29,7 +30,8 @@ const AppRoutes: FC<any> = () => {
       )} */}
 
       <Routes>
-        <Route path="/" element={<Profile />} />
+        <Route path="/sidebar" element={<Sidebar />} />
+        <Route path="/profile/*" element={<Profile />} />
         <Route path="/social" element={<Social />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/:name/:id" element={<Messages />} />
@@ -37,7 +39,7 @@ const AppRoutes: FC<any> = () => {
         <Route path="/login" element={<LogIn />} />
 
         {/* Redirect */}
-        <Route path="*" element={<Navigate to="/" replace={true} />} />
+        <Route path="*" element={<Navigate to="/profile" replace={true} />} />
       </Routes>
     </>
   );

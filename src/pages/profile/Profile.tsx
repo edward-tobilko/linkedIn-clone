@@ -5,17 +5,22 @@ import { CreatePostFormList } from "../../components/forms/create-post-form/Crea
 import PostsList from "../../components/posts/PostsList";
 
 import { ProfileStyle, CreatePostStyle } from "./profileStyle";
+import { Sidebar } from "../../components/sidebar/Sidebar";
 
 const Profile: FC<any> = () => {
   return (
-    <ProfileStyle>
-      <CreatePostStyle>
-        <CreatePostForm />
-        <CreatePostFormList />
-      </CreatePostStyle>
+    <>
+      <Sidebar />
 
-      <PostsList />
-    </ProfileStyle>
+      <ProfileStyle>
+        <CreatePostStyle>
+          <CreatePostForm />
+          <CreatePostFormList />
+        </CreatePostStyle>
+
+        <PostsList />
+      </ProfileStyle>
+    </>
   );
 };
 
