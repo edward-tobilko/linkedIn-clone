@@ -8,21 +8,23 @@ import { Header } from "./components/header/Header";
 
 import AppRoutes from "./AppRoutes";
 
-const App: FC<any> = () => {
+const App: FC = () => {
   return (
-    <ContextProvider>
-      <HeaderStyle>
-        <ContainerStyle>
-          <Header />
-        </ContainerStyle>
-      </HeaderStyle>
+    <>
+      <ContextProvider>
+        <HeaderStyle>
+          <ContainerStyle>
+            <Header />
+          </ContainerStyle>
+        </HeaderStyle>
 
-      <ContainerStyle>
-        <ContentStyle>
-          <AppRoutes />
-        </ContentStyle>
-      </ContainerStyle>
-    </ContextProvider>
+        <ContainerStyle>
+          <ContentStyle>
+            <AppRoutes />
+          </ContentStyle>
+        </ContainerStyle>
+      </ContextProvider>
+    </>
   );
 };
 

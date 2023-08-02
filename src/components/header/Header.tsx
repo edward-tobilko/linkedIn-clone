@@ -1,4 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { FC, MouseEvent } from "react";
+import { NavLink } from "react-router-dom";
 
 import {
   HeaderLeftStyle,
@@ -12,50 +13,62 @@ import { AvatarImgStyle } from "../../rootStyles";
 import SearchInput from "../forms/search-input/SearchInput";
 
 import avatarIcon from "../../img/images/avatar.png";
+
 import { useMyContext } from "../../context/Context";
 
-export const Header = () => {
-  const navigate = useNavigate();
+export const Header: FC = () => {
   const props = useMyContext();
-  console.log(props);
+
+  const logout = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    props?.setIsAuth(false);
+
+    localStorage.setItem("isAuth", "false");
+  };
 
   return (
-    <HeaderStyle>
-      <HeaderLeftStyle>
-        <i className="bx bxs-id-card"></i>
-        <SearchInput />
-      </HeaderLeftStyle>
+    <>
+      <HeaderStyle>
+        <HeaderLeftStyle>
+          <i className="bx bxs-id-card"></i>
+          <SearchInput />
+        </HeaderLeftStyle>
 
-      <HeaderCenterStyle>
-        <ul>
-          <NavLink to="/profile">
-            <i className="bx bxs-home"></i>
-            <p>Home</p>
-          </NavLink>
-          <NavLink to="/social">
-            <i className="bx bx-group"></i>
-            <p>Social</p>
-          </NavLink>
-          <NavLink to="/messages">
-            <i className="bx bx-chat"></i>
-            <p>Messages</p>
-          </NavLink>
-          <NavLink to="/setting">
-            <i className="bx bx-cog"></i>
-            <p>Setting</p>
-          </NavLink>
-        </ul>
-      </HeaderCenterStyle>
+        <HeaderCenterStyle>
+          <ul>
+            <NavLink to="/profile">
+              <i className="bx bxs-home"></i>
+              <p>Home</p>
+            </NavLink>
+            <NavLink to="/social">
+              <i className="bx bx-group"></i>
+              <p>Social</p>
+            </NavLink>
+            <NavLink to="/messages">
+              <i className="bx bx-chat"></i>
+              <p>Messages</p>
+            </NavLink>
+            <NavLink to="/setting">
+              <i className="bx bx-cog"></i>
+              <p>Setting</p>
+            </NavLink>
+          </ul>
+        </HeaderCenterStyle>
 
-      <HeaderRightStyle>
-        <>
-          <AvatarImgStyle src={avatarIcon} alt="" width="40px" height="40px" />
-          <p>Eduard Tobilko</p>
-        </>
+        <HeaderRightStyle>
+          <>
+            <AvatarImgStyle
+              src={avatarIcon}
+              alt=""
+              width="40px"
+              height="40px"
+            />
+            <p>Eduard Tobilko</p>
+          </>
 
-        {props.isAuth}
-        <LogOutStyle onClick={() => navigate("/login")}>Log out</LogOutStyle>
-      </HeaderRightStyle>
-    </HeaderStyle>
+          <LogOutStyle onClick={logout}>Log out</LogOutStyle>
+        </HeaderRightStyle>
+      </HeaderStyle>
+    </>
   );
 };
