@@ -8,15 +8,15 @@ export const SidebarStyle = styled.aside`
   width: 100%;
 
   .sidebar {
-    background-color: ${themeVars.colors.headerBackgroundColor};
+    position: relative;
 
     &-followers {
-      position: relative;
-      height: 170px;
+      background-color: ${themeVars.colors.headerBackgroundColor};
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 60px 0;
 
       &:before {
         content: "";
@@ -26,7 +26,7 @@ export const SidebarStyle = styled.aside`
         opacity: 0.5;
         position: absolute;
         left: 0;
-        top: 25%;
+        top: 50%;
       }
 
       &:after {
@@ -37,7 +37,7 @@ export const SidebarStyle = styled.aside`
         opacity: 0.5;
         position: absolute;
         left: 0;
-        bottom: 25%;
+        bottom: 30%;
       }
 
       p {
@@ -61,11 +61,25 @@ export const SidebarStyle = styled.aside`
     }
 
     &-elements {
+      background-color: ${themeVars.colors.headerBackgroundColor};
+
       &__time {
-        padding: 0 0 15px 0;
+        position: relative;
+        padding-bottom: 20px;
         display: flex;
         justify-content: space-around;
-        
+
+        &:after {
+          content: "";
+          width: 100%;
+          height: 1px;
+          background-color: ${themeVars.colors.lightGreyColor};
+          opacity: 0.5;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+        }
+
         .button {
           --width: 100px;
           --height: 35px;
@@ -190,7 +204,7 @@ export const SidebarStyle = styled.aside`
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 40px;
+        height: 50px;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
 

@@ -21,7 +21,7 @@ import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
 
 // Container component
-const mapState = (state: any) => {
+const mapStateToProps = (state: any) => {
   return {
     socialUsers: state.socialPage.socialUsers,
     totalUsersCount: state.socialPage.totalUsersCount,
@@ -31,7 +31,7 @@ const mapState = (state: any) => {
   };
 };
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     // Додаємо користувача
     followDispatch: (userId: any) => {
@@ -65,7 +65,7 @@ const mapDispatch = (dispatch: any) => {
   };
 };
 
-const SocialContentContainer = connect(mapState, mapDispatch);
+const SocialContentContainer = connect(mapStateToProps, mapDispatchToProps);
 
 // Pure component
 const SocialContent: FC<any> = ({
@@ -125,7 +125,7 @@ const SocialContent: FC<any> = ({
       {loading && <Loader />}
 
       <SocialUsersListStyle>
-        {socialUsers.length ? (
+        {socialUsers?.length ? (
           <SocialUsersList
             socialUsers={socialUsers}
             followDispatch={followDispatch}

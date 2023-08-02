@@ -23,10 +23,12 @@ const mapState = (state: RootState) => {
 
 const mapDispatch = (dispatch: any) => {
   return {
+    // Створюємо новий пост на сторінку profile
     addNewPostDispatch() {
       dispatch(addNewPostAC());
     },
 
+    // Для динамічної поведінки onChange обробника подій
     changePostDispatch(newPostText: string) {
       dispatch(changePostAC(newPostText));
     },

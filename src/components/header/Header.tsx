@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   HeaderLeftStyle,
@@ -12,8 +12,13 @@ import { AvatarImgStyle } from "../../rootStyles";
 import SearchInput from "../forms/search-input/SearchInput";
 
 import avatarIcon from "../../img/images/avatar.png";
+import { useMyContext } from "../../context/Context";
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const props = useMyContext();
+  console.log(props);
+
   return (
     <HeaderStyle>
       <HeaderLeftStyle>
@@ -45,9 +50,11 @@ export const Header = () => {
       <HeaderRightStyle>
         <>
           <AvatarImgStyle src={avatarIcon} alt="" width="40px" height="40px" />
-          <p> Eduard Tobilko </p>
+          <p>Eduard Tobilko</p>
         </>
-        <LogOutStyle>Log out</LogOutStyle>
+
+        {props.isAuth}
+        <LogOutStyle onClick={() => navigate("/login")}>Log out</LogOutStyle>
       </HeaderRightStyle>
     </HeaderStyle>
   );

@@ -27,6 +27,9 @@ export interface IStateContext {
 
   searchUsers: string;
   setSearchUsers: Dispatch<SetStateAction<string>>;
+
+  isAuth: boolean;
+  setIsAuth: Dispatch<SetStateAction<boolean>>;
 }
 
 // PostsList component

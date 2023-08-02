@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   socialPage: socialReducer,
 });
 
-// получаем тип редюсора и с пом. RootState мы можем созд. кастомный хук useTypeSelector
+// отримуємо тип редюсора та за допомогою RootState ми можемо створити кастомний хук useTypeSelector
 export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 

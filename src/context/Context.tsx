@@ -6,7 +6,7 @@ import {
   FC,
 } from "react";
 
-import { IStateContext } from "../type-models";
+import type { IStateContext } from "../type-models";
 
 export const Context = createContext<IStateContext | null>(null);
 
@@ -63,6 +63,7 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     { id: 2, name: "John Doe" },
   ]);
   const [searchUsers, setSearchUsers] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
 
   return (
     <Context.Provider
@@ -70,9 +71,11 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         dialogUsers,
         chatUsers,
         searchUsers,
+        isAuth,
         setDialogUsers,
         setChatUsers,
         setSearchUsers,
+        setIsAuth,
       }}
     >
       {children}

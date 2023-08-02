@@ -8,11 +8,8 @@ import Social from "./pages/social/Social";
 import LogIn from "./pages/logIn/LogIn";
 import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
-import { Sidebar } from "./components/sidebar/Sidebar";
 
 const AppRoutes: FC<any> = () => {
-  // const [isAuth, setIsAuth] = useState(false);
-
   return (
     <>
       {/* {isAuth ? (
@@ -30,8 +27,10 @@ const AppRoutes: FC<any> = () => {
       )} */}
 
       <Routes>
-        <Route path="/sidebar" element={<Sidebar />} />
-        <Route path="/profile/*" element={<Profile />} />
+        {/* <Route path="/profile/*" element={<Profile />} /> */}
+
+        {/* "?" - вкінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
+        <Route path="/profile/:userId?" element={<Profile />} />
         <Route path="/social" element={<Social />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/messages/:name/:id" element={<Messages />} />

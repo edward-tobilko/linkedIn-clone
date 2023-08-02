@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 
 import { SidebarStyle } from "./sidebarStyle";
 
@@ -61,11 +61,11 @@ function UITimeElements() {
   );
 }
 
-export const Sidebar = () => {
+export const Sidebar: FC<any> = ({ currentUserPage }) => {
   return (
     <SidebarStyle>
       <div className="sidebar">
-        <CardProfile />
+        <CardProfile currentUserPage={currentUserPage} />
 
         <div className="sidebar-followers">
           <p>

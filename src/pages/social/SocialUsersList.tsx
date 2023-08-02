@@ -16,12 +16,12 @@ const SocialUsersList: FC<any> = ({
   return (
     <>
       {socialUsers.map((socialUser: any) => (
-        <SocialUserItemStyle key={socialUser.id}>
+        <SocialUserItemStyle key={socialUser?.id}>
           <div className="cardSocial">
             <img
               src={
-                socialUser.photos.large != null
-                  ? socialUser.photos.large
+                socialUser?.photos?.large !== null
+                  ? socialUser?.photos?.large
                   : "https://place-hold.it/170"
               }
               alt="Wrapper"
@@ -30,8 +30,8 @@ const SocialUsersList: FC<any> = ({
             <div className="cardSocial__desc">
               <AvatarImgStyle
                 src={
-                  socialUser.photos.small != null
-                    ? socialUser.photos.small
+                  socialUser?.photos?.small !== null
+                    ? socialUser?.photos?.small
                     : "https://place-hold.it/90"
                 }
                 alt=""
@@ -39,14 +39,14 @@ const SocialUsersList: FC<any> = ({
                 height="90px"
               />
               <p>
-                <NavLink to={`/profile/${socialUser.id}`}>
-                  {socialUser.name}
+                <NavLink to={`/profile/${socialUser?.id}`}>
+                  {socialUser?.name}
                 </NavLink>
               </p>
 
               <p>
-                {socialUser.status != null ? (
-                  socialUser.status
+                {socialUser?.status !== null ? (
+                  socialUser?.status
                 ) : (
                   <span>No status...</span>
                 )}

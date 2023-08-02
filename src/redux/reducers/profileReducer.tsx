@@ -3,6 +3,7 @@ import { v4 as uniqueID } from "uuid";
 export const CREATE_NEW_POST = "CREATE-NEW-POST";
 export const CHANGE_POST = "CHANGE-POST";
 export const UPDATE_SEARCH_POST = "UPDATE-SEARCH-POST";
+export const SET_CURRENT_USER_PAGE = "SET-CURRENT-USER-PAGE";
 
 const initialState = {
   postUsers: [
@@ -101,10 +102,12 @@ const initialState = {
   ],
   newPostText: "",
   name: "eduard.tobilko",
+  // currentProfilePage: null,
 };
 
 const profileReducer = (state: any = initialState, action: any) => {
   switch (action.type) {
+    // Створюємо новий пост на сторінку profile
     case CREATE_NEW_POST:
       // вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
       return {
@@ -138,11 +141,16 @@ const profileReducer = (state: any = initialState, action: any) => {
         newPostText: "",
       };
 
+    // Для динамічної поведінки onChange обробника подій
     case CHANGE_POST:
       return {
         ...state,
-        newPostText: action.text,
+        newPostText: action.newPostText,
       };
+
+    // // Показуємо поточну сторінку іншого користувача
+    // case SET_CURRENT_USER_PAGE:
+    //   return { ...state, currentProfilePage: action.currentProfilePage };
 
     default:
       return state;
@@ -151,16 +159,23 @@ const profileReducer = (state: any = initialState, action: any) => {
 
 export default profileReducer;
 
-// Action Creators (AC)
+// Action Creators (ACs)
 export const addNewPostAC = () => {
   return {
     type: CREATE_NEW_POST,
   };
 };
 
-export const changePostAC = (text: string) => {
+export const changePostAC = (newPostText: string) => {
   return {
     type: CHANGE_POST,
-    text: text,
+    newPostText: newPostText,
   };
 };
+
+// export const setCurrentUserPageAC = (currentProfilePage: any) => {
+//   return {
+//     type: SET_CURRENT_USER_PAGE,
+//     currentProfilePage,
+//   };
+// };
