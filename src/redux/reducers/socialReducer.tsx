@@ -9,7 +9,7 @@ const initialState = {
   socialUsers: [],
   totalUsersCount: 0, // загальна к-сть користувачів
   usersCount: 18, // к-сть користувачів на одній сторінці
-  currentPage: 40, // поточна активна сторінка
+  currentPage: 1, // поточна активна сторінка
   loading: false,
 };
 
@@ -66,14 +66,14 @@ const socialReducer = (state: any = initialState, action: any) => {
 };
 
 // ACs
-export const followUserAC = (userId: any) => {
+export const setFollowUserAC = (userId: any) => {
   return {
     type: FOLLOW,
     userId,
   };
 };
 
-export const unFollowUserAC = (userId: any) => {
+export const setUnFollowUserAC = (userId: any) => {
   return {
     type: UN_FOLLOW,
     userId,

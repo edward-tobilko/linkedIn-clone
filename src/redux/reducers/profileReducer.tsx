@@ -102,7 +102,7 @@ const initialState = {
   ],
   newPostText: "",
   name: "eduard.tobilko",
-  // currentProfilePage: null,
+  currentProfilePage: null,
 };
 
 const profileReducer = (state: any = initialState, action: any) => {
@@ -148,9 +148,9 @@ const profileReducer = (state: any = initialState, action: any) => {
         newPostText: action.newPostText,
       };
 
-    // // Показуємо поточну сторінку іншого користувача
-    // case SET_CURRENT_USER_PAGE:
-    //   return { ...state, currentProfilePage: action.currentProfilePage };
+    // Показуємо поточну сторінку іншого користувача
+    case SET_CURRENT_USER_PAGE:
+      return { ...state, currentProfilePage: action.currentProfilePage };
 
     default:
       return state;
@@ -173,9 +173,9 @@ export const changePostAC = (newPostText: string) => {
   };
 };
 
-// export const setCurrentUserPageAC = (currentProfilePage: any) => {
-//   return {
-//     type: SET_CURRENT_USER_PAGE,
-//     currentProfilePage,
-//   };
-// };
+export const setCurrentUserPageAC = (currentProfilePage: any) => {
+  return {
+    type: SET_CURRENT_USER_PAGE,
+    currentProfilePage,
+  };
+};

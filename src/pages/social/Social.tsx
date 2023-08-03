@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import SocialNetworkManagement from "./SocialNetworkManagement";
+import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
 import SocialContent from "./SocialContent";
 
 const Social: FC = () => {

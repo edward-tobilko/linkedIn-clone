@@ -1,10 +1,11 @@
 import { FC, useEffect } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+
+import { socialUsersAPI } from "../../api/API";
 
 import {
-  followUserAC,
-  unFollowUserAC,
+  setFollowUserAC,
+  setUnFollowUserAC,
   setUsersAC,
   setCurrentPageAC,
   setTotalUsersCountAC,
@@ -34,13 +35,13 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     // Додаємо користувача
-    followDispatch: (userId: any) => {
-      dispatch(followUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!!!
+    setFollowDispatch: (userId: any) => {
+      dispatch(setFollowUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!!!
     },
 
     // Видаляємо користувача
-    unFollowDispatch: (userId: any) => {
-      dispatch(unFollowUserAC(userId));
+    setUnFollowDispatch: (userId: any) => {
+      dispatch(setUnFollowUserAC(userId));
     },
 
     // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
@@ -71,8 +72,8 @@ const SocialContentContainer = connect(mapStateToProps, mapDispatchToProps);
 const SocialContent: FC<any> = ({
   socialUsers,
   setUsersDispatch,
-  followDispatch,
-  unFollowDispatch,
+  setFollowDispatch,
+  setUnFollowDispatch,
   usersCount,
   totalUsersCount,
   currentPage,
@@ -83,14 +84,13 @@ const SocialContent: FC<any> = ({
 }) => {
   const [getSocialUsers, loadingSocialUsers] = useFetching(async () => {
     setLoadingDispatch(true);
-    await axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${usersCount}`,
-      )
-      .then((response: any) => {
+
+    socialUsersAPI
+      .fetchSocialUsers(currentPage, usersCount)
+      .then((data: any) => {
         setLoadingDispatch(false);
-        setUsersDispatch(response.data.items);
-        setTotalUsersCountDispatch(response.data.totalCount);
+        setUsersDispatch(data.items);
+        setTotalUsersCountDispatch(data.totalCount);
       });
   });
 
@@ -98,13 +98,11 @@ const SocialContent: FC<any> = ({
     setCurrentPageDispatch(pageNumber);
     setLoadingDispatch(true);
 
-    await axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${usersCount}`,
-      )
-      .then((res: any) => {
+    socialUsersAPI
+      .fetchChangedPageUsers(pageNumber, usersCount)
+      .then((data: any) => {
         setLoadingDispatch(false);
-        setUsersDispatch(res.data.items);
+        setUsersDispatch(data.items);
       });
   };
 
@@ -128,8 +126,8 @@ const SocialContent: FC<any> = ({
         {socialUsers?.length ? (
           <SocialUsersList
             socialUsers={socialUsers}
-            followDispatch={followDispatch}
-            unFollowDispatch={unFollowDispatch}
+            setFollowDispatch={setFollowDispatch}
+            setUnFollowDispatch={setUnFollowDispatch}
           />
         ) : loading ? null : (
           <Error />

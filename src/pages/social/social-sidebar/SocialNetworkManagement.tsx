@@ -5,10 +5,10 @@ import {
   NetworkManagementStyle,
   NetworkManagementPersonalContactsStyle,
   NetworkManagementPersonalFooterStyle,
-} from "./socialStyle";
+} from "../socialStyle";
 
-import SocialNetworkManagementInput from "../../components/forms/social-network-management/SocialNetworkManagementInput";
-import { SocialNetworkManagementBtn } from "../../components/UI/btns/social-network-management/SocialNetworkManagementBtn";
+import SocialNetworkManagementInput from "../../../components/forms/social-network-management/SocialNetworkManagementInput";
+import { SocialNetworkManagementBtn } from "../../../components/UI/btns/social-network-management/SocialNetworkManagementBtn";
 
 const socialNetworkManagementInfo = [
   { id: 1, title: "General information" },

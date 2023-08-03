@@ -3,6 +3,7 @@ import { useEffect, useState, FC } from "react";
 import { SidebarStyle } from "./sidebarStyle";
 
 import { MdVisibility } from "react-icons/md";
+
 import { CardProfile } from "../../pages/profile/CardProfile";
 
 // UI time elements
@@ -61,11 +62,11 @@ function UITimeElements() {
   );
 }
 
-export const Sidebar: FC<any> = ({ currentUserPage }) => {
+export const Sidebar: FC<any> = ({ currentProfilePage }) => {
   return (
     <SidebarStyle>
       <div className="sidebar">
-        <CardProfile currentUserPage={currentUserPage} />
+        <CardProfile currentProfilePage={currentProfilePage} />
 
         <div className="sidebar-followers">
           <p>
