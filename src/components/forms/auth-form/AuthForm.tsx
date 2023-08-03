@@ -4,9 +4,9 @@ import { LoginBtn } from "../../UI/btns/login-btn/LoginBtn";
 
 import { AuthFormStyle } from "./authFormStyle";
 
-export const AuthForm: FC<any> = ({ login }) => {
+export const AuthForm: FC<any> = ({ logIn }) => {
   return (
-    <AuthFormStyle onSubmit={login}>
+    <AuthFormStyle onSubmit={logIn}>
       <div className="logo">
         <i className="bx bxs-id-card"></i>
       </div>
@@ -44,7 +44,7 @@ export const AuthForm: FC<any> = ({ login }) => {
           <label>
             <input type="checkbox" name="remember" /> <span>Remember me</span>
           </label>
-          <LoginBtn type="submit">Log in</LoginBtn>
+          <LoginBtn type="submit">Log In</LoginBtn>
         </div>
       </div>
     </AuthFormStyle>

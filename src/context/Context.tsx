@@ -63,7 +63,6 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     { id: 2, name: "John Doe" },
   ]);
   const [searchUsers, setSearchUsers] = useState("");
-  const [isAuth, setIsAuth] = useState(false);
 
   return (
     <Context.Provider
@@ -71,11 +70,9 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         dialogUsers,
         chatUsers,
         searchUsers,
-        isAuth,
         setDialogUsers,
         setChatUsers,
         setSearchUsers,
-        setIsAuth,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import {
   NetworkManagementPersonalFooterStyle,
 } from "./socialStyle";
 
-import { SocialNetworkManagementInput } from "../../components/forms/social-network-management/SocialNetworkManagementInput";
+import SocialNetworkManagementInput from "../../components/forms/social-network-management/SocialNetworkManagementInput";
 import { SocialNetworkManagementBtn } from "../../components/UI/btns/social-network-management/SocialNetworkManagementBtn";
 
 const socialNetworkManagementInfo = [

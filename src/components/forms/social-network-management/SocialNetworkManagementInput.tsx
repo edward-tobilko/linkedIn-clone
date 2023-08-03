@@ -1,9 +1,18 @@
 import { FC, useState, ChangeEvent } from "react";
+import { connect } from "react-redux";
 
 import { SocialNetworkManagementInputStyle } from "./socialNetworkManagementInputStyle";
 
-export const SocialNetworkManagementInput: FC = () => {
-  const [value, setValue] = useState("1992eduard777@gmail.com");
+const mapStateToProps = (state: any) => {
+  return {
+    email: state.authorization.email,
+  };
+};
+
+const SocialNetworkManagementInputContainer = connect(mapStateToProps, null);
+
+const SocialNetworkManagementInput: FC<any> = ({ email }) => {
+  const [value, setValue] = useState(email || "1992eduard777@gmail.com");
 
   return (
     <SocialNetworkManagementInputStyle
@@ -14,3 +23,7 @@ export const SocialNetworkManagementInput: FC = () => {
     />
   );
 };
+
+export default SocialNetworkManagementInputContainer(
+  SocialNetworkManagementInput,
+);
