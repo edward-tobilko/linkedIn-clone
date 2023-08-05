@@ -11,34 +11,74 @@ export const FollowBtn: FC<any> = ({
   socialUser,
   setFollowDispatch,
   setUnFollowDispatch,
+  setFollowingBlockedBtnDispatch,
+  followingBlockedBtn,
 }) => {
   const follow = async (userId: number) => {
+    setFollowingBlockedBtnDispatch(true, userId);
+
     await socialUsersAPI.followUser(userId).then((data) => {
       if (data.resultCode === 0) {
         setFollowDispatch(userId);
       }
+
+      setFollowingBlockedBtnDispatch(false, userId);
     });
   };
 
   const unFollow = async (userId: number) => {
+    setFollowingBlockedBtnDispatch(true, userId);
+
     await socialUsersAPI.unFollowUser(userId).then((data) => {
       if (data.resultCode === 0) {
         setUnFollowDispatch(userId);
       }
+
+      setFollowingBlockedBtnDispatch(false, userId);
     });
   };
 
   return (
     <>
       {socialUser.followed ? (
-        <FollowBtnStyle onClick={() => unFollow(socialUser.id)}>
+        <FollowBtnStyle
+          disabled={followingBlockedBtn.some(
+            (id: number) => id === socialUser.id,
+          )}
+          onClick={() => unFollow(socialUser.id)}
+          left={false}
+          transformPosition={false}
+          top={false}
+          position={false}
+          margin={false}
+          maxWidth={false}
+          visibleText={false}
+          primary
+          borderRadius={false}
+          fontSizeIcon={false}
+        >
           <img src={unFollowUserIcon} alt="" />
-          Unfollow
+          <span>Unfollow</span>
         </FollowBtnStyle>
       ) : (
-        <FollowBtnStyle onClick={() => follow(socialUser.id)}>
+        <FollowBtnStyle
+          disabled={followingBlockedBtn.some(
+            (id: number) => id === socialUser.id,
+          )}
+          onClick={() => follow(socialUser.id)}
+          transformPosition
+          left
+          top
+          position
+          margin
+          fontSizeIcon
+          maxWidth
+          visibleText
+          primary
+          borderRadius
+        >
           <img src={followUserIcon} alt="" />
-          Follow
+          <span>Follow</span>
         </FollowBtnStyle>
       )}
     </>

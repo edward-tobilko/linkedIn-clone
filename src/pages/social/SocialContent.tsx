@@ -10,6 +10,7 @@ import {
   setCurrentPageAC,
   setTotalUsersCountAC,
   setLoadingAC,
+  setFollowingBlockedBtnAC,
 } from "../../redux/reducers/socialReducer";
 
 import { useFetching } from "../../hooks/useFetching";
@@ -29,18 +30,19 @@ const mapStateToProps = (state: any) => {
     usersCount: state.socialPage.usersCount,
     currentPage: state.socialPage.currentPage,
     loading: state.socialPage.loading,
+    followingBlockedBtn: state.socialPage.followingBlockedBtn,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
     // Додаємо користувача
-    setFollowDispatch: (userId: any) => {
+    setFollowDispatch: (userId: number) => {
       dispatch(setFollowUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!!!
     },
 
     // Видаляємо користувача
-    setUnFollowDispatch: (userId: any) => {
+    setUnFollowDispatch: (userId: number) => {
       dispatch(setUnFollowUserAC(userId));
     },
 
@@ -50,12 +52,12 @@ const mapDispatchToProps = (dispatch: any) => {
     },
 
     // Навігація постранічного вивода користувачів
-    setCurrentPageDispatch: (pageNumber: any) => {
+    setCurrentPageDispatch: (pageNumber: number) => {
       dispatch(setCurrentPageAC(pageNumber));
     },
 
     // Отримуємо всю к-сть користувачів з сервера
-    setTotalUsersCountDispatch: (totalUsers: any) => {
+    setTotalUsersCountDispatch: (totalUsers: number) => {
       dispatch(setTotalUsersCountAC(totalUsers));
     },
 
@@ -63,12 +65,16 @@ const mapDispatchToProps = (dispatch: any) => {
     setLoadingDispatch: (isLoading: boolean) => {
       dispatch(setLoadingAC(isLoading));
     },
+
+    // Блокуємо кнопку при натисканні
+    setFollowingBlockedBtnDispatch: (isLoading: boolean, userId: number) => {
+      dispatch(setFollowingBlockedBtnAC(isLoading, userId));
+    },
   };
 };
 
 const SocialContentContainer = connect(mapStateToProps, mapDispatchToProps);
 
-// Pure component
 const SocialContent: FC<any> = ({
   socialUsers,
   setUsersDispatch,
@@ -81,6 +87,8 @@ const SocialContent: FC<any> = ({
   setTotalUsersCountDispatch,
   setLoadingDispatch,
   loading,
+  followingBlockedBtn,
+  setFollowingBlockedBtnDispatch,
 }) => {
   const [getSocialUsers, loadingSocialUsers] = useFetching(async () => {
     setLoadingDispatch(true);
@@ -94,7 +102,7 @@ const SocialContent: FC<any> = ({
       });
   });
 
-  const onChangedPage = async (pageNumber: any) => {
+  const onChangedPage = async (pageNumber: number) => {
     setCurrentPageDispatch(pageNumber);
     setLoadingDispatch(true);
 
@@ -128,6 +136,8 @@ const SocialContent: FC<any> = ({
             socialUsers={socialUsers}
             setFollowDispatch={setFollowDispatch}
             setUnFollowDispatch={setUnFollowDispatch}
+            setFollowingBlockedBtnDispatch={setFollowingBlockedBtnDispatch}
+            followingBlockedBtn={followingBlockedBtn}
           />
         ) : loading ? null : (
           <Error />

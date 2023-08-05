@@ -12,6 +12,8 @@ const SocialUsersItem: FC<any> = ({
   socialUser,
   setFollowDispatch,
   setUnFollowDispatch,
+  setFollowingBlockedBtnDispatch,
+  followingBlockedBtn,
 }) => {
   return (
     <SocialUserItemStyle>
@@ -59,6 +61,8 @@ const SocialUsersItem: FC<any> = ({
           socialUser={socialUser}
           setFollowDispatch={setFollowDispatch}
           setUnFollowDispatch={setUnFollowDispatch}
+          setFollowingBlockedBtnDispatch={setFollowingBlockedBtnDispatch}
+          followingBlockedBtn={followingBlockedBtn}
         />
       </div>
     </SocialUserItemStyle>

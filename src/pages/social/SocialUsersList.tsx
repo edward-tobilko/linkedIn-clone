@@ -6,6 +6,8 @@ const SocialUsersList: FC<any> = ({
   socialUsers,
   setFollowDispatch,
   setUnFollowDispatch,
+  setFollowingBlockedBtnDispatch,
+  followingBlockedBtn,
 }) => {
   return (
     <>
@@ -15,6 +17,8 @@ const SocialUsersList: FC<any> = ({
           socialUser={socialUser}
           setFollowDispatch={setFollowDispatch}
           setUnFollowDispatch={setUnFollowDispatch}
+          setFollowingBlockedBtnDispatch={setFollowingBlockedBtnDispatch}
+          followingBlockedBtn={followingBlockedBtn}
         />
       ))}
     </>

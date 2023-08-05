@@ -4,6 +4,7 @@ const SET_USERS = "set-users";
 const SET_CURRENT_PAGE = "set-current-page";
 const SET_TOTAL_USERS_COUNT = "set-total-users-count";
 const LOADING = "loading";
+const FOLLOWING_BLOCKED_BTN = "following-blocked-btn";
 
 const initialState = {
   socialUsers: [],
@@ -11,6 +12,7 @@ const initialState = {
   usersCount: 18, // к-сть користувачів на одній сторінці
   currentPage: 1, // поточна активна сторінка
   loading: false,
+  followingBlockedBtn: [],
 };
 
 const socialReducer = (state: any = initialState, action: any) => {
@@ -45,7 +47,7 @@ const socialReducer = (state: any = initialState, action: any) => {
     case SET_USERS:
       return {
         ...state,
-        socialUsers: [...action.newUsers],
+        socialUsers: [...action.socialUsers],
       };
 
     // Навігація постранічного вивода користувачів
@@ -60,41 +62,52 @@ const socialReducer = (state: any = initialState, action: any) => {
     case LOADING:
       return { ...state, loading: action.loading };
 
+    // Блокуємо кнопку при натисканні
+    case FOLLOWING_BLOCKED_BTN:
+      return {
+        ...state,
+        followingBlockedBtn: action.loading
+          ? [...state.followingBlockedBtn, action.userId]
+          : state.followingBlockedBtn.filter(
+              (id: number) => id !== action.userId,
+            ),
+      };
+
     default:
       return state;
   }
 };
 
 // ACs
-export const setFollowUserAC = (userId: any) => {
+export const setFollowUserAC = (userId: number) => {
   return {
     type: FOLLOW,
     userId,
   };
 };
 
-export const setUnFollowUserAC = (userId: any) => {
+export const setUnFollowUserAC = (userId: number) => {
   return {
     type: UN_FOLLOW,
     userId,
   };
 };
 
-export const setUsersAC = (newUsers: any) => {
+export const setUsersAC = (socialUsers: any) => {
   return {
     type: SET_USERS,
-    newUsers,
+    socialUsers,
   };
 };
 
-export const setCurrentPageAC = (currentPage: any) => {
+export const setCurrentPageAC = (currentPage: number) => {
   return {
     type: SET_CURRENT_PAGE,
     currentPage,
   };
 };
 
-export const setTotalUsersCountAC = (totalUsersCount: any) => {
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
   return {
     type: SET_TOTAL_USERS_COUNT,
     totalUsersCount,
@@ -105,6 +118,14 @@ export const setLoadingAC = (loading: boolean) => {
   return {
     type: LOADING,
     loading,
+  };
+};
+
+export const setFollowingBlockedBtnAC = (loading: boolean, userId: number) => {
+  return {
+    type: FOLLOWING_BLOCKED_BTN,
+    loading,
+    userId,
   };
 };
 
