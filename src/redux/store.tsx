@@ -1,4 +1,9 @@
-import { combineReducers, legacy_createStore as createStore } from "redux";
+import {
+  combineReducers,
+  legacy_createStore as createStore,
+  applyMiddleware,
+} from "redux";
+import thunkMiddleware from "redux-thunk";
 
 import profileReducer from "./reducers/profileReducer";
 import socialReducer from "./reducers/socialReducer";
@@ -22,7 +27,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 
 // Store
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 window.store = store;
 

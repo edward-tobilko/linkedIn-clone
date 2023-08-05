@@ -6,8 +6,8 @@ export const Pagination: FC<any> = ({
   totalUsersCount,
   usersCount,
   currentPage,
-  paginationLength = 5,
   onChangedPage,
+  paginationLength = 5,
 }) => {
   const [lengthNumber, setLengthNumber] = useState(1);
 

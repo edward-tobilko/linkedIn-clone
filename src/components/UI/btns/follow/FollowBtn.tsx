@@ -1,41 +1,25 @@
 import { FC } from "react";
+import { useDispatch } from "react-redux";
 
 import { FollowBtnStyle } from "./followBtnStyle";
 
 import followUserIcon from "../../../../img/svg/followUser_icon.svg";
 import unFollowUserIcon from "../../../../img/svg/unFollowUser_icon.svg";
 
-import { socialUsersAPI } from "../../../../api/API";
+import {
+  setFollowUserTC,
+  setUnFollowUserTC,
+} from "../../../../redux/reducers/socialReducer";
 
-export const FollowBtn: FC<any> = ({
-  socialUser,
-  setFollowDispatch,
-  setUnFollowDispatch,
-  setFollowingBlockedBtnDispatch,
-  followingBlockedBtn,
-}) => {
-  const follow = async (userId: number) => {
-    setFollowingBlockedBtnDispatch(true, userId);
+export const FollowBtn: FC<any> = ({ socialUser, followingBlockedBtn }) => {
+  const dispatch: any = useDispatch();
 
-    await socialUsersAPI.followUser(userId).then((data) => {
-      if (data.resultCode === 0) {
-        setFollowDispatch(userId);
-      }
-
-      setFollowingBlockedBtnDispatch(false, userId);
-    });
+  const follow = (userId: number) => {
+    dispatch(setFollowUserTC(userId));
   };
 
-  const unFollow = async (userId: number) => {
-    setFollowingBlockedBtnDispatch(true, userId);
-
-    await socialUsersAPI.unFollowUser(userId).then((data) => {
-      if (data.resultCode === 0) {
-        setUnFollowDispatch(userId);
-      }
-
-      setFollowingBlockedBtnDispatch(false, userId);
-    });
+  const unFollow = (userId: number) => {
+    dispatch(setUnFollowUserTC(userId));
   };
 
   return (

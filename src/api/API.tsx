@@ -10,42 +10,42 @@ const instance = axios.create({
 // For the Social component
 export const socialUsersAPI = {
   // Отримуємо користувачів
-  fetchSocialUsers(currentPage: any, usersCount: any) {
-    return instance
+  async fetchSocialUsers(currentPage: number, usersCount: number) {
+    return await instance
       .get(`users?page=${currentPage}&count=${usersCount}`)
       .then((res) => res.data);
   },
 
   // Отримуємо користувачів при пагінації
-  fetchChangedPageUsers(pageNumber: any, usersCount: any) {
-    return instance
+  async fetchChangedPageUsers(pageNumber: number, usersCount: number) {
+    return await instance
       .get(`users?page=${pageNumber}&count=${usersCount}`)
       .then((res) => res.data);
   },
 
   // Добавляємо користувача (follow)
-  followUser(userId: number) {
-    return instance.post(`follow/${userId}`, {}).then((res) => res.data);
+  async followUser(userId: number) {
+    return await instance.post(`follow/${userId}`, {}).then((res) => res.data);
   },
 
   // Видаляємо користувача (unFollow)
-  unFollowUser(userId: number) {
-    return instance.delete(`follow/${userId}`).then((res) => res.data);
+  async unFollowUser(userId: number) {
+    return await instance.delete(`follow/${userId}`).then((res) => res.data);
   },
 };
 
 // For the Profile component
 export const profileAPI = {
   // Отримуємо поточну сторінку користувача
-  fetchCurrentUserPageById(userId: number) {
-    return instance.get(`profile/${userId}`).then((res) => res.data);
+  async fetchCurrentUserPageById(userId: number) {
+    return await instance.get(`profile/${userId}`).then((res) => res.data);
   },
 };
 
 // For the AppRoutes component
 export const authAPI = {
   // Авторизуємо себе
-  authorizationMe() {
-    return instance.get("auth/me").then((res) => res.data);
+  async authorizationMe() {
+    return await instance.get("auth/me").then((res) => res.data);
   },
 };

@@ -1,3 +1,5 @@
+import { socialUsersAPI } from "../../api/API";
+
 const FOLLOW = "follow";
 const UN_FOLLOW = "un-follow";
 const SET_USERS = "set-users";
@@ -12,9 +14,10 @@ const initialState = {
   usersCount: 18, // к-сть користувачів на одній сторінці
   currentPage: 1, // поточна активна сторінка
   loading: false,
-  followingBlockedBtn: [],
+  followingBlockedBtn: [], // для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
 };
 
+// Reducer
 const socialReducer = (state: any = initialState, action: any) => {
   switch (action.type) {
     // Додаємо користувача
@@ -130,3 +133,68 @@ export const setFollowingBlockedBtnAC = (loading: boolean, userId: number) => {
 };
 
 export default socialReducer;
+
+// TC: Thunks - anonym function and HOCs - fetchSocialUsersTC
+
+// Санка (thunk creator) для отримання користувачів
+export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
+  return (dispatch: any) => {
+    dispatch(setLoadingAC(true));
+
+    socialUsersAPI
+      .fetchSocialUsers(currentPage, usersCount)
+      .then((data: any) => {
+        dispatch(setLoadingAC(false)); // Додаємо загрузчик;
+        dispatch(setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
+        dispatch(setTotalUsersCountAC(data.totalCount)); // Отримуємо всю к-сть користувачів з сервера;
+      });
+  };
+};
+
+// Санка (TC) для отримання користувачів при переходах по пагінації
+export const fetchSocialUsersOnChangedPageTC = (
+  pageNumber: number,
+  usersCount: number,
+) => {
+  return (dispatch: any) => {
+    dispatch(setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
+    dispatch(setLoadingAC(true));
+
+    socialUsersAPI
+      .fetchChangedPageUsers(pageNumber, usersCount)
+      .then((data: any) => {
+        dispatch(setLoadingAC(false));
+        dispatch(setUsersAC(data.items));
+      });
+  };
+};
+
+// ТС для додавання користувача
+export const setFollowUserTC = (userId: number) => {
+  return (dispatch: any) => {
+    dispatch(setFollowingBlockedBtnAC(true, userId)); // Блокуємо кнопку при натисканні
+
+    socialUsersAPI.followUser(userId).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setFollowUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!!!
+      }
+
+      dispatch(setFollowingBlockedBtnAC(false, userId)); // Блокуємо кнопку при натисканні
+    });
+  };
+};
+
+// ТС для видалення користувача
+export const setUnFollowUserTC = (userId: number) => {
+  return (dispatch: any) => {
+    // dispatch(setFollowingBlockedBtnAC(true, userId));
+
+    socialUsersAPI.unFollowUser(userId).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setUnFollowUserAC(userId));
+      }
+
+      // dispatch(setFollowingBlockedBtnAC(false, userId));
+    });
+  };
+};
