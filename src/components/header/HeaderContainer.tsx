@@ -33,36 +33,36 @@ const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
   };
 
   return (
-    <HeaderStyle>
-      <HeaderLeftStyle>
-        <i className="bx bxs-id-card"></i>
-        <SearchInput />
-      </HeaderLeftStyle>
-
-      <HeaderCenterStyle>
-        <ul>
-          <NavLink to="/profile">
-            <i className="bx bxs-home"></i>
-            <p>Home</p>
-          </NavLink>
-          <NavLink to="/social">
-            <i className="bx bx-group"></i>
-            <p>Social</p>
-          </NavLink>
-          <NavLink to="/messages">
-            <i className="bx bx-chat"></i>
-            <p>Messages</p>
-          </NavLink>
-          <NavLink to="/setting">
-            <i className="bx bx-cog"></i>
-            <p>Setting</p>
-          </NavLink>
-        </ul>
-      </HeaderCenterStyle>
-
+    <>
       {isAuth ? (
-        <HeaderRightStyle>
-          <>
+        <HeaderStyle>
+          <HeaderLeftStyle>
+            <i className="bx bxs-id-card"></i>
+            <SearchInput />
+          </HeaderLeftStyle>
+
+          <HeaderCenterStyle>
+            <ul>
+              <NavLink to="/profile">
+                <i className="bx bxs-home"></i>
+                <p>Home</p>
+              </NavLink>
+              <NavLink to="/social">
+                <i className="bx bx-group"></i>
+                <p>Social</p>
+              </NavLink>
+              <NavLink to="/messages">
+                <i className="bx bx-chat"></i>
+                <p>Messages</p>
+              </NavLink>
+              <NavLink to="/setting">
+                <i className="bx bx-cog"></i>
+                <p>Setting</p>
+              </NavLink>
+            </ul>
+          </HeaderCenterStyle>
+
+          <HeaderRightStyle>
             <AvatarImgStyle
               src={avatarIcon}
               alt=""
@@ -70,12 +70,12 @@ const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
               height="40px"
             />
             <p> {login} </p>
-          </>
 
-          <LogOutStyle onClick={logout}>Log out</LogOutStyle>
-        </HeaderRightStyle>
+            <LogOutStyle onClick={logout}>Log out</LogOutStyle>
+          </HeaderRightStyle>
+        </HeaderStyle>
       ) : null}
-    </HeaderStyle>
+    </>
   );
 };
 

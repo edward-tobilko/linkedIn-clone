@@ -39,16 +39,20 @@ const AppRoutes: FC<any> = ({ isAuth }) => {
           {/* "?" - в кінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
           <Route path="/profile/:userId?" element={<Profile />} />
           <Route path="/social" element={<Social />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/messages/:name/:id" element={<Messages />} />
+          <Route path="/messages/:name?/:id?" element={<Messages />} />
           <Route path="/setting" element={<Setting />} />
-          <Route path="/auth" element={<Auth />} />
+          {/* <Route path="/auth" element={<Auth />} /> */}
 
           {/* Redirect */}
-          <Route path="*" element={<Navigate to="/profile" replace={true} />} />
+          <Route path="*" element={<Navigate to="/profile" replace />} />
         </Routes>
       ) : (
-        <Auth />
+        <Routes>
+          <Route path="/login" element={<Auth />} />
+
+          {/* Redirect */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
       )}
     </>
   );

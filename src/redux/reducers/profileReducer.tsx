@@ -194,7 +194,7 @@ export const setLoadingAC = (loading: boolean) => {
   };
 };
 
-// TC: Thunks - anonym function and HOCs - fetchSocialUsersTC
+// TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
 // Санка (thunk creator) для отримання поточної сторінки іншого користувача
 export const fetchCurrentUserPageTC = (userId: number) => {

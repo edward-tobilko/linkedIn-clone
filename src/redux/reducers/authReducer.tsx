@@ -39,7 +39,7 @@ export const setIsAuthAC = (
   };
 };
 
-// TC: Thunks - anonym function and HOCs - fetchSocialUsersTC
+// TC: Thunk creator - anonym function and HOC - setIsAuthTC
 
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = () => {

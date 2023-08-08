@@ -134,7 +134,7 @@ export const setFollowingBlockedBtnAC = (loading: boolean, userId: number) => {
 
 export default socialReducer;
 
-// TC: Thunks - anonym function and HOCs - fetchSocialUsersTC
+// TC: Thunk creator - anonym function and HOC - fetchSocialUsersTC
 
 // Санка (thunk creator) для отримання користувачів
 export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
