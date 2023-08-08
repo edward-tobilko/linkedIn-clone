@@ -1,6 +1,4 @@
 import { FC } from "react";
-// import axios from "axios";
-// import { connect } from "react-redux";
 
 import { ContainerStyle, ContentStyle, HeaderStyle } from "./rootStyles";
 
@@ -8,16 +6,6 @@ import { ContextProvider } from "./context/Context";
 
 import { Header } from "./components/header/Header";
 import AppRoutes from "./AppRoutes";
-// import Auth from "./pages/auth/Auth";
-
-// import { setIsAuthAC } from "./redux/reducers/authReducer";
-
-// // Container component
-// const mapStateToProps = (state: any) => {
-//   return {
-//     isAuth: state.authorization.isAuth,
-//   };
-// };
 
 const App: FC = () => {
   return (
@@ -40,13 +28,3 @@ const App: FC = () => {
 };
 
 export default App;
-// export default connect(mapStateToProps, { setIsAuthAC })(AppContainer);
-
-// // Pure component
-// export const App = () => {
-//   return (
-//     <>
-//       <AppContainer />
-//     </>
-//   );
-// };

@@ -144,6 +144,7 @@ export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
     socialUsersAPI
       .fetchSocialUsers(currentPage, usersCount)
       .then((data: any) => {
+        dispatch(setCurrentPageAC(currentPage));
         dispatch(setLoadingAC(false)); // Додаємо загрузчик;
         dispatch(setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
         dispatch(setTotalUsersCountAC(data.totalCount)); // Отримуємо всю к-сть користувачів з сервера;
@@ -187,14 +188,14 @@ export const setFollowUserTC = (userId: number) => {
 // ТС для видалення користувача
 export const setUnFollowUserTC = (userId: number) => {
   return (dispatch: any) => {
-    // dispatch(setFollowingBlockedBtnAC(true, userId));
+    dispatch(setFollowingBlockedBtnAC(true, userId));
 
     socialUsersAPI.unFollowUser(userId).then((data) => {
       if (data.resultCode === 0) {
         dispatch(setUnFollowUserAC(userId));
       }
 
-      // dispatch(setFollowingBlockedBtnAC(false, userId));
+      dispatch(setFollowingBlockedBtnAC(false, userId));
     });
   };
 };

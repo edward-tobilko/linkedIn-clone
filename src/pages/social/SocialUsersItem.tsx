@@ -8,7 +8,12 @@ import { FollowBtn } from "../../components/UI/btns/follow/FollowBtn";
 
 import removeIcon from "../../img/svg/remove_icon.svg";
 
-const SocialUsersItem: FC<any> = ({ socialUser, followingBlockedBtn }) => {
+const SocialUsersItem: FC<any> = ({
+  socialUser,
+  followingBlockedBtn,
+  setFollowUserTC,
+  setUnFollowUserTC,
+}) => {
   return (
     <SocialUserItemStyle>
       <div className="cardSocial">
@@ -54,6 +59,8 @@ const SocialUsersItem: FC<any> = ({ socialUser, followingBlockedBtn }) => {
         <FollowBtn
           socialUser={socialUser}
           followingBlockedBtn={followingBlockedBtn}
+          setUnFollowUserTC={setUnFollowUserTC}
+          setFollowUserTC={setFollowUserTC}
         />
       </div>
     </SocialUserItemStyle>

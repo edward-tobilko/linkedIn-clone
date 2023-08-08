@@ -1,3 +1,5 @@
+import { authAPI } from "../../api/API";
+
 const SET_IS_AUTH = "SET-IS-AUTH";
 
 const initialState = {
@@ -34,5 +36,20 @@ export const setIsAuthAC = (
   return {
     type: SET_IS_AUTH,
     data: { id, email, login, isAuth },
+  };
+};
+
+// TC: Thunks - anonym function and HOCs - fetchSocialUsersTC
+
+// Санка (thunk creator) для авторизації
+export const setIsAuthTC = () => {
+  return (dispatch: any) => {
+    authAPI.authorizationMe().then((data) => {
+      if (data.resultCode === 0) {
+        let { id, email, login, isAuth } = data.data;
+
+        dispatch(setIsAuthAC(id, email, login, isAuth));
+      }
+    });
   };
 };

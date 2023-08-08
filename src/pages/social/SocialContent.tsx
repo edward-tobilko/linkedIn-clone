@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import {
-  setUsersAC,
-  setCurrentPageAC,
-  setLoadingAC,
   fetchSocialUsersTC,
   fetchSocialUsersOnChangedPageTC,
+  setFollowUserTC,
+  setUnFollowUserTC,
 } from "../../redux/reducers/socialReducer";
 
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
@@ -31,10 +30,17 @@ const mapStateToProps = (state: any) => {
 };
 
 const SocialContentContainer = connect(mapStateToProps, {
+  // Санка (thunk creator) для отримання користувачів
   fetchSocialUsersTC,
-  setCurrentPageAC,
-  setLoadingAC,
-  setUsersAC,
+
+  // Санка (TC) для отримання користувачів при переходах по пагінації
+  fetchSocialUsersOnChangedPageTC,
+
+  // ТС для додавання користувача
+  setFollowUserTC,
+
+  // ТС для видалення користувача
+  setUnFollowUserTC,
 });
 
 const SocialContent: FC<any> = ({
@@ -48,7 +54,7 @@ const SocialContent: FC<any> = ({
   const dispatch: any = useDispatch();
 
   const [getSocialUsers] = useFetching(async () => {
-    await dispatch(fetchSocialUsersTC(currentPage, usersCount));
+    dispatch(fetchSocialUsersTC(currentPage, usersCount));
   });
 
   const onChangedPage = (pageNumber: number) => {
@@ -75,6 +81,8 @@ const SocialContent: FC<any> = ({
           <SocialUsersList
             socialUsers={socialUsers}
             followingBlockedBtn={followingBlockedBtn}
+            setFollowUserTC={setFollowUserTC}
+            setUnFollowUserTC={setUnFollowUserTC}
           />
         ) : loading ? null : (
           <Error />

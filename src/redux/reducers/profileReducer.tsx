@@ -1,9 +1,11 @@
 import { v4 as uniqueID } from "uuid";
+import { profileAPI } from "../../api/API";
 
 export const CREATE_NEW_POST = "CREATE-NEW-POST";
 export const CHANGE_POST = "CHANGE-POST";
 export const UPDATE_SEARCH_POST = "UPDATE-SEARCH-POST";
 export const SET_CURRENT_USER_PAGE = "SET-CURRENT-USER-PAGE";
+export const LOADING = "LOADING";
 
 const initialState = {
   postUsers: [
@@ -103,6 +105,7 @@ const initialState = {
   newPostText: "",
   name: "eduard.tobilko",
   currentProfilePage: null,
+  loading: false,
 };
 
 const profileReducer = (state: any = initialState, action: any) => {
@@ -152,6 +155,10 @@ const profileReducer = (state: any = initialState, action: any) => {
     case SET_CURRENT_USER_PAGE:
       return { ...state, currentProfilePage: action.currentProfilePage };
 
+    // Додаємо загрузчик
+    case LOADING:
+      return { ...state, loading: action.loading };
+
     default:
       return state;
   }
@@ -177,5 +184,26 @@ export const setCurrentUserPageAC = (currentProfilePage: any) => {
   return {
     type: SET_CURRENT_USER_PAGE,
     currentProfilePage,
+  };
+};
+
+export const setLoadingAC = (loading: boolean) => {
+  return {
+    type: LOADING,
+    loading,
+  };
+};
+
+// TC: Thunks - anonym function and HOCs - fetchSocialUsersTC
+
+// Санка (thunk creator) для отримання поточної сторінки іншого користувача
+export const fetchCurrentUserPageTC = (userId: number) => {
+  return (dispatch: any) => {
+    dispatch(setLoadingAC(true));
+
+    profileAPI.fetchCurrentUserPageById(userId).then((data: any) => {
+      dispatch(setCurrentUserPageAC(data));
+      dispatch(setLoadingAC(false));
+    });
   };
 };

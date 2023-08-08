@@ -30,7 +30,7 @@ export const socialUsersAPI = {
 
   // Видаляємо користувача (unFollow)
   async unFollowUser(userId: number) {
-    return await instance.delete(`follow/${userId}`).then((res) => res.data);
+    return await instance.delete(`follow/${userId}`).then((res) => res.data); // В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
 };
 

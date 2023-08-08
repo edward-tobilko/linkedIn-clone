@@ -1,8 +1,6 @@
 import { FC, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { connect } from "react-redux";
-
-import { profileAPI } from "../../api/API";
+import { connect, useDispatch } from "react-redux";
 
 import { ProfileStyle, CreatePostStyle } from "./profileStyle";
 
@@ -10,22 +8,24 @@ import CreatePostForm from "../../components/forms/create-post-form/CreatePostFo
 import { CreatePostFormList } from "../../components/forms/create-post-form/CreatePostFormList";
 import PostsList from "../../components/posts/PostsList";
 import { Sidebar } from "../../components/sidebar/Sidebar";
+import { Loader } from "../../components/UI/loader/Loader";
 
-import { setCurrentUserPageAC } from "../../redux/reducers/profileReducer";
+import { fetchCurrentUserPageTC } from "../../redux/reducers/profileReducer";
+
 import { useFetching } from "../../hooks/useFetching";
 
 const mapState = (state: any) => {
   return {
     currentProfilePage: state.profilePage.currentProfilePage,
+    loading: state.profilePage.loading,
   };
 };
 
-const ProfileContent: FC<any> = ({
-  currentProfilePage,
-  setCurrentUserPageAC,
-}) => {
+const ProfileContent: FC<any> = ({ currentProfilePage, loading }) => {
   let { userId }: any = useParams();
+
   const navigate = useNavigate();
+  const dispatch: any = useDispatch();
 
   if (!userId) {
     userId = 18850;
@@ -35,33 +35,37 @@ const ProfileContent: FC<any> = ({
     }
   }
 
-  const [getCurrentUserPageById] = useFetching(async () => {
-    await profileAPI.fetchCurrentUserPageById(userId).then((data: any) => {
-      setCurrentUserPageAC(data);
-    });
+  const [getCurrentUserPageById] = useFetching(() => {
+    dispatch(fetchCurrentUserPageTC(userId));
   });
 
   useEffect(() => {
     getCurrentUserPageById(userId);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
-      <Sidebar currentProfilePage={currentProfilePage} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Sidebar currentProfilePage={currentProfilePage} />
 
-      <ProfileStyle>
-        <CreatePostStyle>
-          <CreatePostForm />
-          <CreatePostFormList />
-        </CreatePostStyle>
+          <ProfileStyle>
+            <CreatePostStyle>
+              <CreatePostForm />
+              <CreatePostFormList />
+            </CreatePostStyle>
 
-        <PostsList />
-      </ProfileStyle>
+            <PostsList />
+          </ProfileStyle>
+        </>
+      )}
     </>
   );
 };
 
 export default connect(mapState, {
-  // Показуємо поточну сторінку іншого користувача
-  setCurrentUserPageAC,
+  // Санка (thunk creator) для отримання поточної сторінки іншого користувача
+  fetchCurrentUserPageTC,
 })(ProfileContent);

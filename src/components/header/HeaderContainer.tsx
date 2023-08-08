@@ -24,7 +24,7 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const HeaderContainer: FC<any> = ({ login, isAuth, setIsAuthAC }) => {
+const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
   const logout = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     // setIsAuthAC(false);

@@ -6,21 +6,13 @@ import { FollowBtnStyle } from "./followBtnStyle";
 import followUserIcon from "../../../../img/svg/followUser_icon.svg";
 import unFollowUserIcon from "../../../../img/svg/unFollowUser_icon.svg";
 
-import {
+export const FollowBtn: FC<any> = ({
+  socialUser,
+  followingBlockedBtn,
   setFollowUserTC,
   setUnFollowUserTC,
-} from "../../../../redux/reducers/socialReducer";
-
-export const FollowBtn: FC<any> = ({ socialUser, followingBlockedBtn }) => {
+}) => {
   const dispatch: any = useDispatch();
-
-  const follow = (userId: number) => {
-    dispatch(setFollowUserTC(userId));
-  };
-
-  const unFollow = (userId: number) => {
-    dispatch(setUnFollowUserTC(userId));
-  };
 
   return (
     <>
@@ -29,7 +21,7 @@ export const FollowBtn: FC<any> = ({ socialUser, followingBlockedBtn }) => {
           disabled={followingBlockedBtn.some(
             (id: number) => id === socialUser.id,
           )}
-          onClick={() => unFollow(socialUser.id)}
+          onClick={() => dispatch(setUnFollowUserTC(socialUser.id))}
           left={false}
           transformPosition={false}
           top={false}
@@ -49,7 +41,7 @@ export const FollowBtn: FC<any> = ({ socialUser, followingBlockedBtn }) => {
           disabled={followingBlockedBtn.some(
             (id: number) => id === socialUser.id,
           )}
-          onClick={() => follow(socialUser.id)}
+          onClick={() => dispatch(setFollowUserTC(socialUser.id))}
           transformPosition
           left
           top
