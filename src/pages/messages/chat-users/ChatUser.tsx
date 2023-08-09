@@ -11,7 +11,7 @@ interface IChatUserProps {
 }
 
 export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {
-  let pathChatUser = "/messages/" + chatUser.name + "/" + chatUser.id;
+  let pathChatUser = `/messages/${chatUser.id}`;
 
   return (
     <ChatUserStyle>

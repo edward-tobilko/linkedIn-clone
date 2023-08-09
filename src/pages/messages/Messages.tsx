@@ -1,10 +1,15 @@
+import { FC } from "react";
+import { compose } from "redux";
+
 import { MessagesStyle } from "./messagesStyle";
 
 import { ChatUsers } from "./chat-users/ChatUsers";
 import { DialogUsers } from "./dialog-users/DialogUsers";
 import { CreateMessagePost } from "../../components/forms/create-message-post/CreateMessagePost";
 
-const Messages = () => {
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
+
+const Messages: FC = () => {
   return (
     <>
       <MessagesStyle>
@@ -19,4 +24,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default compose(withAuthRedirectHOC)(Messages);

@@ -2,6 +2,7 @@ import {
   combineReducers,
   legacy_createStore as createStore,
   applyMiddleware,
+  compose,
 } from "redux";
 import thunkMiddleware from "redux-thunk";
 
@@ -27,7 +28,10 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 
 // Store
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+const store = createStore(
+  rootReducer,
+  compose(applyMiddleware(thunkMiddleware)),
+);
 
 window.store = store;
 

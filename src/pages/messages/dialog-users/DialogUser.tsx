@@ -11,8 +11,6 @@ interface IDialogUserProps {
 }
 
 export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
-  let pathDialogUser = "/messages/" + dialogUser.name + "/" + dialogUser.id;
-
   return (
     <DialogUserStyle>
       <AvatarImgStyle
@@ -24,7 +22,7 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
 
       <div className="dialog__user">
         <div className="dialog__user-header">
-          <NavLink to={pathDialogUser}> {dialogUser.name} </NavLink>
+          <NavLink to={`/messages/${dialogUser.id}`}>{dialogUser.name}</NavLink>
           <p> {dialogUser.dataTime} </p>
         </div>
 

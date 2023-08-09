@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
+import { compose } from "redux";
 
 import { ProfileStyle, CreatePostStyle } from "./profileStyle";
 
@@ -13,8 +14,9 @@ import { Loader } from "../../components/UI/loader/Loader";
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profileReducer";
 
 import { useFetching } from "../../hooks/useFetching";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
-const mapState = (state: any) => {
+const mapStateToProps = (state: any) => {
   return {
     currentProfilePage: state.profilePage.currentProfilePage,
     loading: state.profilePage.loading,
@@ -29,10 +31,8 @@ const ProfileContent: FC<any> = ({ currentProfilePage, loading }) => {
 
   if (!userId) {
     userId = 18850;
-
-    if (!userId) {
-      navigate("/login");
-    }
+  } else if (!userId) {
+    navigate("/auth");
   }
 
   const [getCurrentUserPageById] = useFetching(() => {
@@ -65,7 +65,13 @@ const ProfileContent: FC<any> = ({ currentProfilePage, loading }) => {
   );
 };
 
-export default connect(mapState, {
-  // Санка (thunk creator) для отримання поточної сторінки іншого користувача
-  fetchCurrentUserPageTC,
-})(ProfileContent);
+// Ф-я compose працює (перебирає всі наші створені обробники (ф-ї, хоки і тд.)) з права -> на ліво
+export default compose(
+  connect(mapStateToProps, {
+    // Санка (thunk creator) для отримання поточної сторінки іншого користувача
+    fetchCurrentUserPageTC,
+  }),
+
+  // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
+  withAuthRedirectHOC,
+)(ProfileContent);

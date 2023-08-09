@@ -36,6 +36,7 @@ export const HeaderCenterStyle = styled.div`
       padding: 0 15px;
       text-decoration: none;
       color: ${themeVars.colors.whiteColor};
+
       &:hover {
         cursor: pointer;
         filter: brightness(80%);
@@ -80,5 +81,24 @@ export const LogOutStyle = styled.button`
 
   &:hover {
     color: ${themeVars.colors.orangeColor};
+  }
+`;
+
+export const NavLinkStyle = styled.div`
+  text-align: center;
+  padding: 0 15px;
+
+  a {
+    text-decoration: none;
+    color: ${themeVars.colors.whiteColor};
+  }
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+  }
+
+  i {
+    font-size: 22px;
   }
 `;

@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
-import { connect } from "react-redux";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { compose } from "redux";
 
 import {
   fetchSocialUsersTC,
@@ -12,11 +12,13 @@ import {
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
 import { useFetching } from "../../hooks/useFetching";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { Loader } from "../../components/UI/loader/Loader";
 import SocialUsersList from "./SocialUsersList";
 import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
+import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
 
 const mapStateToProps = (state: any) => {
   return {
@@ -66,30 +68,40 @@ const SocialContent: FC<any> = ({
   }, [dispatch]);
 
   return (
-    <SocialStyle>
-      <Pagination
-        totalUsersCount={totalUsersCount}
-        usersCount={usersCount}
-        currentPage={currentPage}
-        onChangedPage={onChangedPage}
-      />
+    <>
+      <SocialNetworkManagement />
 
-      {loading && <Loader />}
+      <SocialStyle>
+        <Pagination
+          totalUsersCount={totalUsersCount}
+          usersCount={usersCount}
+          currentPage={currentPage}
+          onChangedPage={onChangedPage}
+        />
 
-      <SocialUsersListStyle>
-        {socialUsers?.length ? (
-          <SocialUsersList
-            socialUsers={socialUsers}
-            followingBlockedBtn={followingBlockedBtn}
-            setFollowUserTC={setFollowUserTC}
-            setUnFollowUserTC={setUnFollowUserTC}
-          />
-        ) : loading ? null : (
-          <Error />
-        )}
-      </SocialUsersListStyle>
-    </SocialStyle>
+        {loading && <Loader />}
+
+        <SocialUsersListStyle>
+          {socialUsers?.length ? (
+            <SocialUsersList
+              socialUsers={socialUsers}
+              followingBlockedBtn={followingBlockedBtn}
+              setFollowUserTC={setFollowUserTC}
+              setUnFollowUserTC={setUnFollowUserTC}
+            />
+          ) : loading ? null : (
+            <Error>The list is empty...</Error>
+          )}
+        </SocialUsersListStyle>
+      </SocialStyle>
+    </>
   );
 };
 
-export default SocialContentContainer(SocialContent);
+// Ф-я compose працює (перебирає всі наші створені обробники (ф-ї, хоки і тд.)) з права -> на ліво
+export default compose(
+  SocialContentContainer,
+
+  // HOC для перенаправлення сторінки (<NotFound />), якщо користувач не зареєстрований
+  withAuthRedirectHOC,
+)(SocialContent);

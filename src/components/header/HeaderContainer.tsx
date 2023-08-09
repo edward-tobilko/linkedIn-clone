@@ -8,6 +8,7 @@ import {
   HeaderRightStyle,
   HeaderStyle,
   LogOutStyle,
+  NavLinkStyle,
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
 
@@ -29,39 +30,39 @@ const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
     event.preventDefault();
     // setIsAuthAC(false);
 
-    localStorage.setItem("isAuth", "false");
+    // localStorage.setItem("isAuth", "false");
   };
 
   return (
     <>
-      {isAuth ? (
-        <HeaderStyle>
-          <HeaderLeftStyle>
-            <i className="bx bxs-id-card"></i>
-            <SearchInput />
-          </HeaderLeftStyle>
+      <HeaderStyle>
+        <HeaderLeftStyle>
+          <i className="bx bxs-id-card"></i>
+          <SearchInput />
+        </HeaderLeftStyle>
 
-          <HeaderCenterStyle>
-            <ul>
-              <NavLink to="/profile">
-                <i className="bx bxs-home"></i>
-                <p>Home</p>
-              </NavLink>
-              <NavLink to="/social">
-                <i className="bx bx-group"></i>
-                <p>Social</p>
-              </NavLink>
-              <NavLink to="/messages">
-                <i className="bx bx-chat"></i>
-                <p>Messages</p>
-              </NavLink>
-              <NavLink to="/setting">
-                <i className="bx bx-cog"></i>
-                <p>Setting</p>
-              </NavLink>
-            </ul>
-          </HeaderCenterStyle>
+        <HeaderCenterStyle>
+          <ul>
+            <NavLink to="/profile">
+              <i className="bx bxs-home"></i>
+              <p>Home</p>
+            </NavLink>
+            <NavLink to="/social">
+              <i className="bx bx-group"></i>
+              <p>Social</p>
+            </NavLink>
+            <NavLink to="/messages">
+              <i className="bx bx-chat"></i>
+              <p>Messages</p>
+            </NavLink>
+            <NavLink to="/setting">
+              <i className="bx bx-cog"></i>
+              <p>Setting</p>
+            </NavLink>
+          </ul>
+        </HeaderCenterStyle>
 
+        {isAuth ? (
           <HeaderRightStyle>
             <AvatarImgStyle
               src={avatarIcon}
@@ -73,8 +74,15 @@ const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
 
             <LogOutStyle onClick={logout}>Log out</LogOutStyle>
           </HeaderRightStyle>
-        </HeaderStyle>
-      ) : null}
+        ) : (
+          <NavLinkStyle>
+            <NavLink to="/auth">
+              <i className="bx bx-log-in"></i>
+              <p>Log in</p>
+            </NavLink>
+          </NavLinkStyle>
+        )}
+      </HeaderStyle>
     </>
   );
 };

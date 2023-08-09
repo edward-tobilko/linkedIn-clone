@@ -8,52 +8,45 @@ import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
 import Auth from "./pages/auth/Auth";
 
+import { NotFound } from "./components/notifications/not-found/NotFound";
+
 import { setIsAuthTC } from "./redux/reducers/authReducer";
 
-const mapStateToProps = (state: any) => {
-  return {
-    isAuth: state.authorization.isAuth,
-  };
-};
-
-const AppRoutesContainer = connect(mapStateToProps, {
+const AppRoutesContainer = connect(null, {
   // Санка (thunk creator) для авторизації
   setIsAuthTC,
 });
 
-const AppRoutes: FC<any> = ({ isAuth }) => {
+const AppRoutes: FC<any> = () => {
   const dispatch: any = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem("isAuth")) {
-      dispatch(setIsAuthTC());
-    }
+    // if (localStorage.getItem("isAuth")) {
+    dispatch(setIsAuthTC());
+    // }
   }, [dispatch]);
 
   return (
     <>
-      {isAuth ? (
-        <Routes>
-          {/* <Route path="/profile/*" element={<Profile />} /> */}
+      <Routes>
+        {/* <Route path="/profile/*" element={<Profile />} /> - такий шлях вказуємо, якщо в <Profile /> буде ще якийсь вложений шлях, наприклад: <Routes> <Route path='account' element={<Account />} /> </Routes> */}
 
-          {/* "?" - в кінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
-          <Route path="/profile/:userId?" element={<Profile />} />
-          <Route path="/social" element={<Social />} />
-          <Route path="/messages/:name?/:id?" element={<Messages />} />
-          <Route path="/setting" element={<Setting />} />
-          {/* <Route path="/auth" element={<Auth />} /> */}
+        {/* "?" - в кінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
+        <Route path="profile">
+          <Route path=":userId" element={<Profile />} />
+          <Route index={true} element={<Profile />} />
+        </Route>
+        <Route path="social" element={<Social />} />
+        <Route path="messages">
+          <Route path=":id?" element={<Messages />} />
+        </Route>
+        <Route path="setting" element={<Setting />} />
+        <Route path="auth" element={<Auth />} />
+        <Route path="not-found" element={<NotFound />} />
 
-          {/* Redirect */}
-          <Route path="*" element={<Navigate to="/profile" replace />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path="/login" element={<Auth />} />
-
-          {/* Redirect */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      )}
+        {/* Redirect */}
+        <Route path="*" element={<Navigate to="/profile" replace />} />
+      </Routes>
     </>
   );
 };
