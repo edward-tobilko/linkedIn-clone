@@ -11,7 +11,12 @@ import PostsList from "../../components/posts/PostsList";
 import { Sidebar } from "../../components/sidebar/Sidebar";
 import { Loader } from "../../components/UI/loader/Loader";
 
-import { fetchCurrentUserPageTC } from "../../redux/reducers/profileReducer";
+import {
+  fetchCurrentUserPageTC,
+  fetchUserStatusByIdTC,
+  updateUserStatusTC,
+  setLoadingAC,
+} from "../../redux/reducers/profileReducer";
 
 import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
@@ -20,23 +25,34 @@ const mapStateToProps = (state: any) => {
   return {
     currentProfilePage: state.profilePage.currentProfilePage,
     loading: state.profilePage.loading,
+    status: state.profilePage.status,
   };
 };
 
-const ProfileContent: FC<any> = ({ currentProfilePage, loading }) => {
+const ProfileContent: FC<any> = ({
+  currentProfilePage,
+  loading,
+  status,
+  setLoadingAC,
+}) => {
   let { userId }: any = useParams();
+  console.log(status);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch: any = useDispatch();
 
   if (!userId) {
     userId = 18850;
-  } else if (!userId) {
-    navigate("/auth");
   }
 
   const [getCurrentUserPageById] = useFetching(() => {
     dispatch(fetchCurrentUserPageTC(userId));
+
+    setTimeout(() => {
+      setLoadingAC(true);
+
+      dispatch(fetchUserStatusByIdTC(userId));
+    }, 2000);
   });
 
   useEffect(() => {
@@ -49,7 +65,12 @@ const ProfileContent: FC<any> = ({ currentProfilePage, loading }) => {
         <Loader />
       ) : (
         <>
-          <Sidebar currentProfilePage={currentProfilePage} />
+          <Sidebar
+            currentProfilePage={currentProfilePage}
+            status={status}
+            updateUserStatusTC={updateUserStatusTC}
+            loading={loading}
+          />
 
           <ProfileStyle>
             <CreatePostStyle>
@@ -70,6 +91,13 @@ export default compose(
   connect(mapStateToProps, {
     // Санка (thunk creator) для отримання поточної сторінки іншого користувача
     fetchCurrentUserPageTC,
+
+    // TC для отримання статусу іншого користувача
+    fetchUserStatusByIdTC,
+
+    // TC для динамічної зміни статусу
+    updateUserStatusTC,
+    setLoadingAC,
   }),
 
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований

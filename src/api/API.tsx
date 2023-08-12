@@ -40,6 +40,16 @@ export const profileAPI = {
   async fetchCurrentUserPageById(userId: number) {
     return await instance.get(`profile/${userId}`).then((res) => res.data);
   },
+
+  // Отримуємо статус користувача
+  async fetchUserStatusById(userId: number) {
+    return await instance.get(`profile/status/${userId}`);
+  },
+
+  // Змінюємо динамічно статус
+  async updateUserStatus(status: string) {
+    return await instance.put(`profile/status`, { status: status }); //? другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
+  },
 };
 
 // For the AppRoutes component

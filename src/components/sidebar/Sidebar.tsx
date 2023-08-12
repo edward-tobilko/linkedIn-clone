@@ -5,6 +5,7 @@ import { SidebarStyle } from "./sidebarStyle";
 import { MdVisibility } from "react-icons/md";
 
 import { CardProfile } from "../../pages/profile/CardProfile";
+import { Loader } from "../../components/UI/loader/Loader";
 
 // UI time elements
 function UITimeElements() {
@@ -62,11 +63,23 @@ function UITimeElements() {
   );
 }
 
-export const Sidebar: FC<any> = ({ currentProfilePage }) => {
+export const Sidebar: FC<any> = ({
+  currentProfilePage,
+  status,
+  updateUserStatusTC,
+  loading,
+}) => {
+  if (!currentProfilePage) return <Loader />;
+
   return (
     <SidebarStyle>
       <div className="sidebar">
-        <CardProfile currentProfilePage={currentProfilePage} />
+        <CardProfile
+          currentProfilePage={currentProfilePage}
+          status={status}
+          updateUserStatusTC={updateUserStatusTC}
+          loading={loading}
+        />
 
         <div className="sidebar-followers">
           <p>

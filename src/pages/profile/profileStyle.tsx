@@ -45,11 +45,5 @@ export const CardProfileStyle = styled.div`
       font-size: 12px;
       padding: 0 8px 10px 8px;
     }
-
-    &-subtitle {
-      font-size: 13px;
-      font-weight: 400;
-      color: ${themeVars.colors.lightGreyColor};
-    }
   }
 `;

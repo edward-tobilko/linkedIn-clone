@@ -6,11 +6,14 @@ import { CardProfileStyle } from "./profileStyle";
 // import avatarIcon from "../../img/images/avatar.png";
 // import lampIcon from "../../img/images/lamp.png";
 
-import { Loader } from "../../components/UI/loader/Loader";
+import { Status } from "../../components/forms/status-input/Status";
 
-export const CardProfile: FC<any> = ({ currentProfilePage }) => {
-  if (!currentProfilePage) return <Loader />;
-
+export const CardProfile: FC<any> = ({
+  currentProfilePage,
+  status,
+  updateUserStatusTC,
+  loading,
+}) => {
   return (
     <CardProfileStyle>
       <img
@@ -45,9 +48,11 @@ export const CardProfile: FC<any> = ({ currentProfilePage }) => {
           <p className="cardProfile__desc-title">No info</p>
         )}
 
-        <p className="cardProfile__desc-subtitle">
-          Front-end developer | HTML / CSS / JavaScript / React
-        </p>
+        <Status
+          status={status}
+          updateUserStatusTC={updateUserStatusTC}
+          loading={loading}
+        />
       </div>
     </CardProfileStyle>
   );

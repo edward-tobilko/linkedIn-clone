@@ -6,6 +6,7 @@ export const CHANGE_POST = "CHANGE-POST";
 export const UPDATE_SEARCH_POST = "UPDATE-SEARCH-POST";
 export const SET_CURRENT_USER_PAGE = "SET-CURRENT-USER-PAGE";
 export const LOADING = "LOADING";
+export const SET_STATUS = "SET-STATUS";
 
 const initialState = {
   postUsers: [
@@ -106,6 +107,7 @@ const initialState = {
   name: "eduard.tobilko",
   currentProfilePage: null,
   loading: false,
+  status: "",
 };
 
 const profileReducer = (state: any = initialState, action: any) => {
@@ -159,6 +161,9 @@ const profileReducer = (state: any = initialState, action: any) => {
     case LOADING:
       return { ...state, loading: action.loading };
 
+    case SET_STATUS:
+      return { ...state, status: action.status };
+
     default:
       return state;
   }
@@ -194,6 +199,13 @@ export const setLoadingAC = (loading: boolean) => {
   };
 };
 
+export const setStatusAC = (status: string) => {
+  return {
+    type: SET_STATUS,
+    status,
+  };
+};
+
 // TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
 // Санка (thunk creator) для отримання поточної сторінки іншого користувача
@@ -205,5 +217,37 @@ export const fetchCurrentUserPageTC = (userId: number) => {
       dispatch(setCurrentUserPageAC(data));
       dispatch(setLoadingAC(false));
     });
+  };
+};
+
+// TC для отримання статусу користувача
+export const fetchUserStatusByIdTC = (userId: number) => {
+  return async (dispatch: any) => {
+    dispatch(setLoadingAC(true));
+
+    const response: any = await profileAPI.fetchUserStatusById(userId);
+
+    dispatch(setStatusAC(response.data));
+    dispatch(setLoadingAC(false));
+  };
+};
+
+// TC для динамічної зміни статусу
+export const updateUserStatusTC = (status: string) => {
+  return async (dispatch: any) => {
+    // dispatch(setLoadingAC(true));
+
+    try {
+      const response: any = await profileAPI.updateUserStatus(status);
+
+      if (response.data.resultCode === 0) {
+        dispatch(setStatusAC(status));
+        // dispatch(setLoadingAC(false));
+
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 };
