@@ -161,6 +161,7 @@ const profileReducer = (state: any = initialState, action: any) => {
     case LOADING:
       return { ...state, loading: action.loading };
 
+    // Показуємо статус користувача
     case SET_STATUS:
       return { ...state, status: action.status };
 
@@ -215,6 +216,7 @@ export const fetchCurrentUserPageTC = (userId: number) => {
 
     profileAPI.fetchCurrentUserPageById(userId).then((data: any) => {
       dispatch(setCurrentUserPageAC(data));
+
       dispatch(setLoadingAC(false));
     });
   };
@@ -223,26 +225,20 @@ export const fetchCurrentUserPageTC = (userId: number) => {
 // TC для отримання статусу користувача
 export const fetchUserStatusByIdTC = (userId: number) => {
   return async (dispatch: any) => {
-    dispatch(setLoadingAC(true));
-
     const response: any = await profileAPI.fetchUserStatusById(userId);
 
     dispatch(setStatusAC(response.data));
-    dispatch(setLoadingAC(false));
   };
 };
 
 // TC для динамічної зміни статусу
 export const updateUserStatusTC = (status: string) => {
   return async (dispatch: any) => {
-    // dispatch(setLoadingAC(true));
-
     try {
       const response: any = await profileAPI.updateUserStatus(status);
 
       if (response.data.resultCode === 0) {
         dispatch(setStatusAC(status));
-        // dispatch(setLoadingAC(false));
 
         console.log(response.data);
       }

@@ -27,15 +27,10 @@ const authReducer = (state: any = initialState, action: any) => {
 export default authReducer;
 
 // ACs
-export const setIsAuthAC = (
-  id: number,
-  email: string,
-  login: string,
-  isAuth: boolean,
-) => {
+export const setIsAuthAC = (id: number, email: string, login: string) => {
   return {
     type: SET_IS_AUTH,
-    data: { id, email, login, isAuth },
+    data: { id, email, login },
   };
 };
 
@@ -44,12 +39,30 @@ export const setIsAuthAC = (
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = () => {
   return (dispatch: any) => {
-    authAPI.authorizationMe().then((data) => {
-      if (data.resultCode === 0) {
-        let { id, email, login, isAuth } = data.data;
+    authAPI.authorizationMe().then((response) => {
+      if (response.data.resultCode === 0) {
+        let { id, email, login } = response.data.data;
 
-        dispatch(setIsAuthAC(id, email, login, isAuth));
+        dispatch(setIsAuthAC(id, email, login));
       }
     });
   };
 };
+
+// // CT для логірування користувача
+// export const setLoginTC = (
+//   email: string,
+//   password: string,
+//   rememberMe: boolean,
+//   captcha: boolean,
+// ) => {
+//   return (dispatch: any) => {
+//     authAPI
+//       .getLoginApi(email, password, rememberMe, captcha)
+//       .then((response) => {
+//         if (response.data.resultCode === 0) {
+//           console.log(response.data);
+//         }
+//       });
+//   };
+// };

@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { compose } from "redux";
 
@@ -15,7 +15,6 @@ import {
   fetchCurrentUserPageTC,
   fetchUserStatusByIdTC,
   updateUserStatusTC,
-  setLoadingAC,
 } from "../../redux/reducers/profileReducer";
 
 import { useFetching } from "../../hooks/useFetching";
@@ -29,35 +28,23 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const ProfileContent: FC<any> = ({
-  currentProfilePage,
-  loading,
-  status,
-  setLoadingAC,
-}) => {
+const ProfileContent: FC<any> = ({ currentProfilePage, loading, status }) => {
   let { userId }: any = useParams();
-  console.log(status);
 
-  // const navigate = useNavigate();
   const dispatch: any = useDispatch();
-
-  if (!userId) {
-    userId = 18850;
-  }
 
   const [getCurrentUserPageById] = useFetching(() => {
     dispatch(fetchCurrentUserPageTC(userId));
-
-    setTimeout(() => {
-      setLoadingAC(true);
-
-      dispatch(fetchUserStatusByIdTC(userId));
-    }, 2000);
+    dispatch(fetchUserStatusByIdTC(userId));
   });
 
   useEffect(() => {
-    getCurrentUserPageById(userId);
+    getCurrentUserPageById();
   }, [dispatch]);
+
+  if (!userId) {
+    userId = 29793;
+  }
 
   return (
     <>
@@ -69,7 +56,6 @@ const ProfileContent: FC<any> = ({
             currentProfilePage={currentProfilePage}
             status={status}
             updateUserStatusTC={updateUserStatusTC}
-            loading={loading}
           />
 
           <ProfileStyle>
@@ -97,7 +83,6 @@ export default compose(
 
     // TC для динамічної зміни статусу
     updateUserStatusTC,
-    setLoadingAC,
   }),
 
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований

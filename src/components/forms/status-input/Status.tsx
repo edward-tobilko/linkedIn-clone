@@ -2,45 +2,51 @@ import { FC, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { StatusStyle } from "./statusStyle";
-import { Loader } from "../../UI/loader/Loader";
 
-export const Status: FC<any> = ({ status, updateUserStatusTC, loading }) => {
+export const Status: FC<any> = ({
+  status,
+  updateUserStatusTC,
+  currentProfilePage,
+}) => {
   const [statusValue, setStatusValue] = useState(status);
   const [editMode, setEditMode] = useState(false);
-  console.log(statusValue);
 
   const dispatch: any = useDispatch();
 
   const updateInputStatus = () => {
     setEditMode(false);
-    dispatch(updateUserStatusTC(status));
+    dispatch(updateUserStatusTC(statusValue));
   };
 
   useEffect(() => {
-    setStatusValue(status);
+    setStatusValue(status); //? потрібен для відображення статусу при багато-разовому перезавантаження сторінки (тобто, при перезавантаження сторіки перший хук useEffect спрацює в комп. ProfileContent, а після тут)
   }, [status]);
 
   return (
     <>
-      {loading && <Loader />}
-
       <StatusStyle>
         {!editMode ? (
           <>
-            {status?.length > 0 ? (
+            {currentProfilePage.userId === 29793 ? (
               <>
-                <p
+                <div
                   className="status__name"
                   onDoubleClick={() => setEditMode(true)}
                 >
-                  {status}
-                </p>
+                  {!status ? (
+                    <p className="status__empty">No status</p>
+                  ) : (
+                    status
+                  )}
+                </div>
                 <div className="status__tooltip tooltip__active">
                   If you want to change your status, double-click here!
                 </div>
               </>
             ) : (
-              <p className="status__empty">No status</p>
+              <>
+                {!status ? <p className="status__empty">No status</p> : status}
+              </>
             )}
           </>
         ) : (
@@ -51,7 +57,7 @@ export const Status: FC<any> = ({ status, updateUserStatusTC, loading }) => {
             onChange={(e) => setStatusValue(e.currentTarget.value)}
             onBlur={updateInputStatus}
             autoFocus={true}
-            onFocus={(e) => e.target.select()}
+            onFocus={(e) => e.target.select()} // автозаповнення внутрішнього вмісту інпута (синій колір)
           />
         )}
       </StatusStyle>

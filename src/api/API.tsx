@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   timeout: 0,
   withCredentials: true, // завдяки цьому параметру cookie робить запит на інший домен;
-  headers: { "API-KEY": "4daa91e2-dd5b-4c3b-9a0c-45ab003503f1" },
+  headers: { "API-KEY": "aeecff0a-0646-43b9-a0dd-39f979f0df41" },
 });
 
 // For the Social component
@@ -32,6 +32,13 @@ export const socialUsersAPI = {
   async unFollowUser(userId: number) {
     return await instance.delete(`follow/${userId}`).then((res) => res.data); // В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
+
+  // Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI
+  async fetchUserStatusById(userId: number) {
+    console.warn("Please, go to the profileAPI method!");
+
+    return await profileAPI.fetchUserStatusById(userId);
+  },
 };
 
 // For the Profile component
@@ -56,6 +63,21 @@ export const profileAPI = {
 export const authAPI = {
   // Авторизуємо себе
   async authorizationMe() {
-    return await instance.get("auth/me").then((res) => res.data);
+    return await instance.get("auth/me");
   },
+
+  // // Логірування користувача
+  // async getLoginApi(
+  //   email: string,
+  //   password: string,
+  //   rememberMe: boolean,
+  //   captcha: boolean,
+  // ) {
+  //   return await instance.post("auth/login", {
+  //     email,
+  //     password,
+  //     rememberMe,
+  //     captcha,
+  //   });
+  // },
 };

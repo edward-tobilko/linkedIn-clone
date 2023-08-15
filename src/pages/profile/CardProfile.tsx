@@ -3,8 +3,8 @@ import { FC } from "react";
 import { AvatarImgStyle } from "../../rootStyles";
 import { CardProfileStyle } from "./profileStyle";
 
-// import avatarIcon from "../../img/images/avatar.png";
-// import lampIcon from "../../img/images/lamp.png";
+import avatarIcon from "../../img/images/avatar.png";
+import lampIcon from "../../img/images/lamp.png";
 
 import { Status } from "../../components/forms/status-input/Status";
 
@@ -12,7 +12,6 @@ export const CardProfile: FC<any> = ({
   currentProfilePage,
   status,
   updateUserStatusTC,
-  loading,
 }) => {
   return (
     <CardProfileStyle>
@@ -20,7 +19,7 @@ export const CardProfile: FC<any> = ({
         src={
           currentProfilePage?.photos?.large !== null
             ? currentProfilePage?.photos?.large
-            : "https://place-hold.it/170"
+            : lampIcon
         }
         alt=""
         className="cardProfile__wrapper"
@@ -30,7 +29,7 @@ export const CardProfile: FC<any> = ({
           src={
             currentProfilePage?.photos?.small !== null
               ? currentProfilePage?.photos?.small
-              : "https://place-hold.it/70"
+              : avatarIcon
           }
           alt=""
           width="70px"
@@ -51,7 +50,7 @@ export const CardProfile: FC<any> = ({
         <Status
           status={status}
           updateUserStatusTC={updateUserStatusTC}
-          loading={loading}
+          currentProfilePage={currentProfilePage}
         />
       </div>
     </CardProfileStyle>

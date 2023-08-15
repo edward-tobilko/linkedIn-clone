@@ -67,7 +67,6 @@ export const Sidebar: FC<any> = ({
   currentProfilePage,
   status,
   updateUserStatusTC,
-  loading,
 }) => {
   if (!currentProfilePage) return <Loader />;
 
@@ -78,7 +77,6 @@ export const Sidebar: FC<any> = ({
           currentProfilePage={currentProfilePage}
           status={status}
           updateUserStatusTC={updateUserStatusTC}
-          loading={loading}
         />
 
         <div className="sidebar-followers">
