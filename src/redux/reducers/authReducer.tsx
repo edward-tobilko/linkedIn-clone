@@ -2,6 +2,13 @@ import { authAPI } from "../../api/API";
 
 const SET_IS_AUTH = "SET-IS-AUTH";
 
+type InitialStateType = {
+  id: number;
+  email: string;
+  login: string;
+  isAuth: boolean;
+};
+
 const initialState = {
   id: null,
   email: null,
@@ -27,10 +34,15 @@ const authReducer = (state: any = initialState, action: any) => {
 export default authReducer;
 
 // ACs
-export const setIsAuthAC = (id: number, email: string, login: string) => {
+export const setIsAuthAC = (
+  id: number | any,
+  email: string | any,
+  login: string | any,
+  isAuth: boolean,
+) => {
   return {
     type: SET_IS_AUTH,
-    data: { id, email, login },
+    data: { id, email, login, isAuth },
   };
 };
 
@@ -41,28 +53,41 @@ export const setIsAuthTC = () => {
   return (dispatch: any) => {
     authAPI.authorizationMe().then((response) => {
       if (response.data.resultCode === 0) {
-        let { id, email, login } = response.data.data;
+        let { id, email, login, isAuth } = response.data.data;
 
-        dispatch(setIsAuthAC(id, email, login));
+        dispatch(setIsAuthAC(id, email, login, isAuth));
       }
     });
   };
 };
 
-// // CT для логірування користувача
-// export const setLoginTC = (
-//   email: string,
-//   password: string,
-//   rememberMe: boolean,
-//   captcha: boolean,
-// ) => {
-//   return (dispatch: any) => {
-//     authAPI
-//       .getLoginApi(email, password, rememberMe, captcha)
-//       .then((response) => {
-//         if (response.data.resultCode === 0) {
-//           console.log(response.data);
-//         }
-//       });
-//   };
-// };
+// CT для логірування користувача
+export const setLoginTC = (
+  email: string,
+  password: string,
+  rememberMe: boolean,
+  captcha: boolean,
+) => {
+  return (dispatch: any) => {
+    authAPI
+      .getLoginApi(email, password, rememberMe, captcha)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          dispatch(setIsAuthTC);
+
+          console.log(response.data);
+        }
+      });
+  };
+};
+
+// CT для вилогірування користувача
+export const setLogoutTC = () => {
+  return (dispatch: any) => {
+    authAPI.logoutApi().then((response: any) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setIsAuthAC(null, null, null, false));
+      }
+    });
+  };
+};

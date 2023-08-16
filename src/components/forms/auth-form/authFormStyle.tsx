@@ -44,12 +44,9 @@ export const AuthFormStyle = styled.form`
       margin: 20px auto;
 
       label {
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
       }
-      &:last-child {
-        flex-direction: row-reverse;
-        justify-content: center;
-      }
+
       &-input {
         width: 80%;
         background: inherit;
@@ -59,17 +56,60 @@ export const AuthFormStyle = styled.form`
         margin-top: 7px;
         border-radius: 8px;
       }
+
       .psw {
         letter-spacing: 1px;
         font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+
         a {
           color: ${themeVars.colors.lightGreyColor};
           text-decoration: none;
           font-size: 13px;
+          padding-left: 10px;
+
           &:hover {
             text-decoration: underline;
           }
         }
+      }
+
+      &:last-child {
+        flex-direction: row-reverse;
+        justify-content: center;
+        position: relative;
+
+        .checkbox__error {
+          position: absolute;
+          bottom: -30px;
+          right: 0;
+
+          background: ${themeVars.colors.whiteColor};
+          color: ${themeVars.colors.errorColor};
+          padding: 5px 10px;
+          border-radius: 0 12px 12px 12px;
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+
+      &-checkbox {
+        display: inline-flex;
+        flex-direction: row-reverse;
+        align-items: center;
+
+        input {
+          margin-right: 10px;
+        }
+      }
+
+      .password__error {
+        color: ${themeVars.colors.errorColor};
+      }
+
+      .email__error {
+        color: ${themeVars.colors.errorColor};
       }
     }
   }

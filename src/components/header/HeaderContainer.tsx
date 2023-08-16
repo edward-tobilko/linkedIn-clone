@@ -1,5 +1,5 @@
 import { FC, MouseEvent } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import {
@@ -16,7 +16,7 @@ import SearchInput from "../forms/search-input/SearchInput";
 
 import avatarIcon from "../../img/images/avatar.png";
 
-import { setIsAuthAC } from "../../redux/reducers/authReducer";
+import { setIsAuthAC, setLogoutTC } from "../../redux/reducers/authReducer";
 
 const mapStateToProps = (state: any) => {
   return {
@@ -26,11 +26,14 @@ const mapStateToProps = (state: any) => {
 };
 
 const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
+  const dispatch: any = useDispatch();
+
   const logout = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    // setIsAuthAC(false);
 
-    // localStorage.setItem("isAuth", "false");
+    dispatch(setLogoutTC());
+
+    localStorage.setItem("isAuth", "false");
   };
 
   return (
@@ -76,7 +79,7 @@ const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
           </HeaderRightStyle>
         ) : (
           <NavLinkStyle>
-            <NavLink to="/auth">
+            <NavLink to="/auth/login">
               <i className="bx bx-log-in"></i>
               <p>Log in</p>
             </NavLink>

@@ -66,18 +66,23 @@ export const authAPI = {
     return await instance.get("auth/me");
   },
 
-  // // Логірування користувача
-  // async getLoginApi(
-  //   email: string,
-  //   password: string,
-  //   rememberMe: boolean,
-  //   captcha: boolean,
-  // ) {
-  //   return await instance.post("auth/login", {
-  //     email,
-  //     password,
-  //     rememberMe,
-  //     captcha,
-  //   });
-  // },
+  // Логірування користувача
+  async getLoginApi(
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: boolean,
+  ) {
+    return await instance.post("auth/login", {
+      email,
+      password,
+      rememberMe,
+      captcha,
+    });
+  },
+
+  // Вилогірування користувача
+  async logoutApi() {
+    return await instance.delete("auth/login");
+  },
 };

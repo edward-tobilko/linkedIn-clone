@@ -21,9 +21,9 @@ const AppRoutes: FC<any> = () => {
   const dispatch: any = useDispatch();
 
   useEffect(() => {
-    // if (localStorage.getItem("isAuth")) {
-    dispatch(setIsAuthTC());
-    // }
+    if (localStorage.getItem("isAuth")) {
+      dispatch(setIsAuthTC());
+    }
   }, [dispatch]);
 
   return (
@@ -41,7 +41,7 @@ const AppRoutes: FC<any> = () => {
           <Route path=":id?" element={<Messages />} />
         </Route>
         <Route path="setting" element={<Setting />} />
-        <Route path="auth" element={<Auth />} />
+        <Route path="auth/login" element={<Auth />} />
         <Route path="not-found" element={<NotFound />} />
 
         {/* Redirect */}
