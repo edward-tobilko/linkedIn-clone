@@ -74,8 +74,6 @@ export const setLoginTC = (
       .then((response) => {
         if (response.data.resultCode === 0) {
           dispatch(setIsAuthTC);
-
-          console.log(response.data);
         }
       });
   };

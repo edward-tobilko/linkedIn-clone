@@ -44,11 +44,11 @@ export const AuthFormStyle = styled.form`
       margin: 20px auto;
 
       label {
-        letter-spacing: 1.5px;
+        letter-spacing: 1.2px;
       }
 
       &-input {
-        width: 80%;
+        width: 70%;
         background: inherit;
         border: 1px solid ${themeVars.colors.whiteColor};
         padding: 12px 25px;
@@ -57,59 +57,65 @@ export const AuthFormStyle = styled.form`
         border-radius: 8px;
       }
 
-      .psw {
-        letter-spacing: 1px;
-        font-size: 16px;
-        display: inline-flex;
-        align-items: center;
-
-        a {
-          color: ${themeVars.colors.lightGreyColor};
-          text-decoration: none;
-          font-size: 13px;
-          padding-left: 10px;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
+      .error {
+        padding-top: 7px;
+        color: ${themeVars.colors.errorColor};
       }
 
-      &:last-child {
+      &:last-child .error {
+        position: absolute;
+        bottom: -30px;
+        right: 0;
+
+        background: ${themeVars.colors.whiteColor};
+        color: ${themeVars.colors.errorColor};
+        padding: 5px 10px;
+        border-radius: 0 12px 12px 12px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      &:nth-child(5) {
         flex-direction: row-reverse;
         justify-content: center;
         position: relative;
 
-        .checkbox__error {
-          position: absolute;
-          bottom: -30px;
-          right: 0;
+        .checkbox {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
 
-          background: ${themeVars.colors.whiteColor};
-          color: ${themeVars.colors.errorColor};
-          padding: 5px 10px;
-          border-radius: 0 12px 12px 12px;
-          font-size: 14px;
-          font-weight: 600;
+          input {
+            width: 30px;
+            margin-top: 0;
+          }
+
+          label {
+            text-transform: uppercase;
+            font-size: 13px;
+          }
         }
       }
+    }
 
-      &-checkbox {
-        display: inline-flex;
-        flex-direction: row-reverse;
-        align-items: center;
+    .psw {
+      width: 100%;
+      letter-spacing: 1px;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-        input {
-          margin-right: 10px;
+      a {
+        color: ${themeVars.colors.lightGreyColor};
+        text-decoration: none;
+        font-size: 13px;
+        padding-left: 10px;
+
+        &:hover {
+          text-decoration: underline;
+          text-decoration-color: ${themeVars.colors.whiteColor};
         }
-      }
-
-      .password__error {
-        color: ${themeVars.colors.errorColor};
-      }
-
-      .email__error {
-        color: ${themeVars.colors.errorColor};
       }
     }
   }

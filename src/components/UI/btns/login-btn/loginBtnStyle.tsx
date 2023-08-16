@@ -18,8 +18,8 @@ export const LoginBtnStyle = styled.button`
   padding: 10px 20px;
   margin-right: 20px;
 
-  &:hover {
-    opacity: 0.8;
+  &:disabled {
+    opacity: 0.3;
   }
 
   /* Media */

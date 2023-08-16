@@ -15,13 +15,13 @@ import {
 import avatarIcon from "../../../img/images/avatar.png";
 
 // Container component
-const mapState = (state: RootState) => {
+const mapStateToProps = (state: RootState) => {
   return {
     newPostText: state.profilePage.newPostText,
   };
 };
 
-const mapDispatch = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     // Створюємо новий пост на сторінку profile
     addNewPostDispatch() {
@@ -35,7 +35,7 @@ const mapDispatch = (dispatch: any) => {
   };
 };
 
-const CreatePostFormContainer = connect(mapState, mapDispatch);
+const CreatePostFormContainer = connect(mapStateToProps, mapDispatchToProps);
 
 // Pure component
 const CreatePostForm: FC<any> = (props) => {

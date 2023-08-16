@@ -1,15 +1,17 @@
 import { FC } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { connect } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { connect, useDispatch } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { LoginBtn } from "../../UI/btns/login-btn/LoginBtn";
+import { authSchema } from "../../../utils/validators/authFormValidator";
 
 import { AuthFormStyle } from "./authFormStyle";
 
 import { setLoginTC } from "../../../redux/reducers/authReducer";
+import AuthFormField from "./AuthFormField";
 
-type AuthFormType = {
+export type AuthFormProps = {
   email: string;
   password: string;
   rememberMe: boolean;
@@ -39,21 +41,19 @@ const AuthFormContainer = connect(
 const AuthForm: FC = () => {
   const dispatch: any = useDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AuthFormType>({
+  const authForm = useForm<AuthFormProps>({
+    resolver: yupResolver(authSchema),
     defaultValues: {
       email: "",
       password: "",
       rememberMe: false,
       captcha: false,
     },
+    mode: "onChange",
   });
 
   // Submit your data into Redux store
-  const onSubmit: SubmitHandler<AuthFormType> = ({
+  const onSubmit: SubmitHandler<AuthFormProps> = ({
     email,
     password,
     rememberMe,
@@ -61,83 +61,52 @@ const AuthForm: FC = () => {
   }) => {
     dispatch(setLoginTC(email, password, rememberMe, captcha));
 
-    localStorage.setItem("isAuth", "true");
-
     console.log(email, password, rememberMe, captcha);
+
+    localStorage.setItem("isAuth", "true");
   };
 
   return (
-    <AuthFormStyle onSubmit={handleSubmit(onSubmit)}>
-      <div className="logo">
-        <i className="bx bxs-id-card"></i>
-      </div>
+    <FormProvider {...authForm}>
+      <AuthFormStyle onSubmit={authForm.handleSubmit(onSubmit)}>
+        <div className="logo">
+          <i className="bx bxs-id-card"></i>
+        </div>
 
-      <div className="container">
-        <h1 className="container-title">Authorization</h1>
-        <div className="container-field">
-          <label>Email:</label>
-          <input
+        <div className="container">
+          <h1 className="container-title">Authorization</h1>
+          <AuthFormField
             type="email"
-            placeholder="Enter Email"
-            className="container-field-input"
-            {...register("email", {
-              required: "Email Address is required",
-              maxLength: 30,
-              minLength: 7,
-            })}
-            aria-invalid={errors.email ? "true" : "false"}
+            name="email"
+            label="Email"
+            className="container-field"
           />
-
-          {errors.email && (
-            <p role="alert" className="email__error">
-              {errors.email.message}
-            </p>
-          )}
-        </div>
-        <div className="container-field">
-          <label>Password:</label>
-          <input
+          <AuthFormField
             type="password"
-            placeholder="Enter Password"
-            className="container-field-input"
-            {...register("password", { required: "Password is required" })}
-            aria-invalid={errors.password ? "true" : "false"}
+            name="password"
+            label="Password"
+            className="container-field"
           />
 
-          {errors.password && (
-            <p role="alert" className="password__error">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-        <div className="container-field">
-          <span className="psw">
+          <div className="psw">
             Forgot
             <a href="https://www.google.com/" target="blank">
               password?
             </a>
-          </span>
-        </div>
-        <div className="container-field">
-          <div className="container-field-checkbox">
-            <label>Remember me</label>
-            <input
-              type="checkbox"
-              {...register("rememberMe", { required: true })}
-              aria-invalid={errors.rememberMe ? "true" : "false"}
-            />
-
-            {errors.rememberMe?.type === "required" && (
-              <p role="alert" className="checkbox__error">
-                Authorization is required!
-              </p>
-            )}
           </div>
 
-          <LoginBtn type="submit">Log In</LoginBtn>
+          <div className="container-field">
+            <AuthFormField
+              type="checkbox"
+              name="rememberMe"
+              label="Remember me"
+              className="checkbox"
+            />
+            <LoginBtn authForm={authForm}>Log In</LoginBtn>
+          </div>
         </div>
-      </div>
-    </AuthFormStyle>
+      </AuthFormStyle>
+    </FormProvider>
   );
 };
 
