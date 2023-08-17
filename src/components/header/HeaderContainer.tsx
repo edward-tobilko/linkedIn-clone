@@ -39,8 +39,6 @@ const HeaderContainer: FC<HeaderContainerProps> = ({ isAuth, login }) => {
     event.preventDefault();
 
     dispatch(setLogoutTC());
-
-    localStorage.setItem("isAuth", "false");
   };
 
   return (
@@ -86,7 +84,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({ isAuth, login }) => {
           </HeaderRightStyle>
         ) : (
           <NavLinkStyle>
-            <NavLink to="/auth/login">
+            <NavLink to="/login">
               <i className="bx bx-log-in"></i>
               <p>Log in</p>
             </NavLink>

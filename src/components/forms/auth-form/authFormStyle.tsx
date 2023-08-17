@@ -118,6 +118,41 @@ export const AuthFormStyle = styled.form`
         }
       }
     }
+
+    .show__psw {
+      position: relative;
+
+      &-label {
+        position: absolute;
+        right: 0;
+        top: 60%;
+        z-index: 1;
+        transform: translateY(-40%);
+
+        &-check {
+          cursor: pointer;
+        }
+
+        .hover__text {
+          display: none;
+        }
+
+        &:hover .hover__text {
+          position: absolute;
+          bottom: -60px;
+          right: -100px;
+          z-index: 2;
+
+          display: block;
+          background: ${themeVars.colors.whiteColor};
+          color: ${themeVars.colors.blackColor};
+          padding: 5px 12px;
+          border-radius: 0 12px 12px 12px;
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+    }
   }
 
   /* Media */

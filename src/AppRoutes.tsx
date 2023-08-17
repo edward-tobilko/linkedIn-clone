@@ -22,9 +22,7 @@ const AppRoutes: FC = () => {
   const dispatch = useTypeDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem("isAuth")) {
-      dispatch(setIsAuthTC());
-    }
+    dispatch(setIsAuthTC());
   }, [dispatch]);
 
   return (
@@ -35,14 +33,14 @@ const AppRoutes: FC = () => {
         {/* "?" - в кінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
         <Route path="profile">
           <Route path=":userId" element={<Profile />} />
-          <Route index={true} element={<Profile />} />
+          <Route index element={<Profile />} />
         </Route>
         <Route path="social" element={<Social />} />
         <Route path="messages">
           <Route path=":id?" element={<Messages />} />
         </Route>
         <Route path="setting" element={<Setting />} />
-        <Route path="auth/login" element={<Auth />} />
+        <Route path="login" element={<Auth />} />
         <Route path="not-found" element={<NotFound />} />
 
         {/* Redirect */}
