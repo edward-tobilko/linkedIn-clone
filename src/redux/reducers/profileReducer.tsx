@@ -1,5 +1,7 @@
 import { v4 as uniqueID } from "uuid";
+
 import { profileAPI } from "../../api/API";
+import { RootDispatch } from "../store";
 
 export const CREATE_NEW_POST = "CREATE-NEW-POST";
 export const CHANGE_POST = "CHANGE-POST";
@@ -8,7 +10,46 @@ export const SET_CURRENT_USER_PAGE = "SET-CURRENT-USER-PAGE";
 export const LOADING = "LOADING";
 export const SET_STATUS = "SET-STATUS";
 
-const initialState = {
+type GeoProps = {
+  lat: string;
+  lng: string;
+};
+
+type AddressProps = {
+  street: string;
+  suite: string;
+  city: string;
+  zipcode: string;
+  geo: GeoProps;
+};
+
+type CompanyProps = {
+  name: string;
+  catchPhrase: string;
+  bs: string;
+};
+
+export type ItemProps = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: AddressProps;
+  phone: string;
+  website: string;
+  company: CompanyProps;
+};
+
+export type InitialStateProps = {
+  postUsers: ItemProps[];
+  newPostText: string;
+  name: string;
+  currentProfilePage: any;
+  loading: boolean;
+  status: string;
+};
+
+const initialState: InitialStateProps = {
   postUsers: [
     {
       id: 1,
@@ -110,7 +151,7 @@ const initialState = {
   status: "",
 };
 
-const profileReducer = (state: any = initialState, action: any) => {
+const profileReducer = (state = initialState, action: any) => {
   switch (action.type) {
     // Створюємо новий пост на сторінку profile
     case CREATE_NEW_POST:
@@ -210,8 +251,8 @@ export const setStatusAC = (status: string) => {
 // TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
 // Санка (thunk creator) для отримання поточної сторінки іншого користувача
-export const fetchCurrentUserPageTC = (userId: number) => {
-  return (dispatch: any) => {
+export const fetchCurrentUserPageTC = (userId: string) => {
+  return (dispatch: RootDispatch) => {
     dispatch(setLoadingAC(true));
 
     profileAPI.fetchCurrentUserPageById(userId).then((data: any) => {
@@ -223,8 +264,8 @@ export const fetchCurrentUserPageTC = (userId: number) => {
 };
 
 // TC для отримання статусу користувача
-export const fetchUserStatusByIdTC = (userId: number) => {
-  return async (dispatch: any) => {
+export const fetchUserStatusByIdTC = (userId: string) => {
+  return async (dispatch: RootDispatch) => {
     const response: any = await profileAPI.fetchUserStatusById(userId);
 
     dispatch(setStatusAC(response.data));
@@ -233,7 +274,7 @@ export const fetchUserStatusByIdTC = (userId: number) => {
 
 // TC для динамічної зміни статусу
 export const updateUserStatusTC = (status: string) => {
-  return async (dispatch: any) => {
+  return async (dispatch: RootDispatch) => {
     try {
       const response: any = await profileAPI.updateUserStatus(status);
 

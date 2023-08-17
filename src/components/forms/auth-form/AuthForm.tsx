@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { LoginBtn } from "../../UI/btns/login-btn/LoginBtn";
@@ -10,6 +10,7 @@ import { AuthFormStyle } from "./authFormStyle";
 
 import { setLoginTC } from "../../../redux/reducers/authReducer";
 import AuthFormField from "./AuthFormField";
+import { useTypeDispatch } from "../../../hooks/useTypeSelector";
 
 export type AuthFormProps = {
   email: string;
@@ -39,7 +40,7 @@ const AuthFormContainer = connect(
 );
 
 const AuthForm: FC = () => {
-  const dispatch: any = useDispatch();
+  const dispatch = useTypeDispatch();
 
   const authForm = useForm<AuthFormProps>({
     resolver: yupResolver(authSchema),

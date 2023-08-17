@@ -1,4 +1,5 @@
 import { socialUsersAPI } from "../../api/API";
+import { RootDispatch } from "../store";
 
 const FOLLOW = "follow";
 const UN_FOLLOW = "un-follow";
@@ -8,7 +9,36 @@ const SET_TOTAL_USERS_COUNT = "set-total-users-count";
 const LOADING = "loading";
 const FOLLOWING_BLOCKED_BTN = "following-blocked-btn";
 
-const initialState = {
+type SocialUserPhotosType = {
+  small: any;
+  large: any;
+};
+
+export type SocialUserType = {
+  name: string;
+  id: number;
+  uniqueUrlName: any;
+  photos: SocialUserPhotosType;
+  status: string;
+  followed: boolean;
+};
+
+type InitialStateType = {
+  socialUsers: SocialUserType[];
+  totalUsersCount: number;
+  usersCount: number;
+  currentPage: number;
+  loading: boolean;
+  followingBlockedBtn: any;
+};
+
+type fetchSocialUsersOnChangedPageDataType = {
+  items: SocialUserType[];
+  totalCount: number;
+  error: any;
+};
+
+const initialState: InitialStateType = {
   socialUsers: [],
   totalUsersCount: 0, // загальна к-сть користувачів
   usersCount: 18, // к-сть користувачів на одній сторінці
@@ -18,13 +48,13 @@ const initialState = {
 };
 
 // Reducer
-const socialReducer = (state: any = initialState, action: any) => {
+const socialReducer = (state = initialState, action: any) => {
   switch (action.type) {
     // Додаємо користувача
     case FOLLOW:
       return {
         ...state,
-        socialUsers: state.socialUsers.map((socialUser: any) => {
+        socialUsers: state.socialUsers.map((socialUser: SocialUserType) => {
           if (socialUser.id === action.userId) {
             return { ...socialUser, followed: true };
           }
@@ -37,7 +67,7 @@ const socialReducer = (state: any = initialState, action: any) => {
     case UN_FOLLOW:
       return {
         ...state,
-        socialUsers: state.socialUsers.map((socialUser: any) => {
+        socialUsers: state.socialUsers.map((socialUser: SocialUserType) => {
           if (socialUser.id === action.userId) {
             return { ...socialUser, followed: false };
           }
@@ -82,21 +112,21 @@ const socialReducer = (state: any = initialState, action: any) => {
 };
 
 // ACs
-export const setFollowUserAC = (userId: number) => {
+export const setFollowUserAC = (userId: string) => {
   return {
     type: FOLLOW,
     userId,
   };
 };
 
-export const setUnFollowUserAC = (userId: number) => {
+export const setUnFollowUserAC = (userId: string) => {
   return {
     type: UN_FOLLOW,
     userId,
   };
 };
 
-export const setUsersAC = (socialUsers: any) => {
+export const setUsersAC = (socialUsers: SocialUserType[]) => {
   return {
     type: SET_USERS,
     socialUsers,
@@ -124,7 +154,7 @@ export const setLoadingAC = (loading: boolean) => {
   };
 };
 
-export const setFollowingBlockedBtnAC = (loading: boolean, userId: number) => {
+export const setFollowingBlockedBtnAC = (loading: boolean, userId: string) => {
   return {
     type: FOLLOWING_BLOCKED_BTN,
     loading,
@@ -138,12 +168,12 @@ export default socialReducer;
 
 // Санка (thunk creator) для отримання користувачів
 export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
-  return (dispatch: any) => {
+  return (dispatch: RootDispatch) => {
     dispatch(setLoadingAC(true));
 
     socialUsersAPI
       .fetchSocialUsers(currentPage, usersCount)
-      .then((data: any) => {
+      .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(setCurrentPageAC(currentPage));
         dispatch(setLoadingAC(false)); // Додаємо загрузчик;
         dispatch(setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
@@ -157,13 +187,13 @@ export const fetchSocialUsersOnChangedPageTC = (
   pageNumber: number,
   usersCount: number,
 ) => {
-  return (dispatch: any) => {
+  return (dispatch: RootDispatch) => {
     dispatch(setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
     dispatch(setLoadingAC(true));
 
     socialUsersAPI
       .fetchChangedPageUsers(pageNumber, usersCount)
-      .then((data: any) => {
+      .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(setLoadingAC(false));
         dispatch(setUsersAC(data.items));
       });
@@ -171,8 +201,8 @@ export const fetchSocialUsersOnChangedPageTC = (
 };
 
 // ТС для додавання користувача
-export const setFollowUserTC = (userId: number) => {
-  return (dispatch: any) => {
+export const setFollowUserTC = (userId: string) => {
+  return (dispatch: RootDispatch) => {
     dispatch(setFollowingBlockedBtnAC(true, userId)); // Блокуємо кнопку при натисканні
 
     socialUsersAPI.followUser(userId).then((data) => {
@@ -186,8 +216,8 @@ export const setFollowUserTC = (userId: number) => {
 };
 
 // ТС для видалення користувача
-export const setUnFollowUserTC = (userId: number) => {
-  return (dispatch: any) => {
+export const setUnFollowUserTC = (userId: string) => {
+  return (dispatch: RootDispatch) => {
     dispatch(setFollowingBlockedBtnAC(true, userId));
 
     socialUsersAPI.unFollowUser(userId).then((data) => {

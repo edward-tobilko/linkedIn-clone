@@ -7,7 +7,7 @@ import { RootState } from "../../../redux/store";
 import { useMyContext } from "../../../context/Context";
 
 // Container component
-const mapStateToprops = (state: RootState) => {
+const mapStateToprops = (state: RootState | any) => {
   return {
     postUsers: state.profilePage.postUsers,
   };
@@ -15,7 +15,7 @@ const mapStateToprops = (state: RootState) => {
 
 const SearchInputContainer = connect(mapStateToprops, null);
 
-const SearchInput: FC<any> = () => {
+const SearchInput: FC = () => {
   const props = useMyContext();
 
   return (

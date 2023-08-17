@@ -8,7 +8,16 @@ import { FollowBtn } from "../../components/UI/btns/follow/FollowBtn";
 
 import removeIcon from "../../img/svg/remove_icon.svg";
 
-const SocialUsersItem: FC<any> = ({
+import { SocialUserType } from "../../redux/reducers/socialReducer";
+
+type SocialUsersItemProps = {
+  socialUser: SocialUserType;
+  followingBlockedBtn: any;
+  setFollowUserTC: any;
+  setUnFollowUserTC: any;
+};
+
+const SocialUsersItem: FC<SocialUsersItemProps> = ({
   socialUser,
   followingBlockedBtn,
   setFollowUserTC,

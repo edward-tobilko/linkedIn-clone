@@ -4,7 +4,7 @@ import { AuthStyle } from "./authStyle";
 
 import AuthForm from "../../components/forms/auth-form/AuthForm";
 
-const Auth: FC<any> = () => {
+const Auth: FC = () => {
   return (
     <AuthStyle>
       <AuthForm />

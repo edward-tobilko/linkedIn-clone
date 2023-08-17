@@ -2,16 +2,24 @@ import { FC, useState } from "react";
 
 import { PaginationStyle } from "./paginationStyle";
 
-export const Pagination: FC<any> = ({
+type PaginationProps = {
+  totalUsersCount: number;
+  usersCount: number;
+  currentPage: number;
+  onChangedPage: (page: number) => void;
+};
+
+export const Pagination: FC<PaginationProps> = ({
   totalUsersCount,
   usersCount,
   currentPage,
   onChangedPage,
-  paginationLength = 5,
 }) => {
-  const [lengthNumber, setLengthNumber] = useState(1);
+  const [lengthNumber, setLengthNumber] = useState<number>(1);
 
-  const pages: any = [];
+  const pages: Array<number> = [];
+  const paginationLength: number = 5;
+
   const totalPagesCount = Math.ceil(totalUsersCount / usersCount);
   const paginationLengthCount = totalPagesCount / paginationLength;
 
@@ -33,10 +41,10 @@ export const Pagination: FC<any> = ({
 
       {pages
         .filter(
-          (page: any) =>
+          (page: number) =>
             page >= leftArrowPageNumber && page <= rightArrowPageNumber,
         )
-        .map((page: any, index: number) => (
+        .map((page: number, index: number) => (
           <p key={index}>
             <span
               className={currentPage === page ? "active__page" : undefined}

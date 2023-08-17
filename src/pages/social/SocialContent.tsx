@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { compose } from "redux";
 
 import {
@@ -8,11 +8,13 @@ import {
   setFollowUserTC,
   setUnFollowUserTC,
 } from "../../redux/reducers/socialReducer";
+import { RootState } from "../../redux/store";
 
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
 import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
+import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { Loader } from "../../components/UI/loader/Loader";
 import SocialUsersList from "./SocialUsersList";
@@ -20,7 +22,16 @@ import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
 import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
 
-const mapStateToProps = (state: any) => {
+type SocialContentProps = {
+  socialUsers: any;
+  usersCount: number;
+  totalUsersCount: number;
+  currentPage: number;
+  loading: boolean;
+  followingBlockedBtn: any;
+};
+
+const mapStateToProps = (state: RootState) => {
   return {
     socialUsers: state.socialPage.socialUsers,
     totalUsersCount: state.socialPage.totalUsersCount,
@@ -45,7 +56,7 @@ const SocialContentContainer = connect(mapStateToProps, {
   setUnFollowUserTC,
 });
 
-const SocialContent: FC<any> = ({
+const SocialContent: FC<SocialContentProps> = ({
   socialUsers,
   usersCount,
   totalUsersCount,
@@ -53,7 +64,7 @@ const SocialContent: FC<any> = ({
   loading,
   followingBlockedBtn,
 }) => {
-  const dispatch: any = useDispatch();
+  const dispatch = useTypeDispatch();
 
   const [getSocialUsers] = useFetching(async () => {
     dispatch(fetchSocialUsersTC(currentPage, usersCount));

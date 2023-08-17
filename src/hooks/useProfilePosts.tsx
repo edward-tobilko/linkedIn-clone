@@ -1,10 +1,16 @@
 import { useMemo } from "react";
 
-export const useProfilePosts = (postUsers: any, searchUsers: any) => {
+import { ItemProps } from "../redux/reducers/profileReducer";
+
+type UserPost = ItemProps & { searchUsers: string };
+
+export const useProfilePosts = (postUsers: ItemProps, searchUsers: string) => {
   const searchedPosts = useMemo(() => {
-    return postUsers.filter((userPost: any) => {
-      return userPost.name.includes(searchUsers);
-    });
+    if (Array.isArray(postUsers)) {
+      return postUsers.filter((userPost: UserPost) => {
+        return userPost.name.includes(searchUsers);
+      });
+    }
   }, [searchUsers, postUsers]);
 
   return searchedPosts;

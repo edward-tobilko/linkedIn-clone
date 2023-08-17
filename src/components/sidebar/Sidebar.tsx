@@ -7,6 +7,12 @@ import { MdVisibility } from "react-icons/md";
 import { CardProfile } from "../../pages/profile/CardProfile";
 import { Loader } from "../../components/UI/loader/Loader";
 
+type SidebarProps = {
+  currentProfilePage: any;
+  status: string;
+  updateUserStatusTC: any;
+};
+
 // UI time elements
 function UITimeElements() {
   const [seconds, setSeconds] = useState(new Date().toLocaleTimeString());
@@ -63,7 +69,7 @@ function UITimeElements() {
   );
 }
 
-export const Sidebar: FC<any> = ({
+export const Sidebar: FC<SidebarProps> = ({
   currentProfilePage,
   status,
   updateUserStatusTC,

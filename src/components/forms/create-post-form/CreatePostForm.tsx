@@ -1,6 +1,5 @@
 import { FC, MouseEvent, ChangeEvent } from "react";
 import { connect } from "react-redux";
-import { RootState } from "../../../redux/store";
 
 import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
@@ -11,17 +10,24 @@ import {
   addNewPostAC,
   changePostAC,
 } from "../../../redux/reducers/profileReducer";
+import { RootDispatch, RootState } from "../../../redux/store";
 
 import avatarIcon from "../../../img/images/avatar.png";
 
+type CreatePostFormProps = {
+  changePostDispatch: (newPostText: string) => void;
+  addNewPostDispatch(): void;
+  newPostText: string;
+};
+
 // Container component
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState | any) => {
   return {
     newPostText: state.profilePage.newPostText,
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: RootDispatch) => {
   return {
     // Створюємо новий пост на сторінку profile
     addNewPostDispatch() {
@@ -38,7 +44,7 @@ const mapDispatchToProps = (dispatch: any) => {
 const CreatePostFormContainer = connect(mapStateToProps, mapDispatchToProps);
 
 // Pure component
-const CreatePostForm: FC<any> = (props) => {
+const CreatePostForm: FC<CreatePostFormProps> = (props) => {
   const changePost = (event: ChangeEvent<HTMLInputElement>) => {
     props.changePostDispatch(event.target.value);
   };

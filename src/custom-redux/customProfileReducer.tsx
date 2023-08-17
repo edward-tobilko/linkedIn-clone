@@ -1,9 +1,11 @@
 import { v4 as uniqueID } from "uuid";
 
+import { RootState } from "../redux/store";
+
 export const CREATE_NEW_POST = "CREATE-NEW-POST";
 export const CHANGE_POST = "CHANGE-POST";
 
-const profileReducer = (state: any, action: any) => {
+const profileReducer = (state: RootState | any, action: any) => {
   switch (action.type) {
     case CREATE_NEW_POST:
       if (state.newText.trim() !== "") {

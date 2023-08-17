@@ -2,7 +2,16 @@ import { FC } from "react";
 
 import SocialUsersItem from "./SocialUsersItem";
 
-const SocialUsersList: FC<any> = ({
+import { SocialUserType } from "../../redux/reducers/socialReducer";
+
+type SocialUsersListProps = {
+  socialUsers: SocialUserType[];
+  followingBlockedBtn: any;
+  setFollowUserTC: any;
+  setUnFollowUserTC: any;
+};
+
+const SocialUsersList: FC<SocialUsersListProps> = ({
   socialUsers,
   followingBlockedBtn,
   setFollowUserTC,
@@ -10,7 +19,7 @@ const SocialUsersList: FC<any> = ({
 }) => {
   return (
     <>
-      {socialUsers.map((socialUser: any) => (
+      {socialUsers.map((socialUser) => (
         <SocialUsersItem
           key={socialUser?.id}
           socialUser={socialUser}

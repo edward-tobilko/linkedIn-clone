@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
 import Profile from "./pages/profile/Profile";
 import Social from "./pages/social/Social";
@@ -11,14 +11,15 @@ import Auth from "./pages/auth/Auth";
 import { NotFound } from "./components/notifications/not-found/NotFound";
 
 import { setIsAuthTC } from "./redux/reducers/authReducer";
+import { useTypeDispatch } from "./hooks/useTypeSelector";
 
 const AppRoutesContainer = connect(null, {
   // Санка (thunk creator) для авторизації
   setIsAuthTC,
 });
 
-const AppRoutes: FC<any> = () => {
-  const dispatch: any = useDispatch();
+const AppRoutes: FC = () => {
+  const dispatch = useTypeDispatch();
 
   useEffect(() => {
     if (localStorage.getItem("isAuth")) {

@@ -1,9 +1,18 @@
 import { FC, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 
 import { StatusStyle } from "./statusStyle";
 
-export const Status: FC<any> = ({
+import { useTypeDispatch } from "../../../hooks/useTypeSelector";
+
+import { RootDispatch } from "../../../redux/store";
+
+type StatusProps = {
+  status: string;
+  updateUserStatusTC: RootDispatch;
+  currentProfilePage: any;
+};
+
+export const Status: FC<StatusProps> = ({
   status,
   updateUserStatusTC,
   currentProfilePage,
@@ -11,7 +20,7 @@ export const Status: FC<any> = ({
   const [statusValue, setStatusValue] = useState(status);
   const [editMode, setEditMode] = useState(false);
 
-  const dispatch: any = useDispatch();
+  const dispatch = useTypeDispatch();
 
   const updateInputStatus = () => {
     setEditMode(false);

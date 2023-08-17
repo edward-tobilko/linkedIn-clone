@@ -1,11 +1,12 @@
 import { authAPI } from "../../api/API";
+import { RootDispatch } from "../store";
 
 const SET_IS_AUTH = "SET-IS-AUTH";
 
 type InitialStateType = {
-  id: number;
-  email: string;
-  login: string;
+  id: number | null;
+  email: string | null;
+  login: string | null;
   isAuth: boolean;
 };
 
@@ -16,7 +17,7 @@ const initialState = {
   isAuth: false,
 };
 
-const authReducer = (state: any = initialState, action: any) => {
+const authReducer = (state: InitialStateType = initialState, action: any) => {
   switch (action.type) {
     // Встановлюємо параметри (id, email, login, ) авторизації
     case SET_IS_AUTH:
@@ -35,9 +36,9 @@ export default authReducer;
 
 // ACs
 export const setIsAuthAC = (
-  id: number | any,
-  email: string | any,
-  login: string | any,
+  id: number | null,
+  email: string | null,
+  login: string | null,
   isAuth: boolean,
 ) => {
   return {
@@ -50,7 +51,7 @@ export const setIsAuthAC = (
 
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = () => {
-  return (dispatch: any) => {
+  return (dispatch: RootDispatch) => {
     authAPI.authorizationMe().then((response) => {
       if (response.data.resultCode === 0) {
         let { id, email, login, isAuth } = response.data.data;
@@ -68,7 +69,7 @@ export const setLoginTC = (
   rememberMe: boolean,
   captcha: boolean,
 ) => {
-  return (dispatch: any) => {
+  return (dispatch: RootDispatch) => {
     authAPI
       .getLoginApi(email, password, rememberMe, captcha)
       .then((response) => {
@@ -81,7 +82,7 @@ export const setLoginTC = (
 
 // CT для вилогірування користувача
 export const setLogoutTC = () => {
-  return (dispatch: any) => {
+  return (dispatch: RootDispatch) => {
     authAPI.logoutApi().then((response: any) => {
       if (response.data.resultCode === 0) {
         dispatch(setIsAuthAC(null, null, null, false));

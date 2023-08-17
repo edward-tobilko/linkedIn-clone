@@ -24,17 +24,17 @@ export const socialUsersAPI = {
   },
 
   // Добавляємо користувача (follow)
-  async followUser(userId: number) {
+  async followUser(userId: string) {
     return await instance.post(`follow/${userId}`, {}).then((res) => res.data);
   },
 
   // Видаляємо користувача (unFollow)
-  async unFollowUser(userId: number) {
+  async unFollowUser(userId: string) {
     return await instance.delete(`follow/${userId}`).then((res) => res.data); // В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
 
   // Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI
-  async fetchUserStatusById(userId: number) {
+  async fetchUserStatusById(userId: string) {
     console.warn("Please, go to the profileAPI method!");
 
     return await profileAPI.fetchUserStatusById(userId);
@@ -44,12 +44,12 @@ export const socialUsersAPI = {
 // For the Profile component
 export const profileAPI = {
   // Отримуємо поточну сторінку користувача
-  async fetchCurrentUserPageById(userId: number) {
+  async fetchCurrentUserPageById(userId: string) {
     return await instance.get(`profile/${userId}`).then((res) => res.data);
   },
 
   // Отримуємо статус користувача
-  async fetchUserStatusById(userId: number) {
+  async fetchUserStatusById(userId: string) {
     return await instance.get(`profile/status/${userId}`);
   },
 

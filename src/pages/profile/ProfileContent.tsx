@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { compose } from "redux";
 
 import { ProfileStyle, CreatePostStyle } from "./profileStyle";
@@ -16,11 +16,23 @@ import {
   fetchUserStatusByIdTC,
   updateUserStatusTC,
 } from "../../redux/reducers/profileReducer";
+import { RootState } from "../../redux/store";
 
 import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
+import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
-const mapStateToProps = (state: any) => {
+type ProfileContentProps = {
+  currentProfilePage: any;
+  loading: boolean;
+  status: string;
+};
+
+type UseParamsProps = {
+  userId: string;
+};
+
+const mapStateToProps = (state: RootState | any) => {
   return {
     currentProfilePage: state.profilePage.currentProfilePage,
     loading: state.profilePage.loading,
@@ -28,10 +40,14 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const ProfileContent: FC<any> = ({ currentProfilePage, loading, status }) => {
-  let { userId }: any = useParams();
+const ProfileContent: FC<ProfileContentProps> = ({
+  currentProfilePage,
+  loading,
+  status,
+}) => {
+  let { userId } = useParams<keyof UseParamsProps>() as UseParamsProps;
 
-  const dispatch: any = useDispatch();
+  const dispatch = useTypeDispatch();
 
   const [getCurrentUserPageById] = useFetching(() => {
     dispatch(fetchCurrentUserPageTC(userId));
@@ -43,7 +59,7 @@ const ProfileContent: FC<any> = ({ currentProfilePage, loading, status }) => {
   }, [dispatch]);
 
   if (!userId) {
-    userId = 29793;
+    userId = "29793";
   }
 
   return (

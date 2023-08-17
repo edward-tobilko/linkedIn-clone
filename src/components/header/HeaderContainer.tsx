@@ -1,5 +1,5 @@
 import { FC, MouseEvent } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import {
@@ -17,16 +17,23 @@ import SearchInput from "../forms/search-input/SearchInput";
 import avatarIcon from "../../img/images/avatar.png";
 
 import { setIsAuthAC, setLogoutTC } from "../../redux/reducers/authReducer";
+import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { RootState } from "../../redux/store";
 
-const mapStateToProps = (state: any) => {
+type HeaderContainerProps = {
+  isAuth: boolean;
+  login: string;
+};
+
+const mapStateToProps = (state: RootState) => {
   return {
     isAuth: state.authorization.isAuth,
     login: state.authorization.login,
   };
 };
 
-const HeaderContainer: FC<any> = ({ isAuth, login, setIsAuthAC }) => {
-  const dispatch: any = useDispatch();
+const HeaderContainer: FC<HeaderContainerProps> = ({ isAuth, login }) => {
+  const dispatch = useTypeDispatch();
 
   const logout = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();

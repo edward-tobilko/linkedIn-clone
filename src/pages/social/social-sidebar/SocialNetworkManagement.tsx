@@ -10,7 +10,13 @@ import {
 import SocialNetworkManagementInput from "../../../components/forms/social-network-management/SocialNetworkManagementInput";
 import { SocialNetworkManagementBtn } from "../../../components/UI/btns/social-network-management/SocialNetworkManagementBtn";
 
-const socialNetworkManagementInfo = [
+type SocialNetworkManagementInfoType = {
+  id: number;
+  title: string;
+  subtitle?: string;
+};
+
+const socialNetworkManagementInfo: SocialNetworkManagementInfoType[] = [
   { id: 1, title: "General information" },
   { id: 2, title: "Availability", subtitle: "Help centre" },
   { id: 3, title: "Privacy terms and conditions" },
@@ -83,9 +89,11 @@ const SocialNetworkManagement: FC = () => {
 
       <NetworkManagementPersonalFooterStyle>
         <ul>
-          {socialNetworkManagementInfo.map((item: any) => (
+          {socialNetworkManagementInfo.map((item) => (
             <li key={item.id}>
-              <a href="#"> {item.title} </a>
+              <a href="#" target="blank">
+                {item.title}
+              </a>
             </li>
           ))}
         </ul>
