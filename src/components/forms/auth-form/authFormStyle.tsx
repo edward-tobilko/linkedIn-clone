@@ -62,17 +62,22 @@ export const AuthFormStyle = styled.form`
         color: ${themeVars.colors.errorColor};
       }
 
-      &:last-child .error {
+      .checkbox__error {
         position: absolute;
-        bottom: -30px;
-        right: 0;
+        bottom: -40px;
+        right: 20px;
 
         background: ${themeVars.colors.whiteColor};
         color: ${themeVars.colors.errorColor};
-        padding: 5px 10px;
         border-radius: 0 12px 12px 12px;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 600;
+        height: 40px;
+        width: 200px;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       &:nth-child(5) {
@@ -84,16 +89,7 @@ export const AuthFormStyle = styled.form`
           display: flex;
           flex-direction: row-reverse;
           align-items: center;
-
-          input {
-            width: 30px;
-            margin-top: 0;
-          }
-
-          label {
-            text-transform: uppercase;
-            font-size: 13px;
-          }
+          margin-right: 5px;
         }
       }
     }

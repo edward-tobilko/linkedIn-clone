@@ -31,6 +31,7 @@ const AuthForm: FC<any> = ({ authForm, onSubmit }) => {
             name="password"
             label="Password"
           />
+
           <label className="show__psw-label">
             <input
               type="checkbox"
@@ -51,12 +52,20 @@ const AuthForm: FC<any> = ({ authForm, onSubmit }) => {
         </div>
 
         <div className="container-field">
-          <AuthFormField
+          <label htmlFor="rememberMe"> Remember me </label>
+          <input
             type="checkbox"
             name="rememberMe"
-            label="Remember me"
             className="checkbox"
+            {...authForm.register("rememberMe")}
           />
+
+          {authForm.formState.errors.rememberMe && (
+            <p className="checkbox__error">
+              {authForm.formState.errors["rememberMe"]?.message}
+            </p>
+          )}
+
           <LoginBtn authForm={authForm}>Log In</LoginBtn>
         </div>
       </div>

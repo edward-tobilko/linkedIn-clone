@@ -3,14 +3,14 @@ import { authAPI } from "../../api/API";
 import { RootDispatch } from "../store";
 
 const SET_IS_AUTH = "SET-IS-AUTH";
-const SET_LOGIN_BLOCKED_BTN = "SET-LOGIN-BLOCKED-BTN";
+const CAPTCHA = "CAPTCHA";
 
 type InitialStateType = {
   id: number | any;
   email: string | any;
   login: string | any;
   isAuth: boolean;
-  loginBlockedBtn: any;
+  captcha: any;
 };
 
 const initialState: InitialStateType = {
@@ -18,7 +18,7 @@ const initialState: InitialStateType = {
   email: null,
   login: null,
   isAuth: false,
-  loginBlockedBtn: [],
+  captcha: null,
 };
 
 const authReducer = (state = initialState, action: any) => {
@@ -29,6 +29,9 @@ const authReducer = (state = initialState, action: any) => {
         ...state,
         ...action.data,
       };
+
+    case CAPTCHA:
+      return { ...state, ...action.payload };
 
     default:
       return state;
@@ -50,9 +53,10 @@ export const setIsAuthAC = (
   };
 };
 
-export const setLoginBlockedBtnAC = () => {
+export const setCaptcha = (captcha: any) => {
   return {
-    type: SET_LOGIN_BLOCKED_BTN,
+    type: CAPTCHA,
+    payload: { captcha },
   };
 };
 
@@ -80,10 +84,14 @@ export const setLoginTC = (
 ) => {
   return (dispatch: RootDispatch) => {
     authAPI
-      .getLoginApi(email, password, rememberMe, captcha)
+      .getLoginApi(email, password, (rememberMe = false), captcha)
       .then((response) => {
         if (response.data.resultCode === 0) {
           dispatch(setIsAuthTC());
+        } else {
+          if (response.data.resultCode === 10) {
+            dispatch(setCaptchaTC());
+          }
         }
       });
   };
@@ -98,4 +106,11 @@ export const setLogoutTC = () => {
       }
     });
   };
+};
+
+// TC для капчі
+export const setCaptchaTC = () => (dispatch: RootDispatch) => {
+  return authAPI.getCaptchaUrl().then((response: any) => {
+    console.log(response.data.url);
+  });
 };

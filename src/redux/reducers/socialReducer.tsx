@@ -207,10 +207,10 @@ export const setFollowUserTC = (userId: string) => {
 
     socialUsersAPI.followUser(userId).then((data) => {
       if (data.resultCode === 0) {
-        dispatch(setFollowUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!!!
+        dispatch(setFollowUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!
       }
 
-      dispatch(setFollowingBlockedBtnAC(false, userId)); // Блокуємо кнопку при натисканні
+      dispatch(setFollowingBlockedBtnAC(false, userId));
     });
   };
 };

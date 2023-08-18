@@ -59,7 +59,7 @@ export const profileAPI = {
   },
 };
 
-// For the AppRoutes component
+// For the AppRoutes, Auth components
 export const authAPI = {
   // Авторизуємо себе
   async authorizationMe() {
@@ -84,5 +84,10 @@ export const authAPI = {
   // Вилогірування користувача
   async logoutApi() {
     return await instance.delete("auth/login");
+  },
+
+  // Captcha
+  async getCaptchaUrl() {
+    return await instance.get("security/get-captcha-url");
   },
 };

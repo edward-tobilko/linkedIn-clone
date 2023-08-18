@@ -6,7 +6,7 @@ import Profile from "./pages/profile/Profile";
 import Social from "./pages/social/Social";
 import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
-import Auth from "./pages/auth/Auth";
+import Auth from "./pages/auth/AuthContainer";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
 
