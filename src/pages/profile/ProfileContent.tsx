@@ -47,6 +47,10 @@ const ProfileContent: FC<ProfileContentProps> = ({
 }) => {
   let { userId } = useParams<keyof UseParamsProps>() as UseParamsProps;
 
+  if (!userId) {
+    userId = "29793";
+  }
+
   const dispatch = useTypeDispatch();
 
   const [getCurrentUserPageById] = useFetching(() => {
@@ -57,10 +61,6 @@ const ProfileContent: FC<ProfileContentProps> = ({
   useEffect(() => {
     getCurrentUserPageById();
   }, [dispatch]);
-
-  if (!userId) {
-    userId = "29793";
-  }
 
   return (
     <>

@@ -9,6 +9,7 @@ import thunkMiddleware from "redux-thunk";
 import profileReducer from "./reducers/profileReducer";
 import socialReducer from "./reducers/socialReducer";
 import authReducer from "./reducers/authReducer";
+import rootAppReducer from "./reducers/rootAppReducer";
 
 declare global {
   interface Window {
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   profilePage: profileReducer,
   socialPage: socialReducer,
   authorization: authReducer,
+  rootApp: rootAppReducer,
 });
 
 // отримуємо тип редюсора та за допомогою RootState ми можемо створити кастомний хук useTypeSelector

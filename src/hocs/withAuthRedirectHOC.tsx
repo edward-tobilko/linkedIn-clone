@@ -22,7 +22,7 @@ export const withAuthRedirectHOC = (Component: any) => {
     let navigate = useNavigate();
     let params = useParams();
 
-    if (props.isAuth === false) return <Navigate to={"/not-found"} />;
+    if (props.isAuth === false) return <Navigate to="/not-found" />;
 
     return (
       <Component

@@ -10,20 +10,35 @@ import Auth from "./pages/auth/AuthContainer";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
 
-import { setIsAuthTC } from "./redux/reducers/authReducer";
+import { setInitializedSuccessRootAppTC } from "./redux/reducers/rootAppReducer";
+
 import { useTypeDispatch } from "./hooks/useTypeSelector";
+import { RootState } from "./redux/store";
+import { Loader } from "./components/UI/loader/Loader";
+import { compose } from "redux";
 
-const AppRoutesContainer = connect(null, {
-  // Санка (thunk creator) для авторизації
-  setIsAuthTC,
-});
+const mapStateToProps = (state: RootState) => {
+  return {
+    initialized: state.rootApp.initialized,
+  };
+};
 
-const AppRoutes: FC = () => {
+const AppRoutesContainer = compose(
+  connect(mapStateToProps, {
+    setInitializedSuccessRootAppTC,
+  }),
+);
+
+const AppRoutes: FC = (initialized) => {
   const dispatch = useTypeDispatch();
 
   useEffect(() => {
-    dispatch(setIsAuthTC());
+    dispatch(setInitializedSuccessRootAppTC());
   }, [dispatch]);
+
+  if (!initialized) {
+    return <Loader />;
+  }
 
   return (
     <>

@@ -65,7 +65,7 @@ export const setCaptcha = (captcha: any) => {
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = () => {
   return (dispatch: RootDispatch) => {
-    authAPI.authorizationMe().then((response) => {
+    return authAPI.authorizationMe().then((response) => {
       if (response.data.resultCode === 0) {
         let { id, email, login, isAuth } = response.data.data;
 
