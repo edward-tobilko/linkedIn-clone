@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
+import { compose } from "redux";
 
 import Profile from "./pages/profile/Profile";
 import Social from "./pages/social/Social";
@@ -9,17 +10,17 @@ import Setting from "./pages/setting/Setting";
 import Auth from "./pages/auth/AuthContainer";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
+import { Loader } from "./components/UI/loader/Loader";
 
 import { setInitializedSuccessRootAppTC } from "./redux/reducers/rootAppReducer";
+import { RootState } from "./redux/store";
 
 import { useTypeDispatch } from "./hooks/useTypeSelector";
-import { RootState } from "./redux/store";
-import { Loader } from "./components/UI/loader/Loader";
-import { compose } from "redux";
+import { initializedSelector } from "./utils/selectors/rootSelectors";
 
 const mapStateToProps = (state: RootState) => {
   return {
-    initialized: state.rootApp.initialized,
+    initialized: initializedSelector(state),
   };
 };
 

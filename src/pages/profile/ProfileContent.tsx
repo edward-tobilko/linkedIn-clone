@@ -22,6 +22,12 @@ import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
+import {
+  currentProfilePageSelector,
+  loadingSelector,
+  statusSelector,
+} from "../../utils/selectors/profileSelectors";
+
 type ProfileContentProps = {
   currentProfilePage: any;
   loading: boolean;
@@ -34,9 +40,9 @@ type UseParamsProps = {
 
 const mapStateToProps = (state: RootState | any) => {
   return {
-    currentProfilePage: state.profilePage.currentProfilePage,
-    loading: state.profilePage.loading,
-    status: state.profilePage.status,
+    currentProfilePage: currentProfilePageSelector(state),
+    loading: loadingSelector(state),
+    status: statusSelector(state),
   };
 };
 

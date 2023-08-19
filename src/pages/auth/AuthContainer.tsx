@@ -7,7 +7,9 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { AuthStyle } from "./authStyle";
 
 import AuthForm from "../../components/forms/auth-form/AuthForm";
+
 import { authSchema } from "../../utils/validators/authFormValidator";
+import { isAuthSelector } from "../../utils/selectors/authSelectors";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { setLoginTC } from "../../redux/reducers/authReducer";
@@ -25,7 +27,7 @@ type AuthContainerProps = {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  isAuth: state.authorization.isAuth,
+  isAuth: isAuthSelector(state),
 });
 
 const AuthContainer: FC<AuthContainerProps> = ({ isAuth }) => {

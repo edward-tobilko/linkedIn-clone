@@ -14,13 +14,22 @@ import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { Loader } from "../../components/UI/loader/Loader";
 import SocialUsersList from "./SocialUsersList";
 import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
 import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
+
+import {
+  socialUsersSelector,
+  totalUsersCountSelector,
+  usersCountSelector,
+  currentPageSelector,
+  loadingSelector,
+  followingBlockedBtnSelector,
+  isAuthSelector,
+} from "../../utils/selectors/socialSelectors";
 
 type SocialContentProps = {
   socialUsers: any;
@@ -34,13 +43,13 @@ type SocialContentProps = {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    socialUsers: state.socialPage.socialUsers,
-    totalUsersCount: state.socialPage.totalUsersCount,
-    usersCount: state.socialPage.usersCount,
-    currentPage: state.socialPage.currentPage,
-    loading: state.socialPage.loading,
-    followingBlockedBtn: state.socialPage.followingBlockedBtn,
-    isAuth: state.authorization.isAuth,
+    socialUsers: socialUsersSelector(state),
+    totalUsersCount: totalUsersCountSelector(state),
+    usersCount: usersCountSelector(state),
+    currentPage: currentPageSelector(state),
+    loading: loadingSelector(state),
+    followingBlockedBtn: followingBlockedBtnSelector(state),
+    isAuth: isAuthSelector(state),
   };
 };
 
