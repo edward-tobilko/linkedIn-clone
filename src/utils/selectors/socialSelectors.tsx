@@ -1,7 +1,18 @@
 import { RootState } from "../../redux/store";
 
+import { createSelector } from "reselect";
+
+// Примітивний селектор - просто вертає частину стейта, яка нам потрібна (наприклад socialUsers).
 export const socialUsersSelector = (state: RootState) =>
   state.socialPage.socialUsers;
+
+// Складний селектор - потрібен для складних обчислень, щоб не викликався render компоненти за кожним разом при обновленні state.
+export const socialUsersReselector = createSelector(
+  socialUsersSelector,
+  (socialUsers) => {
+    return socialUsers.filter((user) => true);
+  },
+);
 
 export const totalUsersCountSelector = (state: RootState) =>
   state.socialPage.totalUsersCount;

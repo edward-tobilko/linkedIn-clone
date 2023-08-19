@@ -22,6 +22,7 @@ import { Pagination } from "../../components/UI/paginations/Pagination";
 import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
 
 import {
+  socialUsersReselector,
   socialUsersSelector,
   totalUsersCountSelector,
   usersCountSelector,
@@ -42,8 +43,13 @@ type SocialContentProps = {
 };
 
 const mapStateToProps = (state: RootState) => {
+  // Для прикладу рендера компоненти SocialContent
+  console.log("mapStateToProps - users");
+
   return {
-    socialUsers: socialUsersSelector(state),
+    socialUsers: socialUsersReselector(state),
+    // socialUsers: socialUsersSelector(state),
+
     totalUsersCount: totalUsersCountSelector(state),
     usersCount: usersCountSelector(state),
     currentPage: currentPageSelector(state),
@@ -89,6 +95,9 @@ const SocialContent: FC<SocialContentProps> = ({
   useEffect(() => {
     getSocialUsers();
   }, [dispatch]);
+
+  // Для прикладу рендера компоненти SocialContent
+  console.log("SocialContent component - render");
 
   return (
     <>

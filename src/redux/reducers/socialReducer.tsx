@@ -30,6 +30,7 @@ type InitialStateType = {
   currentPage: number;
   loading: boolean;
   followingBlockedBtn: any;
+  fake: number;
 };
 
 type fetchSocialUsersOnChangedPageDataType = {
@@ -45,11 +46,18 @@ const initialState: InitialStateType = {
   currentPage: 1, // поточна активна сторінка
   loading: false,
   followingBlockedBtn: [], // для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
+
+  // Для прикладу рендера компоненти SocialContent
+  fake: 2,
 };
 
 // Reducer
 const socialReducer = (state = initialState, action: any) => {
   switch (action.type) {
+    // Для прикладу рендера компоненти SocialContent
+    case "FAKE":
+      return { ...state, fake: state.fake + 1 };
+
     // Додаємо користувача
     case FOLLOW:
       return {

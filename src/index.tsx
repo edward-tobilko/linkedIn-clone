@@ -12,6 +12,11 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
 
+// Для прикладу рендера компоненти SocialContent
+setInterval(() => {
+  store.dispatch({ type: "FAKE" });
+}, 1000);
+
 root.render(
   <Router>
     <Provider store={store}>
