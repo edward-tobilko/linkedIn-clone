@@ -13,8 +13,8 @@ import { RootState } from "../../redux/store";
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
 import { useFetching } from "../../hooks/useFetching";
-import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { Loader } from "../../components/UI/loader/Loader";
 import SocialUsersList from "./SocialUsersList";
@@ -29,6 +29,7 @@ type SocialContentProps = {
   currentPage: number;
   loading: boolean;
   followingBlockedBtn: any;
+  isAuth: boolean;
 };
 
 const mapStateToProps = (state: RootState) => {
@@ -39,6 +40,7 @@ const mapStateToProps = (state: RootState) => {
     currentPage: state.socialPage.currentPage,
     loading: state.socialPage.loading,
     followingBlockedBtn: state.socialPage.followingBlockedBtn,
+    isAuth: state.authorization.isAuth,
   };
 };
 
@@ -63,6 +65,7 @@ const SocialContent: FC<SocialContentProps> = ({
   currentPage,
   loading,
   followingBlockedBtn,
+  isAuth,
 }) => {
   const dispatch = useTypeDispatch();
 
@@ -80,7 +83,7 @@ const SocialContent: FC<SocialContentProps> = ({
 
   return (
     <>
-      <SocialNetworkManagement />
+      {isAuth && <SocialNetworkManagement />}
 
       <SocialStyle>
         <Pagination
@@ -110,9 +113,4 @@ const SocialContent: FC<SocialContentProps> = ({
 };
 
 // Ф-я compose працює (перебирає всі наші створені обробники (ф-ї, хоки і тд.)) з права -> на ліво
-export default compose(
-  SocialContentContainer,
-
-  // HOC для перенаправлення сторінки (<NotFound />), якщо користувач не зареєстрований
-  withAuthRedirectHOC,
-)(SocialContent);
+export default compose(SocialContentContainer)(SocialContent);

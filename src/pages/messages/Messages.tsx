@@ -24,4 +24,7 @@ const Messages: FC = () => {
   );
 };
 
-export default compose(withAuthRedirectHOC)(Messages);
+export default compose(
+  // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
+  withAuthRedirectHOC,
+)(Messages);
