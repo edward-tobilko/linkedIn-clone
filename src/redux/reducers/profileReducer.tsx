@@ -3,12 +3,13 @@ import { v4 as uniqueID } from "uuid";
 import { profileAPI } from "../../api/API";
 import { RootDispatch } from "../store";
 
-export const CREATE_NEW_POST = "CREATE-NEW-POST";
-export const CHANGE_POST = "CHANGE-POST";
-export const UPDATE_SEARCH_POST = "UPDATE-SEARCH-POST";
-export const SET_CURRENT_USER_PAGE = "SET-CURRENT-USER-PAGE";
-export const LOADING = "LOADING";
-export const SET_STATUS = "SET-STATUS";
+import {
+  CHANGE_POST,
+  CREATE_NEW_POST,
+  LOADING,
+  SET_CURRENT_USER_PAGE,
+  SET_STATUS,
+} from "../../utils/reducer-types-name/reducerTypesName";
 
 type GeoProps = {
   lat: string;
@@ -265,24 +266,22 @@ export const fetchCurrentUserPageTC = (userId: string) => {
 
 // TC для отримання статусу користувача
 export const fetchUserStatusByIdTC = (userId: string) => {
-  return async (dispatch: RootDispatch) => {
-    const response: any = await profileAPI.fetchUserStatusById(userId);
-
-    dispatch(setStatusAC(response.data));
+  return (dispatch: RootDispatch) => {
+    profileAPI
+      .fetchUserStatusById(userId)
+      .then((data: any) => dispatch(setStatusAC(data)));
   };
 };
 
 // TC для динамічної зміни статусу
 export const updateUserStatusTC = (status: string) => {
-  return async (dispatch: RootDispatch) => {
+  return (dispatch: RootDispatch) => {
     try {
-      const response: any = await profileAPI.updateUserStatus(status);
-
-      if (response.data.resultCode === 0) {
-        dispatch(setStatusAC(status));
-
-        console.log(response.data);
-      }
+      profileAPI.updateUserStatus(status).then((data: any) => {
+        if (data.resultCode === 0) {
+          dispatch(setStatusAC(status));
+        }
+      });
     } catch (error) {
       console.log("Error", error);
     }

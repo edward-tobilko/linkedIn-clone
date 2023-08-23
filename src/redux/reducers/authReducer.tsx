@@ -1,9 +1,11 @@
 import { authAPI } from "../../api/API";
 
-import { RootDispatch } from "../store";
+import {
+  CAPTCHA,
+  SET_IS_AUTH,
+} from "../../utils/reducer-types-name/reducerTypesName";
 
-const SET_IS_AUTH = "SET-IS-AUTH";
-const CAPTCHA = "CAPTCHA";
+import { RootDispatch } from "../store";
 
 type InitialStateType = {
   id: number | any;
@@ -53,7 +55,7 @@ export const setIsAuthAC = (
   };
 };
 
-export const setCaptcha = (captcha: any) => {
+export const setCaptchaAC = (captcha: any) => {
   return {
     type: CAPTCHA,
     payload: { captcha },
@@ -80,7 +82,7 @@ export const setLoginTC = (
   email: string,
   password: string,
   rememberMe: boolean,
-  captcha: boolean,
+  captcha: any,
 ) => {
   return (dispatch: RootDispatch) => {
     authAPI

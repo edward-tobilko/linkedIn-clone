@@ -7,6 +7,7 @@ import {
   fetchSocialUsersOnChangedPageTC,
   setFollowUserTC,
   setUnFollowUserTC,
+  SocialUserType,
 } from "../../redux/reducers/socialReducer";
 import { RootState } from "../../redux/store";
 
@@ -23,7 +24,6 @@ import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
 
 import {
   socialUsersReselector,
-  socialUsersSelector,
   totalUsersCountSelector,
   usersCountSelector,
   currentPageSelector,
@@ -33,7 +33,7 @@ import {
 } from "../../utils/selectors/socialSelectors";
 
 type SocialContentProps = {
-  socialUsers: any;
+  socialUsers: SocialUserType[];
   usersCount: number;
   totalUsersCount: number;
   currentPage: number;
@@ -43,13 +43,8 @@ type SocialContentProps = {
 };
 
 const mapStateToProps = (state: RootState) => {
-  // Для прикладу рендера компоненти SocialContent
-  console.log("mapStateToProps - users");
-
   return {
     socialUsers: socialUsersReselector(state),
-    // socialUsers: socialUsersSelector(state),
-
     totalUsersCount: totalUsersCountSelector(state),
     usersCount: usersCountSelector(state),
     currentPage: currentPageSelector(state),
@@ -84,7 +79,7 @@ const SocialContent: FC<SocialContentProps> = ({
 }) => {
   const dispatch = useTypeDispatch();
 
-  const [getSocialUsers] = useFetching(async () => {
+  const [getSocialUsers] = useFetching(() => {
     dispatch(fetchSocialUsersTC(currentPage, usersCount));
   });
 
@@ -95,9 +90,6 @@ const SocialContent: FC<SocialContentProps> = ({
   useEffect(() => {
     getSocialUsers();
   }, [dispatch]);
-
-  // Для прикладу рендера компоненти SocialContent
-  console.log("SocialContent component - render");
 
   return (
     <>

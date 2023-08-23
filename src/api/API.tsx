@@ -50,12 +50,16 @@ export const profileAPI = {
 
   // Отримуємо статус користувача
   async fetchUserStatusById(userId: string) {
-    return await instance.get(`profile/status/${userId}`);
+    return await instance
+      .get(`profile/status/${userId}`)
+      .then((res) => res.data);
   },
 
   // Змінюємо динамічно статус
   async updateUserStatus(status: string) {
-    return await instance.put(`profile/status`, { status: status }); //? другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
+    return await instance
+      .put(`profile/status`, { status: status })
+      .then((res) => res.data); //? другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
   },
 };
 

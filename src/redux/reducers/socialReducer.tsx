@@ -1,13 +1,15 @@
 import { socialUsersAPI } from "../../api/API";
 import { RootDispatch } from "../store";
 
-const FOLLOW = "follow";
-const UN_FOLLOW = "un-follow";
-const SET_USERS = "set-users";
-const SET_CURRENT_PAGE = "set-current-page";
-const SET_TOTAL_USERS_COUNT = "set-total-users-count";
-const LOADING = "loading";
-const FOLLOWING_BLOCKED_BTN = "following-blocked-btn";
+import {
+  FOLLOW,
+  FOLLOWING_BLOCKED_BTN,
+  LOADING,
+  SET_CURRENT_PAGE,
+  SET_TOTAL_USERS_COUNT,
+  SET_USERS,
+  UN_FOLLOW,
+} from "../../utils/reducer-types-name/reducerTypesName";
 
 type SocialUserPhotosType = {
   small: any;
@@ -30,7 +32,6 @@ type InitialStateType = {
   currentPage: number;
   loading: boolean;
   followingBlockedBtn: any;
-  fake: number;
 };
 
 type fetchSocialUsersOnChangedPageDataType = {
@@ -46,18 +47,11 @@ const initialState: InitialStateType = {
   currentPage: 1, // поточна активна сторінка
   loading: false,
   followingBlockedBtn: [], // для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
-
-  // Для прикладу рендера компоненти SocialContent
-  fake: 2,
 };
 
 // Reducer
 const socialReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    // Для прикладу рендера компоненти SocialContent
-    case "FAKE":
-      return { ...state, fake: state.fake + 1 };
-
     // Додаємо користувача
     case FOLLOW:
       return {

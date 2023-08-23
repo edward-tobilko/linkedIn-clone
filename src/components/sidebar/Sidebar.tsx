@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from "react";
+import React, { useEffect, FC } from "react";
 
 import { SidebarStyle } from "./sidebarStyle";
 
@@ -15,7 +15,7 @@ type SidebarProps = {
 
 // UI time elements
 function UITimeElements() {
-  const [seconds, setSeconds] = useState(new Date().toLocaleTimeString());
+  const [seconds, setSeconds] = React.useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
     const interval = setInterval(() => {

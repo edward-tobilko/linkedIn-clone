@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 
 import { StatusStyle } from "./statusStyle";
 
@@ -17,8 +17,8 @@ export const Status: FC<StatusProps> = ({
   updateUserStatusTC,
   currentProfilePage,
 }) => {
-  const [statusValue, setStatusValue] = useState(status);
-  const [editMode, setEditMode] = useState(false);
+  const [statusValue, setStatusValue] = React.useState(status);
+  const [editMode, setEditMode] = React.useState(false);
 
   const dispatch = useTypeDispatch();
 

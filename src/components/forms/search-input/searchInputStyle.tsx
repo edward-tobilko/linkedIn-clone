@@ -6,7 +6,7 @@ export const SearchInputStyle = styled.input`
   background: ${themeVars.colors.greyColor};
   border: 0;
   box-shadow: none;
-  min-width: 235px;
+  min-width: 180px;
   color: ${themeVars.colors.whiteColor};
   height: 26px;
   border-radius: 6px;

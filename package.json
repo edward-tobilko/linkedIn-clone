@@ -28,6 +28,7 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.1",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.8",
     "styled-components": "^5.3.9",
@@ -61,5 +62,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-leaflet|@react-leaflet|d3-*|axios))"
+    ]
+  },
+  "devDependencies": {
+    "@types/redux-mock-store": "^1.0.3"
   }
 }

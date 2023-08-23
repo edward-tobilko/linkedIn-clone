@@ -4,13 +4,15 @@ import { ChatUser } from "./ChatUser";
 import { useMyContext } from "../../../context/Context";
 
 export const ChatUsers = () => {
-  const props = useMyContext();
+  const props: any = useMyContext();
 
   return (
     <ChatUsersStyle>
-      {props?.chatUsers.map((chatUser) => (
-        <ChatUser key={chatUser.id} chatUser={chatUser} />
-      ))}
+      {[...props?.chatUsers]
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((chatUser) => (
+          <ChatUser key={chatUser.id} chatUser={chatUser} />
+        ))}
     </ChatUsersStyle>
   );
 };

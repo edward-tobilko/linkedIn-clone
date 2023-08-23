@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React from "react";
 
 export const useFetching = (callback: () => void) => {
-  const [loading, setLoading] = useState<any>(false);
-  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = React.useState<any>(false);
+  const [error, setError] = React.useState<string>("");
 
   async function fetching() {
     try {

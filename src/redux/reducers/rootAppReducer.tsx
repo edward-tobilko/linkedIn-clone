@@ -1,7 +1,7 @@
+import { INITIALIZED_SUCCESS_ROOT_APP } from "../../utils/reducer-types-name/reducerTypesName";
+
 import { RootDispatch } from "../store";
 import { setIsAuthTC } from "./authReducer";
-
-const INITIALIZED_SUCCESS_ROOT_APP = "INITIALIZED-SUCCESS-ROOT-APP";
 
 // Type
 type InitialStateType = {

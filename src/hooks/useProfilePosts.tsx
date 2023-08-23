@@ -11,7 +11,7 @@ export const useProfilePosts = (postUsers: ItemProps, searchUsers: string) => {
         return userPost.name.includes(searchUsers);
       });
     }
-  }, [searchUsers, postUsers]);
+  }, [postUsers, searchUsers]);
 
   return searchedPosts;
 };
