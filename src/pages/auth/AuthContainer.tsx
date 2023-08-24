@@ -12,19 +12,10 @@ import { authSchema } from "../../utils/validators/authFormValidator";
 import { isAuthSelector } from "../../utils/selectors/authSelectors";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
-import { setLoginTC } from "../../redux/reducers/authReducer";
+import { setLoginTC } from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
 
-export type AuthFormType = {
-  email: string;
-  password: string;
-  rememberMe: any;
-  captcha: boolean;
-};
-
-type AuthContainerProps = {
-  isAuth: boolean;
-};
+import { AuthContainerProps, AuthFormType } from "./authTypes";
 
 const mapStateToProps = (state: RootState) => ({
   isAuth: isAuthSelector(state),

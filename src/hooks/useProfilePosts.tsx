@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { ItemProps } from "../redux/reducers/profileReducer";
+import { ItemProps } from "../redux/reducers/profile-reducer/profileReducerTypes";
 
 type UserPost = ItemProps & { searchUsers: string };
 

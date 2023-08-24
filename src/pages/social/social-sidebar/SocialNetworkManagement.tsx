@@ -10,11 +10,7 @@ import {
 import SocialNetworkManagementInput from "../../../components/forms/social-network-management/SocialNetworkManagementInput";
 import { SocialNetworkManagementBtn } from "../../../components/UI/btns/social-network-management/SocialNetworkManagementBtn";
 
-type SocialNetworkManagementInfoType = {
-  id: number;
-  title: string;
-  subtitle?: string;
-};
+import { SocialNetworkManagementInfoType } from "./socialNetworkManagementTypes";
 
 const socialNetworkManagementInfo: SocialNetworkManagementInfoType[] = [
   { id: 1, title: "General information" },

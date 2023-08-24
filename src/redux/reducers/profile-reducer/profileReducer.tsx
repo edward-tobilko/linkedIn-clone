@@ -1,54 +1,11 @@
 import { v4 as uniqueID } from "uuid";
 
-import { profileAPI } from "../../api/API";
-import { RootDispatch } from "../store";
+import { profileAPI } from "../../../api/API";
+import { RootDispatch } from "../../store";
 
-import {
-  CHANGE_POST,
-  CREATE_NEW_POST,
-  LOADING,
-  SET_CURRENT_USER_PAGE,
-  SET_STATUS,
-} from "../../utils/reducer-types-name/reducerTypesName";
+import profileTypeNames from "../../duck/typesName";
 
-type GeoProps = {
-  lat: string;
-  lng: string;
-};
-
-type AddressProps = {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: GeoProps;
-};
-
-type CompanyProps = {
-  name: string;
-  catchPhrase: string;
-  bs: string;
-};
-
-export type ItemProps = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: AddressProps;
-  phone: string;
-  website: string;
-  company: CompanyProps;
-};
-
-export type InitialStateProps = {
-  postUsers: ItemProps[];
-  newPostText: string;
-  name: string;
-  currentProfilePage: any;
-  loading: boolean;
-  status: string;
-};
+import { InitialStateProps } from "./profileReducerTypes";
 
 const initialState: InitialStateProps = {
   postUsers: [
@@ -155,7 +112,7 @@ const initialState: InitialStateProps = {
 const profileReducer = (state = initialState, action: any) => {
   switch (action.type) {
     // Створюємо новий пост на сторінку profile
-    case CREATE_NEW_POST:
+    case profileTypeNames.CREATE_NEW_POST:
       // вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
       return {
         ...state,
@@ -189,22 +146,22 @@ const profileReducer = (state = initialState, action: any) => {
       };
 
     // Для динамічної поведінки onChange обробника подій
-    case CHANGE_POST:
+    case profileTypeNames.CHANGE_POST:
       return {
         ...state,
         newPostText: action.newPostText,
       };
 
     // Показуємо поточну сторінку іншого користувача
-    case SET_CURRENT_USER_PAGE:
+    case profileTypeNames.SET_CURRENT_USER_PAGE:
       return { ...state, currentProfilePage: action.currentProfilePage };
 
     // Додаємо загрузчик
-    case LOADING:
+    case profileTypeNames.LOADING:
       return { ...state, loading: action.loading };
 
     // Показуємо статус користувача
-    case SET_STATUS:
+    case profileTypeNames.SET_STATUS:
       return { ...state, status: action.status };
 
     default:
@@ -217,34 +174,34 @@ export default profileReducer;
 // Action Creators (ACs)
 export const addNewPostAC = () => {
   return {
-    type: CREATE_NEW_POST,
+    type: profileTypeNames.CREATE_NEW_POST,
   };
 };
 
 export const changePostAC = (newPostText: string) => {
   return {
-    type: CHANGE_POST,
+    type: profileTypeNames.CHANGE_POST,
     newPostText: newPostText,
   };
 };
 
 export const setCurrentUserPageAC = (currentProfilePage: any) => {
   return {
-    type: SET_CURRENT_USER_PAGE,
+    type: profileTypeNames.SET_CURRENT_USER_PAGE,
     currentProfilePage,
   };
 };
 
 export const setLoadingAC = (loading: boolean) => {
   return {
-    type: LOADING,
+    type: profileTypeNames.LOADING,
     loading,
   };
 };
 
 export const setStatusAC = (status: string) => {
   return {
-    type: SET_STATUS,
+    type: profileTypeNames.SET_STATUS,
     status,
   };
 };

@@ -7,15 +7,7 @@ import unFollowUserIcon from "../../../../img/svg/unFollowUser_icon.svg";
 
 import { useTypeDispatch } from "../../../../hooks/useTypeSelector";
 
-import { RootDispatch } from "../../../../redux/store";
-import type { SocialUserType } from "../../../../redux/reducers/socialReducer";
-
-type FollowBtnProps = {
-  socialUser: SocialUserType;
-  followingBlockedBtn: any;
-  setFollowUserTC: RootDispatch;
-  setUnFollowUserTC: RootDispatch;
-};
+import { FollowBtnProps } from "./followBtnTypes";
 
 export const FollowBtn: FC<FollowBtnProps> = ({
   socialUser,

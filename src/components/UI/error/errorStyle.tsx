@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../../themeVars";
+import { themeVars } from "../../../utils/vars/themeVars";
 
 export const ErrorStyle = styled.div`
   max-width: 200px;

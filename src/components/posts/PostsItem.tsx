@@ -9,11 +9,7 @@ import {
   PostsItemStyle,
 } from "./postsListStyle";
 
-import { IPostsUser } from "../../type-models";
-
-interface IPostItemProps {
-  user: IPostsUser;
-}
+import { IPostItemProps } from "./postsTypes";
 
 export const PostsItem: FC<IPostItemProps> = ({ user }) => {
   return (

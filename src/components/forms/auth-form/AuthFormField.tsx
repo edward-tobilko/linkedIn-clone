@@ -1,12 +1,7 @@
 import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 
-type AuthFormFieldProps = {
-  name: string;
-  label: string;
-  type: string;
-  className: string;
-};
+import { AuthFormFieldProps } from "./authFormTypes";
 
 const AuthFormField: FC<AuthFormFieldProps> = ({
   name,

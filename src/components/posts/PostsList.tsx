@@ -9,8 +9,9 @@ import { RootState } from "../../redux/store";
 
 import { useProfilePosts } from "../../hooks/useProfilePosts";
 import { useMyContext } from "../../context/Context";
+import { IStateContext } from "../../context/contextTypes";
 
-import { IPostsUser, IStateContext } from "../../type-models";
+import { IPostsUser } from "./postsTypes";
 
 // Container component
 const mapStateToProps = (state: RootState | any) => {

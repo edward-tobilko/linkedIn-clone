@@ -4,11 +4,7 @@ import { NavLink } from "react-router-dom";
 import { ChatUserStyle } from "./chatUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-import { IChatUsers } from "../../../type-models";
-
-interface IChatUserProps {
-  chatUser: IChatUsers;
-}
+import { IChatUserProps } from "./chatUsersTypes";
 
 export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {
   let pathChatUser = `/messages/${chatUser.id}`;

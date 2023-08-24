@@ -1,22 +1,18 @@
-import { INITIALIZED_SUCCESS_ROOT_APP } from "../../utils/reducer-types-name/reducerTypesName";
+import rootAppTypeNames from "../../duck/typesName";
 
-import { RootDispatch } from "../store";
-import { setIsAuthTC } from "./authReducer";
+import { RootDispatch } from "../../store";
 
-// Type
-type InitialStateType = {
-  initialized: boolean;
-};
+import { setIsAuthTC } from "../auth-reducer/authReducer";
 
-// State
+import { InitialStateType } from "./rootAppReducerTypes";
+
 const initialState: InitialStateType = {
   initialized: false,
 };
 
-// Reducer
 const rootAppReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case INITIALIZED_SUCCESS_ROOT_APP:
+    case rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP:
       return { ...state, initialized: true };
 
     default:
@@ -26,14 +22,12 @@ const rootAppReducer = (state = initialState, action: any) => {
 
 export default rootAppReducer;
 
-// ACs
 export const setInitializedSuccessRootAppAC = () => {
   return {
-    type: INITIALIZED_SUCCESS_ROOT_APP,
+    type: rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP,
   };
 };
 
-// TCs
 export const setInitializedSuccessRootAppTC =
   () => (dispatch: RootDispatch) => {
     const dispatchResult = dispatch(setIsAuthTC()); //? dispatch вертає результат санки (в санкі setIsAuthTC ми вертаємо authorizationMe (return authAPI.authorizationMe))

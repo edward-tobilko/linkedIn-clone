@@ -1,10 +1,8 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 import { SocialNetworkManagementBtnStyle } from "./socialNetworkManagementBtnStyle";
 
-type SocialNetworkManagementBtnProps = {
-  children: ReactNode;
-};
+import { SocialNetworkManagementBtnProps } from "./socialNetworkManagementBtnTypes";
 
 export const SocialNetworkManagementBtn: FC<
   SocialNetworkManagementBtnProps

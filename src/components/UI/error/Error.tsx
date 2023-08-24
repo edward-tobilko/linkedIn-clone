@@ -1,12 +1,10 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 import errorIcon from "../../../img/svg/error_icon.svg";
 
 import { ErrorStyle } from "./errorStyle";
 
-type ErrorProps = {
-  children: ReactNode;
-};
+import { ErrorProps } from "./errorTypes";
 
 export const Error: FC<ErrorProps> = ({ children }) => {
   return (

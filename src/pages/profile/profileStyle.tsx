@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../themeVars";
+import { themeVars } from "../../utils/vars/themeVars";
 
 // Profile component
 export const ProfileStyle = styled.main`

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../../themeVars";
+import { themeVars } from "../../../utils/vars/themeVars";
 
 export const LoaderStyle = styled.div`
   opacity: 0.5;

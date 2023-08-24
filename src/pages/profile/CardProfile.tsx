@@ -8,13 +8,7 @@ import lampIcon from "../../img/images/lamp.png";
 
 import { Status } from "../../components/forms/status-input/Status";
 
-import { RootDispatch } from "../../redux/store";
-
-type CardProfileProps = {
-  currentProfilePage: any;
-  status: string;
-  updateUserStatusTC: RootDispatch;
-};
+import { CardProfileProps } from "./profileTypes";
 
 export const CardProfile: FC<CardProfileProps> = ({
   currentProfilePage,

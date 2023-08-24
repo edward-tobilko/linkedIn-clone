@@ -4,13 +4,7 @@ import { StatusStyle } from "./statusStyle";
 
 import { useTypeDispatch } from "../../../hooks/useTypeSelector";
 
-import { RootDispatch } from "../../../redux/store";
-
-type StatusProps = {
-  status: string;
-  updateUserStatusTC: RootDispatch;
-  currentProfilePage: any;
-};
+import { StatusProps } from "./statusTypes";
 
 export const Status: FC<StatusProps> = ({
   status,

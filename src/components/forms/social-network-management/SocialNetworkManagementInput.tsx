@@ -5,9 +5,7 @@ import { SocialNetworkManagementInputStyle } from "./socialNetworkManagementInpu
 
 import { RootState } from "../../../redux/store";
 
-type SocialNetworkManagementInputProps = {
-  email: string;
-};
+import { SocialNetworkManagementInputProps } from "./socialNetworkManagementInputTypes";
 
 const mapStateToProps = (state: RootState) => {
   return {

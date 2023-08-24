@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 
-import { themeVars } from "./themeVars";
+import { themeVars } from "./utils/vars/themeVars";
 
 // Global styles
 export default createGlobalStyle`

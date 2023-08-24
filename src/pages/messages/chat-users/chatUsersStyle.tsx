@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { themeVars } from "../../../themeVars";
+import { themeVars } from "../../../utils/vars/themeVars";
 
 export const ChatUsersStyle = styled.div`
   list-style: none;

@@ -1,14 +1,16 @@
 import {
   setInitializedSuccessRootAppAC,
   setInitializedSuccessRootAppTC,
-} from "../../redux/reducers/rootAppReducer";
-import { setIsAuthTC } from "../../redux/reducers/authReducer";
+} from "./rootAppReducer";
+import { setIsAuthTC } from "../auth-reducer/authReducer";
 
-import { INITIALIZED_SUCCESS_ROOT_APP } from "../../utils/reducer-types-name/reducerTypesName";
+import rootAppTypeNames from "../../duck/typesName";
 
 describe("Root App Reducer Actions", () => {
   it("should create an action to set initialized success", () => {
-    const expectedAction = { type: INITIALIZED_SUCCESS_ROOT_APP };
+    const expectedAction = {
+      type: rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP,
+    };
     expect(setInitializedSuccessRootAppAC()).toEqual(expectedAction);
   });
 });

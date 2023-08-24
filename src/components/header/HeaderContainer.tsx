@@ -16,14 +16,15 @@ import SearchInput from "../forms/search-input/SearchInput";
 
 import avatarIcon from "../../img/images/avatar.png";
 
-import { setIsAuthAC, setLogoutTC } from "../../redux/reducers/authReducer";
-import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import {
+  setIsAuthAC,
+  setLogoutTC,
+} from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
 
-type HeaderContainerProps = {
-  isAuth: boolean;
-  login: string;
-};
+import { useTypeDispatch } from "../../hooks/useTypeSelector";
+
+import { HeaderContainerProps } from "./headerTypes";
 
 const mapStateToProps = (state: RootState) => {
   return {

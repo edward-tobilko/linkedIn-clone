@@ -6,10 +6,10 @@ import {
 } from "redux";
 import thunkMiddleware from "redux-thunk";
 
-import profileReducer from "./reducers/profileReducer";
-import socialReducer from "./reducers/socialReducer";
-import authReducer from "./reducers/authReducer";
-import rootAppReducer from "./reducers/rootAppReducer";
+import profileReducer from "./reducers/profile-reducer/profileReducer";
+import socialReducer from "./reducers/social-reducer/socialReducer";
+import authReducer from "./reducers/auth-reducer/authReducer";
+import rootAppReducer from "./reducers/root-app-reducer/rootAppReducer";
 
 declare global {
   interface Window {

@@ -2,12 +2,7 @@ import { FC, useState } from "react";
 
 import { PaginationStyle } from "./paginationStyle";
 
-type PaginationProps = {
-  totalUsersCount: number;
-  usersCount: number;
-  currentPage: number;
-  onChangedPage: (page: number) => void;
-};
+import { PaginationProps } from "./paginationTypes";
 
 export const Pagination: FC<PaginationProps> = ({
   totalUsersCount,

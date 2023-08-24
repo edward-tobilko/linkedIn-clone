@@ -5,13 +5,11 @@ import {
   setLoginTC,
   setLogoutTC,
   setCaptchaTC,
-} from "../../redux/reducers/authReducer";
+} from "./authReducer";
 
-import { authAPI } from "../../api/API";
-import {
-  CAPTCHA,
-  SET_IS_AUTH,
-} from "../../utils/reducer-types-name/reducerTypesName";
+import { authAPI } from "../../../api/API";
+
+import authTypeNames from "../../duck/typesName";
 
 jest.mock("../../api/API", () => ({
   authAPI: {
@@ -29,7 +27,7 @@ describe("Auth Reducer Actions", () => {
     const login = "testUser";
     const isAuth = true;
     const expectedAction = {
-      type: SET_IS_AUTH,
+      type: authTypeNames.SET_IS_AUTH,
       data: { id, email, login, isAuth },
     };
     expect(setIsAuthAC(id, email, login, isAuth)).toEqual(expectedAction);
@@ -37,7 +35,10 @@ describe("Auth Reducer Actions", () => {
 
   it("should create an action to set captcha", () => {
     const captcha = "mockCaptcha";
-    const expectedAction = { type: CAPTCHA, payload: { captcha } };
+    const expectedAction = {
+      type: authTypeNames.CAPTCHA,
+      payload: { captcha },
+    };
     expect(setCaptchaAC(captcha)).toEqual(expectedAction);
   });
 });

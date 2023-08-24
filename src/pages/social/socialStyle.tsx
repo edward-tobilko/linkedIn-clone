@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../themeVars";
+import { themeVars } from "../../utils/vars/themeVars";
 
 // SocialContent component
 export const SocialStyle = styled.div`

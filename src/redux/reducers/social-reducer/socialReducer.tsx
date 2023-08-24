@@ -1,44 +1,16 @@
-import { socialUsersAPI } from "../../api/API";
-import { RootDispatch } from "../store";
+import { socialUsersAPI } from "../../../api/API";
+import { RootDispatch } from "../../store";
+
+import socialTypeNames from "../../duck/typesName";
+import actionCreators from "../../duck/actionCreators";
+
+import helperReducerFunctions from "../../../utils/helper-functions/helperReducerFunctions";
 
 import {
-  FOLLOW,
-  FOLLOWING_BLOCKED_BTN,
-  LOADING,
-  SET_CURRENT_PAGE,
-  SET_TOTAL_USERS_COUNT,
-  SET_USERS,
-  UN_FOLLOW,
-} from "../../utils/reducer-types-name/reducerTypesName";
-
-type SocialUserPhotosType = {
-  small: any;
-  large: any;
-};
-
-export type SocialUserType = {
-  name: string;
-  id: number;
-  uniqueUrlName?: any;
-  photos?: SocialUserPhotosType;
-  status?: string;
-  followed?: boolean;
-};
-
-type InitialStateType = {
-  socialUsers: SocialUserType[];
-  totalUsersCount: number;
-  usersCount: number;
-  currentPage: number;
-  loading: boolean;
-  followingBlockedBtn: any;
-};
-
-type fetchSocialUsersOnChangedPageDataType = {
-  items: SocialUserType[];
-  totalCount: number;
-  error: any;
-};
+  InitialStateType,
+  SocialUserType,
+  fetchSocialUsersOnChangedPageDataType,
+} from "./socialReducerTypes";
 
 const initialState: InitialStateType = {
   socialUsers: [],
@@ -53,7 +25,7 @@ const initialState: InitialStateType = {
 const socialReducer = (state = initialState, action: any) => {
   switch (action.type) {
     // Додаємо користувача
-    case FOLLOW:
+    case socialTypeNames.FOLLOW:
       return {
         ...state,
         socialUsers: state.socialUsers.map((socialUser: SocialUserType) => {
@@ -66,7 +38,7 @@ const socialReducer = (state = initialState, action: any) => {
       };
 
     // Видаляємо користувача
-    case UN_FOLLOW:
+    case socialTypeNames.UN_FOLLOW:
       return {
         ...state,
         socialUsers: state.socialUsers.map((socialUser: SocialUserType) => {
@@ -79,26 +51,26 @@ const socialReducer = (state = initialState, action: any) => {
       };
 
     // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
-    case SET_USERS:
+    case socialTypeNames.SET_USERS:
       return {
         ...state,
         socialUsers: [...action.socialUsers],
       };
 
     // Навігація постранічного вивода користувачів
-    case SET_CURRENT_PAGE:
+    case socialTypeNames.SET_CURRENT_PAGE:
       return { ...state, currentPage: action.currentPage };
 
     // Отримуємо всю к-сть користувачів з сервера
-    case SET_TOTAL_USERS_COUNT:
+    case socialTypeNames.SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.totalUsersCount };
 
     // Додаємо загрузчик
-    case LOADING:
+    case socialTypeNames.LOADING:
       return { ...state, loading: action.loading };
 
     // Блокуємо кнопку при натисканні
-    case FOLLOWING_BLOCKED_BTN:
+    case socialTypeNames.FOLLOWING_BLOCKED_BTN:
       return {
         ...state,
         followingBlockedBtn: action.loading
@@ -113,57 +85,6 @@ const socialReducer = (state = initialState, action: any) => {
   }
 };
 
-// ACs
-export const setFollowUserAC = (userId: string) => {
-  return {
-    type: FOLLOW,
-    userId,
-  };
-};
-
-export const setUnFollowUserAC = (userId: string) => {
-  return {
-    type: UN_FOLLOW,
-    userId,
-  };
-};
-
-export const setUsersAC = (socialUsers: SocialUserType[]) => {
-  return {
-    type: SET_USERS,
-    socialUsers,
-  };
-};
-
-export const setCurrentPageAC = (currentPage: number) => {
-  return {
-    type: SET_CURRENT_PAGE,
-    currentPage,
-  };
-};
-
-export const setTotalUsersCountAC = (totalUsersCount: number) => {
-  return {
-    type: SET_TOTAL_USERS_COUNT,
-    totalUsersCount,
-  };
-};
-
-export const setLoadingAC = (loading: boolean) => {
-  return {
-    type: LOADING,
-    loading,
-  };
-};
-
-export const setFollowingBlockedBtnAC = (loading: boolean, userId: string) => {
-  return {
-    type: FOLLOWING_BLOCKED_BTN,
-    loading,
-    userId,
-  };
-};
-
 export default socialReducer;
 
 // TC: Thunk creator - anonym function and HOC - fetchSocialUsersTC
@@ -171,15 +92,15 @@ export default socialReducer;
 // Санка (thunk creator) для отримання користувачів
 export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
   return (dispatch: RootDispatch) => {
-    dispatch(setLoadingAC(true));
+    dispatch(actionCreators.setLoadingAC(true));
 
     socialUsersAPI
       .fetchSocialUsers(currentPage, usersCount)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
-        dispatch(setCurrentPageAC(currentPage));
-        dispatch(setLoadingAC(false)); // Додаємо загрузчик;
-        dispatch(setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
-        dispatch(setTotalUsersCountAC(data.totalCount)); // Отримуємо всю к-сть користувачів з сервера;
+        dispatch(actionCreators.setCurrentPageAC(currentPage));
+        dispatch(actionCreators.setLoadingAC(false)); // Додаємо загрузчик;
+        dispatch(actionCreators.setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
+        dispatch(actionCreators.setTotalUsersCountAC(data.totalCount)); // Отримуємо всю к-сть користувачів з сервера;
       });
   };
 };
@@ -190,14 +111,14 @@ export const fetchSocialUsersOnChangedPageTC = (
   usersCount: number,
 ) => {
   return (dispatch: RootDispatch) => {
-    dispatch(setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
-    dispatch(setLoadingAC(true));
+    dispatch(actionCreators.setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
+    dispatch(actionCreators.setLoadingAC(true));
 
     socialUsersAPI
       .fetchChangedPageUsers(pageNumber, usersCount)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
-        dispatch(setLoadingAC(false));
-        dispatch(setUsersAC(data.items));
+        dispatch(actionCreators.setLoadingAC(false));
+        dispatch(actionCreators.setUsersAC(data.items));
       });
   };
 };
@@ -205,29 +126,23 @@ export const fetchSocialUsersOnChangedPageTC = (
 // ТС для додавання користувача
 export const setFollowUserTC = (userId: string) => {
   return (dispatch: RootDispatch) => {
-    dispatch(setFollowingBlockedBtnAC(true, userId)); // Блокуємо кнопку при натисканні
-
-    socialUsersAPI.followUser(userId).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setFollowUserAC(userId)); // Діспатчимо виклик AC-ра, а не сам AC!
-      }
-
-      dispatch(setFollowingBlockedBtnAC(false, userId));
-    });
+    helperReducerFunctions.setFollowUnfollowAC(
+      dispatch,
+      userId,
+      socialUsersAPI.followUser.bind(socialUsersAPI),
+      actionCreators.setFollowUserAC,
+    );
   };
 };
 
 // ТС для видалення користувача
 export const setUnFollowUserTC = (userId: string) => {
   return (dispatch: RootDispatch) => {
-    dispatch(setFollowingBlockedBtnAC(true, userId));
-
-    socialUsersAPI.unFollowUser(userId).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setUnFollowUserAC(userId));
-      }
-
-      dispatch(setFollowingBlockedBtnAC(false, userId));
-    });
+    helperReducerFunctions.setFollowUnfollowAC(
+      dispatch,
+      userId,
+      socialUsersAPI.unFollowUser.bind(socialUsersAPI),
+      actionCreators.setUnFollowUserAC,
+    );
   };
 };

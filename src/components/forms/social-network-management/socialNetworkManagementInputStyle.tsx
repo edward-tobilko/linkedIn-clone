@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../../themeVars";
+import { themeVars } from "../../../utils/vars/themeVars";
 
 export const SocialNetworkManagementInputStyle = styled.input`
   max-width: 200px;

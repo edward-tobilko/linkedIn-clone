@@ -4,11 +4,7 @@ import { NavLink } from "react-router-dom";
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-import { IDialogUsers } from "../../../type-models";
-
-interface IDialogUserProps {
-  dialogUser: IDialogUsers;
-}
+import { IDialogUserProps } from "./dialogUsersTypes";
 
 export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
   return (

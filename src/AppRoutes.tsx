@@ -12,7 +12,7 @@ import Auth from "./pages/auth/AuthContainer";
 import { NotFound } from "./components/notifications/not-found/NotFound";
 import { Loader } from "./components/UI/loader/Loader";
 
-import { setInitializedSuccessRootAppTC } from "./redux/reducers/rootAppReducer";
+import { setInitializedSuccessRootAppTC } from "./redux/reducers/root-app-reducer/rootAppReducer";
 import { RootState } from "./redux/store";
 
 import { useTypeDispatch } from "./hooks/useTypeSelector";

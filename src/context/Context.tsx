@@ -6,7 +6,7 @@ import {
   FC,
 } from "react";
 
-import type { IStateContext } from "../type-models";
+import { IStateContext } from "./contextTypes";
 
 export const Context = createContext<IStateContext | null>(null);
 

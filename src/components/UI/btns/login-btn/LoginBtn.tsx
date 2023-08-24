@@ -1,11 +1,8 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 import { LoginBtnStyle } from "./loginBtnStyle";
 
-type LoginBtnProps = {
-  children: ReactNode;
-  authForm: any;
-};
+import { LoginBtnProps } from "./loginBtnTypes";
 
 export const LoginBtn: FC<LoginBtnProps> = ({ children, authForm }) => {
   return (

@@ -9,16 +9,12 @@ import { CreatePostBtn } from "../../UI/btns/create-post/CreatePostBtn";
 import {
   addNewPostAC,
   changePostAC,
-} from "../../../redux/reducers/profileReducer";
+} from "../../../redux/reducers/profile-reducer/profileReducer";
 import { RootDispatch, RootState } from "../../../redux/store";
 
 import avatarIcon from "../../../img/images/avatar.png";
 
-type CreatePostFormProps = {
-  changePostDispatch: (newPostText: string) => void;
-  addNewPostDispatch(): void;
-  newPostText: string;
-};
+import { CreatePostFormProps } from "./createPostFormTypes";
 
 // Container component
 const mapStateToProps = (state: RootState | any) => {

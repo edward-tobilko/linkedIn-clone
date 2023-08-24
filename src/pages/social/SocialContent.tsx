@@ -7,8 +7,7 @@ import {
   fetchSocialUsersOnChangedPageTC,
   setFollowUserTC,
   setUnFollowUserTC,
-  SocialUserType,
-} from "../../redux/reducers/socialReducer";
+} from "../../redux/reducers/social-reducer/socialReducer";
 import { RootState } from "../../redux/store";
 
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
@@ -32,15 +31,7 @@ import {
   isAuthSelector,
 } from "../../utils/selectors/socialSelectors";
 
-type SocialContentProps = {
-  socialUsers: SocialUserType[];
-  usersCount: number;
-  totalUsersCount: number;
-  currentPage: number;
-  loading: boolean;
-  followingBlockedBtn: any;
-  isAuth: boolean;
-};
+import { SocialContentProps } from "./socialTypes";
 
 const mapStateToProps = (state: RootState) => {
   return {

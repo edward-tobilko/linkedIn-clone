@@ -1,11 +1,8 @@
-import { FC, ReactNode, Dispatch, SetStateAction } from "react";
+import { FC } from "react";
 
 import { CreatePostBtnStyle } from "./createPostBtnStyle";
 
-type CreatePostBtnProps = {
-  children: ReactNode;
-  addNewPost: Dispatch<SetStateAction<any>>;
-};
+import { CreatePostBtnProps } from "./createPostBtnTypes";
 
 export const CreatePostBtn: FC<CreatePostBtnProps> = ({
   addNewPost,

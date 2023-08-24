@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../../themeVars";
+import { themeVars } from "../../../utils/vars/themeVars";
 
 export const PaginationStyle = styled.div`
   max-width: 300px;

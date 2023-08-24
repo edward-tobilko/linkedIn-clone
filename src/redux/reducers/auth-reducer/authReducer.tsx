@@ -1,19 +1,10 @@
-import { authAPI } from "../../api/API";
+import { authAPI } from "../../../api/API";
 
-import {
-  CAPTCHA,
-  SET_IS_AUTH,
-} from "../../utils/reducer-types-name/reducerTypesName";
+import authTypeNames from "../../duck/typesName";
 
-import { RootDispatch } from "../store";
+import { RootDispatch } from "../../store";
 
-type InitialStateType = {
-  id: number | any;
-  email: string | any;
-  login: string | any;
-  isAuth: boolean;
-  captcha: any;
-};
+import { InitialStateType } from "./authReducerTypes";
 
 const initialState: InitialStateType = {
   id: null,
@@ -26,13 +17,13 @@ const initialState: InitialStateType = {
 const authReducer = (state = initialState, action: any) => {
   switch (action.type) {
     // Встановлюємо параметри (id, email, login, ) авторизації
-    case SET_IS_AUTH:
+    case authTypeNames.SET_IS_AUTH:
       return {
         ...state,
         ...action.data,
       };
 
-    case CAPTCHA:
+    case authTypeNames.CAPTCHA:
       return { ...state, ...action.payload };
 
     default:
@@ -50,14 +41,14 @@ export const setIsAuthAC = (
   isAuth: boolean,
 ) => {
   return {
-    type: SET_IS_AUTH,
+    type: authTypeNames.SET_IS_AUTH,
     data: { id, email, login, isAuth },
   };
 };
 
 export const setCaptchaAC = (captcha: any) => {
   return {
-    type: CAPTCHA,
+    type: authTypeNames.CAPTCHA,
     payload: { captcha },
   };
 };

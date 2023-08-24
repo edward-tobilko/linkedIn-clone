@@ -7,15 +7,7 @@ import { AvatarImgStyle } from "../../rootStyles";
 import { FollowBtn } from "../../components/UI/btns/follow/FollowBtn";
 
 import removeIcon from "../../img/svg/remove_icon.svg";
-
-import { SocialUserType } from "../../redux/reducers/socialReducer";
-
-type SocialUsersItemProps = {
-  socialUser: SocialUserType;
-  followingBlockedBtn: any;
-  setFollowUserTC: any;
-  setUnFollowUserTC: any;
-};
+import { SocialUsersItemProps } from "./socialTypes";
 
 const SocialUsersItem: FC<SocialUsersItemProps> = ({
   socialUser,

@@ -1,27 +1,15 @@
 import socialReducer, {
-  setFollowUserAC,
-  setUnFollowUserAC,
-  setUsersAC,
-  setCurrentPageAC,
-  setTotalUsersCountAC,
-  setLoadingAC,
-  setFollowingBlockedBtnAC,
   fetchSocialUsersTC,
   fetchSocialUsersOnChangedPageTC,
   setFollowUserTC,
   setUnFollowUserTC,
-  SocialUserType,
-} from "../../redux/reducers/socialReducer";
-import { socialUsersAPI } from "../../api/API";
+} from "./socialReducer";
+import { socialUsersAPI } from "../../../api/API";
 
-import {
-  FOLLOW,
-  UN_FOLLOW,
-  SET_USERS,
-  SET_CURRENT_PAGE,
-  SET_TOTAL_USERS_COUNT,
-  LOADING,
-} from "../../utils/reducer-types-name/reducerTypesName";
+import socialTypeNames from "../../duck/typesName";
+import actionCreators from "../../duck/actionCreators";
+
+import { SocialUserType } from "./socialReducerTypes";
 
 let mockDispatch: any;
 let mockFollowUser: any;
@@ -65,9 +53,9 @@ describe("Social Reducer Actions", () => {
       socialUsers: [{ id: "123", followed: false }],
     };
 
-    expect(socialReducer(initialState, setUnFollowUserAC(userId))).toEqual(
-      expectedState,
-    );
+    expect(
+      socialReducer(initialState, actionCreators.setUnFollowUserAC(userId)),
+    ).toEqual(expectedState);
   });
 
   it("should handle SET_USERS", () => {
@@ -85,57 +73,72 @@ describe("Social Reducer Actions", () => {
       socialUsers,
     };
 
-    expect(socialReducer(initialState, setUsersAC(socialUsers))).toEqual(
-      expectedState,
-    );
+    expect(
+      socialReducer(initialState, actionCreators.setUsersAC(socialUsers)),
+    ).toEqual(expectedState);
   });
 
   it("should create an action to set follow user", () => {
     const testUserId = "123";
-    const expectedAction = { type: FOLLOW, userId: testUserId };
+    const expectedAction = { type: socialTypeNames.FOLLOW, userId: testUserId };
 
-    expect(setFollowUserAC(testUserId)).toEqual(expectedAction);
+    expect(actionCreators.setFollowUserAC(testUserId)).toEqual(expectedAction);
   });
 
   it("should create an action to set unFollow user", () => {
     const testUserId = "123";
-    const expectedAction = { type: UN_FOLLOW, userId: testUserId };
+    const expectedAction = {
+      type: socialTypeNames.UN_FOLLOW,
+      userId: testUserId,
+    };
 
-    expect(setUnFollowUserAC(testUserId)).toEqual(expectedAction);
+    expect(actionCreators.setUnFollowUserAC(testUserId)).toEqual(
+      expectedAction,
+    );
   });
 
   it("should create an action to set users", () => {
     const testSocialUsers: SocialUserType[] = [{ id: 1, name: "John Doe" }];
-    const expectedAction = { type: SET_USERS, socialUsers: testSocialUsers };
+    const expectedAction = {
+      type: socialTypeNames.SET_USERS,
+      socialUsers: testSocialUsers,
+    };
 
-    expect(setUsersAC(testSocialUsers)).toEqual(expectedAction);
+    expect(actionCreators.setUsersAC(testSocialUsers)).toEqual(expectedAction);
   });
 
   it("should create an action to set current page", () => {
     const testCurrentPage: any = null;
     const expectedAction = {
-      type: SET_CURRENT_PAGE,
+      type: socialTypeNames.SET_CURRENT_PAGE,
       currentPage: testCurrentPage,
     };
 
-    expect(setCurrentPageAC(testCurrentPage)).toEqual(expectedAction);
+    expect(actionCreators.setCurrentPageAC(testCurrentPage)).toEqual(
+      expectedAction,
+    );
   });
 
   it("should create an action to set total users count", () => {
     const testTotalUsersCount = 30;
     const expectedAction = {
-      type: SET_TOTAL_USERS_COUNT,
+      type: socialTypeNames.SET_TOTAL_USERS_COUNT,
       totalUsersCount: testTotalUsersCount,
     };
 
-    expect(setTotalUsersCountAC(testTotalUsersCount)).toEqual(expectedAction);
+    expect(actionCreators.setTotalUsersCountAC(testTotalUsersCount)).toEqual(
+      expectedAction,
+    );
   });
 
   it("should create an action to set loading", () => {
     const testLoading: any = false;
-    const expectedAction = { type: LOADING, loading: testLoading };
+    const expectedAction = {
+      type: socialTypeNames.LOADING,
+      loading: testLoading,
+    };
 
-    expect(setLoadingAC(testLoading)).toEqual(expectedAction);
+    expect(actionCreators.setLoadingAC(testLoading)).toEqual(expectedAction);
   });
 });
 
@@ -161,11 +164,17 @@ describe("Social Reducer Thunk Actions", () => {
     await fetchSocialUsersTC(1, 10)(mockDispatch);
 
     expect(mockDispatch).toHaveBeenCalledTimes(5); // Number of expected actions dispatched
-    expect(mockDispatch).toHaveBeenCalledWith(setCurrentPageAC(1));
-    expect(mockDispatch).toHaveBeenCalledWith(setLoadingAC(true));
-    expect(mockDispatch).toHaveBeenCalledWith(setLoadingAC(false));
     expect(mockDispatch).toHaveBeenCalledWith(
-      setUsersAC([
+      actionCreators.setCurrentPageAC(1),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setLoadingAC(true),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setLoadingAC(false),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setUsersAC([
         {
           name: "John Doe",
           id: 1,
@@ -176,7 +185,9 @@ describe("Social Reducer Thunk Actions", () => {
         },
       ]),
     );
-    expect(mockDispatch).toHaveBeenCalledWith(setTotalUsersCountAC(1));
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setTotalUsersCountAC(1),
+    );
 
     mockFetchSocialUsers.mockRestore(); // Restore the original function
   });
@@ -205,11 +216,17 @@ describe("Social Reducer Thunk Actions", () => {
     await fetchSocialUsersOnChangedPageTC(2, 10)(mockDispatch);
 
     expect(mockDispatch).toHaveBeenCalledTimes(4); // Number of expected actions dispatched
-    expect(mockDispatch).toHaveBeenCalledWith(setCurrentPageAC(2));
-    expect(mockDispatch).toHaveBeenCalledWith(setLoadingAC(true));
-    expect(mockDispatch).toHaveBeenCalledWith(setLoadingAC(false));
     expect(mockDispatch).toHaveBeenCalledWith(
-      setUsersAC([
+      actionCreators.setCurrentPageAC(2),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setLoadingAC(true),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setLoadingAC(false),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setUsersAC([
         {
           name: "Jane Doe",
           id: 2,
@@ -233,11 +250,13 @@ describe("Social Reducer Thunk Actions", () => {
 
     expect(mockDispatch).toHaveBeenCalledTimes(3);
     expect(mockDispatch).toHaveBeenCalledWith(
-      setFollowingBlockedBtnAC(true, userId),
+      actionCreators.setFollowingBlockedBtnAC(true, userId),
     );
-    expect(mockDispatch).toHaveBeenCalledWith(setFollowUserAC(userId));
     expect(mockDispatch).toHaveBeenCalledWith(
-      setFollowingBlockedBtnAC(false, userId),
+      actionCreators.setFollowUserAC(userId),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setFollowingBlockedBtnAC(false, userId),
     );
   });
 
@@ -250,11 +269,13 @@ describe("Social Reducer Thunk Actions", () => {
 
     expect(mockDispatch).toHaveBeenCalledTimes(3);
     expect(mockDispatch).toHaveBeenCalledWith(
-      setFollowingBlockedBtnAC(true, userId),
+      actionCreators.setFollowingBlockedBtnAC(true, userId),
     );
-    expect(mockDispatch).toHaveBeenCalledWith(setUnFollowUserAC(userId));
     expect(mockDispatch).toHaveBeenCalledWith(
-      setFollowingBlockedBtnAC(false, userId),
+      actionCreators.setUnFollowUserAC(userId),
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      actionCreators.setFollowingBlockedBtnAC(false, userId),
     );
   });
 });

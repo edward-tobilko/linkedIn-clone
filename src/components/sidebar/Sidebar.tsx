@@ -7,11 +7,7 @@ import { MdVisibility } from "react-icons/md";
 import { CardProfile } from "../../pages/profile/CardProfile";
 import { Loader } from "../../components/UI/loader/Loader";
 
-type SidebarProps = {
-  currentProfilePage: any;
-  status: string;
-  updateUserStatusTC: any;
-};
+import { SidebarProps } from "./sidebarTypes";
 
 // UI time elements
 function UITimeElements() {

@@ -15,7 +15,7 @@ import {
   fetchCurrentUserPageTC,
   fetchUserStatusByIdTC,
   updateUserStatusTC,
-} from "../../redux/reducers/profileReducer";
+} from "../../redux/reducers/profile-reducer/profileReducer";
 import { RootState } from "../../redux/store";
 
 import { useFetching } from "../../hooks/useFetching";
@@ -28,15 +28,7 @@ import {
   statusSelector,
 } from "../../utils/selectors/profileSelectors";
 
-type ProfileContentProps = {
-  currentProfilePage: any;
-  loading: boolean;
-  status: string;
-};
-
-type UseParamsProps = {
-  userId: string;
-};
+import { ProfileContentProps, UseParamsProps } from "./profileTypes";
 
 const mapStateToProps = (state: RootState | any) => {
   return {

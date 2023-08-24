@@ -2,14 +2,7 @@ import { FC } from "react";
 
 import SocialUsersItem from "./SocialUsersItem";
 
-import { SocialUserType } from "../../redux/reducers/socialReducer";
-
-type SocialUsersListProps = {
-  socialUsers: SocialUserType[];
-  followingBlockedBtn: any;
-  setFollowUserTC: any;
-  setUnFollowUserTC: any;
-};
+import { SocialUsersListProps } from "./socialTypes";
 
 const SocialUsersList: FC<SocialUsersListProps> = ({
   socialUsers,
