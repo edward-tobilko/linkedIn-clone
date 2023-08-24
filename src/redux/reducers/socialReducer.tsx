@@ -19,10 +19,10 @@ type SocialUserPhotosType = {
 export type SocialUserType = {
   name: string;
   id: number;
-  uniqueUrlName: any;
-  photos: SocialUserPhotosType;
-  status: string;
-  followed: boolean;
+  uniqueUrlName?: any;
+  photos?: SocialUserPhotosType;
+  status?: string;
+  followed?: boolean;
 };
 
 type InitialStateType = {
