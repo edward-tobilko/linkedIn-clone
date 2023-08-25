@@ -30,9 +30,13 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 
 // Store
+// Підключаємо devtools розширення для Chrome browser (для роботи з Redux)
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(thunkMiddleware)),
+  composeEnhancers(applyMiddleware(thunkMiddleware)),
 );
 
 window.store = store;

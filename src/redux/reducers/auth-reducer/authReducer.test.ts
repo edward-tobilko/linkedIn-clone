@@ -11,7 +11,7 @@ import { authAPI } from "../../../api/API";
 
 import authTypeNames from "../../duck/typesName";
 
-jest.mock("../../api/API", () => ({
+jest.mock("../../../api/API", () => ({
   authAPI: {
     authorizationMe: jest.fn(),
     getLoginApi: jest.fn(),

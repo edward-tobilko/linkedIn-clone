@@ -1,12 +1,14 @@
 import { FC, useState } from "react";
 
-import { LoginBtn } from "../../UI/btns/login-btn/LoginBtn";
+import LoginBtn from "../../UI/btns/login-btn/LoginBtn";
 
 import { AuthFormStyle } from "./authFormStyle";
 
 import AuthFormField from "./AuthFormField";
 
-const AuthForm: FC<any> = ({ authForm, onSubmit }) => {
+import { AuthFormProps } from "./authFormTypes";
+
+const AuthForm: FC<AuthFormProps> = ({ authForm, onSubmit }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (

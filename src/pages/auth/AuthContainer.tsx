@@ -36,21 +36,19 @@ const AuthContainer: FC<AuthContainerProps> = ({ isAuth }) => {
   });
 
   // Submit your data into Redux store
-  const onSubmit: SubmitHandler<AuthFormType> = ({
-    email,
-    password,
-    rememberMe,
-    captcha,
-  }) => {
+  const onSubmit: SubmitHandler<AuthFormType> = (data) => {
     if (
-      email !== "1992eduard777clone@gmail.com" ||
-      password !== "email4769PageClone"
+      data.email !== "1992eduard777clone@gmail.com" ||
+      data.password !== "email4769PageClone"
     ) {
       authForm.setError("password", {
         type: "manual",
         message: "Incorrect Email or Password",
       });
     }
+
+    const { email, password, rememberMe, captcha } = data;
+    console.log(data);
 
     dispatch(setLoginTC(email, password, rememberMe, captcha));
   };

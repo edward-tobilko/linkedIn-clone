@@ -12,7 +12,7 @@ import { profileAPI } from "../../../api/API";
 
 import profileTypeNames from "../../duck/typesName";
 
-jest.mock("../../api/API.tsx", () => ({
+jest.mock("../../../api/API.tsx", () => ({
   profileAPI: {
     fetchCurrentUserPageById: jest.fn(),
     fetchUserStatusById: jest.fn(),
