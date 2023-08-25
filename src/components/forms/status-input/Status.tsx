@@ -6,7 +6,7 @@ import { useTypeDispatch } from "../../../hooks/useTypeSelector";
 
 import { StatusProps } from "./statusTypes";
 
-export const Status: FC<StatusProps> = ({
+const Status: FC<StatusProps> = ({
   status,
   updateUserStatusTC,
   currentProfilePage,
@@ -67,3 +67,5 @@ export const Status: FC<StatusProps> = ({
     </>
   );
 };
+
+export default Status;

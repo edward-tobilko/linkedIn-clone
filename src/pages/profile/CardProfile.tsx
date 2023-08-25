@@ -6,7 +6,7 @@ import { CardProfileStyle } from "./profileStyle";
 import avatarIcon from "../../img/images/avatar.png";
 import lampIcon from "../../img/images/lamp.png";
 
-import { Status } from "../../components/forms/status-input/Status";
+import Status from "../../components/forms/status-input/Status";
 
 import { CardProfileProps } from "./profileTypes";
 

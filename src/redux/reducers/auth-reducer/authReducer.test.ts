@@ -1,11 +1,4 @@
-import {
-  setIsAuthAC,
-  setCaptchaAC,
-  setIsAuthTC,
-  setLoginTC,
-  setLogoutTC,
-  setCaptchaTC,
-} from "./authReducer";
+import { setIsAuthAC, setCaptchaAC, setIsAuthTC } from "./authReducer";
 
 import { authAPI } from "../../../api/API";
 
