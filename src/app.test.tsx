@@ -3,14 +3,14 @@ import { MemoryRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import store from "./redux/store";
-import AppRoutes from "./AppRoutes";
+import App from "./App";
 
-describe("AppRoutes Component", () => {
+describe("App Component", () => {
   it("renders without crashing", () => {
     render(
       <MemoryRouter>
         <Provider store={store}>
-          <AppRoutes />
+          <App />
         </Provider>
       </MemoryRouter>,
     );
