@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
 });
 
 // отримуємо тип редюсора та за допомогою RootState ми можемо створити кастомний хук useTypeSelector
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
 export type RootDispatch = typeof store.dispatch;
 
 // Store

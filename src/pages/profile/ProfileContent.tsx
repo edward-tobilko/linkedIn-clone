@@ -30,7 +30,7 @@ import {
 
 import { ProfileContentProps, UseParamsProps } from "./profileTypes";
 
-const mapStateToProps = (state: RootState | any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),

@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 
 import Status from "./Status";
 
@@ -10,9 +10,9 @@ describe("Status Component", () => {
       currentProfilePage: { userId: 29793 },
     };
 
-    const { getByText } = render(<Status {...props} />);
+    render(<Status {...props} />);
 
-    expect(getByText("Test status")).toBeInTheDocument();
+    expect(screen.getByText("Test status")).toBeInTheDocument();
   });
 
   it("allows editing status when double-clicked", () => {
@@ -22,11 +22,11 @@ describe("Status Component", () => {
       currentProfilePage: { userId: 29793 },
     };
 
-    const { getByText, getByPlaceholderText } = render(<Status {...props} />);
+    render(<Status {...props} />);
 
-    fireEvent.doubleClick(getByText("Test status"));
+    fireEvent.doubleClick(screen.getByText("Test status"));
 
-    const input = getByPlaceholderText("Add new status...");
+    const input = screen.getByPlaceholderText("Add new status...");
     expect(input).toBeInTheDocument();
   });
 
@@ -38,16 +38,14 @@ describe("Status Component", () => {
       currentProfilePage: { userId: 29793 },
     };
 
-    const { getByText, getByPlaceholderText } = render(<Status {...props} />);
+    render(<Status {...props} />);
 
-    fireEvent.doubleClick(getByText("Test status"));
+    fireEvent.doubleClick(screen.getByText("Test status"));
 
-    const input = getByPlaceholderText("Add new status...");
+    const input = screen.getByPlaceholderText("Add new status...");
     fireEvent.change(input, { target: { value: "New test status" } });
     fireEvent.blur(input);
 
     expect(updateUserStatusTC).toHaveBeenCalledWith("New test status");
   });
-
-  // Add more tests for different scenarios and interactions
 });

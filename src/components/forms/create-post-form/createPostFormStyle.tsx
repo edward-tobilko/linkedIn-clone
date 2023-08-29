@@ -53,10 +53,9 @@ export const CreatePostFormListStyle = styled.ul`
       cursor: pointer;
     }
 
-      i {
-          font-size: 25px;
-          margin-right: 10px;
-        }
+    i {
+      font-size: 25px;
+      margin-right: 10px;
     }
   }
 `;

@@ -20,6 +20,7 @@
     "boxicons": "^2.1.4",
     "formik": "^2.4.3",
     "gh-pages": "^5.0.0",
+    "jest": "^27.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
@@ -33,6 +34,7 @@
     "redux-thunk": "^2.4.2",
     "reselect": "^4.1.8",
     "styled-components": "^5.3.9",
+    "ts-jest": "^29.1.1",
     "typescript": "^4.9.5",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4",
@@ -43,7 +45,8 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
