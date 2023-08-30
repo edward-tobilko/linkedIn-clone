@@ -94,20 +94,22 @@ const SocialContent: FC<SocialContentProps> = ({
           onChangedPage={onChangedPage}
         />
 
-        {loading && <SocialContentLoader />}
-
-        <SocialUsersListStyle>
-          {socialUsers?.length ? (
-            <SocialUsersList
-              socialUsers={socialUsers}
-              followingBlockedBtn={followingBlockedBtn}
-              setFollowUserTC={setFollowUserTC}
-              setUnFollowUserTC={setUnFollowUserTC}
-            />
-          ) : loading ? null : (
-            <Error>The list is empty...</Error>
-          )}
-        </SocialUsersListStyle>
+        {loading ? (
+          <SocialContentLoader />
+        ) : (
+          <SocialUsersListStyle>
+            {socialUsers?.length ? (
+              <SocialUsersList
+                socialUsers={socialUsers}
+                followingBlockedBtn={followingBlockedBtn}
+                setFollowUserTC={setFollowUserTC}
+                setUnFollowUserTC={setUnFollowUserTC}
+              />
+            ) : loading ? null : (
+              <Error>The list is empty...</Error>
+            )}
+          </SocialUsersListStyle>
+        )}
       </SocialStyle>
     </>
   );
