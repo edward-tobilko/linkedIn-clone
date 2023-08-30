@@ -3,7 +3,7 @@ interface IPostUserState {
   postUsers: IPostsUser;
   newText: string;
   addNewPostState: () => void;
-  updatePostState: (newtext: string) => void;
+  updatePostState: (newText: string) => void;
 }
 
 interface IPostsUser {

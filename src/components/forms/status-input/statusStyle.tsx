@@ -14,6 +14,9 @@ export const StatusStyle = styled.div`
     color: ${themeVars.colors.lightGreyColor};
     cursor: pointer;
     padding-bottom: 10px;
+    max-width: 240px;
+    width: 100%;
+    word-wrap: break-word;
 
     &:hover + .tooltip__active {
       display: block;
@@ -48,4 +51,10 @@ export const StatusStyle = styled.div`
     letter-spacing: 1px;
     padding-left: 15px;
   }
+`;
+
+// StatusField component
+export const StatusFieldErrorStyle = styled.p`
+  font-size: 13px;
+  color: ${themeVars.colors.errorColor};
 `;

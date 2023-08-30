@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from "react";
 
-import { StatusStyle } from "./statusStyle";
+import { StatusFieldErrorStyle, StatusStyle } from "./statusStyle";
 
 import { useTypeDispatch } from "../../../hooks/useTypeSelector";
+import StatusField from "./StatusField";
 
 import { StatusProps } from "./statusTypes";
 
@@ -13,10 +14,21 @@ const Status: FC<StatusProps> = ({
 }) => {
   const [statusValue, setStatusValue] = React.useState(status);
   const [editMode, setEditMode] = React.useState(false);
+  const [validationError, setValidationError] = React.useState("");
+
+  const maxStatusLength = 100; // Maximum status length
 
   const dispatch = useTypeDispatch();
 
   const updateInputStatus = () => {
+    if (statusValue.length > maxStatusLength) {
+      setValidationError(
+        `Status is too long. Maximum length is ${maxStatusLength} characters.`,
+      );
+      return;
+    }
+
+    setValidationError("");
     setEditMode(false);
     dispatch(updateUserStatusTC(statusValue));
   };
@@ -32,7 +44,7 @@ const Status: FC<StatusProps> = ({
           <>
             {currentProfilePage.userId === 29793 ? (
               <>
-                <div
+                <p
                   className="status__name"
                   onDoubleClick={() => setEditMode(true)}
                 >
@@ -41,7 +53,7 @@ const Status: FC<StatusProps> = ({
                   ) : (
                     status
                   )}
-                </div>
+                </p>
                 <div className="status__tooltip tooltip__active">
                   If you want to change your status, double-click here!
                 </div>
@@ -53,15 +65,17 @@ const Status: FC<StatusProps> = ({
             )}
           </>
         ) : (
-          <input
-            type="text"
-            placeholder="Add new status..."
-            value={statusValue}
-            onChange={(e) => setStatusValue(e.currentTarget.value)}
-            onBlur={updateInputStatus}
-            autoFocus={true}
-            onFocus={(e) => e.target.select()} // автозаповнення внутрішнього вмісту інпута (синій колір)
-          />
+          <>
+            <StatusField
+              updateInputStatus={updateInputStatus}
+              statusValue={statusValue}
+              setStatusValue={setStatusValue}
+            />
+
+            {validationError && (
+              <StatusFieldErrorStyle> {validationError} </StatusFieldErrorStyle>
+            )}
+          </>
         )}
       </StatusStyle>
     </>
