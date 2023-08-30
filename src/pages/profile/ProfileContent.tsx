@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -8,8 +8,8 @@ import { ProfileStyle, CreatePostStyle } from "./profileStyle";
 import CreatePostForm from "../../components/forms/create-post-form/CreatePostForm";
 import { CreatePostFormList } from "../../components/forms/create-post-form/CreatePostFormList";
 import PostsList from "../../components/posts/PostsList";
-import { Sidebar } from "../../components/sidebar/Sidebar";
-import { Loader } from "../../components/UI/loader/Loader";
+import { ProfileContentLoader } from "../../components/UI/loaders/profile-content-loader/ProfileContentLoader";
+import { ProfileContentSkeleton } from "../../components/UI/loaders/profile-content-loader/ProfileContentSkeleton";
 
 import {
   fetchCurrentUserPageTC,
@@ -29,6 +29,8 @@ import {
 } from "../../utils/selectors/profileSelectors";
 
 import { ProfileContentProps, UseParamsProps } from "./profileTypes";
+
+const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -62,26 +64,28 @@ const ProfileContent: FC<ProfileContentProps> = ({
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <Sidebar
-            currentProfilePage={currentProfilePage}
-            status={status}
-            updateUserStatusTC={updateUserStatusTC}
-          />
+      <Suspense fallback={<ProfileContentSkeleton />}>
+        <Sidebar
+          currentProfilePage={currentProfilePage}
+          status={status}
+          updateUserStatusTC={updateUserStatusTC}
+        />
+      </Suspense>
 
-          <ProfileStyle>
+      <ProfileStyle>
+        {loading ? (
+          <ProfileContentLoader />
+        ) : (
+          <>
             <CreatePostStyle>
               <CreatePostForm />
               <CreatePostFormList />
             </CreatePostStyle>
 
             <PostsList />
-          </ProfileStyle>
-        </>
-      )}
+          </>
+        )}
+      </ProfileStyle>
     </>
   );
 };

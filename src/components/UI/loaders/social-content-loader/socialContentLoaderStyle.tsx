@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../../utils/vars/themeVars";
+import { themeVars } from "../../../../utils/vars/themeVars";
 
-export const LoaderStyle = styled.div`
+export const SocialContentLoaderStyle = styled.div`
   opacity: 0.5;
   background: ${themeVars.colors.blackColor};
   height: 100%;

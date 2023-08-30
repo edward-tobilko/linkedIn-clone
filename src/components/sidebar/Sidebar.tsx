@@ -5,7 +5,7 @@ import { SidebarStyle } from "./sidebarStyle";
 import { MdVisibility } from "react-icons/md";
 
 import { CardProfile } from "../../pages/profile/CardProfile";
-import { Loader } from "../../components/UI/loader/Loader";
+import { SocialContentLoader } from "../UI/loaders/social-content-loader/SocialContentLoader";
 
 import { SidebarProps } from "./sidebarTypes";
 
@@ -65,12 +65,12 @@ function UITimeElements() {
   );
 }
 
-export const Sidebar: FC<SidebarProps> = ({
+const Sidebar: FC<SidebarProps> = ({
   currentProfilePage,
   status,
   updateUserStatusTC,
 }) => {
-  if (!currentProfilePage) return <Loader />;
+  if (!currentProfilePage) return <SocialContentLoader />;
 
   return (
     <SidebarStyle>
@@ -101,3 +101,5 @@ export const Sidebar: FC<SidebarProps> = ({
     </SidebarStyle>
   );
 };
+
+export default Sidebar;

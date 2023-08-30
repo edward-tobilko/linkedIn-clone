@@ -1,22 +1,24 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-import Profile from "./pages/profile/Profile";
-import Social from "./pages/social/Social";
 import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
 import Auth from "./pages/auth/AuthContainer";
+import Social from "./pages/social/Social";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
-import { Loader } from "./components/UI/loader/Loader";
+import { SocialContentLoader } from "./components/UI/loaders/social-content-loader/SocialContentLoader";
 
 import { setInitializedSuccessRootAppTC } from "./redux/reducers/root-app-reducer/rootAppReducer";
 import { RootState } from "./redux/store";
 
 import { useTypeDispatch } from "./hooks/useTypeSelector";
 import { initializedSelector } from "./utils/selectors/rootSelectors";
+
+// Lazy loading of components
+const Profile = lazy(() => import("./pages/profile/Profile"));
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -38,11 +40,11 @@ const AppRoutes: FC = (initialized) => {
   }, [dispatch]);
 
   if (!initialized) {
-    return <Loader />;
+    return <SocialContentLoader />;
   }
 
   return (
-    <>
+    <Suspense fallback={<SocialContentLoader />}>
       <Routes>
         {/* <Route path="/profile/*" element={<Profile />} /> - такий шлях вказуємо, якщо в <Profile /> буде ще якийсь вложений шлях, наприклад: <Routes> <Route path='account' element={<Account />} /> </Routes> */}
 
@@ -62,7 +64,7 @@ const AppRoutes: FC = (initialized) => {
         {/* Redirect */}
         <Route path="*" element={<Navigate to="/profile" replace />} />
       </Routes>
-    </>
+    </Suspense>
   );
 };
 

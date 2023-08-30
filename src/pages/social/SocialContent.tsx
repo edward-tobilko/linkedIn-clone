@@ -15,7 +15,7 @@ import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
-import { Loader } from "../../components/UI/loader/Loader";
+import { SocialContentLoader } from "../../components/UI/loaders/social-content-loader/SocialContentLoader";
 import SocialUsersList from "./SocialUsersList";
 import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
@@ -94,7 +94,7 @@ const SocialContent: FC<SocialContentProps> = ({
           onChangedPage={onChangedPage}
         />
 
-        {loading && <Loader />}
+        {loading && <SocialContentLoader />}
 
         <SocialUsersListStyle>
           {socialUsers?.length ? (

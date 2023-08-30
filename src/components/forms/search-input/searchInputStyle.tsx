@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { themeVars } from "../../../utils/vars/themeVars";
 
+// SearchInput component
 export const SearchInputStyle = styled.input`
   background: ${themeVars.colors.greyColor};
   border: 0;

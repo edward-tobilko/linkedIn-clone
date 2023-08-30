@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { themeVars } from "../../utils/vars/themeVars";
 
 export const HeaderStyle = styled.header`
-  min-height: 70px;
+  position: relative;
+  min-height: 85px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,12 +15,14 @@ export const HeaderLeftStyle = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+
   .bx-search {
     position: absolute;
     top: 50%;
     left: 50px;
     transform: translateY(-50%);
   }
+
   .bxs-id-card {
     font-size: 35px;
     padding-right: 10px;

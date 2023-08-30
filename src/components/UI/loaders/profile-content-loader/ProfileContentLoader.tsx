@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-import { LoaderStyle } from "./loaderStyle";
+import { ProfileContentLoaderStyle } from "./profileContentLoaderStyle";
 
-export const Loader: FC = () => {
+export const ProfileContentLoader: FC = () => {
   return (
-    <LoaderStyle>
+    <ProfileContentLoaderStyle>
       <div className="spinner center">
         <div className="spinner-blade"></div>
         <div className="spinner-blade"></div>
@@ -19,6 +19,6 @@ export const Loader: FC = () => {
         <div className="spinner-blade"></div>
         <div className="spinner-blade"></div>
       </div>
-    </LoaderStyle>
+    </ProfileContentLoaderStyle>
   );
 };
