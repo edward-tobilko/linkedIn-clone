@@ -2,9 +2,16 @@ import styled from "styled-components";
 
 import { themeVars } from "../../../../utils/vars/themeVars";
 
-export const SocialContentLoaderStyle = styled.div`
-  position: relative;
+export const RootLoaderStyle = styled.div`
+  opacity: 0.5;
+  background: ${themeVars.colors.blackColor};
   height: 100%;
+  width: 100%;
+  border-radius: 7px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 
   .spinner {
     font-size: 32px;
@@ -17,7 +24,7 @@ export const SocialContentLoaderStyle = styled.div`
     position: absolute;
     left: 0;
     right: 0;
-    top: 25%;
+    top: 50%;
     margin: auto;
   }
 

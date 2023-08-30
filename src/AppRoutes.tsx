@@ -10,15 +10,13 @@ import Social from "./pages/social/Social";
 import Profile from "./pages/profile/Profile";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
-import { Error } from "./components/UI/error/Error";
-// import { SocialContentLoader } from "./components/UI/loaders/social-content-loader/SocialContentLoader";
+import { RootLoader } from "./components/UI/loaders/root-loader/RootLoader";
 
 import { setInitializedSuccessRootAppTC } from "./redux/reducers/root-app-reducer/rootAppReducer";
 import { RootState } from "./redux/store";
 
 import { useTypeDispatch } from "./hooks/useTypeSelector";
 import { initializedSelector } from "./utils/selectors/rootSelectors";
-// import { Error } from "./components/UI/error/Error";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -39,9 +37,9 @@ const AppRoutes: FC = (initialized) => {
     dispatch(setInitializedSuccessRootAppTC());
   }, [dispatch]);
 
-  if (!initialized) {
-    return <Error> Error </Error>;
-  }
+  // if (!initialized) {
+  //   return <RootLoader />;
+  // }
 
   return (
     <Routes>
