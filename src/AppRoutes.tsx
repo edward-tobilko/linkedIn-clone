@@ -18,6 +18,7 @@ import { RootState } from "./redux/store";
 
 import { useTypeDispatch } from "./hooks/useTypeSelector";
 import { initializedSelector } from "./utils/selectors/rootSelectors";
+// import { Error } from "./components/UI/error/Error";
 
 const mapStateToProps = (state: RootState) => {
   return {
