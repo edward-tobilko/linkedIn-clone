@@ -30,6 +30,7 @@ import {
 
 import { ProfileContentProps, UseParamsProps } from "./profileTypes";
 
+// Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
 
 const mapStateToProps = (state: RootState) => {
