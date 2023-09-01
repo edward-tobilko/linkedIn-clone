@@ -5,6 +5,7 @@ const UPDATE_SEARCH_POST = "profile/duck/UPDATE-SEARCH-POST";
 const SET_CURRENT_USER_PAGE = "profile/duck/SET-CURRENT-USER-PAGE";
 const LOADING = "profile/duck/LOADING";
 const SET_STATUS = "profile/duck/SET-STATUS";
+const DOWNLOAD_SMALL_PHOTO = "profile/duck/DOWNLOAD-SMALL-PHOTO";
 
 // Auth reducer
 const SET_IS_AUTH = "auth/duck/SET-IS-AUTH";
@@ -38,4 +39,5 @@ export default {
   SET_CURRENT_PAGE,
   SET_TOTAL_USERS_COUNT,
   FOLLOWING_BLOCKED_BTN,
+  DOWNLOAD_SMALL_PHOTO,
 };

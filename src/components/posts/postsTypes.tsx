@@ -39,6 +39,7 @@ interface ICompany {
 // PostsItem component
 interface IPostItemProps {
   user: IPostsUser;
+  currentProfilePage: any;
 }
 
 export { IPostUserState, IPostsUser, IPostItemProps };

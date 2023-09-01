@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   timeout: 0,
   withCredentials: true, // завдяки цьому параметру cookie робить запит на інший домен;
@@ -60,6 +60,17 @@ export const profileAPI = {
     return await instance
       .put(`profile/status`, { status: status })
       .then((res) => res.data); //? другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
+  },
+
+  // Загрузка фото
+  async downloadPhoto(photoFile: any) {
+    let formData = new FormData(); //? формуємо новий об'єкт
+    formData.append("image", photoFile); //? додаємо першим параметром images (API -> /profile/photo -> Request -> Properties -> image ), а другим параметром файл, який ми отримали з input
+    return await instance.put(`/profile/photo`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
 };
 

@@ -47,3 +47,28 @@ export const CardProfileStyle = styled.div`
     }
   }
 `;
+
+export const CardProfileEditorStyle = styled.label`
+  position: absolute;
+  right: 10px;
+  top: 46%;
+  z-index: 1;
+
+  padding: 7px;
+  background: ${themeVars.colors.greyColor};
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+
+  i {
+    font-size: 18px;
+  }
+
+  input {
+    display: none;
+  }
+
+  &:hover {
+    filter: brightness(85%);
+  }
+`;

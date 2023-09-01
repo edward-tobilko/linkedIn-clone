@@ -14,8 +14,6 @@ import { AvatarImgStyle } from "../../rootStyles";
 
 import SearchInput from "../forms/search-input/SearchInput";
 
-import avatarIcon from "../../img/images/avatar.png";
-
 import {
   setIsAuthAC,
   setLogoutTC,
@@ -26,14 +24,21 @@ import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { HeaderContainerProps } from "./headerTypes";
 
+import { currentProfilePageSelector } from "../../utils/selectors/profileSelectors";
+
 const mapStateToProps = (state: RootState) => {
   return {
     isAuth: state.authorization.isAuth,
     login: state.authorization.login,
+    currentProfilePage: currentProfilePageSelector(state),
   };
 };
 
-const HeaderContainer: FC<HeaderContainerProps> = ({ isAuth, login }) => {
+const HeaderContainer: FC<HeaderContainerProps> = ({
+  isAuth,
+  login,
+  currentProfilePage,
+}) => {
   const dispatch = useTypeDispatch();
 
   const logout = (event: MouseEvent<HTMLElement>) => {
@@ -74,7 +79,9 @@ const HeaderContainer: FC<HeaderContainerProps> = ({ isAuth, login }) => {
         {isAuth ? (
           <HeaderRightStyle>
             <AvatarImgStyle
-              src={avatarIcon}
+              src={
+                currentProfilePage?.photos?.small || "https://place-hold.it/60"
+              }
               alt=""
               width="40px"
               height="40px"

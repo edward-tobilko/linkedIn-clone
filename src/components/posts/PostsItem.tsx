@@ -11,18 +11,30 @@ import {
 
 import { IPostItemProps } from "./postsTypes";
 
-export const PostsItem: FC<IPostItemProps> = ({ user }) => {
+export const PostsItem: FC<IPostItemProps> = ({ user, currentProfilePage }) => {
   return (
     <>
       <PostsItemStyle>
         <PostsItemDescriptionStyle>
           <div style={{ display: "flex" }}>
-            <AvatarImgStyle
-              width="50px"
-              height="50px"
-              src="https://place-hold.it/70"
-              alt=""
-            />
+            {currentProfilePage?.userId === 29793 ? (
+              <AvatarImgStyle
+                width="50px"
+                height="50px"
+                src={
+                  currentProfilePage?.photos?.small ||
+                  "https://place-hold.it/70"
+                }
+                alt=""
+              />
+            ) : (
+              <AvatarImgStyle
+                width="50px"
+                height="50px"
+                src="https://place-hold.it/70"
+                alt=""
+              />
+            )}
 
             <PostsItemAboutStyle>
               <h2>

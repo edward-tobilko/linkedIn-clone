@@ -84,7 +84,13 @@ const SocialContent: FC<SocialContentProps> = ({
 
   return (
     <>
-      {isAuth && <SocialNetworkManagement />}
+      {isAuth && (
+        <SocialNetworkManagement
+          totalUsersCount={totalUsersCount}
+          usersCount={usersCount}
+          socialUsers={socialUsers}
+        />
+      )}
 
       <SocialStyle>
         <Pagination

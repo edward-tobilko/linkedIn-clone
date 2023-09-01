@@ -1,17 +1,26 @@
 import { FC } from "react";
 
 import { AvatarImgStyle } from "../../rootStyles";
-import { CardProfileStyle } from "./profileStyle";
+import { CardProfileEditorStyle, CardProfileStyle } from "./profileStyle";
 
 import Status from "../../components/forms/status-input/Status";
 
 import { CardProfileProps } from "./profileTypes";
+import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 export const CardProfile: FC<CardProfileProps> = ({
   currentProfilePage,
   status,
   updateUserStatusTC,
+  downloadSmallPhotoTC,
 }) => {
+  const dispatch = useTypeDispatch();
+
+  const downloadPhoto = (event: any) => {
+    if (event.target.files.length) {
+      dispatch(downloadSmallPhotoTC(event.target.files[0]));
+    }
+  };
   return (
     <CardProfileStyle>
       <img
@@ -19,6 +28,19 @@ export const CardProfile: FC<CardProfileProps> = ({
         alt=""
         className="cardProfile__wrapper"
       />
+
+      {currentProfilePage?.userId === 29793 ? (
+        <CardProfileEditorStyle>
+          <input
+            type="file"
+            name="file"
+            accept="image/*"
+            onChange={downloadPhoto}
+          />
+          <i className="bx bx-pencil"></i>
+        </CardProfileEditorStyle>
+      ) : null}
+
       <div className="cardProfile__desc">
         <AvatarImgStyle
           src={currentProfilePage?.photos?.small || "https://place-hold.it/90"}
@@ -26,6 +48,7 @@ export const CardProfile: FC<CardProfileProps> = ({
           width="70px"
           height="70px"
         />
+
         <h1 className="cardProfile__desc-suptitle">
           {currentProfilePage?.fullName}
         </h1>

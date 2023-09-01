@@ -16,6 +16,7 @@ type CardProfileProps = {
   currentProfilePage: any;
   status: string;
   updateUserStatusTC: RootDispatch;
+  downloadSmallPhotoTC: RootDispatch;
 };
 
 export { ProfileContentProps, UseParamsProps, CardProfileProps };

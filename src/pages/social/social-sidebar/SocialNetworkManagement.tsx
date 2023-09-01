@@ -12,7 +12,22 @@ import { SocialNetworkManagementBtn } from "../../../components/UI/btns/social-n
 
 import { socialNetworkManagementInfo } from "./socialNetworkManagementInfoData";
 
-const SocialNetworkManagement: FC = () => {
+import { SocialNetworkManagementProps } from "./socialNetworkManagementTypes";
+import { calculatePaginationTotalCountPagesHelper } from "../../../utils/helper-functions/helperComponentFunctions";
+
+const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
+  totalUsersCount,
+  usersCount,
+  socialUsers,
+}) => {
+  const filteredUsers = socialUsers.filter((item: any) => item.followed);
+
+  const result = calculatePaginationTotalCountPagesHelper(
+    totalUsersCount,
+    usersCount,
+    5,
+  );
+
   return (
     <SocialNetworkManagementStyle>
       <NetworkManagementStyle>
@@ -22,10 +37,10 @@ const SocialNetworkManagement: FC = () => {
           <li className="network__management-list">
             <p>
               <i className="bx bxs-contact"></i>
-              <span className="network__management-title">Contacts</span>
+              <span className="network__management-title">All users</span>
             </p>
 
-            <span className="network__management-count">106</span>
+            <span className="network__management-count">{totalUsersCount}</span>
           </li>
           <li className="network__management-list">
             <p>
@@ -33,15 +48,19 @@ const SocialNetworkManagement: FC = () => {
               <span className="network__management-title">Pages</span>
             </p>
 
-            <span className="network__management-count">8</span>
+            <span className="network__management-count">
+              {result.paginationLengthCount}
+            </span>
           </li>
           <li className="network__management-list">
             <p>
-              <i className="bx bx-calendar"></i>
-              <span className="network__management-title">Events</span>
+              <i className="bx bx-user-check"></i>
+              <span className="network__management-title">Followed users</span>
             </p>
 
-            <span className="network__management-count">0</span>
+            <span className="network__management-count">
+              {filteredUsers.length > 0 ? <> {filteredUsers.length} </> : null}
+            </span>
           </li>
           <li className="network__management-list">
             <p>

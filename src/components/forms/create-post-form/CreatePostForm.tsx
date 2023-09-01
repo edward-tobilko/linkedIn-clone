@@ -5,6 +5,7 @@ import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
 import { CreatePostBtn } from "../../UI/btns/create-post/CreatePostBtn";
+import { currentProfilePageSelector } from "../../../utils/selectors/profileSelectors";
 
 import {
   addNewPostAC,
@@ -12,14 +13,13 @@ import {
 } from "../../../redux/reducers/profile-reducer/profileReducer";
 import { RootDispatch, RootState } from "../../../redux/store";
 
-import avatarIcon from "../../../img/images/avatar.png";
-
 import { CreatePostFormProps } from "./createPostFormTypes";
 
 // Container component
 const mapStateToProps = (state: RootState | any) => {
   return {
     newPostText: state.profilePage.newPostText,
+    currentProfilePage: currentProfilePageSelector(state),
   };
 };
 
@@ -55,7 +55,14 @@ const CreatePostForm: FC<CreatePostFormProps> = (props) => {
 
   return (
     <CreatePostFormStyle>
-      <AvatarImgStyle src={avatarIcon} alt="" width="50px" height="50px" />
+      <AvatarImgStyle
+        src={
+          props.currentProfilePage?.photos?.small || "https://place-hold.it/70"
+        }
+        alt=""
+        width="50px"
+        height="50px"
+      />
       <TextareaStyle
         type="text"
         name="text"

@@ -103,7 +103,7 @@ const initialState: InitialStateProps = {
     },
   ],
   newPostText: "",
-  name: "eduard.tobilko",
+  name: "eduard__tobilko",
   currentProfilePage: null,
   loading: false,
   status: "",
@@ -164,6 +164,16 @@ const profileReducer = (state = initialState, action: any) => {
     case profileTypeNames.SET_STATUS:
       return { ...state, status: action.status };
 
+    // Загрузка фото
+    case profileTypeNames.DOWNLOAD_SMALL_PHOTO:
+      return {
+        ...state,
+        currentProfilePage: {
+          ...state.currentProfilePage,
+          smallPhoto: action.smallPhoto,
+        },
+      };
+
     default:
       return state;
   }
@@ -206,6 +216,13 @@ export const setStatusAC = (status: string) => {
   };
 };
 
+export const setDownloadSmallPhotoAC = (smallPhoto: any) => {
+  return {
+    type: profileTypeNames.DOWNLOAD_SMALL_PHOTO,
+    smallPhoto,
+  };
+};
+
 // TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
 // Санка (thunk creator) для отримання поточної сторінки іншого користувача
@@ -242,5 +259,18 @@ export const updateUserStatusTC = (status: string) => {
     } catch (error) {
       console.log("Error", error);
     }
+  };
+};
+
+// TC для загрузки фото
+export const downloadSmallPhotoTC = (photoFile: any) => {
+  return (dispatch: RootDispatch) => {
+    profileAPI.downloadPhoto(photoFile).then((response: any) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setDownloadSmallPhotoAC(response.data.data.photos.small));
+
+        console.log(response.data.data.photos.small);
+      }
+    });
   };
 };

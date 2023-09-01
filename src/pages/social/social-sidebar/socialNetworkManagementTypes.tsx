@@ -1,7 +1,15 @@
+import { SocialUserType } from "../../../redux/reducers/social-reducer/socialReducerTypes";
+
 type SocialNetworkManagementInfoType = {
   id: number;
   title: string;
   subtitle?: string;
 };
 
-export { SocialNetworkManagementInfoType };
+type SocialNetworkManagementProps = {
+  totalUsersCount: number;
+  usersCount: number;
+  socialUsers: SocialUserType[];
+};
+
+export { SocialNetworkManagementInfoType, SocialNetworkManagementProps };

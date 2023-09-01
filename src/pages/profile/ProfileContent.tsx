@@ -15,6 +15,7 @@ import {
   fetchCurrentUserPageTC,
   fetchUserStatusByIdTC,
   updateUserStatusTC,
+  downloadSmallPhotoTC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 import { RootState } from "../../redux/store";
 
@@ -61,7 +62,7 @@ const ProfileContent: FC<ProfileContentProps> = ({
 
   useEffect(() => {
     getCurrentUserPageById();
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   return (
     <>
@@ -70,6 +71,7 @@ const ProfileContent: FC<ProfileContentProps> = ({
           currentProfilePage={currentProfilePage}
           status={status}
           updateUserStatusTC={updateUserStatusTC}
+          downloadSmallPhotoTC={downloadSmallPhotoTC}
         />
       </Suspense>
 
@@ -83,7 +85,7 @@ const ProfileContent: FC<ProfileContentProps> = ({
               <CreatePostFormList />
             </CreatePostStyle>
 
-            <PostsList />
+            <PostsList currentProfilePage={currentProfilePage} />
           </>
         )}
       </ProfileStyle>
@@ -102,6 +104,9 @@ export default compose(
 
     // TC для динамічної зміни статусу
     updateUserStatusTC,
+
+    // TC для загрузки фото
+    downloadSmallPhotoTC,
   }),
 
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований

@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { PaginationStyle } from "./paginationStyle";
 
 import { PaginationProps } from "./paginationTypes";
+import { calculatePaginationTotalCountPagesHelper } from "../../../utils/helper-functions/helperComponentFunctions";
 
 export const Pagination: FC<PaginationProps> = ({
   totalUsersCount,
@@ -15,10 +16,13 @@ export const Pagination: FC<PaginationProps> = ({
   const pages: Array<number> = [];
   const paginationLength: number = 5;
 
-  const totalPagesCount = Math.ceil(totalUsersCount / usersCount);
-  const paginationLengthCount = totalPagesCount / paginationLength;
+  const result = calculatePaginationTotalCountPagesHelper(
+    totalUsersCount,
+    usersCount,
+    paginationLength,
+  );
 
-  for (let index = 1; index <= totalPagesCount; index++) {
+  for (let index = 1; index <= result.totalPagesCount; index++) {
     pages.push(index);
   }
 
@@ -50,7 +54,7 @@ export const Pagination: FC<PaginationProps> = ({
           </p>
         ))}
 
-      {paginationLengthCount > lengthNumber && (
+      {result.paginationLengthCount > lengthNumber && (
         <i
           className="bx bx-chevron-right"
           onClick={() => setLengthNumber(lengthNumber + 1)}

@@ -44,7 +44,7 @@ const Status: FC<StatusProps> = ({
           <>
             {currentProfilePage.userId === 29793 ? (
               <>
-                <p
+                <div
                   className="status__name"
                   onDoubleClick={() => setEditMode(true)}
                 >
@@ -53,7 +53,7 @@ const Status: FC<StatusProps> = ({
                   ) : (
                     status
                   )}
-                </p>
+                </div>
                 <div className="status__tooltip tooltip__active">
                   If you want to change your status, double-click here!
                 </div>
