@@ -1,11 +1,15 @@
 import { FC, createContext, useState } from "react";
 
-export const DropdownContext: any = createContext({
+import { IDropDownContextProviderProps } from "./contextTypes";
+
+export const DropdownContext = createContext<any>({
   isOpenDropdown: true,
-  toggleMenu: () => {},
+  setIsOpenDropdown: () => {},
 });
 
-const DropDownState: FC<any> = ({ children }) => {
+const DropDownContextProvider: FC<IDropDownContextProviderProps> = ({
+  children,
+}) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   // Open or close dropdown
@@ -25,4 +29,4 @@ const DropDownState: FC<any> = ({ children }) => {
   );
 };
 
-export default DropDownState;
+export default DropDownContextProvider;

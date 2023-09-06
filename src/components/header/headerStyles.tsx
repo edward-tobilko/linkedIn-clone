@@ -73,6 +73,7 @@ export const HeaderRightStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     &-dropdown {
       color: ${themeVars.colors.lightGreyColor};
@@ -133,25 +134,15 @@ export const NavLinkStyle = styled.div`
 
 // DropdownContent component
 export const DropdownContentStyle = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 2;
-
-  background: ${themeVars.colors.backgroundRGBA};
-  width: 100%;
-  height: 100%;
-
   .profile {
     position: absolute;
-    top: 90px;
-    right: 240px;
+    top: 70px;
+    right: 0;
     z-index: 3;
 
-    box-shadow: rgba(182, 198, 206, 0.5) 0px 0px 30px 0px;
     background: ${themeVars.colors.headerBackgroundColor};
     width: 300px;
-    border-radius: 15px;
+    border-radius: 0 0 15px 15px;
 
     &__container {
       padding: 15px;
@@ -242,23 +233,6 @@ export const DropdownContentStyle = styled.div`
         color: ${themeVars.colors.lightGreyColor};
         font-size: 14px;
         padding-top: 5px;
-      }
-
-      &-content__btn {
-        width: 100%;
-        padding: 14px 0;
-        background: transparent;
-        color: ${themeVars.colors.whiteColor};
-        font-size: 17px;
-        border-radius: 15px;
-
-        &:hover {
-          filter: brightness(50%);
-        }
-
-        &:focus {
-          outline: none;
-        }
       }
     }
   }

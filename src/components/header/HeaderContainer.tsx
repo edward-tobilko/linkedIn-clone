@@ -25,7 +25,10 @@ import { useOnClickOutsite } from "../../hooks/useOnClickOutsite";
 
 import { HeaderContainerProps } from "./headerTypes";
 
-import { currentProfilePageSelector } from "../../utils/selectors/profileSelectors";
+import {
+  currentProfilePageSelector,
+  loadingSelector,
+} from "../../utils/selectors/profileSelectors";
 import { DropdownContent } from "./DropdownContent";
 import { DropdownContext } from "../../context/DropDownContext";
 
@@ -39,6 +42,7 @@ const mapStateToProps = (state: RootState) => {
     login: state.authorization.login,
     currentProfilePage: currentProfilePageSelector(state),
     email: state.authorization.email,
+    loading: loadingSelector(state),
   };
 };
 
@@ -54,11 +58,14 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     useContext(DropdownContext);
 
   const [isClicked, setIsClicked] = useState(isClickedInitialState);
+  const [loading, setLoading] = useState(false);
 
   const logout = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     dispatch(setLogoutTC());
+
+    setIsClicked(false);
   };
 
   const handleClick = (clicked: any) => {
@@ -68,7 +75,9 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   useOnClickOutsite(node, () => {
     // Only if menu is open
     if (isOpenDropdown) {
+      setLoading(true);
       toggleDropdownMode();
+      setLoading(false);
     }
   });
 
@@ -126,6 +135,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
                     logout={logout}
                     currentProfilePage={currentProfilePage}
                     email={email}
+                    loading={loading}
                   />
                 )}
               </div>

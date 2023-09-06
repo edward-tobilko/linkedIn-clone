@@ -2,12 +2,12 @@ import { FC } from "react";
 
 import HeaderContainer from "./HeaderContainer";
 
-import DropDownState from "../../context/DropDownContext";
+import DropDownContextProvider from "../../context/DropDownContext";
 
 export const Header: FC = () => {
   return (
-    <DropDownState>
+    <DropDownContextProvider>
       <HeaderContainer />
-    </DropDownState>
+    </DropDownContextProvider>
   );
 };

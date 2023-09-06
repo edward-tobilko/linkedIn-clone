@@ -3,6 +3,15 @@ type HeaderContainerProps = {
   login: string;
   currentProfilePage: any;
   email: string;
+  loading: boolean;
 };
 
-export { HeaderContainerProps };
+type LinksTypes = {
+  id: number;
+  path: string;
+  name: string;
+  description: string;
+  icon: any;
+};
+
+export { HeaderContainerProps, LinksTypes };

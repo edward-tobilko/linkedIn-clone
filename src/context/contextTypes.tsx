@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 interface IVoice {
   say: string;
@@ -23,10 +23,24 @@ interface IStateContext {
 
   chatUsers: IChatUsers[];
   setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
-  // setChatUsers: (chatUsers: Array<IChatUsersType>) => void;
 
   searchUsers: string;
   setSearchUsers: Dispatch<SetStateAction<string>>;
 }
 
-export { IDialogUsers, IStateContext, IChatUsers };
+interface IDropdownContext {
+  isOpenDropdown: boolean;
+  setIsOpenDropdown: Dispatch<SetStateAction<boolean>>;
+}
+
+interface IDropDownContextProviderProps {
+  children: ReactNode;
+}
+
+export {
+  IDialogUsers,
+  IStateContext,
+  IChatUsers,
+  IDropdownContext,
+  IDropDownContextProviderProps,
+};
