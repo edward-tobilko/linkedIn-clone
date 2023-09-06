@@ -17,7 +17,7 @@ export const SocialContentLoaderStyle = styled.div`
     position: absolute;
     left: 0;
     right: 0;
-    top: 15%;
+    top: 25%;
     margin: auto;
   }
 

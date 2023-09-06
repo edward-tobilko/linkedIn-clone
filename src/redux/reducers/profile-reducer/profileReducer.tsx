@@ -170,7 +170,7 @@ const profileReducer = (state = initialState, action: any) => {
         ...state,
         currentProfilePage: {
           ...state.currentProfilePage,
-          smallPhoto: action.smallPhoto,
+          photos: action.smallPhoto,
         },
       };
 
@@ -265,11 +265,11 @@ export const updateUserStatusTC = (status: string) => {
 // TC для загрузки фото
 export const downloadSmallPhotoTC = (photoFile: any) => {
   return (dispatch: RootDispatch) => {
+    dispatch(setLoadingAC(true));
     profileAPI.downloadPhoto(photoFile).then((response: any) => {
       if (response.data.resultCode === 0) {
-        dispatch(setDownloadSmallPhotoAC(response.data.data.photos.small));
-
-        console.log(response.data.data.photos.small);
+        dispatch(setDownloadSmallPhotoAC(response.data.data.photos));
+        dispatch(setLoadingAC(false));
       }
     });
   };

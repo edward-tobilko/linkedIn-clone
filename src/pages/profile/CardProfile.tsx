@@ -4,6 +4,7 @@ import { AvatarImgStyle } from "../../rootStyles";
 import { CardProfileEditorStyle, CardProfileStyle } from "./profileStyle";
 
 import Status from "../../components/forms/status-input/Status";
+import { CardProfileLoader } from "../../components/UI/loaders/card-profile-loader/CardProfileLoader";
 
 import { CardProfileProps } from "./profileTypes";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
@@ -13,6 +14,7 @@ export const CardProfile: FC<CardProfileProps> = ({
   status,
   updateUserStatusTC,
   downloadSmallPhotoTC,
+  loading,
 }) => {
   const dispatch = useTypeDispatch();
 
@@ -21,6 +23,7 @@ export const CardProfile: FC<CardProfileProps> = ({
       dispatch(downloadSmallPhotoTC(event.target.files[0]));
     }
   };
+
   return (
     <CardProfileStyle>
       <img
@@ -29,7 +32,7 @@ export const CardProfile: FC<CardProfileProps> = ({
         className="cardProfile__wrapper"
       />
 
-      {currentProfilePage?.userId === 29793 ? (
+      {currentProfilePage?.userId === 29793 && (
         <CardProfileEditorStyle>
           <input
             type="file"
@@ -37,9 +40,10 @@ export const CardProfile: FC<CardProfileProps> = ({
             accept="image/*"
             onChange={downloadPhoto}
           />
-          <i className="bx bx-pencil"></i>
+
+          {loading ? <CardProfileLoader /> : <i className="bx bx-pencil"></i>}
         </CardProfileEditorStyle>
-      ) : null}
+      )}
 
       <div className="cardProfile__desc">
         <AvatarImgStyle

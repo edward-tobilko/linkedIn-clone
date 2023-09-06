@@ -42,7 +42,7 @@ const Status: FC<StatusProps> = ({
       <StatusStyle>
         {!editMode ? (
           <>
-            {currentProfilePage.userId === 29793 ? (
+            {currentProfilePage?.userId === 29793 ? (
               <>
                 <div
                   className="status__name"

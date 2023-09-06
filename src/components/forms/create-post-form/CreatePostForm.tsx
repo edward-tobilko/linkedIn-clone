@@ -55,14 +55,15 @@ const CreatePostForm: FC<CreatePostFormProps> = (props) => {
 
   return (
     <CreatePostFormStyle>
-      <AvatarImgStyle
-        src={
-          props.currentProfilePage?.photos?.small || "https://place-hold.it/70"
-        }
-        alt=""
-        width="50px"
-        height="50px"
-      />
+      {props?.currentProfilePage?.userId === 29793 && (
+        <AvatarImgStyle
+          src={props.currentProfilePage?.photos?.small}
+          alt=""
+          width="50px"
+          height="50px"
+        />
+      )}
+
       <TextareaStyle
         type="text"
         name="text"

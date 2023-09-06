@@ -23,7 +23,7 @@ const mapStateToProps = (state: RootState | any) => {
 const PostsListContainer = connect(mapStateToProps, null);
 
 // Pure component
-const PostsList: FC<any> = ({ postUsers, currentProfilePage }) => {
+const PostsList: FC<any> = ({ postUsers }) => {
   const props: IStateContext | any = useMyContext();
 
   const searchedPosts = useProfilePosts(postUsers, props?.searchUsers);
@@ -33,13 +33,7 @@ const PostsList: FC<any> = ({ postUsers, currentProfilePage }) => {
       {searchedPosts?.length !== 0 ? (
         <>
           {searchedPosts
-            ?.map((user: IPostsUser) => (
-              <PostsItem
-                key={user.id}
-                user={user}
-                currentProfilePage={currentProfilePage}
-              />
-            ))
+            ?.map((user: IPostsUser) => <PostsItem key={user.id} user={user} />)
             .reverse()}
         </>
       ) : (

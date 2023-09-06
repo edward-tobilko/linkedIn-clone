@@ -72,6 +72,7 @@ const ProfileContent: FC<ProfileContentProps> = ({
           status={status}
           updateUserStatusTC={updateUserStatusTC}
           downloadSmallPhotoTC={downloadSmallPhotoTC}
+          loading={loading}
         />
       </Suspense>
 
@@ -85,7 +86,7 @@ const ProfileContent: FC<ProfileContentProps> = ({
               <CreatePostFormList />
             </CreatePostStyle>
 
-            <PostsList currentProfilePage={currentProfilePage} />
+            <PostsList />
           </>
         )}
       </ProfileStyle>

@@ -78,14 +78,15 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
 
         {isAuth ? (
           <HeaderRightStyle>
-            <AvatarImgStyle
-              src={
-                currentProfilePage?.photos?.small || "https://place-hold.it/60"
-              }
-              alt=""
-              width="40px"
-              height="40px"
-            />
+            {currentProfilePage?.userId === 29793 && (
+              <AvatarImgStyle
+                src={currentProfilePage?.photos?.small}
+                alt=""
+                width="40px"
+                height="40px"
+              />
+            )}
+
             <p> {login} </p>
 
             <LogOutStyle onClick={logout}>Log out</LogOutStyle>

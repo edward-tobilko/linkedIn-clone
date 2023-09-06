@@ -70,6 +70,7 @@ const Sidebar: FC<SidebarProps> = ({
   status,
   updateUserStatusTC,
   downloadSmallPhotoTC,
+  loading,
 }) => {
   if (!currentProfilePage) return <SocialContentLoader />;
 
@@ -81,6 +82,7 @@ const Sidebar: FC<SidebarProps> = ({
           status={status}
           updateUserStatusTC={updateUserStatusTC}
           downloadSmallPhotoTC={downloadSmallPhotoTC}
+          loading={loading}
         />
 
         <div className="sidebar-followers">
