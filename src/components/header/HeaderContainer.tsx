@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, useContext, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -21,16 +21,24 @@ import {
 import { RootState } from "../../redux/store";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { useOnClickOutsite } from "../../hooks/useOnClickOutsite";
 
 import { HeaderContainerProps } from "./headerTypes";
 
 import { currentProfilePageSelector } from "../../utils/selectors/profileSelectors";
+import { DropdownContent } from "./DropdownContent";
+import { DropdownContext } from "../../context/DropDownContext";
+
+const isClickedInitialState: any = {
+  profile: false,
+};
 
 const mapStateToProps = (state: RootState) => {
   return {
     isAuth: state.authorization.isAuth,
     login: state.authorization.login,
     currentProfilePage: currentProfilePageSelector(state),
+    email: state.authorization.email,
   };
 };
 
@@ -38,8 +46,14 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   isAuth,
   login,
   currentProfilePage,
+  email,
 }) => {
+  const node: any = useRef();
   const dispatch = useTypeDispatch();
+  const { isOpenDropdown, toggleDropdownMode }: any =
+    useContext(DropdownContext);
+
+  const [isClicked, setIsClicked] = useState(isClickedInitialState);
 
   const logout = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -47,9 +61,20 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     dispatch(setLogoutTC());
   };
 
+  const handleClick = (clicked: any) => {
+    setIsClicked({ ...isClickedInitialState, [clicked]: true });
+  };
+
+  useOnClickOutsite(node, () => {
+    // Only if menu is open
+    if (isOpenDropdown) {
+      toggleDropdownMode();
+    }
+  });
+
   return (
     <>
-      <HeaderStyle>
+      <HeaderStyle ref={node}>
         <HeaderLeftStyle>
           <i className="bx bxs-id-card"></i>
           <SearchInput />
@@ -69,22 +94,41 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
               <i className="bx bx-chat"></i>
               <p>Messages</p>
             </NavLink>
-            <NavLink to="/setting">
-              <i className="bx bx-cog"></i>
-              <p>Setting</p>
-            </NavLink>
           </ul>
         </HeaderCenterStyle>
 
         {isAuth ? (
           <HeaderRightStyle>
             {currentProfilePage?.userId === 29793 && (
-              <AvatarImgStyle
-                src={currentProfilePage?.photos?.small}
-                alt=""
-                width="40px"
-                height="40px"
-              />
+              <div className="header__right">
+                <AvatarImgStyle
+                  src={currentProfilePage?.photos?.small}
+                  alt=""
+                  width="40px"
+                  height="40px"
+                />
+
+                <p
+                  className="header__right-dropdown"
+                  onClick={() => handleClick("profile")}
+                >
+                  Profile
+                  {isClicked.profile ? (
+                    <i className="bx bx-down-arrow"></i>
+                  ) : (
+                    <i className="bx bx-up-arrow"></i>
+                  )}
+                </p>
+
+                {isClicked.profile && (
+                  <DropdownContent
+                    setIsClicked={setIsClicked}
+                    logout={logout}
+                    currentProfilePage={currentProfilePage}
+                    email={email}
+                  />
+                )}
+              </div>
             )}
 
             <p> {login} </p>

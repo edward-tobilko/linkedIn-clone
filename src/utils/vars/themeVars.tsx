@@ -11,5 +11,6 @@ export const themeVars = {
     headerBackgroundColorLighter: "#1b415f",
     blueColor: "#116ce3",
     lightBlueColor: "#34abd3",
+    backgroundRGBA: "rgba(0, 0, 0, 0.6)",
   },
 };

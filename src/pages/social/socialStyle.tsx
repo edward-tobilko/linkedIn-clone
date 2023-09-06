@@ -231,23 +231,3 @@ export const NetworkManagementPersonalFooterStyle = styled.div`
     }
   }
 `;
-
-// RemoveCardSocialUserStyle component
-export const RemoveCardSocialUserStyle = styled.button`
-  position: absolute;
-  top: 0;
-  right: 5px;
-  z-index: 1;
-  background-color: transparent;
-  border: none;
-  opacity: 0.7;
-
-  img {
-    width: 25px;
-    height: 25px;
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-`;

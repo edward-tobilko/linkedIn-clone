@@ -72,6 +72,11 @@ export const profileAPI = {
       },
     });
   },
+
+  // Оновлення інформації користувача
+  async updateProfilePage(profile: any) {
+    return await instance.put(`/profile`, profile); //? profile object is (API -> /profile -> Request -> Properties)
+  },
 };
 
 // For the AppRoutes, Auth components

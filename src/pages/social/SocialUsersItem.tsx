@@ -1,13 +1,15 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-import { SocialUserItemStyle, RemoveCardSocialUserStyle } from "./socialStyle";
+import { SocialUserItemStyle } from "./socialStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
 import { FollowBtn } from "../../components/UI/btns/follow/FollowBtn";
+import { SocialUsersItemRemoveBtn } from "../../components/UI/btns/remove-btn/removeBtnStyle";
+
+import { SocialUsersItemProps } from "./socialTypes";
 
 import removeIcon from "../../img/svg/remove_icon.svg";
-import { SocialUsersItemProps } from "./socialTypes";
 
 const SocialUsersItem: FC<SocialUsersItemProps> = ({
   socialUser,
@@ -53,9 +55,9 @@ const SocialUsersItem: FC<SocialUsersItemProps> = ({
               )}
             </p>
 
-            <RemoveCardSocialUserStyle>
+            <SocialUsersItemRemoveBtn>
               <img src={removeIcon} alt="" />
-            </RemoveCardSocialUserStyle>
+            </SocialUsersItemRemoveBtn>
           </div>
 
           <FollowBtn

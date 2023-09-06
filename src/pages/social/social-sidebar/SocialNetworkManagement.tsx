@@ -83,6 +83,7 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
         </p>
 
         <SocialNetworkManagementInput />
+
         <SocialNetworkManagementBtn>Continue</SocialNetworkManagementBtn>
 
         <p className="more__options">

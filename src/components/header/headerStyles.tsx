@@ -68,6 +68,31 @@ export const HeaderRightStyle = styled.div`
   display: inline-flex;
   align-items: center;
 
+  .header__right {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-dropdown {
+      color: ${themeVars.colors.lightGreyColor};
+      padding: 5px 0 0 0;
+      font-size: 15px;
+      display: flex;
+      align-items: first baseline;
+      cursor: pointer;
+
+      i {
+        padding-left: 5px;
+        font-size: 14px;
+      }
+
+      &:hover {
+        color: ${themeVars.colors.whiteColor};
+      }
+    }
+  }
+
   p {
     color: ${themeVars.colors.lightGreyColor};
     padding: 0 15px;
@@ -103,5 +128,138 @@ export const NavLinkStyle = styled.div`
 
   i {
     font-size: 22px;
+  }
+`;
+
+// DropdownContent component
+export const DropdownContentStyle = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
+
+  background: ${themeVars.colors.backgroundRGBA};
+  width: 100%;
+  height: 100%;
+
+  .profile {
+    position: absolute;
+    top: 90px;
+    right: 240px;
+    z-index: 3;
+
+    box-shadow: rgba(182, 198, 206, 0.5) 0px 0px 30px 0px;
+    background: ${themeVars.colors.headerBackgroundColor};
+    width: 300px;
+    border-radius: 15px;
+
+    &__container {
+      padding: 15px;
+
+      &-header {
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 15px 0;
+        position: relative;
+      }
+
+      &-title {
+        font-size: 17px;
+        font-weight: bolder;
+        color: ${themeVars.colors.lightGreyColor};
+      }
+
+      &-aboutMe {
+        display: flex;
+        align-items: center;
+        border-bottom: 0.5px solid ${themeVars.colors.lightGreyColor};
+        padding-bottom: 20px;
+      }
+
+      &-contacts {
+        margin-left: 15px;
+        width: 190px;
+      }
+
+      &-name {
+        font-weight: bold;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      &-job {
+        color: ${themeVars.colors.lightGreyColor};
+        margin: 7px 0;
+        font-size: 14px;
+        padding: 0;
+      }
+
+      &-mail {
+        color: ${themeVars.colors.lightGreyColor};
+        font-size: 14px;
+        padding: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      &-list {
+        display: flex;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      &-list__icon {
+        padding: 5px;
+        font-size: 23px;
+        display: flex;
+        align-items: center;
+
+        svg:hover {
+          transform: scale(1.3);
+          transition: transform 0.3s ease-in-out;
+        }
+      }
+
+      &-list__title {
+        font-weight: 600;
+        cursor: pointer;
+        color: ${themeVars.colors.whiteColor};
+
+        a {
+          color: ${themeVars.colors.whiteColor};
+          text-decoration: none;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &-list__description {
+        color: ${themeVars.colors.lightGreyColor};
+        font-size: 14px;
+        padding-top: 5px;
+      }
+
+      &-content__btn {
+        width: 100%;
+        padding: 14px 0;
+        background: transparent;
+        color: ${themeVars.colors.whiteColor};
+        font-size: 17px;
+        border-radius: 15px;
+
+        &:hover {
+          filter: brightness(50%);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
   }
 `;

@@ -352,6 +352,12 @@ export const ContainerStyle = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 `;
 
 // Avatar img component
