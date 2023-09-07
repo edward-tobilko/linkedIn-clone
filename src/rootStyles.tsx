@@ -355,11 +355,21 @@ export const ContainerStyle = styled.div`
 `;
 
 // Avatar img component
-export const AvatarImgStyle = styled.img<{ width: string; height: string }>`
+export const AvatarImgStyle = styled.img<{
+  width: string;
+  height: string;
+  bottom: string;
+  left: string;
+  position: boolean;
+}>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 50%;
   border: 2px solid ${themeVars.colors.orangeColor};
+
+  position: ${(props) => (props.position ? "absolute" : "none")};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
 `;
 
 export const ContentStyle = styled.div`

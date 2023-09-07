@@ -39,6 +39,16 @@ export const CardProfileStyle = styled.div`
       padding: 10px 0 5px 0;
       font-size: 18px;
       font-weight: 600;
+
+      a {
+        color: ${themeVars.colors.whiteColor};
+        text-decoration: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
 
     &-title {
@@ -48,10 +58,13 @@ export const CardProfileStyle = styled.div`
   }
 `;
 
-export const CardProfileEditorStyle = styled.label`
+export const CardProfileEditorStyle = styled.label<{
+  $sidebarTop: boolean;
+  $sidebarRight: boolean;
+}>`
   position: absolute;
-  right: 10px;
-  top: 46%;
+  right: ${(props) => (props.$sidebarRight ? "10px" : "20px")};
+  top: ${(props) => (props.$sidebarTop ? "46%" : "5%")};
   z-index: 1;
 
   padding: 7px;
@@ -70,5 +83,22 @@ export const CardProfileEditorStyle = styled.label`
 
   &:hover {
     filter: brightness(85%);
+  }
+`;
+
+// UserProfile component
+export const UserProfileStyle = styled.div`
+  width: 800px;
+  margin: 0 auto;
+
+  .user__profile {
+    &-header {
+      position: relative;
+
+      &-wrapper {
+        width: 100%;
+        height: 350px;
+      }
+    }
   }
 `;

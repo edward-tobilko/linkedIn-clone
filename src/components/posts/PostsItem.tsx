@@ -22,6 +22,9 @@ export const PostsItem: FC<IPostItemProps> = ({ user }) => {
               height="50px"
               src="https://place-hold.it/70"
               alt=""
+              position={false}
+              bottom="0"
+              left="0"
             />
 
             <PostsItemAboutStyle>

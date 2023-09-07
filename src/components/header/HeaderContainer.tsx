@@ -115,6 +115,9 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
                   alt=""
                   width="40px"
                   height="40px"
+                  position={false}
+                  bottom="0"
+                  left="0"
                 />
 
                 <p

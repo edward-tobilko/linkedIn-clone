@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import { CgProfile } from "react-icons/cg";
 import { FiCreditCard } from "react-icons/fi";
@@ -15,21 +16,21 @@ import DropDownLoader from "../UI/loaders/dropdown-loader/DropDownLoader";
 
 const links: LinksTypes[] = [
   {
-    id: 1,
-    path: "my-profile",
+    id: uuidv4(),
+    path: "user-profile",
     name: "Profile",
     description: "Account",
     icon: <CgProfile />,
   },
   {
-    id: 2,
+    id: uuidv4(),
     path: "setting",
     name: "Setting",
     description: "Setting account",
     icon: <i className="bx bx-cog"></i>,
   },
   {
-    id: 3,
+    id: uuidv4(),
     path: "my-tasks",
     name: "My Tasks",
     description: "To-do and Daily Tasks",
@@ -76,6 +77,9 @@ export const DropdownContent: FC<any> = ({
                     alt=""
                     width="60px"
                     height="60px"
+                    position={false}
+                    bottom="0"
+                    left="0"
                   />
                 )}
 

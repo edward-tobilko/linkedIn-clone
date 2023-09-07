@@ -3,8 +3,8 @@ import { RootDispatch } from "../../../redux/store";
 
 interface StatusProps {
   status: string;
-  updateUserStatusTC: RootDispatch;
-  currentProfilePage: any;
+  updateUserStatusTC?: RootDispatch;
+  currentProfilePage?: any;
 }
 
 interface StatusFieldProps extends StatusProps {

@@ -14,6 +14,9 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
         height="40px"
         src="https://place-hold.it/60"
         alt=""
+        position={false}
+        bottom="0"
+        left="0"
       />
 
       <div className="dialog__user">

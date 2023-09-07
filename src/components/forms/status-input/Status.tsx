@@ -30,7 +30,7 @@ const Status: FC<StatusProps> = ({
 
     setValidationError("");
     setEditMode(false);
-    dispatch(updateUserStatusTC(statusValue));
+    dispatch(updateUserStatusTC?.(statusValue));
   };
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { NavLink } from "react-router-dom";
 
 import { AvatarImgStyle } from "../../rootStyles";
 import { CardProfileEditorStyle, CardProfileStyle } from "./profileStyle";
@@ -33,7 +34,7 @@ export const CardProfile: FC<CardProfileProps> = ({
       />
 
       {currentProfilePage?.userId === 29793 && (
-        <CardProfileEditorStyle>
+        <CardProfileEditorStyle $sidebarTop={true} $sidebarRight={true}>
           <input
             type="file"
             name="file"
@@ -51,10 +52,13 @@ export const CardProfile: FC<CardProfileProps> = ({
           alt=""
           width="70px"
           height="70px"
+          position={false}
+          bottom="0"
+          left="0"
         />
 
         <h1 className="cardProfile__desc-suptitle">
-          {currentProfilePage?.fullName}
+          <NavLink to="/user-profile"> {currentProfilePage?.fullName} </NavLink>
         </h1>
 
         {currentProfilePage?.aboutMe?.length > 0 ? (

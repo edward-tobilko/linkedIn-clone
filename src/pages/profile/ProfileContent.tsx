@@ -48,12 +48,11 @@ const ProfileContent: FC<ProfileContentProps> = ({
   status,
 }) => {
   let { userId } = useParams<keyof UseParamsProps>() as UseParamsProps;
+  const dispatch = useTypeDispatch();
 
   if (!userId) {
     userId = "29793";
   }
-
-  const dispatch = useTypeDispatch();
 
   const [getCurrentUserPageById] = useFetching(() => {
     dispatch(fetchCurrentUserPageTC(userId));

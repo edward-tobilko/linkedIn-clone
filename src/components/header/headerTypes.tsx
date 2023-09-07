@@ -7,7 +7,7 @@ type HeaderContainerProps = {
 };
 
 type LinksTypes = {
-  id: number;
+  id: string;
   path: string;
   name: string;
   description: string;

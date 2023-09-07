@@ -8,7 +8,7 @@ import Setting from "./pages/setting/Setting";
 import Auth from "./pages/auth/AuthContainer";
 import Social from "./pages/social/Social";
 import Profile from "./pages/profile/Profile";
-import MyProfile from "./pages/profile/MyProfile";
+import UserProfile from "./pages/profile/UserProfile";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
 import { RootLoader } from "./components/UI/loaders/root-loader/RootLoader";
@@ -51,7 +51,7 @@ const AppRoutes: FC = (initialized) => {
         <Route path=":userId" element={<Profile />} />
         <Route index element={<Profile />} />
       </Route>
-      <Route path="my-profile" element={<MyProfile />} />
+      <Route path="user-profile" element={<UserProfile />} />
       <Route path="social" element={<Social />} />
       <Route path="messages">
         <Route path=":id?" element={<Messages />} />

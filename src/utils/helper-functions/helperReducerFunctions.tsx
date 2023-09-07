@@ -25,11 +25,11 @@ const setFollowUnfollowAC = (
   apiMethod: any,
   setFollowUnfollow: any,
 ) => {
-  dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); // Блокуємо кнопку при натисканні
+  dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); //? Блокуємо кнопку при натисканні
 
   apiMethod(userId).then((data: any) => {
     if (data.resultCode === 0) {
-      dispatch(setFollowUnfollow(userId)); // Діспатчимо виклик AC-ра, а не сам AC!
+      dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
     }
 
     dispatch(actionCreators.setFollowingBlockedBtnAC(false, userId));

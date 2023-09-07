@@ -61,6 +61,9 @@ const CreatePostForm: FC<CreatePostFormProps> = (props) => {
           alt=""
           width="50px"
           height="50px"
+          position={false}
+          bottom="0"
+          left="0"
         />
       )}
 

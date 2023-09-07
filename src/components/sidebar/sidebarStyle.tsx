@@ -49,6 +49,7 @@ export const SidebarStyle = styled.aside`
         cursor: pointer;
         width: 100%;
         transition: all 0.2s ease-in-out;
+
         span {
           padding-left: 7px;
         }
@@ -65,7 +66,7 @@ export const SidebarStyle = styled.aside`
 
       &__time {
         position: relative;
-        padding-bottom: 20px;
+        padding-bottom: 25px;
         display: flex;
         justify-content: space-around;
 
@@ -217,6 +218,25 @@ export const SidebarStyle = styled.aside`
           background-color: ${themeVars.colors.lightGreyColor};
           opacity: 0.7;
         }
+      }
+    }
+  }
+`;
+
+// Contacts component
+export const ContactsStyle = styled.div`
+  .menu {
+    &-list {
+      font-size: 18px;
+    }
+
+    &-link {
+      color: ${themeVars.colors.lightGreyColor};
+      text-decoration: none;
+      padding-left: 5px;
+
+      &:hover {
+        color: ${themeVars.colors.whiteColor};
       }
     }
   }
