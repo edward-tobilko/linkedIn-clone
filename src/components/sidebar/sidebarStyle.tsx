@@ -225,6 +225,13 @@ export const SidebarStyle = styled.aside`
 
 // Contacts component
 export const ContactsStyle = styled.div`
+  width: 100%;
+
+  .title {
+    font-size: 20px;
+    padding-bottom: 10px;
+  }
+
   .menu {
     &-list {
       font-size: 18px;
@@ -234,9 +241,10 @@ export const ContactsStyle = styled.div`
       color: ${themeVars.colors.lightGreyColor};
       text-decoration: none;
       padding-left: 5px;
+      font-size: 14px;
 
       &:hover {
-        color: ${themeVars.colors.whiteColor};
+        text-decoration: underline;
       }
     }
   }

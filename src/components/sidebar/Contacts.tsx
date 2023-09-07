@@ -51,6 +51,7 @@ const contactsData = [
 const Contacts: FC<any> = ({ currentProfilePage }) => {
   return (
     <ContactsStyle>
+      <h1 className="title">Contacts:</h1>
       <ul className="menu">
         {Object.keys(currentProfilePage?.contacts).map((contactKey) => (
           <>

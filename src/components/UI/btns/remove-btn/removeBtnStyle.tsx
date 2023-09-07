@@ -9,6 +9,7 @@ export const SocialUsersItemRemoveBtn = styled(RemoveBtn)`
   top: 0;
   right: 5px;
   z-index: 1;
+
   background-color: transparent;
   border: none;
   opacity: 0.7;
@@ -28,6 +29,23 @@ export const DropdownContentRemoveBtn = styled(RemoveBtn)`
   top: 50%;
   right: 0;
   z-index: 1;
+
+  background: transparent;
+  border: none;
+  opacity: 0.7;
+  transform: translateY(-50%);
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+export const EditModeRemoveBtn = styled(RemoveBtn)`
+  position: absolute;
+  top: 7%;
+  right: 10px;
+  z-index: 1;
+
   background: transparent;
   border: none;
   opacity: 0.7;

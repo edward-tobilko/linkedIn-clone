@@ -92,13 +92,74 @@ export const UserProfileStyle = styled.div`
   margin: 0 auto;
 
   .user__profile {
+    background: ${themeVars.colors.headerBackgroundColor};
+
     &-header {
       position: relative;
+    }
 
-      &-wrapper {
+    &-content {
+      padding: 70px 15px 0;
+      display: flex;
+      justify-content: space-between;
+
+      &-about {
+        padding-left: 30px;
+        max-width: 500px;
         width: 100%;
-        height: 350px;
+
+        &-name {
+          font-size: 20px;
+          text-transform: uppercase;
+
+          span {
+            font-size: 13px;
+            color: ${themeVars.colors.lightGreyColor};
+            text-transform: lowercase;
+          }
+        }
+
+        &-status {
+          display: flex;
+          justify-content: flex-start;
+          color: ${themeVars.colors.lightGreyColor};
+          padding: 7px 0;
+          word-break: break-word;
+        }
+
+        &-lookingForAJobDescription {
+          font-size: 14px;
+          letter-spacing: 0.5px;
+
+          p {
+            font-size: 16px;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+
+            i {
+              padding-left: 10px;
+              font-size: 20px;
+            }
+
+            span {
+              font-weight: 700;
+            }
+          }
+        }
+      }
+
+      &-editing {
+        position: relative;
       }
     }
   }
+`;
+
+export const WrapperImgStyle = styled.img<{ bg: string }>`
+  width: 100%;
+  height: 300px;
+  background-image: url(${(props) => props.bg});
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 `;
