@@ -26,6 +26,12 @@ interface IStateContext {
 
   searchUsers: string;
   setSearchUsers: Dispatch<SetStateAction<string>>;
+
+  profileEditMode: boolean;
+  setProfileEditMode: (profileEditMode: boolean) => void;
+
+  localLoading: boolean;
+  setLocalLoading: (profileEditMode: boolean) => void;
 }
 
 interface IDropdownContext {

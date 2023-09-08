@@ -20,4 +20,16 @@ type CardProfileProps = {
   loading: boolean;
 };
 
-export { ProfileContentProps, UseParamsProps, CardProfileProps };
+// UserProfile component
+type UserProfileProps = {
+  currentProfilePage: any;
+  loading: boolean;
+  status: string;
+};
+
+export {
+  ProfileContentProps,
+  UseParamsProps,
+  CardProfileProps,
+  UserProfileProps,
+};

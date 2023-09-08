@@ -16,13 +16,12 @@ const EditModeFormField: FC<EditModeFormFieldProps> = ({
 
   return (
     <div className={className}>
-      <label htmlFor={name} className="edit__mode-form-label">
+      <label htmlFor={name} className="edit__mode-form-field-label">
         {label}
       </label>
       <input
         type={type}
         name={name}
-        className="edit__mode-form-field"
         placeholder={`Enter ${name}`}
         {...register(name)}
       />

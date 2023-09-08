@@ -20,18 +20,65 @@ export const EditModeFormStyle = styled.section`
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 600px;
-    height: 500px;
     background: ${themeVars.colors.headerBackgroundColor};
     padding: 20px;
     border-radius: 15px;
 
     &-title {
       text-align: center;
-      font-size: 18px;
+      font-size: 22px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid ${themeVars.colors.lightGreyColor};
     }
 
     &-form {
+      padding: 20px 15px 0 5px;
+      overflow-y: scroll;
+      width: 650px;
+      height: 600px;
+
+      &-field {
+        display: grid;
+        grid-template-rows: repeat(3, 30px);
+        row-gap: 5px;
+
+        &-label {
+          font-size: 13.5px;
+          color: ${themeVars.colors.lightGreyColor};
+        }
+
+        input {
+          background: transparent;
+          border: none;
+          border: 1px solid ${themeVars.colors.whiteColor};
+          border-radius: 5px;
+          padding: 5px 10px;
+          font-size: 14px;
+          color: ${themeVars.colors.whiteColor};
+          height: 30px;
+          opacity: 0.8;
+
+          &:hover {
+            border: 2px solid;
+            margin: -1px; //? hover without moving the element
+          }
+
+          &:focus {
+            border: 1px solid ${themeVars.colors.blueColor};
+          }
+        }
+
+        .error {
+          color: ${themeVars.colors.errorColor};
+          padding-top: 10px;
+          text-align: center;
+        }
+      }
+
+      &-title {
+        font-size: 21px;
+        padding-bottom: 15px;
+      }
     }
   }
 `;

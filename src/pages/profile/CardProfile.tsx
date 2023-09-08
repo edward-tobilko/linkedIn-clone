@@ -8,7 +8,10 @@ import Status from "../../components/forms/status-input/Status";
 import { CardProfileLoader } from "../../components/UI/loaders/card-profile-loader/CardProfileLoader";
 
 import { CardProfileProps } from "./profileTypes";
+
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+
+import { setLoadingAC } from "../../redux/reducers/profile-reducer/profileReducer";
 
 export const CardProfile: FC<CardProfileProps> = ({
   currentProfilePage,
@@ -21,7 +24,9 @@ export const CardProfile: FC<CardProfileProps> = ({
 
   const downloadPhoto = (event: any) => {
     if (event.target.files.length) {
+      setLoadingAC(true);
       dispatch(downloadSmallPhotoTC(event.target.files[0]));
+      setLoadingAC(false);
     }
   };
 
@@ -40,6 +45,7 @@ export const CardProfile: FC<CardProfileProps> = ({
             name="file"
             accept="image/*"
             onChange={downloadPhoto}
+            disabled={loading}
           />
 
           {loading ? <CardProfileLoader /> : <i className="bx bx-pencil"></i>}

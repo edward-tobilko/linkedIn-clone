@@ -42,7 +42,7 @@ export const DropdownContentRemoveBtn = styled(RemoveBtn)`
 
 export const EditModeRemoveBtn = styled(RemoveBtn)`
   position: absolute;
-  top: 7%;
+  top: 6%;
   right: 10px;
   z-index: 1;
 

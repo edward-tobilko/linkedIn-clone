@@ -231,13 +231,14 @@ export const ContactsStyle = styled.div`
     font-size: 20px;
     padding-bottom: 10px;
   }
+`;
 
-  .menu {
-    &-list {
-      font-size: 18px;
-    }
+// ContactItem component
+export const ContactItemStyle = styled.li`
+  font-size: 18px;
 
-    &-link {
+  p {
+    .link {
       color: ${themeVars.colors.lightGreyColor};
       text-decoration: none;
       padding-left: 5px;

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
@@ -11,18 +11,24 @@ import {
 } from "./profileStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
+import { UserProfileProps } from "./profileTypes";
+
 import {
   currentProfilePageSelector,
   loadingSelector,
   statusSelector,
 } from "../../utils/selectors/profileSelectors";
 import { editModeSchema } from "../../utils/validators/authFormValidator";
+import { useMyContext } from "../../context/Context";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { RootState } from "../../redux/store";
-import { downloadSmallPhotoTC } from "../../redux/reducers/profile-reducer/profileReducer";
+import {
+  downloadSmallPhotoTC,
+  setLoadingAC,
+} from "../../redux/reducers/profile-reducer/profileReducer";
 
 import { CardProfileLoader } from "../../components/UI/loaders/card-profile-loader/CardProfileLoader";
 import Status from "../../components/forms/status-input/Status";
@@ -44,14 +50,24 @@ const UserProfileContainer = compose(
   withAuthRedirectHOC,
 );
 
-const UserProfile: FC<any> = ({ currentProfilePage, loading, status }) => {
+const UserProfile: FC<UserProfileProps> = ({
+  currentProfilePage,
+  loading,
+  status,
+}) => {
   const dispatch = useTypeDispatch();
-
-  const [editMode, setEditMode] = useState(false);
+  const {
+    localLoading,
+    profileEditMode,
+    setLocalLoading,
+    setProfileEditMode,
+  }: any = useMyContext();
 
   const downloadPhoto = (event: any) => {
     if (event.target.files.length) {
+      setLoadingAC(true);
       dispatch(downloadSmallPhotoTC(event.target.files[0]));
+      setLoadingAC(false);
     }
   };
 
@@ -61,14 +77,38 @@ const UserProfile: FC<any> = ({ currentProfilePage, loading, status }) => {
       fullName: "",
       lookingForAJobDescription: "",
       lookingForAJob: "",
+      github: "",
+      vk: "",
+      facebook: "",
+      instagram: "",
+      twitter: "",
+      website: "",
+      youtube: "",
+      mainLink: "",
     },
     mode: "onChange",
   });
 
   // Submit your data into Redux store
   const onSubmit: SubmitHandler<any> = (data) => {
-    console.log("Submit");
+    console.log(data);
   };
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    let delay: number = 1500;
+
+    if (localLoading) {
+      timer = setTimeout(() => {
+        setLocalLoading(false);
+        setProfileEditMode(true);
+      }, delay);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [localLoading]);
 
   return (
     <FormProvider {...authForm}>
@@ -88,6 +128,7 @@ const UserProfile: FC<any> = ({ currentProfilePage, loading, status }) => {
                   name="file"
                   accept="image/*"
                   onChange={downloadPhoto}
+                  disabled={loading}
                 />
 
                 {loading ? (
@@ -139,12 +180,12 @@ const UserProfile: FC<any> = ({ currentProfilePage, loading, status }) => {
             <div className="user__profile-content-editing">
               {currentProfilePage?.userId === 29793 && (
                 <>
-                  {editMode ? (
+                  {profileEditMode ? (
                     <EditModeForm
                       currentProfilePage={currentProfilePage}
                       onSubmit={onSubmit}
                       authForm={authForm}
-                      setEditMode={setEditMode}
+                      setProfileEditMode={setProfileEditMode}
                     />
                   ) : (
                     <CardProfileEditorStyle
@@ -153,11 +194,12 @@ const UserProfile: FC<any> = ({ currentProfilePage, loading, status }) => {
                     >
                       <input
                         type="button"
-                        name="editMode"
-                        onClick={() => setEditMode(true)}
+                        name="profileEditMode"
+                        onClick={() => setLocalLoading(true)}
+                        disabled={localLoading}
                       />
 
-                      {loading ? (
+                      {localLoading ? (
                         <CardProfileLoader />
                       ) : (
                         <i className="bx bx-pencil"></i>

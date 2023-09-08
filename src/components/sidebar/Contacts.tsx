@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { ContactsStyle } from "./sidebarStyle";
 
+import ContactItem from "./ContactItem";
+
 const contactsData = [
   {
     id: uuidv4(),
@@ -54,20 +56,11 @@ const Contacts: FC<any> = ({ currentProfilePage }) => {
       <h1 className="title">Contacts:</h1>
       <ul className="menu">
         {Object.keys(currentProfilePage?.contacts).map((contactKey) => (
-          <>
-            <li className="menu-list" key={contactKey}>
-              <p>
-                {contactKey}:
-                <a
-                  href={currentProfilePage?.contacts[contactKey]}
-                  className="menu-link"
-                  target="blank"
-                >
-                  {currentProfilePage?.contacts[contactKey]}
-                </a>
-              </p>
-            </li>
-          </>
+          <ContactItem
+            key={contactKey}
+            contactKeyValue={contactKey}
+            currentProfilePage={currentProfilePage}
+          />
         ))}
       </ul>
     </ContactsStyle>
