@@ -93,13 +93,14 @@ export const UserProfileStyle = styled.div`
 
   .user__profile {
     background: ${themeVars.colors.headerBackgroundColor};
+    border-radius: 10px;
 
     &-header {
       position: relative;
     }
 
     &-content {
-      padding: 70px 15px 0;
+      padding: 70px 15px 20px 15px;
       display: flex;
       justify-content: space-between;
 
@@ -127,23 +128,27 @@ export const UserProfileStyle = styled.div`
           word-break: break-word;
         }
 
-        &-lookingForAJobDescription {
-          font-size: 14px;
-          letter-spacing: 0.5px;
+        &-descriptions {
+          border-bottom: 0.5px solid ${themeVars.colors.lightGreyColor};
+          padding-bottom: 10px;
 
-          p {
-            font-size: 16px;
+          &-title {
+            letter-spacing: 0.5px;
+            font-size: 17px;
             padding: 10px 0;
             display: flex;
             align-items: center;
-
-            i {
-              padding-left: 10px;
-              font-size: 20px;
-            }
+            font-weight: 600;
 
             span {
-              font-weight: 700;
+              padding-left: 10px;
+              font-weight: 300;
+              color: ${themeVars.colors.whiteColor};
+              opacity: 0.8;
+            }
+
+            i {
+              font-size: 25px;
             }
           }
         }
@@ -162,4 +167,6 @@ export const WrapperImgStyle = styled.img<{ bg: string }>`
   background-image: url(${(props) => props.bg});
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  background-position: center;
+  box-sizing: border-box;
 `;

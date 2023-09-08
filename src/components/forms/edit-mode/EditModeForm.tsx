@@ -44,67 +44,35 @@ const EditModeForm: FC<any> = ({
           <EditModeFormField
             className="edit__mode-form-field"
             label="About me"
+            name="aboutMe"
+            type="text"
+          />
+
+          <EditModeFormField
+            className="edit__mode-form-field"
+            label="Skills"
             name="lookingForAJobDescription"
-            type="textarea"
+            type="text"
           />
 
           <EditModeFormField
             className="edit__mode-form-field"
             label="Looking for a job"
             name="lookingForAJob"
-            type="text"
+            type="checkbox"
           />
 
           <h2 className="edit__mode-form-title">Contacts</h2>
 
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="GitHub"
-            name="github"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="VK"
-            name="vk"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="Facebook"
-            name="facebook"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="Instagram"
-            name="instagram"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="Twitter"
-            name="twitter"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="Website"
-            name="website"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="YouTube"
-            name="youtube"
-            type="text"
-          />
-          <EditModeFormField
-            className="edit__mode-form-field"
-            label="MainLink"
-            name="mainLink"
-            type="text"
-          />
+          {Object.keys(currentProfilePage?.contacts)?.map((key) => (
+            <EditModeFormField
+              key={key}
+              className="edit__mode-form-field"
+              label={key}
+              name={key}
+              type="text"
+            />
+          ))}
 
           <SaveEditModeBtn>Save</SaveEditModeBtn>
         </form>

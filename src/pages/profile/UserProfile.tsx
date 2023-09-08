@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
@@ -18,7 +18,7 @@ import {
   loadingSelector,
   statusSelector,
 } from "../../utils/selectors/profileSelectors";
-import { editModeSchema } from "../../utils/validators/authFormValidator";
+import { editModeSchema } from "../../utils/validators/editModeSchema";
 import { useMyContext } from "../../context/Context";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
@@ -27,6 +27,7 @@ import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 import { RootState } from "../../redux/store";
 import {
   downloadSmallPhotoTC,
+  profileEditModeTC,
   setLoadingAC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 
@@ -73,25 +74,20 @@ const UserProfile: FC<UserProfileProps> = ({
 
   const authForm = useForm<any>({
     resolver: yupResolver(editModeSchema),
-    defaultValues: {
-      fullName: "",
-      lookingForAJobDescription: "",
-      lookingForAJob: "",
-      github: "",
-      vk: "",
-      facebook: "",
-      instagram: "",
-      twitter: "",
-      website: "",
-      youtube: "",
-      mainLink: "",
-    },
+
+    //? Для зберігання введених даних в формі
+    defaultValues: useMemo(() => {
+      return currentProfilePage;
+    }, [currentProfilePage]),
+
     mode: "onChange",
   });
 
   // Submit your data into Redux store
-  const onSubmit: SubmitHandler<any> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<any> = (formData) => {
+    dispatch(profileEditModeTC(formData));
+    console.log(formData);
+    setProfileEditMode(false);
   };
 
   useEffect(() => {
@@ -109,6 +105,10 @@ const UserProfile: FC<UserProfileProps> = ({
       clearTimeout(timer);
     };
   }, [localLoading]);
+
+  useEffect(() => {
+    authForm.reset(currentProfilePage);
+  }, [currentProfilePage]);
 
   return (
     <FormProvider {...authForm}>
@@ -162,15 +162,27 @@ const UserProfile: FC<UserProfileProps> = ({
               <div className="user__profile-content-about-status">
                 <Status status={status} />
               </div>
-              <div className="user__profile-content-about-lookingForAJobDescription">
-                {currentProfilePage?.lookingForAJobDescription}
-                <p>
-                  Looking for a job:
-                  {currentProfilePage?.lookingForAJob ? (
-                    <i className="bx bxs-binoculars"></i>
+              <div className="user__profile-content-about-descriptions">
+                <p className="user__profile-content-about-descriptions-title">
+                  <span>{currentProfilePage?.aboutMe}</span>
+                </p>
+                <p className="user__profile-content-about-descriptions-title">
+                  Skills:
+                  {currentProfilePage?.lookingForAJobDescription?.length > 0 ? (
+                    <span>{currentProfilePage?.lookingForAJobDescription}</span>
                   ) : (
-                    <i className="bx bx-bell-off"></i>
+                    <span>Null</span>
                   )}
+                </p>
+                <p className="user__profile-content-about-descriptions-title">
+                  Looking for a job:
+                  <span>
+                    {currentProfilePage?.lookingForAJob ? (
+                      <i className="bx bxs-binoculars"></i>
+                    ) : (
+                      <i className="bx bx-bell-off"></i>
+                    )}
+                  </span>
                 </p>
               </div>
 

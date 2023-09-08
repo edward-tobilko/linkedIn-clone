@@ -74,8 +74,8 @@ export const profileAPI = {
   },
 
   // Оновлення інформації користувача
-  async updateProfilePage(profile: any) {
-    return await instance.put(`/profile`, profile); //? profile object is (API -> /profile -> Request -> Properties)
+  async profileInfoEditMode(profileProperties: any) {
+    return await instance.put(`/profile`, profileProperties); //? profile object is (API -> /profile -> Request -> Properties)
   },
 };
 

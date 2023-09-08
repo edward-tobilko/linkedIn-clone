@@ -8,7 +8,7 @@ import { AuthStyle } from "./authStyle";
 
 import AuthForm from "../../components/forms/auth-form/AuthForm";
 
-import { authSchema } from "../../utils/validators/authFormValidator";
+import { authSchema } from "../../utils/validators/authFormSchema";
 import { isAuthSelector } from "../../utils/selectors/authSelectors";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 

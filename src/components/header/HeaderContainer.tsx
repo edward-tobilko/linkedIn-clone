@@ -39,7 +39,6 @@ const isClickedInitialState: any = {
 const mapStateToProps = (state: RootState) => {
   return {
     isAuth: state.authorization.isAuth,
-    login: state.authorization.login,
     currentProfilePage: currentProfilePageSelector(state),
     email: state.authorization.email,
     loading: loadingSelector(state),
@@ -48,7 +47,6 @@ const mapStateToProps = (state: RootState) => {
 
 const HeaderContainer: FC<HeaderContainerProps> = ({
   isAuth,
-  login,
   currentProfilePage,
   email,
 }) => {
@@ -144,7 +142,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
               </div>
             )}
 
-            <p> {login} </p>
+            <p> {currentProfilePage?.fullName} </p>
 
             <LogOutStyle onClick={logout}>Log out</LogOutStyle>
           </HeaderRightStyle>

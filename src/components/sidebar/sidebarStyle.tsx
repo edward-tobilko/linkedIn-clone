@@ -228,8 +228,8 @@ export const ContactsStyle = styled.div`
   width: 100%;
 
   .title {
-    font-size: 20px;
-    padding-bottom: 10px;
+    font-size: 25px;
+    padding: 16px 0;
   }
 `;
 

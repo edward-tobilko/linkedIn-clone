@@ -1,6 +1,5 @@
 type HeaderContainerProps = {
   isAuth: boolean;
-  login: string;
   currentProfilePage: any;
   email: string;
   loading: boolean;

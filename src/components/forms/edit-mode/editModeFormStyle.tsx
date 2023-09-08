@@ -42,6 +42,28 @@ export const EditModeFormStyle = styled.section`
         grid-template-rows: repeat(3, 30px);
         row-gap: 5px;
 
+        &:nth-child(4) {
+          display: flex;
+          max-width: 150px;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        &:nth-child(4) input:hover {
+          cursor: pointer;
+          border: 0;
+          margin: 0;
+        }
+
+        &:nth-child(4) input {
+          width: 15px;
+          height: 15px;
+        }
+
+        &:nth-child(4) input:focus {
+          border: 0;
+        }
+
         &-label {
           font-size: 13.5px;
           color: ${themeVars.colors.lightGreyColor};
@@ -77,7 +99,7 @@ export const EditModeFormStyle = styled.section`
 
       &-title {
         font-size: 21px;
-        padding-bottom: 15px;
+        padding: 15px 0;
       }
     }
   }

@@ -274,3 +274,14 @@ export const downloadSmallPhotoTC = (photoFile: any) => {
     });
   };
 };
+
+// TC для оновлення інформації користувача
+export const profileEditModeTC = (profileProperties: any) => {
+  return (dispatch: RootDispatch) => {
+    profileAPI.profileInfoEditMode(profileProperties).then((res: any) => {
+      if (res.data.resultCode === 0) {
+        // dispatch(setDownloadSmallPhotoAC(res.data.data.photos));
+      }
+    });
+  };
+};
