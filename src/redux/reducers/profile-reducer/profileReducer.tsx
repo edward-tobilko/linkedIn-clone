@@ -1,7 +1,7 @@
 import { v4 as uniqueID } from "uuid";
 
 import { profileAPI } from "../../../api/API";
-import { RootDispatch } from "../../store";
+import { RootDispatch, RootState } from "../../store";
 
 import profileTypeNames from "../../duck/typesName";
 
@@ -277,10 +277,14 @@ export const downloadSmallPhotoTC = (photoFile: any) => {
 
 // TC для оновлення інформації користувача
 export const profileEditModeTC = (profileProperties: any) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: RootDispatch, getState: any) => {
+    const myId = getState().authorization.id;
+
+    dispatch(setLoadingAC(true));
     profileAPI.profileInfoEditMode(profileProperties).then((res: any) => {
       if (res.data.resultCode === 0) {
-        // dispatch(setDownloadSmallPhotoAC(res.data.data.photos));
+        dispatch(fetchCurrentUserPageTC(myId));
+        dispatch(setLoadingAC(false));
       }
     });
   };

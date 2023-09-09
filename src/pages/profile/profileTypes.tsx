@@ -1,8 +1,34 @@
 import { RootDispatch } from "../../redux/store";
 
 // ProfileContent component
+type ContactsTypes = {
+  facebook: any;
+  website: any;
+  vk: any;
+  twitter: any;
+  instagram: any;
+  youtube: any;
+  github: any;
+  mainLink: any;
+};
+
+type PhotosTypes = {
+  small: string;
+  large: string;
+};
+
+type CurrentProfilePageTypes = {
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  aboutMe: string;
+  fullName: string;
+  contacts: ContactsTypes;
+  userId: string;
+  photos: PhotosTypes;
+};
+
 type ProfileContentProps = {
-  currentProfilePage: any;
+  currentProfilePage: CurrentProfilePageTypes;
   loading: boolean;
   status: string;
 };
@@ -32,4 +58,5 @@ export {
   UseParamsProps,
   CardProfileProps,
   UserProfileProps,
+  CurrentProfilePageTypes,
 };

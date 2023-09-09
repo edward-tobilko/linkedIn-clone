@@ -1,7 +1,15 @@
 import React from "react";
 
-export const useFetching = (callback: () => void) => {
-  const [loading, setLoading] = React.useState<any>(false);
+type CallbackType = () => Promise<void>;
+
+type UseFetchingTypes = {
+  fetching: () => void;
+  loading: boolean;
+  error: string;
+};
+
+export const useFetching = (callback: CallbackType): UseFetchingTypes => {
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>("");
 
   async function fetching() {
@@ -15,5 +23,5 @@ export const useFetching = (callback: () => void) => {
     }
   }
 
-  return [fetching, loading, error];
+  return { fetching, loading, error };
 };

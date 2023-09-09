@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, ChangeEvent } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
@@ -31,10 +31,11 @@ import {
   setLoadingAC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 
-import { CardProfileLoader } from "../../components/UI/loaders/card-profile-loader/CardProfileLoader";
+import { CardProfileLoader } from "../../components/UI/loaders/profile-loaders/CardProfileLoader";
 import Status from "../../components/forms/status-input/Status";
 import Contacts from "../../components/sidebar/Contacts";
 import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
+import { ProfileContentLoaderStyle } from "../../components/UI/loaders/profile-loaders/profileContentLoaderStyle";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -64,8 +65,8 @@ const UserProfile: FC<UserProfileProps> = ({
     setProfileEditMode,
   }: any = useMyContext();
 
-  const downloadPhoto = (event: any) => {
-    if (event.target.files.length) {
+  const downloadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length) {
       setLoadingAC(true);
       dispatch(downloadSmallPhotoTC(event.target.files[0]));
       setLoadingAC(false);
@@ -77,7 +78,7 @@ const UserProfile: FC<UserProfileProps> = ({
 
     //? Для зберігання введених даних в формі
     defaultValues: useMemo(() => {
-      return currentProfilePage;
+      return currentProfilePage || {};
     }, [currentProfilePage]),
 
     mode: "onChange",
@@ -107,122 +108,134 @@ const UserProfile: FC<UserProfileProps> = ({
   }, [localLoading]);
 
   useEffect(() => {
-    authForm.reset(currentProfilePage);
-  }, [currentProfilePage]);
+    authForm.reset(currentProfilePage || {});
+  }, [currentProfilePage, authForm]);
 
   return (
     <FormProvider {...authForm}>
       <UserProfileStyle>
-        <div className="user__profile">
-          <div className="user__profile-header">
-            <WrapperImgStyle
-              bg={
-                currentProfilePage?.photos?.large || "https://place-hold.it/170"
-              }
-            />
+        {loading ? (
+          <ProfileContentLoaderStyle />
+        ) : (
+          <div className="user__profile">
+            <div className="user__profile-header">
+              <WrapperImgStyle
+                bg={
+                  currentProfilePage?.photos?.large ||
+                  "https://place-hold.it/170"
+                }
+              />
 
-            {currentProfilePage?.userId === 29793 && (
-              <CardProfileEditorStyle $sidebarTop={false} $sidebarRight={false}>
-                <input
-                  type="file"
-                  name="file"
-                  accept="image/*"
-                  onChange={downloadPhoto}
-                  disabled={loading}
-                />
-
-                {loading ? (
-                  <CardProfileLoader />
-                ) : (
-                  <i className="bx bx-pencil"></i>
-                )}
-              </CardProfileEditorStyle>
-            )}
-
-            <AvatarImgStyle
-              src={
-                currentProfilePage?.photos?.small || "https://place-hold.it/160"
-              }
-              alt=""
-              width="150px"
-              height="150px"
-              position={true}
-              bottom="-60px"
-              left="50px"
-            />
-          </div>
-
-          <div className="user__profile-content">
-            <div className="user__profile-content-about">
-              <h1 className="user__profile-content-about-name">
-                {currentProfilePage?.fullName}
-                <span> id: {currentProfilePage?.userId} </span>
-              </h1>
-
-              <div className="user__profile-content-about-status">
-                <Status status={status} />
-              </div>
-              <div className="user__profile-content-about-descriptions">
-                <p className="user__profile-content-about-descriptions-title">
-                  <span>{currentProfilePage?.aboutMe}</span>
-                </p>
-                <p className="user__profile-content-about-descriptions-title">
-                  Skills:
-                  {currentProfilePage?.lookingForAJobDescription?.length > 0 ? (
-                    <span>{currentProfilePage?.lookingForAJobDescription}</span>
-                  ) : (
-                    <span>Null</span>
-                  )}
-                </p>
-                <p className="user__profile-content-about-descriptions-title">
-                  Looking for a job:
-                  <span>
-                    {currentProfilePage?.lookingForAJob ? (
-                      <i className="bx bxs-binoculars"></i>
-                    ) : (
-                      <i className="bx bx-bell-off"></i>
-                    )}
-                  </span>
-                </p>
-              </div>
-
-              <Contacts currentProfilePage={currentProfilePage} />
-            </div>
-
-            <div className="user__profile-content-editing">
               {currentProfilePage?.userId === 29793 && (
-                <>
-                  {profileEditMode ? (
-                    <EditModeForm
-                      currentProfilePage={currentProfilePage}
-                      onSubmit={onSubmit}
-                      authForm={authForm}
-                      setProfileEditMode={setProfileEditMode}
-                    />
-                  ) : (
-                    <CardProfileEditorStyle
-                      $sidebarTop={false}
-                      $sidebarRight={false}
-                    >
-                      <input
-                        type="button"
-                        name="profileEditMode"
-                        onClick={() => setLocalLoading(true)}
-                        disabled={localLoading}
-                      />
+                <CardProfileEditorStyle
+                  $sidebarTop={false}
+                  $sidebarRight={false}
+                >
+                  <input
+                    type="file"
+                    name="file"
+                    accept="image/*"
+                    onChange={downloadPhoto}
+                    disabled={loading}
+                  />
 
-                      {localLoading ? (
-                        <CardProfileLoader />
-                      ) : (
-                        <i className="bx bx-pencil"></i>
-                      )}
-                    </CardProfileEditorStyle>
+                  {loading ? (
+                    <CardProfileLoader />
+                  ) : (
+                    <i className="bx bx-pencil"></i>
                   )}
-                </>
+                </CardProfileEditorStyle>
               )}
+
+              <AvatarImgStyle
+                src={
+                  currentProfilePage?.photos?.small ||
+                  "https://place-hold.it/160"
+                }
+                alt=""
+                width="150px"
+                height="150px"
+                position={true}
+                bottom="-60px"
+                left="50px"
+              />
+            </div>
+
+            <div className="user__profile-content">
+              <div className="user__profile-content-about">
+                <h1 className="user__profile-content-about-name">
+                  {currentProfilePage?.fullName}
+                  <span> id: {currentProfilePage?.userId} </span>
+                </h1>
+
+                <div className="user__profile-content-about-status">
+                  <Status status={status} />
+                </div>
+                <div className="user__profile-content-about-descriptions">
+                  <p className="user__profile-content-about-descriptions-title">
+                    <span>{currentProfilePage?.aboutMe}</span>
+                  </p>
+                  <p className="user__profile-content-about-descriptions-title">
+                    Skills:
+                    {currentProfilePage?.lookingForAJobDescription?.length >
+                    0 ? (
+                      <span>
+                        {currentProfilePage?.lookingForAJobDescription}
+                      </span>
+                    ) : (
+                      <span>Null</span>
+                    )}
+                  </p>
+                  <p className="user__profile-content-about-descriptions-title">
+                    Looking for a job:
+                    <span>
+                      {currentProfilePage?.lookingForAJob ? (
+                        <i className="bx bxs-binoculars"></i>
+                      ) : (
+                        <i className="bx bx-bell-off"></i>
+                      )}
+                    </span>
+                  </p>
+                </div>
+
+                <Contacts currentProfilePage={currentProfilePage} />
+              </div>
+
+              <div className="user__profile-content-editing">
+                {currentProfilePage?.userId === 29793 && (
+                  <>
+                    {profileEditMode ? (
+                      <EditModeForm
+                        currentProfilePage={currentProfilePage}
+                        onSubmit={onSubmit}
+                        authForm={authForm}
+                        setProfileEditMode={setProfileEditMode}
+                      />
+                    ) : (
+                      <CardProfileEditorStyle
+                        $sidebarTop={false}
+                        $sidebarRight={false}
+                      >
+                        <input
+                          type="button"
+                          name="profileEditMode"
+                          onClick={() => setLocalLoading(true)}
+                          disabled={localLoading}
+                        />
+
+                        {localLoading ? (
+                          <CardProfileLoader />
+                        ) : (
+                          <i className="bx bx-pencil"></i>
+                        )}
+                      </CardProfileEditorStyle>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </UserProfileStyle>
     </FormProvider>
   );

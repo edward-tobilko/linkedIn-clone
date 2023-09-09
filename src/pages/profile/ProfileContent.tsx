@@ -8,8 +8,8 @@ import { ProfileStyle, CreatePostStyle } from "./profileStyle";
 import CreatePostForm from "../../components/forms/create-post-form/CreatePostForm";
 import { CreatePostFormList } from "../../components/forms/create-post-form/CreatePostFormList";
 import PostsList from "../../components/posts/PostsList";
-import { ProfileContentLoader } from "../../components/UI/loaders/profile-content-loader/ProfileContentLoader";
-import { ProfileContentSkeleton } from "../../components/UI/loaders/profile-content-loader/ProfileContentSkeleton";
+import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
+import { ProfileContentSkeleton } from "../../components/UI/loaders/profile-loaders/ProfileContentSkeleton";
 
 import {
   fetchCurrentUserPageTC,
@@ -47,20 +47,20 @@ const ProfileContent: FC<ProfileContentProps> = ({
   loading,
   status,
 }) => {
-  let { userId } = useParams<keyof UseParamsProps>() as UseParamsProps;
+  let { userId } = useParams() as UseParamsProps;
   const dispatch = useTypeDispatch();
 
   if (!userId) {
     userId = "29793";
   }
 
-  const [getCurrentUserPageById] = useFetching(() => {
-    dispatch(fetchCurrentUserPageTC(userId));
-    dispatch(fetchUserStatusByIdTC(userId));
+  const { fetching } = useFetching(async () => {
+    await dispatch(fetchCurrentUserPageTC(userId));
+    await dispatch(fetchUserStatusByIdTC(userId));
   });
 
   useEffect(() => {
-    getCurrentUserPageById();
+    fetching();
   }, [dispatch, userId]);
 
   return (

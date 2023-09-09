@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { CardProfileLoaderStyle } from "./cardProfileLoaderStyle";
+import { CardProfileLoaderStyle } from "./profileContentLoaderStyle";
 
 export const CardProfileLoader: FC = () => {
   return (

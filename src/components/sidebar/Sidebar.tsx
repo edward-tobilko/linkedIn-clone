@@ -5,7 +5,7 @@ import { SidebarStyle } from "./sidebarStyle";
 import { MdVisibility } from "react-icons/md";
 
 import { CardProfile } from "../../pages/profile/CardProfile";
-import { SocialContentLoader } from "../UI/loaders/social-content-loader/SocialContentLoader";
+import { SocialContentLoader } from "../UI/loaders/social-loaders/SocialContentLoader";
 
 import { SidebarProps } from "./sidebarTypes";
 

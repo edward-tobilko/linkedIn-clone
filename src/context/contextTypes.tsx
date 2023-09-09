@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
+// Context component
 interface IVoice {
   say: string;
 }
@@ -34,6 +35,7 @@ interface IStateContext {
   setLocalLoading: (profileEditMode: boolean) => void;
 }
 
+// DropDownContextProvider component
 interface IDropdownContext {
   isOpenDropdown: boolean;
   setIsOpenDropdown: Dispatch<SetStateAction<boolean>>;

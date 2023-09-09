@@ -1,9 +1,19 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, RefObject } from "react";
 
-export const useOnClickOutsite: FC<any> = (ref, callback) => {
+type CallbackType = (event: MouseEvent) => void;
+
+type UseOnClickOutsiteTypes = {
+  ref: RefObject<HTMLElement>;
+  callback: CallbackType;
+};
+
+export const useOnClickOutsite: FC<UseOnClickOutsiteTypes> = ({
+  ref,
+  callback,
+}) => {
   useEffect(() => {
-    const listener = (event: any) => {
-      if (!ref.current || ref.current.contains(event.target)) {
+    const listener = (event: MouseEvent) => {
+      if (!ref?.current || ref?.current.contains(event.target as Node)) {
         return;
       }
       callback(event);

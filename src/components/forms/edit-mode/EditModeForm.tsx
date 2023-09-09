@@ -2,11 +2,13 @@ import { FC } from "react";
 
 import { EditModeFormStyle } from "./editModeFormStyle";
 
+import { EditModeFormProps } from "./editModeFormTypes";
+
 import EditModeFormField from "./EditModeFormField";
 import { SaveEditModeBtn } from "../../UI/btns/edit-mode/SaveEditModeBtn";
 import { EditModeRemoveBtn } from "../../UI/btns/remove-btn/removeBtnStyle";
 
-const EditModeForm: FC<any> = ({
+const EditModeForm: FC<EditModeFormProps> = ({
   currentProfilePage,
   onSubmit,
   authForm,

@@ -5,7 +5,7 @@ import { AvatarImgStyle } from "../../rootStyles";
 import { CardProfileEditorStyle, CardProfileStyle } from "./profileStyle";
 
 import Status from "../../components/forms/status-input/Status";
-import { CardProfileLoader } from "../../components/UI/loaders/card-profile-loader/CardProfileLoader";
+import { CardProfileLoader } from "../../components/UI/loaders/profile-loaders/CardProfileLoader";
 
 import { CardProfileProps } from "./profileTypes";
 

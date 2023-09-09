@@ -12,7 +12,7 @@ import {
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import SearchInput from "../forms/search-input/SearchInput";
+import { HeaderContainerProps } from "./headerTypes";
 
 import {
   setIsAuthAC,
@@ -23,18 +23,13 @@ import { RootState } from "../../redux/store";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { useOnClickOutsite } from "../../hooks/useOnClickOutsite";
 
-import { HeaderContainerProps } from "./headerTypes";
-
 import {
   currentProfilePageSelector,
   loadingSelector,
 } from "../../utils/selectors/profileSelectors";
 import { DropdownContent } from "./DropdownContent";
 import { DropdownContext } from "../../context/DropDownContext";
-
-const isClickedInitialState: any = {
-  profile: false,
-};
+import SearchInput from "../forms/search-input/SearchInput";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -50,12 +45,13 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   currentProfilePage,
   email,
 }) => {
-  const node: any = useRef();
+  const node: any = useRef(null);
   const dispatch = useTypeDispatch();
-  const { isOpenDropdown, toggleDropdownMode }: any =
-    useContext(DropdownContext);
+  const { isOpenDropdown, toggleDropdownMode } = useContext(DropdownContext);
 
-  const [isClicked, setIsClicked] = useState(isClickedInitialState);
+  const [isClicked, setIsClicked] = useState<{ [key: string]: boolean }>({
+    profile: false,
+  });
   const [loading, setLoading] = useState(false);
 
   const logout = (event: MouseEvent<HTMLElement>) => {
@@ -63,11 +59,11 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
 
     dispatch(setLogoutTC());
 
-    setIsClicked(false);
+    setIsClicked({ ...isClicked, profile: false });
   };
 
-  const handleClick = (clicked: any) => {
-    setIsClicked({ ...isClickedInitialState, [clicked]: true });
+  const handleClick = (clicked: string) => {
+    setIsClicked({ ...isClicked, [clicked]: !isClicked[clicked] });
   };
 
   useOnClickOutsite(node, () => {

@@ -12,10 +12,12 @@ import { RootState } from "../../redux/store";
 
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
+import { SocialContentProps } from "./socialTypes";
+
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
-import { SocialContentLoader } from "../../components/UI/loaders/social-content-loader/SocialContentLoader";
+import { SocialContentLoader } from "../../components/UI/loaders/social-loaders/SocialContentLoader";
 import SocialUsersList from "./SocialUsersList";
 import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
@@ -30,8 +32,6 @@ import {
   followingBlockedBtnSelector,
   isAuthSelector,
 } from "../../utils/selectors/socialSelectors";
-
-import { SocialContentProps } from "./socialTypes";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -70,8 +70,8 @@ const SocialContent: FC<SocialContentProps> = ({
 }) => {
   const dispatch = useTypeDispatch();
 
-  const [getSocialUsers] = useFetching(() => {
-    dispatch(fetchSocialUsersTC(currentPage, usersCount));
+  const { fetching } = useFetching(async () => {
+    await dispatch(fetchSocialUsersTC(currentPage, usersCount));
   });
 
   const onChangedPage = (pageNumber: number) => {
@@ -79,7 +79,7 @@ const SocialContent: FC<SocialContentProps> = ({
   };
 
   useEffect(() => {
-    getSocialUsers();
+    fetching();
   }, [dispatch]);
 
   return (

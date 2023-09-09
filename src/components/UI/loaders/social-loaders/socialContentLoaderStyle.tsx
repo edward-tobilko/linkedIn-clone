@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { themeVars } from "../../../../utils/vars/themeVars";
 
+// SocialContentLoader component
 export const SocialContentLoaderStyle = styled.div`
   position: relative;
   height: 100%;
