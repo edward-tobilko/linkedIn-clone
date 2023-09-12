@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { EditModeFormStyle } from "./editModeFormStyle";
 
@@ -14,8 +15,32 @@ const EditModeForm: FC<EditModeFormProps> = ({
   authForm,
   setProfileEditMode,
 }) => {
+  const {
+    formState: { errors: editModeError },
+  }: any = useFormContext();
+
+  // Check if editModeError and editModeError.contacts are defined
+  const editModeErrorString =
+    editModeError && editModeError.contacts
+      ? Object.keys(editModeError.contacts)
+          .reduce((acc: any, key: any) => {
+            const errorMessage = editModeError.contacts[key]?.message;
+
+            if (errorMessage) {
+              acc.push(`${key}: ${errorMessage}`);
+            }
+
+            return acc;
+          }, [])
+          .join("\n")
+      : ""; // Set to an empty string if editModeError or editModeError.contacts is undefined
+
+  console.log(editModeErrorString);
+
   return (
     <EditModeFormStyle>
+      {/* {editModeErrorString && <p className="error">{editModeErrorString}</p>} */}
+
       <div className="edit__mode">
         <EditModeRemoveBtn>
           <svg
@@ -66,15 +91,16 @@ const EditModeForm: FC<EditModeFormProps> = ({
 
           <h2 className="edit__mode-form-title">Contacts</h2>
 
-          {Object.keys(currentProfilePage?.contacts)?.map((key) => (
-            <EditModeFormField
-              key={key}
-              className="edit__mode-form-field"
-              label={key}
-              name={key}
-              type="text"
-            />
-          ))}
+          {currentProfilePage?.contacts &&
+            Object.keys(currentProfilePage?.contacts)?.map((key) => (
+              <EditModeFormField
+                key={key}
+                className="edit__mode-form-field"
+                label={key}
+                name={`contacts.${key}`}
+                type="text"
+              />
+            ))}
 
           <SaveEditModeBtn>Save</SaveEditModeBtn>
         </form>

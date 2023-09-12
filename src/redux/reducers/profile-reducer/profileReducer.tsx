@@ -277,14 +277,19 @@ export const downloadSmallPhotoTC = (photoFile: any) => {
 
 // TC для оновлення інформації користувача
 export const profileEditModeTC = (profileProperties: any) => {
-  return (dispatch: RootDispatch, getState: any) => {
-    const myId = getState().authorization.id;
+  return (dispatch: RootDispatch, getState: () => RootState) => {
+    const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()
 
     dispatch(setLoadingAC(true));
+
     profileAPI.profileInfoEditMode(profileProperties).then((res: any) => {
       if (res.data.resultCode === 0) {
         dispatch(fetchCurrentUserPageTC(myId));
         dispatch(setLoadingAC(false));
+      } else {
+        const errorMessage = res.data.messages[0] || "Server error occurred";
+
+        return Promise.reject(errorMessage);
       }
     });
   };

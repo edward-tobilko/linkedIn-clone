@@ -2,14 +2,14 @@ import { RootDispatch } from "../../redux/store";
 
 // ProfileContent component
 type ContactsTypes = {
-  facebook: any;
-  website: any;
-  vk: any;
-  twitter: any;
-  instagram: any;
-  youtube: any;
-  github: any;
-  mainLink: any;
+  facebook: string | any;
+  website: string | any;
+  vk: string | any;
+  twitter: string | any;
+  instagram: string | any;
+  youtube: string | any;
+  github: string | any;
+  mainLink: string | any;
 };
 
 type PhotosTypes = {
@@ -23,12 +23,15 @@ type CurrentProfilePageTypes = {
   aboutMe: string;
   fullName: string;
   contacts: ContactsTypes;
-  userId: string;
+  userId: string | number;
   photos: PhotosTypes;
 };
 
-type ProfileContentProps = {
+type CurrentProfilePageProps = {
   currentProfilePage: CurrentProfilePageTypes;
+};
+
+type ProfileContentProps = CurrentProfilePageProps & {
   loading: boolean;
   status: string;
 };
@@ -38,25 +41,15 @@ type UseParamsProps = {
 };
 
 // CardProfile component
-type CardProfileProps = {
-  currentProfilePage: any;
-  status: string;
+type CardProfileProps = ProfileContentProps & {
   updateUserStatusTC: RootDispatch;
   downloadSmallPhotoTC: RootDispatch;
-  loading: boolean;
-};
-
-// UserProfile component
-type UserProfileProps = {
-  currentProfilePage: any;
-  loading: boolean;
-  status: string;
 };
 
 export {
   ProfileContentProps,
   UseParamsProps,
   CardProfileProps,
-  UserProfileProps,
   CurrentProfilePageTypes,
+  CurrentProfilePageProps,
 };

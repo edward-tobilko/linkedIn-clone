@@ -1,9 +1,13 @@
-type SidebarProps = {
-  currentProfilePage: any;
-  status: string;
+import { ProfileContentProps } from "../../pages/profile/profileTypes";
+
+type SidebarProps = ProfileContentProps & {
   updateUserStatusTC: any;
   downloadSmallPhotoTC: any;
-  loading: boolean;
 };
 
-export { SidebarProps };
+type ContactItemProps = {
+  contactKey: string;
+  contactValue: string;
+};
+
+export { SidebarProps, ContactItemProps };

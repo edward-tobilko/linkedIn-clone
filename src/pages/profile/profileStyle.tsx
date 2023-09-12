@@ -161,6 +161,40 @@ export const UserProfileStyle = styled.div`
   }
 `;
 
+// Contacts component
+export const ContactsStyle = styled.div`
+  width: 100%;
+
+  .title {
+    font-size: 25px;
+    padding: 16px 0;
+  }
+`;
+
+// ContactItem component
+export const ContactItemStyle = styled.li`
+  font-size: 18px;
+
+  p {
+    .link {
+      color: ${themeVars.colors.lightGreyColor};
+      text-decoration: none;
+      padding-left: 5px;
+      font-size: 14px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    span {
+      color: ${themeVars.colors.errorColor};
+      font-size: 14px;
+      padding-left: 7px;
+    }
+  }
+`;
+
 export const WrapperImgStyle = styled.img<{ bg: string }>`
   width: 100%;
   height: 300px;

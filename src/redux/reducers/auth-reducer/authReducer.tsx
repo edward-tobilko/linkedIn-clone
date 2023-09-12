@@ -81,10 +81,6 @@ export const setLoginTC = (
       .then((response) => {
         if (response.data.resultCode === 0) {
           dispatch(setIsAuthTC());
-        } else {
-          if (response.data.resultCode === 10) {
-            dispatch(setCaptchaTC());
-          }
         }
       });
   };
@@ -101,9 +97,9 @@ export const setLogoutTC = () => {
   };
 };
 
-// TC для капчі
-export const setCaptchaTC = () => (dispatch: RootDispatch) => {
-  return authAPI.getCaptchaUrl().then((response: any) => {
-    console.log(response.data.url);
-  });
-};
+// // TC для капчі
+// export const setCaptchaTC = () => (dispatch: RootDispatch) => {
+//   return authAPI.getCaptchaUrl().then((response: any) => {
+//     console.log(response.data.url);
+//   });
+// };

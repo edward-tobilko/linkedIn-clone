@@ -11,8 +11,24 @@ const EditModeFormField: FC<EditModeFormFieldProps> = ({
 }) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors: editModeError },
   }: any = useFormContext();
+
+  const editModeErrorString = editModeError.contacts
+    ? Object.keys(editModeError.contacts)
+        .reduce((acc: any, key: any) => {
+          const errorMessage = editModeError.contacts[key]?.message;
+
+          if (errorMessage) {
+            acc.push(`${key}: ${errorMessage}`);
+          }
+
+          return acc;
+        }, [])
+        .join("\n")
+    : "";
+
+  console.log(editModeErrorString);
 
   return (
     <div className={className}>
@@ -22,11 +38,15 @@ const EditModeFormField: FC<EditModeFormFieldProps> = ({
       <input
         type={type}
         name={name}
-        placeholder={`Enter ${name}`}
+        placeholder={`Enter ${label}`}
         {...register(name)}
       />
 
-      <p className="error">{errors[name]?.message}</p>
+      {editModeError[name] && (
+        <p className="error">{editModeError[name]?.message}</p>
+      )}
+
+      {editModeErrorString && <p className="error">{editModeErrorString}</p>}
     </div>
   );
 };

@@ -11,7 +11,7 @@ import {
 } from "./profileStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { UserProfileProps } from "./profileTypes";
+import { ProfileContentProps } from "./profileTypes";
 
 import {
   currentProfilePageSelector,
@@ -33,7 +33,7 @@ import {
 
 import { CardProfileLoader } from "../../components/UI/loaders/profile-loaders/CardProfileLoader";
 import Status from "../../components/forms/status-input/Status";
-import Contacts from "../../components/sidebar/Contacts";
+import Contacts from "./Contacts";
 import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
 import { ProfileContentLoaderStyle } from "../../components/UI/loaders/profile-loaders/profileContentLoaderStyle";
 
@@ -52,7 +52,7 @@ const UserProfileContainer = compose(
   withAuthRedirectHOC,
 );
 
-const UserProfile: FC<UserProfileProps> = ({
+const UserProfile: FC<ProfileContentProps> = ({
   currentProfilePage,
   loading,
   status,
@@ -87,13 +87,12 @@ const UserProfile: FC<UserProfileProps> = ({
   // Submit your data into Redux store
   const onSubmit: SubmitHandler<any> = (formData) => {
     dispatch(profileEditModeTC(formData));
-    console.log(formData);
     setProfileEditMode(false);
   };
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    let delay: number = 1500;
+    let delay: number = 0;
 
     if (localLoading) {
       timer = setTimeout(() => {
