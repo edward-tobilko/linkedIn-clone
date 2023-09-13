@@ -13,6 +13,7 @@ type EditModeFormProps = {
   setProfileEditMode: (editMode: boolean) => void;
   onSubmit: SubmitHandler<FormData>;
   authForm: any;
+  loading: boolean;
 };
 
 export { EditModeFormFieldProps, EditModeFormProps };

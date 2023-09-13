@@ -89,12 +89,6 @@ export const EditModeFormStyle = styled.section`
             border: 1px solid ${themeVars.colors.blueColor};
           }
         }
-
-        .error {
-          color: ${themeVars.colors.errorColor};
-          padding-top: 10px;
-          text-align: center;
-        }
       }
 
       &-title {
@@ -102,5 +96,11 @@ export const EditModeFormStyle = styled.section`
         padding: 15px 0;
       }
     }
+  }
+
+  .error {
+    color: ${themeVars.colors.errorColor};
+    padding-top: 10px;
+    text-align: center;
   }
 `;

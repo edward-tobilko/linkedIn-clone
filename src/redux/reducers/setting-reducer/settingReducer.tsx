@@ -12,7 +12,7 @@ const settingReducer = (state = initialState, action: any) => {
 };
 
 // TC для оновлення інформації про користувача
-export const updateProfilePageTC = (profile: any) => {
+export const updateProfilePageTC = (profile: string) => {
   return (dispatch: RootDispatch) => {
     console.log(profile);
   };

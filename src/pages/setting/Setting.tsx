@@ -16,15 +16,7 @@ const Setting: FC = () => {
     dispatch(updateProfilePageTC("hello"));
   }, [dispatch]);
 
-  return (
-    <SettingStyle>
-      <div className="about__header">
-        <h1 className="about__header-title">
-          Change the section about yourself
-        </h1>
-      </div>
-    </SettingStyle>
-  );
+  return <SettingStyle>Setting</SettingStyle>;
 };
 
 export default compose(

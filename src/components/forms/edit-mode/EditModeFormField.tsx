@@ -14,22 +14,6 @@ const EditModeFormField: FC<EditModeFormFieldProps> = ({
     formState: { errors: editModeError },
   }: any = useFormContext();
 
-  const editModeErrorString = editModeError.contacts
-    ? Object.keys(editModeError.contacts)
-        .reduce((acc: any, key: any) => {
-          const errorMessage = editModeError.contacts[key]?.message;
-
-          if (errorMessage) {
-            acc.push(`${key}: ${errorMessage}`);
-          }
-
-          return acc;
-        }, [])
-        .join("\n")
-    : "";
-
-  console.log(editModeErrorString);
-
   return (
     <div className={className}>
       <label htmlFor={name} className="edit__mode-form-field-label">
@@ -45,8 +29,6 @@ const EditModeFormField: FC<EditModeFormFieldProps> = ({
       {editModeError[name] && (
         <p className="error">{editModeError[name]?.message}</p>
       )}
-
-      {editModeErrorString && <p className="error">{editModeErrorString}</p>}
     </div>
   );
 };

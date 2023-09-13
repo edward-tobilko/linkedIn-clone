@@ -35,7 +35,7 @@ import { CardProfileLoader } from "../../components/UI/loaders/profile-loaders/C
 import Status from "../../components/forms/status-input/Status";
 import Contacts from "./Contacts";
 import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
-import { ProfileContentLoaderStyle } from "../../components/UI/loaders/profile-loaders/profileContentLoaderStyle";
+import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -92,7 +92,7 @@ const UserProfile: FC<ProfileContentProps> = ({
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    let delay: number = 0;
+    let delay: number = 1200;
 
     if (localLoading) {
       timer = setTimeout(() => {
@@ -114,7 +114,7 @@ const UserProfile: FC<ProfileContentProps> = ({
     <FormProvider {...authForm}>
       <UserProfileStyle>
         {loading ? (
-          <ProfileContentLoaderStyle />
+          <ProfileContentLoader />
         ) : (
           <div className="user__profile">
             <div className="user__profile-header">
@@ -209,6 +209,7 @@ const UserProfile: FC<ProfileContentProps> = ({
                         onSubmit={onSubmit}
                         authForm={authForm}
                         setProfileEditMode={setProfileEditMode}
+                        loading={loading}
                       />
                     ) : (
                       <CardProfileEditorStyle

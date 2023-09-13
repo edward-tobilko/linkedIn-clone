@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { useFormContext } from "react-hook-form";
 
 import { EditModeFormStyle } from "./editModeFormStyle";
 
 import { EditModeFormProps } from "./editModeFormTypes";
+import { useFormContext } from "react-hook-form";
 
 import EditModeFormField from "./EditModeFormField";
 import { SaveEditModeBtn } from "../../UI/btns/edit-mode/SaveEditModeBtn";
@@ -14,33 +14,14 @@ const EditModeForm: FC<EditModeFormProps> = ({
   onSubmit,
   authForm,
   setProfileEditMode,
+  loading,
 }) => {
   const {
-    formState: { errors: editModeError },
+    formState: { errors: editModeContactsError },
   }: any = useFormContext();
-
-  // Check if editModeError and editModeError.contacts are defined
-  const editModeErrorString =
-    editModeError && editModeError.contacts
-      ? Object.keys(editModeError.contacts)
-          .reduce((acc: any, key: any) => {
-            const errorMessage = editModeError.contacts[key]?.message;
-
-            if (errorMessage) {
-              acc.push(`${key}: ${errorMessage}`);
-            }
-
-            return acc;
-          }, [])
-          .join("\n")
-      : ""; // Set to an empty string if editModeError or editModeError.contacts is undefined
-
-  console.log(editModeErrorString);
 
   return (
     <EditModeFormStyle>
-      {/* {editModeErrorString && <p className="error">{editModeErrorString}</p>} */}
-
       <div className="edit__mode">
         <EditModeRemoveBtn>
           <svg
@@ -93,16 +74,24 @@ const EditModeForm: FC<EditModeFormProps> = ({
 
           {currentProfilePage?.contacts &&
             Object.keys(currentProfilePage?.contacts)?.map((key) => (
-              <EditModeFormField
-                key={key}
-                className="edit__mode-form-field"
-                label={key}
-                name={`contacts.${key}`}
-                type="text"
-              />
+              <div key={key}>
+                <EditModeFormField
+                  className="edit__mode-form-field"
+                  label={key}
+                  name={`contacts.${key}`}
+                  type="text"
+                />
+
+                {editModeContactsError?.contacts &&
+                  editModeContactsError?.contacts[key] && (
+                    <p className="error">
+                      {editModeContactsError?.contacts[key]?.message}
+                    </p>
+                  )}
+              </div>
             ))}
 
-          <SaveEditModeBtn>Save</SaveEditModeBtn>
+          <SaveEditModeBtn loading={loading}>Save</SaveEditModeBtn>
         </form>
       </div>
     </EditModeFormStyle>
