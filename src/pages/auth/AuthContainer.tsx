@@ -27,8 +27,6 @@ const mapStateToProps = (state: RootState) => ({
 
 const AuthContainer: FC<AuthContainerProps> = ({ isAuth, captchaUrl }) => {
   const dispatch = useTypeDispatch();
-  // const [captchaValue, setCaptchaValue] = useState("");
-  // const [captchaState, setCaptchaState] = useState(false);
 
   const authForm = useForm<AuthFormType>({
     resolver: yupResolver(authSchema),
@@ -37,7 +35,7 @@ const AuthContainer: FC<AuthContainerProps> = ({ isAuth, captchaUrl }) => {
       email: "",
       password: "",
       rememberMe: false,
-      captcha: false,
+      captcha: "",
     },
     mode: "onChange",
   });

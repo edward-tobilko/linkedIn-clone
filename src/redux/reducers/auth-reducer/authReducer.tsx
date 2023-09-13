@@ -73,7 +73,7 @@ export const setLoginTC = (
   email: string,
   password: string,
   rememberMe: boolean,
-  captcha: boolean,
+  captcha: string,
 ) => {
   return (dispatch: RootDispatch) => {
     authAPI
@@ -102,8 +102,6 @@ export const setLogoutTC = () => {
 // TC для капчі
 export const setCaptchaTC = () => (dispatch: RootDispatch) => {
   return authAPI.getCaptchaUrl().then((response) => {
-    const captchaURL = response.data.url;
-
-    dispatch(setCaptchaAC(captchaURL));
+    dispatch(setCaptchaAC(response.data.url));
   });
 };

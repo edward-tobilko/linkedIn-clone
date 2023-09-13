@@ -15,14 +15,15 @@ const Captcha: FC<CaptchaProps> = ({ captchaUrl }) => {
     <CaptchaStyle>
       {captchaUrl && (
         <>
-          {captchaError.captchaUrl?.type === "required" && (
-            <p className="error"> {captchaError.captchaUrl.message} </p>
+          {captchaError && (
+            <p className="error"> {captchaError["captcha"]?.message} </p>
           )}
 
           <input
             className="captcha__field"
+            name="captcha"
             type="input"
-            {...register("captchaUrl", { required: "Captcha is required!" })}
+            {...register("captcha")}
           />
 
           {captchaError && <img src={captchaUrl} alt="" />}

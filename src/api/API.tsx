@@ -91,7 +91,7 @@ export const authAPI = {
     email: string, // 1992eduard777clone@gmail.com
     password: string, // email4769PageClone
     rememberMe: boolean,
-    captcha: boolean,
+    captcha: string,
   ) {
     return await instance.post("auth/login", {
       email,

@@ -2,7 +2,7 @@ type AuthFormType = {
   email: string;
   password: string;
   rememberMe: any;
-  captcha: boolean;
+  captcha: any;
 };
 
 type AuthContainerProps = {
