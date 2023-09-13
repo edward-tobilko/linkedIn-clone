@@ -1,9 +1,9 @@
 import { FC } from "react";
+import { useFormContext } from "react-hook-form";
 
 import { EditModeFormStyle } from "./editModeFormStyle";
 
 import { EditModeFormProps } from "./editModeFormTypes";
-import { useFormContext } from "react-hook-form";
 
 import EditModeFormField from "./EditModeFormField";
 import { SaveEditModeBtn } from "../../UI/btns/edit-mode/SaveEditModeBtn";

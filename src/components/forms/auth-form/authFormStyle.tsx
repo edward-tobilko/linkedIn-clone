@@ -210,3 +210,22 @@ export const AuthFormStyle = styled.form`
     }
   }
 `;
+
+// Captcha component
+export const CaptchaStyle = styled.div`
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 250px;
+
+  .captcha__label {
+    text-align: center;
+    padding-bottom: 7px;
+    color: ${themeVars.colors.errorColor};
+  }
+
+  .captcha__field {
+    margin-bottom: 10px;
+  }
+`;

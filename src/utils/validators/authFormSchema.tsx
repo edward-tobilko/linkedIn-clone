@@ -16,7 +16,5 @@ export const authSchema = yup
       .min(2, "Password must be at least 2 characters"),
 
     rememberMe: yup.boolean().oneOf([true], "Authorization is required!"),
-
-    captcha: yup.boolean().required(),
   })
   .required();

@@ -9,7 +9,10 @@ import { AuthStyle } from "./authStyle";
 import AuthForm from "../../components/forms/auth-form/AuthForm";
 
 import { authSchema } from "../../utils/validators/authFormSchema";
-import { isAuthSelector } from "../../utils/selectors/authSelectors";
+import {
+  captchaSelector,
+  isAuthSelector,
+} from "../../utils/selectors/authSelectors";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { setLoginTC } from "../../redux/reducers/auth-reducer/authReducer";
@@ -19,13 +22,17 @@ import { AuthContainerProps, AuthFormType } from "./authTypes";
 
 const mapStateToProps = (state: RootState) => ({
   isAuth: isAuthSelector(state),
+  captchaUrl: captchaSelector(state),
 });
 
-const AuthContainer: FC<AuthContainerProps> = ({ isAuth }) => {
+const AuthContainer: FC<AuthContainerProps> = ({ isAuth, captchaUrl }) => {
   const dispatch = useTypeDispatch();
+  // const [captchaValue, setCaptchaValue] = useState("");
+  // const [captchaState, setCaptchaState] = useState(false);
 
   const authForm = useForm<AuthFormType>({
     resolver: yupResolver(authSchema),
+
     defaultValues: {
       email: "",
       password: "",
@@ -58,7 +65,11 @@ const AuthContainer: FC<AuthContainerProps> = ({ isAuth }) => {
   return (
     <FormProvider {...authForm}>
       <AuthStyle>
-        <AuthForm authForm={authForm} onSubmit={onSubmit} />
+        <AuthForm
+          authForm={authForm}
+          onSubmit={onSubmit}
+          captchaUrl={captchaUrl}
+        />
       </AuthStyle>
     </FormProvider>
   );

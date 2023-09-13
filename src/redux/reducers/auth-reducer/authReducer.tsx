@@ -11,7 +11,7 @@ const initialState: InitialStateType = {
   email: null,
   login: null,
   isAuth: false,
-  captcha: null,
+  captchaUrl: "",
 };
 
 const authReducer = (state = initialState, action: any) => {
@@ -35,9 +35,9 @@ export default authReducer;
 
 // ACs
 export const setIsAuthAC = (
-  id: number | any,
-  email: string | any,
-  login: string | any,
+  id: number | null,
+  email: string | null,
+  login: string | null,
   isAuth: boolean,
 ) => {
   return {
@@ -46,14 +46,14 @@ export const setIsAuthAC = (
   };
 };
 
-export const setCaptchaAC = (captcha: any) => {
+export const setCaptchaAC = (captchaUrl: string) => {
   return {
     type: authTypeNames.CAPTCHA,
-    payload: { captcha },
+    payload: { captchaUrl },
   };
 };
 
-// TC: Thunk creator - anonym function and HOC - setIsAuthTC
+// TC: Thunk creator - anonym function and HOC: setIsAuthTC
 
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = () => {
@@ -73,7 +73,7 @@ export const setLoginTC = (
   email: string,
   password: string,
   rememberMe: boolean,
-  captcha: any,
+  captcha: boolean,
 ) => {
   return (dispatch: RootDispatch) => {
     authAPI
@@ -81,6 +81,8 @@ export const setLoginTC = (
       .then((response) => {
         if (response.data.resultCode === 0) {
           dispatch(setIsAuthTC());
+        } else if (response.data.resultCode === 10) {
+          dispatch(setCaptchaTC());
         }
       });
   };
@@ -89,7 +91,7 @@ export const setLoginTC = (
 // CT для вилогірування користувача
 export const setLogoutTC = () => {
   return (dispatch: RootDispatch) => {
-    authAPI.logoutApi().then((response: any) => {
+    authAPI.logoutApi().then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setIsAuthAC(null, null, null, false));
       }
@@ -97,9 +99,11 @@ export const setLogoutTC = () => {
   };
 };
 
-// // TC для капчі
-// export const setCaptchaTC = () => (dispatch: RootDispatch) => {
-//   return authAPI.getCaptchaUrl().then((response: any) => {
-//     console.log(response.data.url);
-//   });
-// };
+// TC для капчі
+export const setCaptchaTC = () => (dispatch: RootDispatch) => {
+  return authAPI.getCaptchaUrl().then((response) => {
+    const captchaURL = response.data.url;
+
+    dispatch(setCaptchaAC(captchaURL));
+  });
+};

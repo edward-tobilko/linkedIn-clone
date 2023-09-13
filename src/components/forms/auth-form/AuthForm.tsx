@@ -4,11 +4,12 @@ import LoginBtn from "../../UI/btns/login-btn/LoginBtn";
 
 import { AuthFormStyle } from "./authFormStyle";
 
-import AuthFormField from "./AuthFormField";
-
 import { AuthFormProps } from "./authFormTypes";
 
-const AuthForm: FC<AuthFormProps> = ({ authForm, onSubmit }) => {
+import AuthFormField from "./AuthFormField";
+import Captcha from "./Captcha";
+
+const AuthForm: FC<AuthFormProps> = ({ authForm, onSubmit, captchaUrl }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
@@ -71,6 +72,8 @@ const AuthForm: FC<AuthFormProps> = ({ authForm, onSubmit }) => {
           <LoginBtn authForm={authForm}>Log In</LoginBtn>
         </div>
       </div>
+
+      <Captcha captchaUrl={captchaUrl} />
     </AuthFormStyle>
   );
 };

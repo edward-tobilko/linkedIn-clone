@@ -12,6 +12,11 @@ type AuthFormFieldProps = {
 type AuthFormProps = {
   authForm: any;
   onSubmit: SubmitHandler<AuthFormType>;
+  captchaUrl: string;
 };
 
-export { AuthFormFieldProps, AuthFormProps };
+type CaptchaProps = {
+  captchaUrl: string;
+};
+
+export { AuthFormFieldProps, AuthFormProps, CaptchaProps };

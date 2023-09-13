@@ -7,6 +7,7 @@ type AuthFormType = {
 
 type AuthContainerProps = {
   isAuth: boolean;
+  captchaUrl: string;
 };
 
 export { AuthFormType, AuthContainerProps };
