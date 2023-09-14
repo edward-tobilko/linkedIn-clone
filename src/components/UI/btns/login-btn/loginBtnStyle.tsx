@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { themeVars } from "../../../../utils/vars/themeVars";
 
+// LoginBtn component
 export const LoginBtnStyle = styled.button`
   background: radial-gradient(
       192.53% 1041.23% at 0 12%,
@@ -19,11 +20,31 @@ export const LoginBtnStyle = styled.button`
   margin-right: 20px;
 
   &:disabled {
-    opacity: 0.3;
+    opacity: 0.4;
+  }
+
+  &:hover {
+    filter: brightness(70%);
   }
 
   /* Media */
   @media screen and (max-width: 576px) {
     max-width: 100px;
+  }
+`;
+
+export const LoginBtnLoadingStyle = styled.div`
+  i {
+    animation: rotate 2s linear infinite;
+    font-size: 20px;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;

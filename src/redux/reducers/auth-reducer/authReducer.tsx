@@ -12,6 +12,7 @@ const initialState: InitialStateType = {
   login: null,
   isAuth: false,
   captchaUrl: "",
+  authLoginBtnLoading: false,
 };
 
 const authReducer = (state = initialState, action: any) => {
@@ -25,6 +26,9 @@ const authReducer = (state = initialState, action: any) => {
 
     case authTypeNames.CAPTCHA:
       return { ...state, ...action.payload };
+
+    case "AUTH-LOGIN-BTN-LOADING":
+      return { ...state, authLoginBtnLoading: action.authLoginBtnLoading };
 
     default:
       return state;
@@ -53,18 +57,30 @@ export const setCaptchaAC = (captchaUrl: string) => {
   };
 };
 
+export const setAuthLoginBtnLoading = (authLoginBtnLoading: boolean) => {
+  return {
+    type: "AUTH-LOGIN-BTN-LOADING",
+    authLoginBtnLoading,
+  };
+};
+
 // TC: Thunk creator - anonym function and HOC: setIsAuthTC
 
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = () => {
   return (dispatch: RootDispatch) => {
-    return authAPI.authorizationMe().then((response) => {
-      if (response.data.resultCode === 0) {
-        let { id, email, login, isAuth } = response.data.data;
+    return authAPI
+      .authorizationMe()
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          let { id, email, login, isAuth } = response.data.data;
 
-        dispatch(setIsAuthAC(id, email, login, (isAuth = true)));
-      }
-    });
+          dispatch(setIsAuthAC(id, email, login, (isAuth = true)));
+        }
+      })
+      .catch((error) => {
+        console.error("Authorization failed:", error);
+      });
   };
 };
 
@@ -76,6 +92,8 @@ export const setLoginTC = (
   captcha: string,
 ) => {
   return (dispatch: RootDispatch) => {
+    dispatch(setAuthLoginBtnLoading(true));
+
     authAPI
       .getLoginApi(email, password, (rememberMe = false), captcha)
       .then((response) => {
@@ -84,6 +102,12 @@ export const setLoginTC = (
         } else if (response.data.resultCode === 10) {
           dispatch(setCaptchaTC());
         }
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+      })
+      .finally(() => {
+        dispatch(setAuthLoginBtnLoading(false));
       });
   };
 };

@@ -23,9 +23,14 @@ import { AuthContainerProps, AuthFormType } from "./authTypes";
 const mapStateToProps = (state: RootState) => ({
   isAuth: isAuthSelector(state),
   captchaUrl: captchaSelector(state),
+  authLoginBtnLoading: state.authorization.authLoginBtnLoading,
 });
 
-const AuthContainer: FC<AuthContainerProps> = ({ isAuth, captchaUrl }) => {
+const AuthContainer: FC<AuthContainerProps> = ({
+  isAuth,
+  captchaUrl,
+  authLoginBtnLoading,
+}) => {
   const dispatch = useTypeDispatch();
 
   const authForm = useForm<AuthFormType>({
@@ -67,6 +72,7 @@ const AuthContainer: FC<AuthContainerProps> = ({ isAuth, captchaUrl }) => {
           authForm={authForm}
           onSubmit={onSubmit}
           captchaUrl={captchaUrl}
+          authLoginBtnLoading={authLoginBtnLoading}
         />
       </AuthStyle>
     </FormProvider>

@@ -7,6 +7,7 @@ type AuthFormType = {
 
 type AuthContainerProps = {
   isAuth: boolean;
+  authLoginBtnLoading: boolean;
   captchaUrl: string;
 };
 

@@ -13,6 +13,7 @@ type AuthFormProps = {
   authForm: any;
   onSubmit: SubmitHandler<AuthFormType>;
   captchaUrl: string;
+  authLoginBtnLoading: boolean;
 };
 
 type CaptchaProps = {

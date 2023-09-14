@@ -9,7 +9,12 @@ import { AuthFormProps } from "./authFormTypes";
 import AuthFormField from "./AuthFormField";
 import Captcha from "./Captcha";
 
-const AuthForm: FC<AuthFormProps> = ({ authForm, onSubmit, captchaUrl }) => {
+const AuthForm: FC<AuthFormProps> = ({
+  authForm,
+  onSubmit,
+  captchaUrl,
+  authLoginBtnLoading,
+}) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
@@ -69,7 +74,7 @@ const AuthForm: FC<AuthFormProps> = ({ authForm, onSubmit, captchaUrl }) => {
             </p>
           )}
 
-          <LoginBtn authForm={authForm}>Log In</LoginBtn>
+          <LoginBtn authLoginBtnLoading={authLoginBtnLoading}>Log In</LoginBtn>
         </div>
       </div>
 

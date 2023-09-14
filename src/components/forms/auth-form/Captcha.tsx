@@ -12,13 +12,9 @@ const Captcha: FC<CaptchaProps> = ({ captchaUrl }) => {
   }: any = useFormContext();
 
   return (
-    <CaptchaStyle>
+    <>
       {captchaUrl && (
-        <>
-          {captchaError && (
-            <p className="error"> {captchaError["captcha"]?.message} </p>
-          )}
-
+        <CaptchaStyle>
           <input
             className="captcha__field"
             name="captcha"
@@ -27,9 +23,9 @@ const Captcha: FC<CaptchaProps> = ({ captchaUrl }) => {
           />
 
           {captchaError && <img src={captchaUrl} alt="" />}
-        </>
+        </CaptchaStyle>
       )}
-    </CaptchaStyle>
+    </>
   );
 };
 

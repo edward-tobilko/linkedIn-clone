@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { themeVars } from "../../../utils/vars/themeVars";
 
+// AuthForm component
 export const AuthFormStyle = styled.form`
   position: absolute;
   top: 50%;
