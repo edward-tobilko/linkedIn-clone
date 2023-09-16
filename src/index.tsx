@@ -17,3 +17,5 @@ root.render(
     </Provider>
   </Router>,
 );
+
+//? Provider додає store в context API, а context API дозволяє дочірним елементам отримувати дані з store.

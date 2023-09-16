@@ -14,6 +14,7 @@ const CAPTCHA = "auth/duck/CAPTCHA";
 // RootApp reducer
 const INITIALIZED_SUCCESS_ROOT_APP =
   "rootApp/duck/INITIALIZED-SUCCESS-ROOT-APP";
+const SET_SERVER_ERROR = "SET_SERVER_ERROR";
 
 // Social reducer
 const FOLLOW = "social/duck/FOLLOW";
@@ -40,4 +41,5 @@ export default {
   SET_TOTAL_USERS_COUNT,
   FOLLOWING_BLOCKED_BTN,
   DOWNLOAD_SMALL_PHOTO,
+  SET_SERVER_ERROR,
 };

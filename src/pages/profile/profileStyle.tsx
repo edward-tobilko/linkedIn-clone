@@ -30,6 +30,7 @@ export const CardProfileStyle = styled.div`
   .cardProfile__desc {
     text-align: center;
     width: 100%;
+
     position: absolute;
     top: 20%;
     left: 50%;

@@ -7,10 +7,14 @@ interface StatusProps {
   currentProfilePage?: any;
 }
 
-interface StatusFieldProps extends StatusProps {
+interface StatusContainerProps extends StatusProps {
+  serverError: string | null;
+}
+
+interface StatusFieldProps extends StatusContainerProps {
   statusValue: string | undefined;
   setStatusValue: Dispatch<SetStateAction<string>>;
   updateInputStatus: () => void;
 }
 
-export { StatusProps, StatusFieldProps };
+export { StatusContainerProps, StatusFieldProps, StatusProps };

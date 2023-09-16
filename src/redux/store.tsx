@@ -5,6 +5,7 @@ import {
   compose,
 } from "redux";
 import thunkMiddleware from "redux-thunk";
+// import { composeWithDevTools } from "@redux-devtools/extension";
 
 import profileReducer from "./reducers/profile-reducer/profileReducer";
 import socialReducer from "./reducers/social-reducer/socialReducer";
@@ -27,14 +28,16 @@ const rootReducer = combineReducers({
   settingPage: settingReducer,
 });
 
-// отримуємо тип редюсора та за допомогою RootState ми можемо створити кастомний хук useTypeSelector
+//? Отримуємо тип редюсора та за допомогою RootState ми можемо створити кастомний хук useTypeSelector
 export type RootState = ReturnType<typeof store.getState>;
 export type RootDispatch = typeof store.dispatch;
 
 // Store
-// Підключаємо devtools розширення для Chrome browser (для роботи з Redux)
+//? Підключаємо devtools розширення для Chrome browser (для роботи Redux)
 const composeEnhancers =
-  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  (typeof window !== undefined &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 
 const store = createStore(
   rootReducer,

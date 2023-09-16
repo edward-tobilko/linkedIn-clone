@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 
-import Status from "./Status";
+import Status from "./StatusContainer";
 
 // Mock the required dependencies
 jest.mock("../../../hooks/useTypeSelector", () => ({

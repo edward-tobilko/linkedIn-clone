@@ -16,6 +16,7 @@ import { SocialContentProps } from "./socialTypes";
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { SocialContentLoader } from "../../components/UI/loaders/social-loaders/SocialContentLoader";
 import SocialUsersList from "./SocialUsersList";

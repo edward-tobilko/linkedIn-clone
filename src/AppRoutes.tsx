@@ -1,7 +1,9 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
+
+import { ServerErrorStyle } from "./rootStyles";
 
 import Messages from "./pages/messages/Messages";
 import Setting from "./pages/setting/Setting";
@@ -17,11 +19,20 @@ import { setInitializedSuccessRootAppTC } from "./redux/reducers/root-app-reduce
 import { RootState } from "./redux/store";
 
 import { useTypeDispatch } from "./hooks/useTypeSelector";
-import { initializedSelector } from "./utils/selectors/rootSelectors";
+import {
+  initializedSelector,
+  serverErrorSelector,
+} from "./utils/selectors/rootSelectors";
+
+type AppRoutesProps = {
+  initialized: boolean;
+  serverError: string | null;
+};
 
 const mapStateToProps = (state: RootState) => {
   return {
     initialized: initializedSelector(state),
+    serverError: serverErrorSelector(state),
   };
 };
 
@@ -31,38 +42,75 @@ const AppRoutesContainer = compose(
   }),
 );
 
-const AppRoutes: FC = (initialized) => {
+const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
+  const [isServerErrorVisible, setIsServerErrorVisible] = useState(false);
+
   const dispatch = useTypeDispatch();
 
   useEffect(() => {
     dispatch(setInitializedSuccessRootAppTC());
   }, [dispatch]);
 
-  // if (!initialized) {
-  //   return <RootLoader />;
-  // }
+  useEffect(() => {
+    if (serverError) {
+      setIsServerErrorVisible(true);
+
+      let timer = setTimeout(() => {
+        setIsServerErrorVisible(false);
+      }, 7000);
+
+      return () => clearTimeout(timer); //? Automatically close the error message after 7 seconds
+    }
+  }, [serverError]);
+
+  if (!initialized) {
+    return <RootLoader />;
+  }
 
   return (
-    <Routes>
-      {/* <Route path="/profile/*" element={<Profile />} /> - такий шлях вказуємо, якщо в <Profile /> буде ще якийсь вложений шлях, наприклад: <Routes> <Route path='account' element={<Account />} /> </Routes> */}
+    <>
+      {isServerErrorVisible && serverError && (
+        <ServerErrorStyle>
+          <div className="server__error">
+            <div className="server__error-names">
+              {Object.entries(serverError).map(
+                ([serverErrorKey, serverErrorValue]) => {
+                  return (
+                    <div key={serverErrorKey}>
+                      <p>
+                        {serverErrorKey}: <span> {serverErrorValue} </span>
+                      </p>
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          </div>
+        </ServerErrorStyle>
+      )}
 
-      {/* "?" - в кінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
-      <Route path="profile">
-        <Route path=":userId" element={<Profile />} />
-        <Route index element={<Profile />} />
-      </Route>
-      <Route path="user-profile" element={<UserProfile />} />
-      <Route path="social" element={<Social />} />
-      <Route path="messages">
-        <Route path=":id?" element={<Messages />} />
-      </Route>
-      <Route path="setting" element={<Setting />} />
-      <Route path="login" element={<Auth />} />
-      <Route path="not-found" element={<NotFound />} />
+      <Routes>
+        {/* <Route path="/profile/*" element={<Profile />} /> - такий шлях вказуємо, якщо в <Profile /> буде ще якийсь вложений шлях, наприклад: <Routes> <Route path='account' element={<Account />} /> </Routes> */}
 
-      {/* Redirect */}
-      <Route path="*" element={<Navigate to="/profile" replace />} />
-    </Routes>
+        {/* "?" - в кінці заданого параметра означає, що даний параметр є необов'язковим (може бути і не бути)*/}
+        <Route path="/">
+          <Route path="profile/:userId" element={<Profile />} />
+          <Route path="profile" element={<Profile />} />
+          <Route index path="/" element={<Navigate to={"/profile"} />} />
+        </Route>
+        <Route path="user-profile" element={<UserProfile />} />
+        <Route path="social" element={<Social />} />
+        <Route path="messages">
+          <Route path=":id?" element={<Messages />} />
+        </Route>
+        <Route path="setting" element={<Setting />} />
+        <Route path="login" element={<Auth />} />
+        <Route path="not-found" element={<NotFound />} />
+
+        {/* Redirect - При введенні неправильного url path */}
+        <Route path="*" element={<Navigate to="/not-found" />} />
+      </Routes>
+    </>
   );
 };
 

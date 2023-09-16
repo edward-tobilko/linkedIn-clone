@@ -8,12 +8,16 @@ import { InitialStateType } from "./rootAppReducerTypes";
 
 const initialState: InitialStateType = {
   initialized: false,
+  serverError: "",
 };
 
 const rootAppReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP:
       return { ...state, initialized: true };
+
+    case rootAppTypeNames.SET_SERVER_ERROR:
+      return { ...state, serverError: action.serverError };
 
     default:
       return state;
@@ -28,13 +32,23 @@ export const setInitializedSuccessRootAppAC = () => {
   };
 };
 
+export const setServerErrorAC = (serverError: string) => {
+  return {
+    type: rootAppTypeNames.SET_SERVER_ERROR,
+    serverError,
+  };
+};
+
 export const setInitializedSuccessRootAppTC =
   () => (dispatch: RootDispatch) => {
-    const dispatchResult = dispatch(setIsAuthTC()); //? dispatch вертає результат санки (в санкі setIsAuthTC ми вертаємо authorizationMe (return authAPI.authorizationMe))
-
-    console.log(dispatchResult); //? dispatchResult вертає promise
+    const dispatchResult = dispatch(setIsAuthTC()); //? dispatch вертає результат санки: promise (в санкі setIsAuthTC ми вертаємо authorizationMe (return authAPI.authorizationMe))
 
     Promise.all([dispatchResult]).then(() => {
       dispatch(setInitializedSuccessRootAppAC());
     });
+  };
+
+export const setServerErrorTC =
+  (serverError: any) => (dispatch: RootDispatch) => {
+    dispatch(setServerErrorAC(serverError));
   };

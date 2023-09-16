@@ -2,6 +2,7 @@ import { v4 as uniqueID } from "uuid";
 
 import { profileAPI } from "../../../api/API";
 import { RootDispatch, RootState } from "../../store";
+import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
 
 import profileTypeNames from "../../duck/typesName";
 
@@ -243,22 +244,36 @@ export const fetchUserStatusByIdTC = (userId: string) => {
   return (dispatch: RootDispatch) => {
     profileAPI
       .fetchUserStatusById(userId)
-      .then((data: any) => dispatch(setStatusAC(data)));
+      .then((data: any) => dispatch(setStatusAC(data)))
+      .catch((error) => {
+        console.log("Error: ", error["message"]);
+      });
   };
 };
 
 // TC для динамічної зміни статусу
 export const updateUserStatusTC = (status: string) => {
   return (dispatch: RootDispatch) => {
-    try {
-      profileAPI.updateUserStatus(status).then((data: any) => {
+    profileAPI
+      .updateUserStatus(status)
+      .then((data: any) => {
         if (data.resultCode === 0) {
           dispatch(setStatusAC(status));
         }
+      })
+      .catch((error) => {
+        console.log("Error: ", {
+          responseDataMessage: error.response.data["message"],
+          responseStatusCode: error.response.request.status,
+        });
+
+        //? Якщо буде помилка в url, наприклад: "/profile/statussss", то виводимо глобальну серверну помилку
+        const errorMessages = {
+          Response_Message: error.response.data["message"],
+          Status_Code: error.response.request.status,
+        };
+        dispatch(setServerErrorTC(errorMessages));
       });
-    } catch (error) {
-      console.log("Error", error);
-    }
   };
 };
 

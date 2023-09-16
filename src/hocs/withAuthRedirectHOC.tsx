@@ -1,3 +1,4 @@
+import { ComponentType, FC } from "react";
 import { connect } from "react-redux";
 import {
   Navigate,
@@ -12,17 +13,23 @@ type AuthRedirectComponentProps = {
   isAuth: boolean;
 };
 
+type WrappedComponentProps = {
+  location: any;
+  navigate: any;
+  params: any;
+};
+
 const mapStateToProps = (state: RootState) => ({
   isAuth: state.authorization.isAuth,
 });
 
-export const withAuthRedirectHOC = (Component: any) => {
-  const AuthRedirectComponent = (props: AuthRedirectComponentProps) => {
+export const withAuthRedirectHOC = (Component: ComponentType<any>) => {
+  const AuthRedirectComponent: FC<AuthRedirectComponentProps> = (props) => {
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
 
-    if (props.isAuth === false) return <Navigate to="/not-found" />;
+    if (!props.isAuth) return <Navigate to="/login" />;
 
     return (
       <Component

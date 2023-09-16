@@ -378,3 +378,47 @@ export const ContentStyle = styled.div`
   padding: 20px 0;
   width: 100%;
 `;
+
+// Server error
+export const ServerErrorStyle = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  width: 100%;
+  height: 100%;
+  background: ${themeVars.colors.backgroundRGBA};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .server__error {
+    width: 600px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: ${themeVars.colors.headerBackgroundColor};
+    border-radius: 10px;
+    padding: 0 22px;
+
+    &-names {
+      text-align: center;
+
+      p {
+        padding: 10px 0;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        color: ${themeVars.colors.whiteColor};
+
+        span {
+          font-size: 15px;
+          font-weight: 400;
+          color: ${themeVars.colors.errorColor};
+        }
+      }
+    }
+  }
+`;

@@ -3,7 +3,7 @@ import axios from "axios";
 export const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   timeout: 0,
-  withCredentials: true, // завдяки цьому параметру cookie робить запит на інший домен;
+  withCredentials: true, //? завдяки цьому параметру cookie робить запит на інший домен
   headers: { "API-KEY": "aeecff0a-0646-43b9-a0dd-39f979f0df41" },
 });
 
@@ -30,7 +30,7 @@ export const socialUsersAPI = {
 
   // Видаляємо користувача (unFollow)
   async unFollowUser(userId: string) {
-    return await instance.delete(`follow/${userId}`).then((res) => res.data); // В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
+    return await instance.delete(`follow/${userId}`).then((res) => res.data); //? В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
 
   // Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI

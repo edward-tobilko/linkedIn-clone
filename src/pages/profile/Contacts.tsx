@@ -7,6 +7,10 @@ import { CurrentProfilePageProps } from "./profileTypes";
 import ContactItem from "./ContactItem";
 
 const Contacts: FC<CurrentProfilePageProps> = ({ currentProfilePage }) => {
+  if (!currentProfilePage || !currentProfilePage.contacts) {
+    return null;
+  }
+
   return (
     <ContactsStyle>
       <h1 className="title">Contacts:</h1>

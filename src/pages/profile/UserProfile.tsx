@@ -22,7 +22,6 @@ import { editModeSchema } from "../../utils/validators/editModeSchema";
 import { useMyContext } from "../../context/Context";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { RootState } from "../../redux/store";
 import {
@@ -32,10 +31,11 @@ import {
 } from "../../redux/reducers/profile-reducer/profileReducer";
 
 import { CardProfileLoader } from "../../components/UI/loaders/profile-loaders/CardProfileLoader";
-import Status from "../../components/forms/status-input/Status";
+import Status from "../../components/forms/status-input/StatusContainer";
 import Contacts from "./Contacts";
 import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
 import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -47,7 +47,6 @@ const mapStateToProps = (state: RootState) => {
 
 const UserProfileContainer = compose(
   connect(mapStateToProps, {}),
-
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
 );
