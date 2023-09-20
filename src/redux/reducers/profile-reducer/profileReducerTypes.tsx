@@ -1,40 +1,82 @@
-type GeoProps = {
+import { CurrentProfilePageProps } from "../../../pages/profile/profileTypes";
+
+import profileTypeNames from "../../duck/typesName";
+
+type GeoType = {
   lat: string;
   lng: string;
 };
 
-type AddressProps = {
+type AddressType = {
   street: string;
   suite: string;
   city: string;
   zipcode: string;
-  geo: GeoProps;
+  geo: GeoType;
 };
 
-type CompanyProps = {
+type CompanyType = {
   name: string;
   catchPhrase: string;
   bs: string;
 };
 
 type ItemProps = {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;
-  address: AddressProps;
+  address: AddressType;
   phone: string;
   website: string;
-  company: CompanyProps;
+  company: CompanyType;
 };
 
 type InitialStateProps = {
   postUsers: ItemProps[];
   newPostText: string;
   name: string;
-  currentProfilePage: any;
+  currentProfilePage: CurrentProfilePageProps | null;
   loading: boolean;
   status: string;
 };
 
-export { ItemProps, InitialStateProps };
+type AddNewPostACType = {
+  type: typeof profileTypeNames.CREATE_NEW_POST;
+};
+
+type ChangePostACType = {
+  type: typeof profileTypeNames.CHANGE_POST;
+  newPostText: string;
+};
+
+type SetCurrentUserPageACType = {
+  currentProfilePage: string | null;
+  type: typeof profileTypeNames.SET_CURRENT_USER_PAGE;
+};
+
+type SetLoadingACType = {
+  type: typeof profileTypeNames.LOADING;
+  loading: boolean;
+};
+
+type SetStatusACType = {
+  type: typeof profileTypeNames.SET_STATUS;
+  status: string;
+};
+
+type SetDownloadSmallPhotoACType = {
+  type: typeof profileTypeNames.DOWNLOAD_SMALL_PHOTO;
+  smallPhoto: any;
+};
+
+export {
+  ItemProps,
+  InitialStateProps,
+  AddNewPostACType,
+  ChangePostACType,
+  SetCurrentUserPageACType,
+  SetLoadingACType,
+  SetStatusACType,
+  SetDownloadSmallPhotoACType,
+};

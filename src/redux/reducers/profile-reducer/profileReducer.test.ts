@@ -72,7 +72,7 @@ describe("Profile Reducer Thunk Actions", () => {
       mockData,
     );
 
-    await fetchCurrentUserPageTC("userId")(mockDispatch);
+    await fetchCurrentUserPageTC(2)(mockDispatch);
 
     expect(mockDispatch).toHaveBeenCalledWith(setLoadingAC(true));
     expect(mockDispatch).toHaveBeenCalledWith(setCurrentUserPageAC(mockData));
@@ -85,7 +85,7 @@ describe("Profile Reducer Thunk Actions", () => {
 
     (profileAPI.fetchUserStatusById as jest.Mock).mockResolvedValue(mockData);
 
-    await fetchUserStatusByIdTC("userId")(mockDispatch);
+    await fetchUserStatusByIdTC(2)(mockDispatch);
 
     expect(mockDispatch).toHaveBeenCalledWith(setStatusAC(mockData));
   });

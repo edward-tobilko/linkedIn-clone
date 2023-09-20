@@ -8,6 +8,7 @@ import { StatusContainerProps } from "./statusTypes";
 import { useTypeDispatch } from "../../../hooks/useTypeSelector";
 
 import { setServerErrorTC } from "../../../redux/reducers/root-app-reducer/rootAppReducer";
+import { updateUserStatusTC } from "../../../redux/reducers/profile-reducer/profileReducer";
 import { serverErrorSelector } from "../../../utils/selectors/rootSelectors";
 
 import StatusField from "./StatusField";
@@ -20,7 +21,6 @@ const mapStateToProps = (state: any) => {
 
 const StatusContainer: FC<StatusContainerProps> = ({
   status,
-  updateUserStatusTC,
   currentProfilePage,
   serverError,
 }) => {
@@ -42,7 +42,7 @@ const StatusContainer: FC<StatusContainerProps> = ({
 
     setValidationError("");
     setEditMode(false);
-    dispatch(updateUserStatusTC?.(statusValue));
+    dispatch(updateUserStatusTC(statusValue));
   };
 
   useEffect(() => {
@@ -110,4 +110,7 @@ const StatusContainer: FC<StatusContainerProps> = ({
   );
 };
 
-export default connect(mapStateToProps, { setServerErrorTC })(StatusContainer);
+export default connect(mapStateToProps, {
+  updateUserStatusTC,
+  setServerErrorTC,
+})(StatusContainer);

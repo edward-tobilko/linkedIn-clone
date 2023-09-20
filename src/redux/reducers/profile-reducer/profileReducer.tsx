@@ -6,12 +6,20 @@ import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
 
 import profileTypeNames from "../../duck/typesName";
 
-import { InitialStateProps } from "./profileReducerTypes";
+import {
+  AddNewPostACType,
+  ChangePostACType,
+  InitialStateProps,
+  SetCurrentUserPageACType,
+  SetDownloadSmallPhotoACType,
+  SetLoadingACType,
+  SetStatusACType,
+} from "./profileReducerTypes";
 
 const initialState: InitialStateProps = {
   postUsers: [
     {
-      id: 1,
+      id: "1",
       name: "Leanne Graham",
       username: "Bret",
       email: "Sincere@april.biz",
@@ -34,7 +42,7 @@ const initialState: InitialStateProps = {
       },
     },
     {
-      id: 2,
+      id: "2",
       name: "Ervin Howell",
       username: "Antonette",
       email: "Shanna@melissa.tv",
@@ -57,7 +65,7 @@ const initialState: InitialStateProps = {
       },
     },
     {
-      id: 3,
+      id: "3",
       name: "Clementine Bauch",
       username: "Samantha",
       email: "Nathan@yesenia.net",
@@ -80,7 +88,7 @@ const initialState: InitialStateProps = {
       },
     },
     {
-      id: 4,
+      id: "4",
       name: "Patricia Lebsack",
       username: "Karianne",
       email: "Julianne.OConner@kory.org",
@@ -110,7 +118,7 @@ const initialState: InitialStateProps = {
   status: "",
 };
 
-const profileReducer = (state = initialState, action: any) => {
+const profileReducer = (state = initialState, action: any): any => {
   switch (action.type) {
     // Створюємо новий пост на сторінку profile
     case profileTypeNames.CREATE_NEW_POST:
@@ -183,41 +191,45 @@ const profileReducer = (state = initialState, action: any) => {
 export default profileReducer;
 
 // Action Creators (ACs)
-export const addNewPostAC = () => {
+export const addNewPostAC = (): AddNewPostACType => {
   return {
     type: profileTypeNames.CREATE_NEW_POST,
   };
 };
 
-export const changePostAC = (newPostText: string) => {
+export const changePostAC = (newPostText: string): ChangePostACType => {
   return {
     type: profileTypeNames.CHANGE_POST,
     newPostText: newPostText,
   };
 };
 
-export const setCurrentUserPageAC = (currentProfilePage: any) => {
+export const setCurrentUserPageAC = (
+  currentProfilePage: string | null,
+): SetCurrentUserPageACType => {
   return {
     type: profileTypeNames.SET_CURRENT_USER_PAGE,
     currentProfilePage,
   };
 };
 
-export const setLoadingAC = (loading: boolean) => {
+export const setLoadingAC = (loading: boolean): SetLoadingACType => {
   return {
     type: profileTypeNames.LOADING,
     loading,
   };
 };
 
-export const setStatusAC = (status: string) => {
+export const setStatusAC = (status: string): SetStatusACType => {
   return {
     type: profileTypeNames.SET_STATUS,
     status,
   };
 };
 
-export const setDownloadSmallPhotoAC = (smallPhoto: any) => {
+export const setDownloadSmallPhotoAC = (
+  smallPhoto: any,
+): SetDownloadSmallPhotoACType => {
   return {
     type: profileTypeNames.DOWNLOAD_SMALL_PHOTO,
     smallPhoto,
@@ -227,8 +239,8 @@ export const setDownloadSmallPhotoAC = (smallPhoto: any) => {
 // TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
 // Санка (thunk creator) для отримання поточної сторінки іншого користувача
-export const fetchCurrentUserPageTC = (userId: string) => {
-  return (dispatch: RootDispatch) => {
+export const fetchCurrentUserPageTC = (userId: number | null) => {
+  return (dispatch: any) => {
     dispatch(setLoadingAC(true));
 
     profileAPI.fetchCurrentUserPageById(userId).then((data: any) => {
@@ -240,8 +252,8 @@ export const fetchCurrentUserPageTC = (userId: string) => {
 };
 
 // TC для отримання статусу користувача
-export const fetchUserStatusByIdTC = (userId: string) => {
-  return (dispatch: RootDispatch) => {
+export const fetchUserStatusByIdTC = (userId: number | null) => {
+  return (dispatch: any) => {
     profileAPI
       .fetchUserStatusById(userId)
       .then((data: any) => dispatch(setStatusAC(data)))
@@ -253,7 +265,7 @@ export const fetchUserStatusByIdTC = (userId: string) => {
 
 // TC для динамічної зміни статусу
 export const updateUserStatusTC = (status: string) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     profileAPI
       .updateUserStatus(status)
       .then((data: any) => {
@@ -279,7 +291,7 @@ export const updateUserStatusTC = (status: string) => {
 
 // TC для загрузки фото
 export const downloadSmallPhotoTC = (photoFile: any) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     dispatch(setLoadingAC(true));
     profileAPI.downloadPhoto(photoFile).then((response: any) => {
       if (response.data.resultCode === 0) {
@@ -292,7 +304,7 @@ export const downloadSmallPhotoTC = (photoFile: any) => {
 
 // TC для оновлення інформації користувача
 export const profileEditModeTC = (profileProperties: any) => {
-  return (dispatch: RootDispatch, getState: () => RootState) => {
+  return (dispatch: any, getState: () => RootState) => {
     const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()
 
     dispatch(setLoadingAC(true));

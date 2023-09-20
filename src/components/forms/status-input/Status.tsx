@@ -4,17 +4,9 @@ import { StatusProps } from "./statusTypes";
 
 import StatusContainer from "./StatusContainer";
 
-const Status: FC<StatusProps> = ({
-  status,
-  updateUserStatusTC,
-  currentProfilePage,
-}) => {
+const Status: FC<StatusProps> = ({ status, currentProfilePage }) => {
   return (
-    <StatusContainer
-      status={status}
-      updateUserStatusTC={updateUserStatusTC}
-      currentProfilePage={currentProfilePage}
-    />
+    <StatusContainer status={status} currentProfilePage={currentProfilePage} />
   );
 };
 

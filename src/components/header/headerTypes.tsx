@@ -1,7 +1,11 @@
+import { MouseEvent } from "react";
+
+import { CurrentProfilePageTypes } from "../../pages/profile/profileTypes";
+
 type HeaderContainerProps = {
   isAuth: boolean;
-  currentProfilePage: any;
-  email: string;
+  currentProfilePage: CurrentProfilePageTypes;
+  email: string | null;
   loading: boolean;
 };
 
@@ -13,4 +17,12 @@ type LinksTypes = {
   icon: any;
 };
 
-export { HeaderContainerProps, LinksTypes };
+type DropdownContentProps = {
+  setIsClicked: any;
+  logout: (event: MouseEvent<HTMLElement>) => void;
+  currentProfilePage: CurrentProfilePageTypes;
+  email: string | null;
+  loading: boolean;
+};
+
+export { HeaderContainerProps, LinksTypes, DropdownContentProps };

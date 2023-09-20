@@ -26,7 +26,7 @@ import {
 
 type AppRoutesProps = {
   initialized: boolean;
-  serverError: string | null;
+  serverError: Object | null;
 };
 
 const mapStateToProps = (state: RootState) => {

@@ -2,13 +2,13 @@ import { RootDispatch } from "../../redux/store";
 
 // ProfileContent component
 type ContactsTypes = {
-  facebook: string | any;
-  website: string | any;
-  vk: string | any;
-  twitter: string | any;
-  instagram: string | any;
-  youtube: string | any;
-  github: string | any;
+  facebook: string | null;
+  website: string | null;
+  vk: string | null;
+  twitter: string | null;
+  instagram: string | null;
+  youtube: string | null;
+  github: string | null;
   mainLink: string | any;
 };
 
@@ -36,10 +36,6 @@ type ProfileContentProps = CurrentProfilePageProps & {
   status: string;
 };
 
-type UseParamsProps = {
-  userId: string;
-};
-
 // CardProfile component
 type CardProfileProps = ProfileContentProps & {
   updateUserStatusTC: RootDispatch;
@@ -48,7 +44,6 @@ type CardProfileProps = ProfileContentProps & {
 
 export {
   ProfileContentProps,
-  UseParamsProps,
   CardProfileProps,
   CurrentProfilePageTypes,
   CurrentProfilePageProps,

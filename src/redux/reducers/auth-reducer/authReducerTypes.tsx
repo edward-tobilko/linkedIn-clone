@@ -1,10 +1,18 @@
-type InitialStateType = {
-  id: number | null;
-  email: string | null;
-  login: string | null;
-  isAuth: boolean;
-  authLoginBtnLoading: boolean;
-  captchaUrl: string;
+import authTypeNames from "../../duck/typesName";
+
+type SetIsAuthACType = {
+  type: typeof authTypeNames.SET_IS_AUTH;
+  data: Object;
 };
 
-export { InitialStateType };
+type SetCaptchaACType = {
+  type: typeof authTypeNames.CAPTCHA;
+  payload: { captchaUrl: string };
+};
+
+type SetAuthLoginBtnLoadingType = {
+  type: "AUTH-LOGIN-BTN-LOADING";
+  authLoginBtnLoading: boolean;
+};
+
+export { SetIsAuthACType, SetCaptchaACType, SetAuthLoginBtnLoadingType };

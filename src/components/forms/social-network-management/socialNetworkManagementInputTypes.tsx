@@ -1,5 +1,5 @@
 type SocialNetworkManagementInputProps = {
-  email: string;
+  email: string | null;
 };
 
 export { SocialNetworkManagementInputProps };

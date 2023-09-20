@@ -1,12 +1,14 @@
+import socialTypeNames from "../../duck/typesName";
+
 type SocialUserPhotosType = {
-  small: any;
-  large: any;
+  small: string | null;
+  large: string | null;
 };
 
 type SocialUserType = {
   name: string;
   id: number;
-  uniqueUrlName?: any;
+  uniqueUrlName?: string | null;
   photos?: SocialUserPhotosType;
   status?: string;
   followed?: boolean;
@@ -24,11 +26,54 @@ type InitialStateType = {
 type fetchSocialUsersOnChangedPageDataType = {
   items: SocialUserType[];
   totalCount: number;
-  error: any;
+  error: string;
+};
+
+type SetFollowUserACType = {
+  type: typeof socialTypeNames.FOLLOW;
+  userId: string;
+};
+
+type SetUnFollowUserACType = {
+  type: typeof socialTypeNames.UN_FOLLOW;
+  userId: string;
+};
+
+type SetUsersACType = {
+  type: typeof socialTypeNames.SET_USERS;
+  socialUsers: SocialUserType[];
+};
+
+type SetCurrentPageACType = {
+  type: typeof socialTypeNames.SET_CURRENT_PAGE;
+  currentPage: number;
+};
+
+type SetTotalUsersCountACType = {
+  type: typeof socialTypeNames.SET_TOTAL_USERS_COUNT;
+  totalUsersCount: number;
+};
+
+type SetLoadingACType = {
+  type: typeof socialTypeNames.LOADING;
+  loading: boolean;
+};
+
+type SetFollowingBlockedBtnACType = {
+  type: typeof socialTypeNames.FOLLOWING_BLOCKED_BTN;
+  loading: boolean;
+  userId: string;
 };
 
 export {
   SocialUserType,
   InitialStateType,
   fetchSocialUsersOnChangedPageDataType,
+  SetFollowUserACType,
+  SetUnFollowUserACType,
+  SetUsersACType,
+  SetCurrentPageACType,
+  SetTotalUsersCountACType,
+  SetLoadingACType,
+  SetFollowingBlockedBtnACType,
 };

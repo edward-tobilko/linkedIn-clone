@@ -1,14 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
-import { RootDispatch } from "../../../redux/store";
 
 interface StatusProps {
   status: string;
-  updateUserStatusTC?: RootDispatch;
   currentProfilePage?: any;
 }
 
 interface StatusContainerProps extends StatusProps {
-  serverError: string | null;
+  serverError: Object | null;
 }
 
 interface StatusFieldProps extends StatusContainerProps {

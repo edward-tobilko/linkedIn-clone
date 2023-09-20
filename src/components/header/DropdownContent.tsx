@@ -9,7 +9,7 @@ import { DropdownContentStyle } from "./headerStyles";
 import { DropdownContentRemoveBtn } from "../UI/btns/remove-btn/removeBtnStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { LinksTypes } from "./headerTypes";
+import { DropdownContentProps, LinksTypes } from "./headerTypes";
 
 import LogoutBtn from "../UI/btns/logout-btn/LogoutBtn";
 import DropDownLoader from "../UI/loaders/dropdown-loader/DropDownLoader";
@@ -38,7 +38,7 @@ const links: LinksTypes[] = [
   },
 ];
 
-export const DropdownContent: FC<any> = ({
+export const DropdownContent: FC<DropdownContentProps> = ({
   setIsClicked,
   logout,
   currentProfilePage,

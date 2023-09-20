@@ -75,11 +75,7 @@ export const CardProfile: FC<CardProfileProps> = ({
           <p className="cardProfile__desc-title">No info</p>
         )}
 
-        <Status
-          status={status}
-          updateUserStatusTC={updateUserStatusTC}
-          currentProfilePage={currentProfilePage}
-        />
+        <Status status={status} currentProfilePage={currentProfilePage} />
       </div>
     </CardProfileStyle>
   );

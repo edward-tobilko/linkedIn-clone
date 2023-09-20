@@ -29,7 +29,7 @@ import {
   statusSelector,
 } from "../../utils/selectors/profileSelectors";
 
-import { ProfileContentProps, UseParamsProps } from "./profileTypes";
+import { ProfileContentProps } from "./profileTypes";
 
 // Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
@@ -47,11 +47,11 @@ const ProfileContent: FC<ProfileContentProps> = ({
   loading,
   status,
 }) => {
-  let { userId } = useParams() as UseParamsProps;
+  let { userId }: any = useParams();
   const dispatch = useTypeDispatch();
 
   if (!userId) {
-    userId = "29793";
+    userId = 29793;
   }
 
   const { fetching } = useFetching(async () => {

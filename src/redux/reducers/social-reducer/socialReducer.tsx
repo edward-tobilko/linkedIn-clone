@@ -8,7 +8,6 @@ import helperReducerFunctions from "../../../utils/helper-functions/helperReduce
 
 import {
   InitialStateType,
-  SocialUserType,
   fetchSocialUsersOnChangedPageDataType,
 } from "./socialReducerTypes";
 
@@ -22,13 +21,13 @@ const initialState: InitialStateType = {
 };
 
 // Reducer
-const socialReducer = (state = initialState, action: any) => {
+const socialReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
     // Додаємо користувача
     case socialTypeNames.FOLLOW:
       return {
         ...state,
-        socialUsers: state.socialUsers.map((socialUser: SocialUserType) => {
+        socialUsers: state.socialUsers.map((socialUser) => {
           if (socialUser.id === action.userId) {
             return { ...socialUser, followed: true };
           }
@@ -41,7 +40,7 @@ const socialReducer = (state = initialState, action: any) => {
     case socialTypeNames.UN_FOLLOW:
       return {
         ...state,
-        socialUsers: state.socialUsers.map((socialUser: SocialUserType) => {
+        socialUsers: state.socialUsers.map((socialUser) => {
           if (socialUser.id === action.userId) {
             return { ...socialUser, followed: false };
           }
@@ -91,7 +90,7 @@ export default socialReducer;
 
 // Санка (thunk creator) для отримання користувачів
 export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     dispatch(actionCreators.setLoadingAC(true));
 
     socialUsersAPI
@@ -101,7 +100,8 @@ export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
         dispatch(actionCreators.setLoadingAC(false)); // Додаємо загрузчик;
         dispatch(actionCreators.setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
         dispatch(actionCreators.setTotalUsersCountAC(data.totalCount)); // Отримуємо всю к-сть користувачів з сервера;
-      });
+      })
+      .catch((error) => console.log("Error:", error));
   };
 };
 
@@ -110,7 +110,7 @@ export const fetchSocialUsersOnChangedPageTC = (
   pageNumber: number,
   usersCount: number,
 ) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     dispatch(actionCreators.setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
     dispatch(actionCreators.setLoadingAC(true));
 
@@ -119,13 +119,14 @@ export const fetchSocialUsersOnChangedPageTC = (
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(actionCreators.setLoadingAC(false));
         dispatch(actionCreators.setUsersAC(data.items));
-      });
+      })
+      .catch((error) => console.log("Error:", error));
   };
 };
 
 // ТС для додавання користувача
 export const setFollowUserTC = (userId: string) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     helperReducerFunctions.setFollowUnfollowAC(
       dispatch,
       userId,
@@ -137,7 +138,7 @@ export const setFollowUserTC = (userId: string) => {
 
 // ТС для видалення користувача
 export const setUnFollowUserTC = (userId: string) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     helperReducerFunctions.setFollowUnfollowAC(
       dispatch,
       userId,

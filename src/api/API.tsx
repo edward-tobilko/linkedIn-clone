@@ -34,7 +34,7 @@ export const socialUsersAPI = {
   },
 
   // Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI
-  async fetchUserStatusById(userId: string) {
+  async fetchUserStatusById(userId: number | null) {
     console.warn("Please, go to the profileAPI method!");
 
     return await profileAPI.fetchUserStatusById(userId);
@@ -44,12 +44,12 @@ export const socialUsersAPI = {
 // For the Profile component
 export const profileAPI = {
   // Отримуємо поточну сторінку користувача
-  async fetchCurrentUserPageById(userId: string) {
+  async fetchCurrentUserPageById(userId: number | null) {
     return await instance.get(`profile/${userId}`).then((res) => res.data);
   },
 
   // Отримуємо статус користувача
-  async fetchUserStatusById(userId: string) {
+  async fetchUserStatusById(userId: number | null) {
     return await instance
       .get(`profile/status/${userId}`)
       .then((res) => res.data);

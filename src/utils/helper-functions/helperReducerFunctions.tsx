@@ -22,18 +22,20 @@ const followUnfollowAction = (
 const setFollowUnfollowAC = (
   dispatch: RootDispatch,
   userId: string,
-  apiMethod: any,
+  apiMethod: (userId: string) => Promise<any>,
   setFollowUnfollow: any,
 ) => {
   dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); //? Блокуємо кнопку при натисканні
 
-  apiMethod(userId).then((data: any) => {
-    if (data.resultCode === 0) {
-      dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
-    }
+  apiMethod(userId)
+    .then((data: any) => {
+      if (data.resultCode === 0) {
+        dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
+      }
 
-    dispatch(actionCreators.setFollowingBlockedBtnAC(false, userId));
-  });
+      dispatch(actionCreators.setFollowingBlockedBtnAC(false, userId));
+    })
+    .catch((error: Object) => console.log("Error:", error));
 };
 
 export default {

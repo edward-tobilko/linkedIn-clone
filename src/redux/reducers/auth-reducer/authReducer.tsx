@@ -2,22 +2,28 @@ import { authAPI } from "../../../api/API";
 
 import authTypeNames from "../../duck/typesName";
 
+import {
+  SetAuthLoginBtnLoadingType,
+  SetCaptchaACType,
+  SetIsAuthACType,
+} from "./authReducerTypes";
+
 import { RootDispatch } from "../../store";
 
-import { InitialStateType } from "./authReducerTypes";
+type InitialStateType = typeof initialState; //? Так ми можемо переіспользувать тип
 
-const initialState: InitialStateType = {
-  id: null,
-  email: null,
-  login: null,
-  isAuth: false,
-  captchaUrl: "",
-  authLoginBtnLoading: false,
+const initialState = {
+  id: null as number | null,
+  email: null as string | null,
+  login: null as string | null,
+  isAuth: false as boolean,
+  captchaUrl: "" as string,
+  authLoginBtnLoading: false as boolean,
 };
 
-const authReducer = (state = initialState, action: any) => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
   switch (action.type) {
-    // Встановлюємо параметри (id, email, login, ) авторизації
+    //? Встановлюємо параметри (id, email, login, ) авторизації
     case authTypeNames.SET_IS_AUTH:
       return {
         ...state,
@@ -43,21 +49,23 @@ export const setIsAuthAC = (
   email: string | null,
   login: string | null,
   isAuth: boolean,
-) => {
+): SetIsAuthACType => {
   return {
     type: authTypeNames.SET_IS_AUTH,
     data: { id, email, login, isAuth },
   };
 };
 
-export const setCaptchaAC = (captchaUrl: string) => {
+export const setCaptchaAC = (captchaUrl: string): SetCaptchaACType => {
   return {
     type: authTypeNames.CAPTCHA,
     payload: { captchaUrl },
   };
 };
 
-export const setAuthLoginBtnLoading = (authLoginBtnLoading: boolean) => {
+export const setAuthLoginBtnLoading = (
+  authLoginBtnLoading: boolean,
+): SetAuthLoginBtnLoadingType => {
   return {
     type: "AUTH-LOGIN-BTN-LOADING",
     authLoginBtnLoading,
@@ -91,7 +99,7 @@ export const setLoginTC = (
   rememberMe: boolean,
   captcha: string,
 ) => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     dispatch(setAuthLoginBtnLoading(true));
 
     authAPI
@@ -114,7 +122,7 @@ export const setLoginTC = (
 
 // CT для вилогірування користувача
 export const setLogoutTC = () => {
-  return (dispatch: RootDispatch) => {
+  return (dispatch: any) => {
     authAPI.logoutApi().then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setIsAuthAC(null, null, null, false));
@@ -124,7 +132,7 @@ export const setLogoutTC = () => {
 };
 
 // TC для капчі
-export const setCaptchaTC = () => (dispatch: RootDispatch) => {
+export const setCaptchaTC = () => (dispatch: any) => {
   return authAPI.getCaptchaUrl().then((response) => {
     dispatch(setCaptchaAC(response.data.url));
   });
