@@ -33,12 +33,18 @@ type CurrentProfilePageProps = {
 
 type ProfileContentProps = CurrentProfilePageProps & {
   loading: boolean;
-  status: string;
 };
+
+type MapDispatchToPropsType = {
+  fetchCurrentUserPageTC: (userId: number) => void;
+  fetchUserStatusByIdTC: (userId: number) => void;
+  downloadSmallPhotoTC: (dispatch: any) => void;
+};
+
+type OwnPropsType = {};
 
 // CardProfile component
 type CardProfileProps = ProfileContentProps & {
-  updateUserStatusTC: RootDispatch;
   downloadSmallPhotoTC: RootDispatch;
 };
 
@@ -47,4 +53,6 @@ export {
   CardProfileProps,
   CurrentProfilePageTypes,
   CurrentProfilePageProps,
+  MapDispatchToPropsType,
+  OwnPropsType,
 };

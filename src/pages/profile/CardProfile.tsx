@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, SyntheticEvent } from "react";
 import { NavLink } from "react-router-dom";
 
 import { AvatarImgStyle } from "../../rootStyles";
@@ -15,17 +15,15 @@ import { setLoadingAC } from "../../redux/reducers/profile-reducer/profileReduce
 
 export const CardProfile: FC<CardProfileProps> = ({
   currentProfilePage,
-  status,
-  updateUserStatusTC,
   downloadSmallPhotoTC,
   loading,
 }) => {
   const dispatch = useTypeDispatch();
 
-  const downloadPhoto = (event: any) => {
-    if (event.target.files.length) {
+  const downloadPhoto = (event: SyntheticEvent<HTMLInputElement>) => {
+    if (event.currentTarget.files && event.currentTarget.files.length) {
       setLoadingAC(true);
-      dispatch(downloadSmallPhotoTC(event.target.files[0]));
+      dispatch(downloadSmallPhotoTC(event.currentTarget.files[0]));
       setLoadingAC(false);
     }
   };
@@ -75,7 +73,7 @@ export const CardProfile: FC<CardProfileProps> = ({
           <p className="cardProfile__desc-title">No info</p>
         )}
 
-        <Status status={status} currentProfilePage={currentProfilePage} />
+        <Status />
       </div>
     </CardProfileStyle>
   );

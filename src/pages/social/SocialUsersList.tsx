@@ -12,7 +12,7 @@ const SocialUsersList: FC<SocialUsersListProps> = ({
 }) => {
   return (
     <>
-      {socialUsers.map((socialUser: any) => (
+      {socialUsers?.map((socialUser) => (
         <SocialUsersItem
           key={socialUser?.id}
           socialUser={socialUser}

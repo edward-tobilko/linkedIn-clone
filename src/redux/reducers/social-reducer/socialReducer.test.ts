@@ -9,11 +9,11 @@ import { socialUsersAPI } from "../../../api/API";
 import socialTypeNames from "../../duck/typesName";
 import actionCreators from "../../duck/actionCreators";
 
-import { SocialUserType } from "./socialReducerTypes";
+import { InitialStateType, SocialUserType } from "./socialReducerTypes";
 
-let mockDispatch: any;
-let mockFollowUser: any;
-let mockUnFollowUser: any;
+let mockDispatch: () => void;
+let mockFollowUser: jest.SpyInstance;
+let mockUnFollowUser: jest.SpyInstance;
 
 beforeEach(() => {
   mockDispatch = jest.fn();
@@ -39,9 +39,20 @@ describe("Social Reducer Actions", () => {
   });
 
   it("should handle UN_FOLLOW", () => {
-    const userId = "123";
-    const initialState: any = {
-      socialUsers: [{ id: "123", followed: true }],
+    const userId = 7;
+    const initialState: InitialStateType = {
+      socialUsers: [
+        {
+          id: 7,
+          followed: true,
+          name: "John Doe",
+          uniqueUrlName: null,
+          photos: {
+            small: null,
+            large: null,
+          },
+        },
+      ],
       totalUsersCount: 1,
       usersCount: 18,
       currentPage: 1,
@@ -50,7 +61,7 @@ describe("Social Reducer Actions", () => {
     };
     const expectedState = {
       ...initialState,
-      socialUsers: [{ id: "123", followed: false }],
+      socialUsers: [{ id: 7, followed: false }],
     };
 
     expect(
@@ -59,7 +70,9 @@ describe("Social Reducer Actions", () => {
   });
 
   it("should handle SET_USERS", () => {
-    const socialUsers: any = [{ id: "123", name: "John Doe", followed: true }];
+    const socialUsers: SocialUserType[] = [
+      { id: 7, name: "John Doe", followed: true },
+    ];
     const initialState = {
       socialUsers: [],
       totalUsersCount: 0,
@@ -79,14 +92,14 @@ describe("Social Reducer Actions", () => {
   });
 
   it("should create an action to set follow user", () => {
-    const testUserId = "123";
+    const testUserId = 7;
     const expectedAction = { type: socialTypeNames.FOLLOW, userId: testUserId };
 
     expect(actionCreators.setFollowUserAC(testUserId)).toEqual(expectedAction);
   });
 
   it("should create an action to set unFollow user", () => {
-    const testUserId = "123";
+    const testUserId = 7;
     const expectedAction = {
       type: socialTypeNames.UN_FOLLOW,
       userId: testUserId,
@@ -132,7 +145,7 @@ describe("Social Reducer Actions", () => {
   });
 
   it("should create an action to set loading", () => {
-    const testLoading: any = false;
+    const testLoading: boolean = false;
     const expectedAction = {
       type: socialTypeNames.LOADING,
       loading: testLoading,
@@ -242,7 +255,7 @@ describe("Social Reducer Thunk Actions", () => {
   });
 
   it("should follow a user and dispatch actions", async () => {
-    const userId = "123";
+    const userId = 7;
     const mockData = { resultCode: 0 };
     mockFollowUser.mockResolvedValue(mockData);
 
@@ -261,7 +274,7 @@ describe("Social Reducer Thunk Actions", () => {
   });
 
   it("should unFollow a user and dispatch actions", async () => {
-    const userId = "123";
+    const userId = 7;
     const mockData = { resultCode: 0 };
     mockUnFollowUser.mockResolvedValue(mockData);
 

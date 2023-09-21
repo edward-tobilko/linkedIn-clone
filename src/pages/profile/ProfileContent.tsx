@@ -14,7 +14,6 @@ import { ProfileContentSkeleton } from "../../components/UI/loaders/profile-load
 import {
   fetchCurrentUserPageTC,
   fetchUserStatusByIdTC,
-  updateUserStatusTC,
   downloadSmallPhotoTC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 import { RootState } from "../../redux/store";
@@ -26,26 +25,27 @@ import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import {
   currentProfilePageSelector,
   loadingSelector,
-  statusSelector,
 } from "../../utils/selectors/profileSelectors";
 
-import { ProfileContentProps } from "./profileTypes";
+import {
+  MapDispatchToPropsType,
+  OwnPropsType,
+  ProfileContentProps,
+} from "./profileTypes";
 
 // Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): ProfileContentProps => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),
-    status: statusSelector(state),
   };
 };
 
 const ProfileContent: FC<ProfileContentProps> = ({
   currentProfilePage,
   loading,
-  status,
 }) => {
   let { userId }: any = useParams();
   const dispatch = useTypeDispatch();
@@ -68,8 +68,6 @@ const ProfileContent: FC<ProfileContentProps> = ({
       <Suspense fallback={<ProfileContentSkeleton />}>
         <Sidebar
           currentProfilePage={currentProfilePage}
-          status={status}
-          updateUserStatusTC={updateUserStatusTC}
           downloadSmallPhotoTC={downloadSmallPhotoTC}
           loading={loading}
         />
@@ -93,21 +91,25 @@ const ProfileContent: FC<ProfileContentProps> = ({
   );
 };
 
-// Ф-я compose працює (перебирає всі наші створені обробники (ф-ї, хоки і тд.)) з права -> на ліво
+//? <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState> - в connect потрібно передати дженериком 4 параметра: 1 - props, які ми прокинули в компоненту, 2 - mapDispatchToProps: ф-ї (AC or TC), 3 - власні параметри, які ми створимо в компоненті, 4 - mapStateToProps: initialState (RootState), який ми прокидуємо з reducer (profileReducer).
+
+//? Ф-я compose працює з права -> на ліво: перебирає всі наші створені обробники (ф-ї, хоки і тд.)
 export default compose(
-  connect(mapStateToProps, {
-    // Санка (thunk creator) для отримання поточної сторінки іншого користувача
-    fetchCurrentUserPageTC,
+  connect<ProfileContentProps, MapDispatchToPropsType, OwnPropsType, RootState>(
+    mapStateToProps,
+    {
+      //? Коли ми передаємо TC або AC-функції в HOC connect, то він нам автоматично створює callback з такою ж самою назвою, параметрами і тд.
 
-    // TC для отримання статусу іншого користувача
-    fetchUserStatusByIdTC,
+      // Санка (thunk creator) для отримання поточної сторінки іншого користувача
+      fetchCurrentUserPageTC,
 
-    // TC для динамічної зміни статусу
-    updateUserStatusTC,
+      // TC для отримання статусу іншого користувача
+      fetchUserStatusByIdTC,
 
-    // TC для загрузки фото
-    downloadSmallPhotoTC,
-  }),
+      // TC для загрузки фото
+      downloadSmallPhotoTC,
+    },
+  ),
 
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
   withAuthRedirectHOC,

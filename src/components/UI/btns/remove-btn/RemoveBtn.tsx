@@ -1,5 +1,10 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
-export const RemoveBtn: FC<any> = ({ className, children }) => {
+type RemoveBtnProps = {
+  className?: string;
+  children: ReactNode;
+};
+
+export const RemoveBtn: FC<RemoveBtnProps> = ({ className, children }) => {
   return <button className={className}>{children}</button>;
 };

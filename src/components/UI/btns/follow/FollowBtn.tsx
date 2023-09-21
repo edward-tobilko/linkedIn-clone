@@ -21,9 +21,7 @@ export const FollowBtn: FC<FollowBtnProps> = ({
     <>
       {socialUser.followed ? (
         <FollowBtnStyle
-          disabled={followingBlockedBtn.some(
-            (id: number) => id === socialUser.id,
-          )}
+          disabled={followingBlockedBtn.some((id) => id === socialUser.id)}
           onClick={() => dispatch(setUnFollowUserTC(socialUser.id))}
           left={false}
           transformPosition={false}
@@ -41,9 +39,7 @@ export const FollowBtn: FC<FollowBtnProps> = ({
         </FollowBtnStyle>
       ) : (
         <FollowBtnStyle
-          disabled={followingBlockedBtn.some(
-            (id: number) => id === socialUser.id,
-          )}
+          disabled={followingBlockedBtn.some((id) => id === socialUser.id)}
           onClick={() => dispatch(setFollowUserTC(socialUser.id))}
           transformPosition
           left

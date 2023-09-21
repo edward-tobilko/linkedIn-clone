@@ -1,6 +1,8 @@
-import { FC } from "react";
+import { FC, ChangeEvent } from "react";
 
-const StatusField: FC<any> = ({
+import { IStatusFieldProps } from "./statusTypes";
+
+const StatusField: FC<IStatusFieldProps> = ({
   updateInputStatus,
   statusValue,
   setStatusValue,
@@ -11,12 +13,12 @@ const StatusField: FC<any> = ({
         type="text"
         placeholder="Add new status..."
         value={statusValue}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setStatusValue(e.currentTarget.value)
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          setStatusValue(event.currentTarget.value)
         }
         onBlur={updateInputStatus}
         autoFocus={true}
-        onFocus={(e) => e.target.select()} // автозаповнення внутрішнього вмісту інпута (синій колір)
+        onFocus={(e) => e.target.select()} //? автозаповнення внутрішнього вмісту інпута (синій колір)
       />
     </>
   );

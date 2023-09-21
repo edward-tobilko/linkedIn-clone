@@ -7,23 +7,39 @@ type SocialContentProps = {
   totalUsersCount: number;
   currentPage: number;
   loading: boolean;
-  followingBlockedBtn: any;
+  followingBlockedBtn: Array<number>;
   isAuth: boolean;
 };
 
+type MapDispatchToPropsType = {
+  fetchSocialUsersTC: (currentPage: number, usersCount: number) => void;
+  fetchSocialUsersOnChangedPageTC: (
+    pageNumber: number,
+    usersCount: number,
+  ) => void;
+  setFollowUserTC: (id: number) => void;
+  setUnFollowUserTC: (id: number) => void;
+};
+
+type OwnPropsType = {};
+
 // SocialUsersList component
 type SocialUsersListProps = {
-  socialUsers: SocialUserType[];
-  followingBlockedBtn: any;
-  setFollowUserTC: any;
-  setUnFollowUserTC: any;
+  socialUsers?: SocialUserType[];
+  followingBlockedBtn: number[];
+  setFollowUserTC: (id: number) => void;
+  setUnFollowUserTC: (id: number) => void;
 };
 
-type SocialUsersItemProps = {
+// SocialUsersItem component
+type SocialUsersItemProps = SocialUsersListProps & {
   socialUser: SocialUserType;
-  followingBlockedBtn: any;
-  setFollowUserTC: any;
-  setUnFollowUserTC: any;
 };
 
-export { SocialContentProps, SocialUsersListProps, SocialUsersItemProps };
+export {
+  SocialContentProps,
+  SocialUsersListProps,
+  SocialUsersItemProps,
+  MapDispatchToPropsType,
+  OwnPropsType,
+};

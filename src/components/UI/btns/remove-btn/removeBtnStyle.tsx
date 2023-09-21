@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { themeVars } from "../../../../utils/vars/themeVars";
-
 import { RemoveBtn } from "./RemoveBtn";
 
 export const SocialUsersItemRemoveBtn = styled(RemoveBtn)`

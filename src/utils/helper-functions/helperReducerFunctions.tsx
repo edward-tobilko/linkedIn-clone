@@ -6,8 +6,8 @@ import { RootDispatch } from "../../redux/store";
 // Social reducer
 const followUnfollowAction = (
   socialUsers: SocialUserType[],
-  socialUserId: string,
-  userId: string,
+  socialUserId: number,
+  userId: number,
   action: any,
 ) => {
   return socialUsers.map((socialUser: any) => {
@@ -21,8 +21,8 @@ const followUnfollowAction = (
 
 const setFollowUnfollowAC = (
   dispatch: RootDispatch,
-  userId: string,
-  apiMethod: (userId: string) => Promise<any>,
+  userId: number,
+  apiMethod: (userId: number) => Promise<any>,
   setFollowUnfollow: any,
 ) => {
   dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); //? Блокуємо кнопку при натисканні

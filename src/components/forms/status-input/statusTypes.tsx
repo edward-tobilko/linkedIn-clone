@@ -1,18 +1,24 @@
 import { Dispatch, SetStateAction } from "react";
 
-interface StatusProps {
-  status: string;
-  currentProfilePage?: any;
-}
+import { CurrentProfilePageTypes } from "../../../pages/profile/profileTypes";
 
-interface StatusContainerProps extends StatusProps {
+interface IStatusProps {
+  status: string;
+  currentProfilePage?: CurrentProfilePageTypes;
   serverError: Object | null;
 }
 
-interface StatusFieldProps extends StatusContainerProps {
-  statusValue: string | undefined;
+interface IStatusFieldProps {
+  statusValue: string;
   setStatusValue: Dispatch<SetStateAction<string>>;
   updateInputStatus: () => void;
 }
 
-export { StatusContainerProps, StatusFieldProps, StatusProps };
+interface IMapDispatchToProps {
+  updateUserStatusTC: (statusValue: string) => void;
+  setServerErrorTC: (error: Object) => void;
+}
+
+interface IOwnProps {}
+
+export { IStatusFieldProps, IStatusProps, IMapDispatchToProps, IOwnProps };

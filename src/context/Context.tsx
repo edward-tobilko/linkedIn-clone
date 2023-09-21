@@ -62,7 +62,7 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     { id: 5, name: "Richard Bell" },
     { id: 2, name: "John Doe" },
   ]);
-  const [searchUsers, setSearchUsers] = useState<string>("");
+  const [searchUsers, setSearchUsers] = useState("");
   const [profileEditMode, setProfileEditMode] = useState(false);
   const [localLoading, setLocalLoading] = useState(false);
 

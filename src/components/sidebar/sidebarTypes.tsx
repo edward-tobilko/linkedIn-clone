@@ -1,8 +1,9 @@
 import { ProfileContentProps } from "../../pages/profile/profileTypes";
 
+import { TypedDispatch } from "../../redux/store";
+
 type SidebarProps = ProfileContentProps & {
-  updateUserStatusTC: any;
-  downloadSmallPhotoTC: any;
+  downloadSmallPhotoTC: TypedDispatch;
 };
 
 type ContactItemProps = {

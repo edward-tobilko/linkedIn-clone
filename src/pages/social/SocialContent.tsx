@@ -12,11 +12,14 @@ import { RootState } from "../../redux/store";
 
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
-import { SocialContentProps } from "./socialTypes";
+import {
+  MapDispatchToPropsType,
+  OwnPropsType,
+  SocialContentProps,
+} from "./socialTypes";
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { SocialContentLoader } from "../../components/UI/loaders/social-loaders/SocialContentLoader";
 import SocialUsersList from "./SocialUsersList";
@@ -34,7 +37,7 @@ import {
   isAuthSelector,
 } from "../../utils/selectors/socialSelectors";
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): SocialContentProps => {
   return {
     socialUsers: socialUsersReselector(state),
     totalUsersCount: totalUsersCountSelector(state),
@@ -46,7 +49,16 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const SocialContentContainer = connect(mapStateToProps, {
+//? <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState> - в connect потрібно передати дженериком 4 параметра: 1 - props, які ми прокинули в компоненту, 2 - mapDispatchToProps: ф-ї (AC or TC), 3 - власні параметри, які ми створимо в компоненті, 4 - mapStateToProps: initialState (RootState), який ми прокидуємо з reducer (socialReducer).
+
+const SocialContentContainer = connect<
+  SocialContentProps,
+  MapDispatchToPropsType,
+  OwnPropsType,
+  RootState
+>(mapStateToProps, {
+  //? Коли ми передаємо TC або AC-функції в HOC connect, то він нам автоматично створює callback з такою ж самою назвою, параметрами і тд.
+
   // Санка (thunk creator) для отримання користувачів
   fetchSocialUsersTC,
 
@@ -122,5 +134,5 @@ const SocialContent: FC<SocialContentProps> = ({
   );
 };
 
-// Ф-я compose працює (перебирає всі наші створені обробники (ф-ї, хоки і тд.)) з права -> на ліво
+//? Ф-я compose працює з права -> на ліво: перебирає всі наші створені обробники (ф-ї, хоки і тд.)
 export default compose(SocialContentContainer)(SocialContent);

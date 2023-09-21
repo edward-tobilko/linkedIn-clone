@@ -24,12 +24,12 @@ export const socialUsersAPI = {
   },
 
   // Добавляємо користувача (follow)
-  async followUser(userId: string) {
+  async followUser(userId: number) {
     return await instance.post(`follow/${userId}`, {}).then((res) => res.data);
   },
 
   // Видаляємо користувача (unFollow)
-  async unFollowUser(userId: string) {
+  async unFollowUser(userId: number) {
     return await instance.delete(`follow/${userId}`).then((res) => res.data); //? В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
 

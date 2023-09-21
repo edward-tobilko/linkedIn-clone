@@ -67,8 +67,6 @@ function UITimeElements() {
 
 const Sidebar: FC<SidebarProps> = ({
   currentProfilePage,
-  status,
-  updateUserStatusTC,
   downloadSmallPhotoTC,
   loading,
 }) => {
@@ -79,8 +77,6 @@ const Sidebar: FC<SidebarProps> = ({
       <div className="sidebar">
         <CardProfile
           currentProfilePage={currentProfilePage}
-          status={status}
-          updateUserStatusTC={updateUserStatusTC}
           downloadSmallPhotoTC={downloadSmallPhotoTC}
           loading={loading}
         />

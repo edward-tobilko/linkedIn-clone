@@ -16,8 +16,10 @@ export const useFetching = (callback: CallbackType): UseFetchingTypes => {
     try {
       setLoading(true);
       await callback();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     } finally {
       setLoading(false);
     }

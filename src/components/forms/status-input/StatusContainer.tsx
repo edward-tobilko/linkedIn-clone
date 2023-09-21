@@ -3,26 +3,34 @@ import { connect } from "react-redux";
 
 import { StatusFieldErrorStyle, StatusStyle } from "./statusStyle";
 
-import { StatusContainerProps } from "./statusTypes";
+import { IMapDispatchToProps, IOwnProps, IStatusProps } from "./statusTypes";
 
 import { useTypeDispatch } from "../../../hooks/useTypeSelector";
 
 import { setServerErrorTC } from "../../../redux/reducers/root-app-reducer/rootAppReducer";
 import { updateUserStatusTC } from "../../../redux/reducers/profile-reducer/profileReducer";
+import { RootState } from "../../../redux/store";
+
 import { serverErrorSelector } from "../../../utils/selectors/rootSelectors";
+import {
+  currentProfilePageSelector,
+  statusSelector,
+} from "../../../utils/selectors/profileSelectors";
 
 import StatusField from "./StatusField";
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState): IStatusProps => {
   return {
     serverError: serverErrorSelector(state),
+    status: statusSelector(state),
+    currentProfilePage: currentProfilePageSelector(state),
   };
 };
 
-const StatusContainer: FC<StatusContainerProps> = ({
+const StatusContainer: FC<IStatusProps> = ({
+  serverError,
   status,
   currentProfilePage,
-  serverError,
 }) => {
   const [statusValue, setStatusValue] = React.useState(status);
   const [editMode, setEditMode] = React.useState(false);
@@ -50,7 +58,7 @@ const StatusContainer: FC<StatusContainerProps> = ({
   }, [status]);
 
   useEffect(() => {
-    const handleServerError = (error: any) => {
+    const handleServerError = (error: Object) => {
       if (serverError) {
         dispatch(setServerErrorTC(error));
       }
@@ -110,7 +118,10 @@ const StatusContainer: FC<StatusContainerProps> = ({
   );
 };
 
-export default connect(mapStateToProps, {
-  updateUserStatusTC,
-  setServerErrorTC,
-})(StatusContainer);
+export default connect<IStatusProps, IMapDispatchToProps, IOwnProps, RootState>(
+  mapStateToProps,
+  {
+    updateUserStatusTC,
+    setServerErrorTC,
+  },
+)(StatusContainer);

@@ -11,7 +11,7 @@ export const Pagination: FC<PaginationProps> = ({
   currentPage,
   onChangedPage,
 }) => {
-  const [lengthNumber, setLengthNumber] = useState<number>(1);
+  const [lengthNumber, setLengthNumber] = useState(1);
 
   const pages: Array<number> = [];
   const paginationLength: number = 5;

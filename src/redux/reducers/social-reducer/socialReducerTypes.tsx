@@ -20,7 +20,7 @@ type InitialStateType = {
   usersCount: number;
   currentPage: number;
   loading: boolean;
-  followingBlockedBtn: any;
+  followingBlockedBtn: Array<number>; //? array of users' id
 };
 
 type fetchSocialUsersOnChangedPageDataType = {
@@ -31,12 +31,12 @@ type fetchSocialUsersOnChangedPageDataType = {
 
 type SetFollowUserACType = {
   type: typeof socialTypeNames.FOLLOW;
-  userId: string;
+  userId: number;
 };
 
 type SetUnFollowUserACType = {
   type: typeof socialTypeNames.UN_FOLLOW;
-  userId: string;
+  userId: number;
 };
 
 type SetUsersACType = {
@@ -62,7 +62,7 @@ type SetLoadingACType = {
 type SetFollowingBlockedBtnACType = {
   type: typeof socialTypeNames.FOLLOWING_BLOCKED_BTN;
   loading: boolean;
-  userId: string;
+  userId: number;
 };
 
 export {

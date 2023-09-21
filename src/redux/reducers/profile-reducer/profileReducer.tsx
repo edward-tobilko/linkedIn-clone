@@ -1,11 +1,5 @@
 import { v4 as uniqueID } from "uuid";
 
-import { profileAPI } from "../../../api/API";
-import { RootDispatch, RootState } from "../../store";
-import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
-
-import profileTypeNames from "../../duck/typesName";
-
 import {
   AddNewPostACType,
   ChangePostACType,
@@ -15,6 +9,13 @@ import {
   SetLoadingACType,
   SetStatusACType,
 } from "./profileReducerTypes";
+import { CurrentProfilePageProps } from "../../../pages/profile/profileTypes";
+
+import { profileAPI } from "../../../api/API";
+import { RootDispatch, RootState } from "../../store";
+import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
+
+import profileTypeNames from "../../duck/typesName";
 
 const initialState: InitialStateProps = {
   postUsers: [
@@ -118,7 +119,10 @@ const initialState: InitialStateProps = {
   status: "",
 };
 
-const profileReducer = (state = initialState, action: any): any => {
+const profileReducer = (
+  state = initialState,
+  action: any,
+): InitialStateProps => {
   switch (action.type) {
     // Створюємо новий пост на сторінку profile
     case profileTypeNames.CREATE_NEW_POST:
@@ -180,7 +184,7 @@ const profileReducer = (state = initialState, action: any): any => {
         currentProfilePage: {
           ...state.currentProfilePage,
           photos: action.smallPhoto,
-        },
+        } as CurrentProfilePageProps,
       };
 
     default:
@@ -228,7 +232,7 @@ export const setStatusAC = (status: string): SetStatusACType => {
 };
 
 export const setDownloadSmallPhotoAC = (
-  smallPhoto: any,
+  smallPhoto: string | null,
 ): SetDownloadSmallPhotoACType => {
   return {
     type: profileTypeNames.DOWNLOAD_SMALL_PHOTO,

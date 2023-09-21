@@ -11,4 +11,20 @@ type AuthContainerProps = {
   captchaUrl: string;
 };
 
-export { AuthFormType, AuthContainerProps };
+type MapDispatchToPropsType = {
+  setLoginTC: (
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string,
+  ) => void;
+};
+
+type OwnPropsType = {};
+
+export {
+  AuthFormType,
+  AuthContainerProps,
+  OwnPropsType,
+  MapDispatchToPropsType,
+};

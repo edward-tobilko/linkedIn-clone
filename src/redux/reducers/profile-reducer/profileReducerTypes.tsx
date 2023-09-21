@@ -67,7 +67,7 @@ type SetStatusACType = {
 
 type SetDownloadSmallPhotoACType = {
   type: typeof profileTypeNames.DOWNLOAD_SMALL_PHOTO;
-  smallPhoto: any;
+  smallPhoto: string | null;
 };
 
 export {

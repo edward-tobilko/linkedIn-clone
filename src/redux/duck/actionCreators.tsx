@@ -12,14 +12,14 @@ import {
 } from "../reducers/social-reducer/socialReducerTypes";
 
 // Social reducer
-const setFollowUserAC = (userId: string): SetFollowUserACType => {
+const setFollowUserAC = (userId: number): SetFollowUserACType => {
   return {
     type: socialTypeNames.FOLLOW,
     userId,
   };
 };
 
-const setUnFollowUserAC = (userId: string): SetUnFollowUserACType => {
+const setUnFollowUserAC = (userId: number): SetUnFollowUserACType => {
   return {
     type: socialTypeNames.UN_FOLLOW,
     userId,
@@ -58,7 +58,7 @@ const setLoadingAC = (loading: boolean): SetLoadingACType => {
 
 const setFollowingBlockedBtnAC = (
   loading: boolean,
-  userId: string,
+  userId: number,
 ): SetFollowingBlockedBtnACType => {
   return {
     type: socialTypeNames.FOLLOWING_BLOCKED_BTN,

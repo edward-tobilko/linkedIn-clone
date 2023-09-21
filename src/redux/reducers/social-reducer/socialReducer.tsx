@@ -125,7 +125,7 @@ export const fetchSocialUsersOnChangedPageTC = (
 };
 
 // ТС для додавання користувача
-export const setFollowUserTC = (userId: string) => {
+export const setFollowUserTC = (userId: number) => {
   return (dispatch: any) => {
     helperReducerFunctions.setFollowUnfollowAC(
       dispatch,
@@ -137,7 +137,7 @@ export const setFollowUserTC = (userId: string) => {
 };
 
 // ТС для видалення користувача
-export const setUnFollowUserTC = (userId: string) => {
+export const setUnFollowUserTC = (userId: number) => {
   return (dispatch: any) => {
     helperReducerFunctions.setFollowUnfollowAC(
       dispatch,

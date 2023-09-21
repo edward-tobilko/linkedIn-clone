@@ -2,8 +2,8 @@ import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 
 import type { RootState, TypedDispatch } from "../redux/store";
 
-// кастомний типизований діспатч
+//? Кастомний типизований хук dispatch
 export const useTypeDispatch = () => useDispatch<TypedDispatch>();
 
-// кастомний хук для отримання постів с rootReducer
+//? Кастомний хук для отримання state з rootReducer
 export const useTypeSelector: TypedUseSelectorHook<RootState> = useSelector;

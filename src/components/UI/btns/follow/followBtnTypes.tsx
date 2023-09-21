@@ -1,11 +1,12 @@
 import { SocialUserType } from "../../../../redux/reducers/social-reducer/socialReducerTypes";
-import { RootDispatch } from "../../../../redux/store";
 
 type FollowBtnProps = {
   socialUser: SocialUserType;
-  followingBlockedBtn: any;
+  followingBlockedBtn: Array<number>;
   setFollowUserTC: any;
   setUnFollowUserTC: any;
+  // setFollowUserTC: (id: number) => void;
+  // setUnFollowUserTC: (id: number) => void;
 };
 
 export { FollowBtnProps };

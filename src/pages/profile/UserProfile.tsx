@@ -16,7 +16,6 @@ import { ProfileContentProps } from "./profileTypes";
 import {
   currentProfilePageSelector,
   loadingSelector,
-  statusSelector,
 } from "../../utils/selectors/profileSelectors";
 import { editModeSchema } from "../../utils/validators/editModeSchema";
 import { useMyContext } from "../../context/Context";
@@ -41,7 +40,6 @@ const mapStateToProps = (state: RootState) => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),
-    status: statusSelector(state),
   };
 };
 
@@ -54,7 +52,6 @@ const UserProfileContainer = compose(
 const UserProfile: FC<ProfileContentProps> = ({
   currentProfilePage,
   loading,
-  status,
 }) => {
   const dispatch = useTypeDispatch();
   const {
@@ -167,7 +164,7 @@ const UserProfile: FC<ProfileContentProps> = ({
                 </h1>
 
                 <div className="user__profile-content-about-status">
-                  <Status status={status} />
+                  <Status />
                 </div>
                 <div className="user__profile-content-about-descriptions">
                   <p className="user__profile-content-about-descriptions-title">
