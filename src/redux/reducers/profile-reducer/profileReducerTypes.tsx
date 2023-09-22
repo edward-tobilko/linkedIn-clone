@@ -1,7 +1,19 @@
+import { ThunkAction } from "redux-thunk";
+
 import { CurrentProfilePageProps } from "../../../pages/profile/profileTypes";
 
-import profileTypeNames from "../../duck/typesName";
+import {
+  CREATE_NEW_POST,
+  CHANGE_POST,
+  SET_CURRENT_USER_PAGE,
+  LOADING,
+  SET_STATUS,
+  DOWNLOAD_SMALL_PHOTO,
+} from "../../duck/typesName";
 
+import { RootState } from "../../store";
+
+// Types for initial state
 type GeoType = {
   lat: string;
   lng: string;
@@ -41,34 +53,52 @@ type InitialStateProps = {
   status: string;
 };
 
+// Types for action creators
 type AddNewPostACType = {
-  type: typeof profileTypeNames.CREATE_NEW_POST;
+  type: typeof CREATE_NEW_POST;
 };
 
 type ChangePostACType = {
-  type: typeof profileTypeNames.CHANGE_POST;
+  type: typeof CHANGE_POST;
   newPostText: string;
 };
 
 type SetCurrentUserPageACType = {
-  currentProfilePage: string | null;
-  type: typeof profileTypeNames.SET_CURRENT_USER_PAGE;
+  currentProfilePage: CurrentProfilePageProps | null;
+  type: typeof SET_CURRENT_USER_PAGE;
 };
 
 type SetLoadingACType = {
-  type: typeof profileTypeNames.LOADING;
+  type: typeof LOADING;
   loading: boolean;
 };
 
 type SetStatusACType = {
-  type: typeof profileTypeNames.SET_STATUS;
+  type: typeof SET_STATUS;
   status: string;
 };
 
 type SetDownloadSmallPhotoACType = {
-  type: typeof profileTypeNames.DOWNLOAD_SMALL_PHOTO;
+  type: typeof DOWNLOAD_SMALL_PHOTO;
   smallPhoto: string | null;
 };
+
+// Type for actions
+type ProfileActionsTypes =
+  | AddNewPostACType
+  | ChangePostACType
+  | SetCurrentUserPageACType
+  | SetLoadingACType
+  | SetStatusACType
+  | SetDownloadSmallPhotoACType;
+
+// Type for thunks
+type ProfileThunkType<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  ProfileActionsTypes
+>;
 
 export {
   ItemProps,
@@ -79,4 +109,6 @@ export {
   SetLoadingACType,
   SetStatusACType,
   SetDownloadSmallPhotoACType,
+  ProfileActionsTypes,
+  ProfileThunkType,
 };

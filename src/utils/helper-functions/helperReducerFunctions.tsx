@@ -1,7 +1,11 @@
 import actionCreators from "../../redux/duck/actionCreators";
-import { SocialUserType } from "../../redux/reducers/social-reducer/socialReducerTypes";
+import {
+  SetFollowUserACType,
+  SetUnFollowUserACType,
+  SocialUserType,
+} from "../../redux/reducers/social-reducer/socialReducerTypes";
 
-import { RootDispatch } from "../../redux/store";
+import { TypedDispatch } from "../../redux/store";
 
 // Social reducer
 const followUnfollowAction = (
@@ -20,10 +24,12 @@ const followUnfollowAction = (
 };
 
 const setFollowUnfollowAC = (
-  dispatch: RootDispatch,
+  dispatch: TypedDispatch,
   userId: number,
-  apiMethod: (userId: number) => Promise<any>,
-  setFollowUnfollow: any,
+  apiMethod: (userId: number) => Promise<void>,
+  setFollowUnfollow: (
+    userId: number,
+  ) => SetFollowUserACType | SetUnFollowUserACType,
 ) => {
   dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); //? Блокуємо кнопку при натисканні
 

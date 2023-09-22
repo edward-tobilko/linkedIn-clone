@@ -1,18 +1,52 @@
-import authTypeNames from "../../duck/typesName";
+import { ThunkAction } from "redux-thunk";
 
+import { RootState } from "../../store";
+
+import {
+  AUTH_LOGIN_BTN_LOADING,
+  CAPTCHA,
+  SET_IS_AUTH,
+} from "../../duck/typesName";
+
+// Types for action creators
 type SetIsAuthACType = {
-  type: typeof authTypeNames.SET_IS_AUTH;
-  data: Object;
+  type: typeof SET_IS_AUTH;
+  data: {
+    id: number | null;
+    email: string | null;
+    login: string | null;
+    isAuth: boolean;
+  };
 };
 
 type SetCaptchaACType = {
-  type: typeof authTypeNames.CAPTCHA;
+  type: typeof CAPTCHA;
   payload: { captchaUrl: string };
 };
 
-type SetAuthLoginBtnLoadingType = {
-  type: "AUTH-LOGIN-BTN-LOADING";
+type SetAuthLoginBtnLoadingACType = {
+  type: typeof AUTH_LOGIN_BTN_LOADING;
   authLoginBtnLoading: boolean;
 };
 
-export { SetIsAuthACType, SetCaptchaACType, SetAuthLoginBtnLoadingType };
+// Type for actions
+type AuthActionsTypes =
+  | SetIsAuthACType
+  | SetCaptchaACType
+  | SetAuthLoginBtnLoadingACType;
+
+// Type for thunks
+type AuthThunkType<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AuthActionsTypes
+>;
+
+export {
+  SetIsAuthACType,
+  SetCaptchaACType,
+  SetAuthLoginBtnLoadingACType,
+  AuthActionsTypes,
+  AuthThunkType,
+};

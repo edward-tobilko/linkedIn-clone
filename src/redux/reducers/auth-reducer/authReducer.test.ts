@@ -2,7 +2,7 @@ import { setIsAuthAC, setCaptchaAC, setIsAuthTC } from "./authReducer";
 
 import { authAPI } from "../../../api/API";
 
-import authTypeNames from "../../duck/typesName";
+import { CAPTCHA, SET_IS_AUTH } from "../../duck/typesName";
 
 jest.mock("../../../api/API", () => ({
   authAPI: {
@@ -20,7 +20,7 @@ describe("Auth Reducer Actions", () => {
     const login = "testUser";
     const isAuth = true;
     const expectedAction = {
-      type: authTypeNames.SET_IS_AUTH,
+      type: SET_IS_AUTH,
       data: { id, email, login, isAuth },
     };
     expect(setIsAuthAC(id, email, login, isAuth)).toEqual(expectedAction);
@@ -29,7 +29,7 @@ describe("Auth Reducer Actions", () => {
   it("should create an action to set captcha", () => {
     const captcha = "mockCaptcha";
     const expectedAction = {
-      type: authTypeNames.CAPTCHA,
+      type: CAPTCHA,
       payload: { captcha },
     };
     expect(setCaptchaAC(captcha)).toEqual(expectedAction);
@@ -39,15 +39,17 @@ describe("Auth Reducer Actions", () => {
 describe("Auth Reducer Thunk Actions", () => {
   it("should dispatch actions for set is auth", async () => {
     const mockDispatch = jest.fn();
-    const mockData = {
+    const mockData: any = {
       resultCode: 0,
       data: { id: 123, email: "test@example.com", login: "testUser" },
     };
+    const mockAction = jest.fn();
+
     (authAPI.authorizationMe as jest.Mock).mockResolvedValue({
       data: mockData,
     });
 
-    await setIsAuthTC()(mockDispatch);
+    await setIsAuthTC()(mockDispatch, mockData, mockAction);
 
     expect(mockDispatch).toHaveBeenCalledWith(
       setIsAuthAC(

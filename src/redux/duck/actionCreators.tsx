@@ -1,6 +1,4 @@
-import socialTypeNames from "../duck/typesName";
 import { SetLoadingACType } from "../reducers/profile-reducer/profileReducerTypes";
-
 import {
   SetCurrentPageACType,
   SetFollowUserACType,
@@ -11,31 +9,41 @@ import {
   SocialUserType,
 } from "../reducers/social-reducer/socialReducerTypes";
 
+import {
+  FOLLOW,
+  UN_FOLLOW,
+  SET_USERS,
+  SET_CURRENT_PAGE,
+  SET_TOTAL_USERS_COUNT,
+  LOADING,
+  FOLLOWING_BLOCKED_BTN,
+} from "./typesName";
+
 // Social reducer
 const setFollowUserAC = (userId: number): SetFollowUserACType => {
   return {
-    type: socialTypeNames.FOLLOW,
+    type: FOLLOW,
     userId,
   };
 };
 
 const setUnFollowUserAC = (userId: number): SetUnFollowUserACType => {
   return {
-    type: socialTypeNames.UN_FOLLOW,
+    type: UN_FOLLOW,
     userId,
   };
 };
 
 const setUsersAC = (socialUsers: SocialUserType[]): SetUsersACType => {
   return {
-    type: socialTypeNames.SET_USERS,
+    type: SET_USERS,
     socialUsers,
   };
 };
 
 const setCurrentPageAC = (currentPage: number): SetCurrentPageACType => {
   return {
-    type: socialTypeNames.SET_CURRENT_PAGE,
+    type: SET_CURRENT_PAGE,
     currentPage,
   };
 };
@@ -44,14 +52,14 @@ const setTotalUsersCountAC = (
   totalUsersCount: number,
 ): SetTotalUsersCountACType => {
   return {
-    type: socialTypeNames.SET_TOTAL_USERS_COUNT,
+    type: SET_TOTAL_USERS_COUNT,
     totalUsersCount,
   };
 };
 
 const setLoadingAC = (loading: boolean): SetLoadingACType => {
   return {
-    type: socialTypeNames.LOADING,
+    type: LOADING,
     loading,
   };
 };
@@ -61,7 +69,7 @@ const setFollowingBlockedBtnAC = (
   userId: number,
 ): SetFollowingBlockedBtnACType => {
   return {
-    type: socialTypeNames.FOLLOWING_BLOCKED_BTN,
+    type: FOLLOWING_BLOCKED_BTN,
     loading,
     userId,
   };

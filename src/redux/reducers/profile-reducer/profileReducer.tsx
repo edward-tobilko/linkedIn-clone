@@ -4,6 +4,8 @@ import {
   AddNewPostACType,
   ChangePostACType,
   InitialStateProps,
+  ProfileActionsTypes,
+  ProfileThunkType,
   SetCurrentUserPageACType,
   SetDownloadSmallPhotoACType,
   SetLoadingACType,
@@ -11,11 +13,18 @@ import {
 } from "./profileReducerTypes";
 import { CurrentProfilePageProps } from "../../../pages/profile/profileTypes";
 
-import { profileAPI } from "../../../api/API";
-import { RootDispatch, RootState } from "../../store";
-import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
+import {
+  CREATE_NEW_POST,
+  CHANGE_POST,
+  SET_CURRENT_USER_PAGE,
+  LOADING,
+  SET_STATUS,
+  DOWNLOAD_SMALL_PHOTO,
+} from "../../duck/typesName";
 
-import profileTypeNames from "../../duck/typesName";
+import { profileAPI } from "../../../api/API";
+import { RootState } from "../../store";
+import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
 
 const initialState: InitialStateProps = {
   postUsers: [
@@ -121,12 +130,12 @@ const initialState: InitialStateProps = {
 
 const profileReducer = (
   state = initialState,
-  action: any,
+  action: ProfileActionsTypes,
 ): InitialStateProps => {
   switch (action.type) {
     // Створюємо новий пост на сторінку profile
-    case profileTypeNames.CREATE_NEW_POST:
-      // вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
+    case CREATE_NEW_POST:
+      // Вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
       return {
         ...state,
         postUsers: [
@@ -159,26 +168,26 @@ const profileReducer = (
       };
 
     // Для динамічної поведінки onChange обробника подій
-    case profileTypeNames.CHANGE_POST:
+    case CHANGE_POST:
       return {
         ...state,
         newPostText: action.newPostText,
       };
 
     // Показуємо поточну сторінку іншого користувача
-    case profileTypeNames.SET_CURRENT_USER_PAGE:
+    case SET_CURRENT_USER_PAGE:
       return { ...state, currentProfilePage: action.currentProfilePage };
 
     // Додаємо загрузчик
-    case profileTypeNames.LOADING:
+    case LOADING:
       return { ...state, loading: action.loading };
 
     // Показуємо статус користувача
-    case profileTypeNames.SET_STATUS:
+    case SET_STATUS:
       return { ...state, status: action.status };
 
     // Загрузка фото
-    case profileTypeNames.DOWNLOAD_SMALL_PHOTO:
+    case DOWNLOAD_SMALL_PHOTO:
       return {
         ...state,
         currentProfilePage: {
@@ -197,36 +206,36 @@ export default profileReducer;
 // Action Creators (ACs)
 export const addNewPostAC = (): AddNewPostACType => {
   return {
-    type: profileTypeNames.CREATE_NEW_POST,
+    type: CREATE_NEW_POST,
   };
 };
 
 export const changePostAC = (newPostText: string): ChangePostACType => {
   return {
-    type: profileTypeNames.CHANGE_POST,
+    type: CHANGE_POST,
     newPostText: newPostText,
   };
 };
 
 export const setCurrentUserPageAC = (
-  currentProfilePage: string | null,
+  currentProfilePage: CurrentProfilePageProps | null,
 ): SetCurrentUserPageACType => {
   return {
-    type: profileTypeNames.SET_CURRENT_USER_PAGE,
+    type: SET_CURRENT_USER_PAGE,
     currentProfilePage,
   };
 };
 
 export const setLoadingAC = (loading: boolean): SetLoadingACType => {
   return {
-    type: profileTypeNames.LOADING,
+    type: LOADING,
     loading,
   };
 };
 
 export const setStatusAC = (status: string): SetStatusACType => {
   return {
-    type: profileTypeNames.SET_STATUS,
+    type: SET_STATUS,
     status,
   };
 };
@@ -235,7 +244,7 @@ export const setDownloadSmallPhotoAC = (
   smallPhoto: string | null,
 ): SetDownloadSmallPhotoACType => {
   return {
-    type: profileTypeNames.DOWNLOAD_SMALL_PHOTO,
+    type: DOWNLOAD_SMALL_PHOTO,
     smallPhoto,
   };
 };
@@ -243,11 +252,13 @@ export const setDownloadSmallPhotoAC = (
 // TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
 // Санка (thunk creator) для отримання поточної сторінки іншого користувача
-export const fetchCurrentUserPageTC = (userId: number | null) => {
-  return (dispatch: any) => {
+export const fetchCurrentUserPageTC = (
+  userId: number | null,
+): ProfileThunkType => {
+  return (dispatch) => {
     dispatch(setLoadingAC(true));
 
-    profileAPI.fetchCurrentUserPageById(userId).then((data: any) => {
+    profileAPI.fetchCurrentUserPageById(userId).then((data) => {
       dispatch(setCurrentUserPageAC(data));
 
       dispatch(setLoadingAC(false));
@@ -256,11 +267,13 @@ export const fetchCurrentUserPageTC = (userId: number | null) => {
 };
 
 // TC для отримання статусу користувача
-export const fetchUserStatusByIdTC = (userId: number | null) => {
-  return (dispatch: any) => {
+export const fetchUserStatusByIdTC = (
+  userId: number | null,
+): ProfileThunkType => {
+  return (dispatch) => {
     profileAPI
       .fetchUserStatusById(userId)
-      .then((data: any) => dispatch(setStatusAC(data)))
+      .then((data) => dispatch(setStatusAC(data)))
       .catch((error) => {
         console.log("Error: ", error["message"]);
       });
@@ -268,11 +281,11 @@ export const fetchUserStatusByIdTC = (userId: number | null) => {
 };
 
 // TC для динамічної зміни статусу
-export const updateUserStatusTC = (status: string) => {
-  return (dispatch: any) => {
+export const updateUserStatusTC = (status: string): ProfileThunkType => {
+  return (dispatch) => {
     profileAPI
       .updateUserStatus(status)
-      .then((data: any) => {
+      .then((data) => {
         if (data.resultCode === 0) {
           dispatch(setStatusAC(status));
         }
@@ -294,10 +307,10 @@ export const updateUserStatusTC = (status: string) => {
 };
 
 // TC для загрузки фото
-export const downloadSmallPhotoTC = (photoFile: any) => {
-  return (dispatch: any) => {
+export const downloadSmallPhotoTC = (photoFile: any): ProfileThunkType => {
+  return (dispatch) => {
     dispatch(setLoadingAC(true));
-    profileAPI.downloadPhoto(photoFile).then((response: any) => {
+    profileAPI.downloadPhoto(photoFile).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setDownloadSmallPhotoAC(response.data.data.photos));
         dispatch(setLoadingAC(false));
@@ -307,13 +320,13 @@ export const downloadSmallPhotoTC = (photoFile: any) => {
 };
 
 // TC для оновлення інформації користувача
-export const profileEditModeTC = (profileProperties: any) => {
-  return (dispatch: any, getState: () => RootState) => {
+export const profileEditModeTC = (profileProperties: any): ProfileThunkType => {
+  return (dispatch, getState: () => RootState) => {
     const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()
 
     dispatch(setLoadingAC(true));
 
-    profileAPI.profileInfoEditMode(profileProperties).then((res: any) => {
+    profileAPI.profileInfoEditMode(profileProperties).then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(fetchCurrentUserPageTC(myId));
         dispatch(setLoadingAC(false));

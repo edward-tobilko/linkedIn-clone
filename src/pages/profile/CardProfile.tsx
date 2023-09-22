@@ -20,7 +20,7 @@ export const CardProfile: FC<CardProfileProps> = ({
 }) => {
   const dispatch = useTypeDispatch();
 
-  const downloadPhoto = (event: SyntheticEvent<HTMLInputElement>) => {
+  const downloadPhoto = (event: any) => {
     if (event.currentTarget.files && event.currentTarget.files.length) {
       setLoadingAC(true);
       dispatch(downloadSmallPhotoTC(event.currentTarget.files[0]));

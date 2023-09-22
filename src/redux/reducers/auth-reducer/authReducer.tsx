@@ -1,14 +1,18 @@
 import { authAPI } from "../../../api/API";
 
-import authTypeNames from "../../duck/typesName";
+import {
+  AUTH_LOGIN_BTN_LOADING,
+  CAPTCHA,
+  SET_IS_AUTH,
+} from "../../duck/typesName";
 
 import {
-  SetAuthLoginBtnLoadingType,
+  AuthActionsTypes,
+  AuthThunkType,
+  SetAuthLoginBtnLoadingACType,
   SetCaptchaACType,
   SetIsAuthACType,
 } from "./authReducerTypes";
-
-import { RootDispatch } from "../../store";
 
 type InitialStateType = typeof initialState; //? Так ми можемо переіспользувать тип
 
@@ -21,19 +25,22 @@ const initialState = {
   authLoginBtnLoading: false as boolean,
 };
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (
+  state = initialState,
+  action: AuthActionsTypes,
+): InitialStateType => {
   switch (action.type) {
     //? Встановлюємо параметри (id, email, login, ) авторизації
-    case authTypeNames.SET_IS_AUTH:
+    case SET_IS_AUTH:
       return {
         ...state,
         ...action.data,
       };
 
-    case authTypeNames.CAPTCHA:
+    case CAPTCHA:
       return { ...state, ...action.payload };
 
-    case "AUTH-LOGIN-BTN-LOADING":
+    case AUTH_LOGIN_BTN_LOADING:
       return { ...state, authLoginBtnLoading: action.authLoginBtnLoading };
 
     default:
@@ -51,23 +58,23 @@ export const setIsAuthAC = (
   isAuth: boolean,
 ): SetIsAuthACType => {
   return {
-    type: authTypeNames.SET_IS_AUTH,
+    type: SET_IS_AUTH,
     data: { id, email, login, isAuth },
   };
 };
 
 export const setCaptchaAC = (captchaUrl: string): SetCaptchaACType => {
   return {
-    type: authTypeNames.CAPTCHA,
+    type: CAPTCHA,
     payload: { captchaUrl },
   };
 };
 
-export const setAuthLoginBtnLoading = (
+export const setAuthLoginBtnLoadingAC = (
   authLoginBtnLoading: boolean,
-): SetAuthLoginBtnLoadingType => {
+): SetAuthLoginBtnLoadingACType => {
   return {
-    type: "AUTH-LOGIN-BTN-LOADING",
+    type: AUTH_LOGIN_BTN_LOADING,
     authLoginBtnLoading,
   };
 };
@@ -75,8 +82,8 @@ export const setAuthLoginBtnLoading = (
 // TC: Thunk creator - anonym function and HOC: setIsAuthTC
 
 // Санка (thunk creator) для авторизації
-export const setIsAuthTC = () => {
-  return (dispatch: RootDispatch) => {
+export const setIsAuthTC = (): AuthThunkType => {
+  return (dispatch) => {
     return authAPI
       .authorizationMe()
       .then((response) => {
@@ -92,15 +99,15 @@ export const setIsAuthTC = () => {
   };
 };
 
-// CT для логірування користувача
+// TC для логірування користувача
 export const setLoginTC = (
   email: string,
   password: string,
   rememberMe: boolean,
   captcha: string,
-) => {
-  return (dispatch: any) => {
-    dispatch(setAuthLoginBtnLoading(true));
+): AuthThunkType => {
+  return (dispatch) => {
+    dispatch(setAuthLoginBtnLoadingAC(true));
 
     authAPI
       .getLoginApi(email, password, (rememberMe = false), captcha)
@@ -115,14 +122,14 @@ export const setLoginTC = (
         console.error("Login failed:", error);
       })
       .finally(() => {
-        dispatch(setAuthLoginBtnLoading(false));
+        dispatch(setAuthLoginBtnLoadingAC(false));
       });
   };
 };
 
-// CT для вилогірування користувача
-export const setLogoutTC = () => {
-  return (dispatch: any) => {
+// TC для вилогірування користувача
+export const setLogoutTC = (): AuthThunkType => {
+  return (dispatch) => {
     authAPI.logoutApi().then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setIsAuthAC(null, null, null, false));
@@ -132,7 +139,7 @@ export const setLogoutTC = () => {
 };
 
 // TC для капчі
-export const setCaptchaTC = () => (dispatch: any) => {
+export const setCaptchaTC = (): AuthThunkType => (dispatch) => {
   return authAPI.getCaptchaUrl().then((response) => {
     dispatch(setCaptchaAC(response.data.url));
   });

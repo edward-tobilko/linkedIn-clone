@@ -1,4 +1,11 @@
-import rootAppTypeNames from "../../duck/typesName";
+import { ThunkAction } from "redux-thunk";
+
+import {
+  INITIALIZED_SUCCESS_ROOT_APP,
+  SET_SERVER_ERROR,
+} from "../../duck/typesName";
+
+import { RootState } from "../../store";
 
 type InitialStateType = {
   initialized: boolean;
@@ -6,16 +13,29 @@ type InitialStateType = {
 };
 
 type SetInitializedSuccessRootAppACType = {
-  type: typeof rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP; // such as "rootApp/duck/INITIALIZED-SUCCESS-ROOT-APP"
+  type: typeof INITIALIZED_SUCCESS_ROOT_APP; // such as "rootApp/duck/INITIALIZED-SUCCESS-ROOT-APP"
 };
 
 type SetServerErrorACType = {
-  type: typeof rootAppTypeNames.SET_SERVER_ERROR;
+  type: typeof SET_SERVER_ERROR;
   serverError: Object | null;
 };
+
+type RootAppActionsTypes =
+  | SetInitializedSuccessRootAppACType
+  | SetServerErrorACType;
+
+type RootAppThunkType<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  RootAppActionsTypes
+>;
 
 export {
   InitialStateType,
   SetInitializedSuccessRootAppACType,
   SetServerErrorACType,
+  RootAppActionsTypes,
+  RootAppThunkType,
 };

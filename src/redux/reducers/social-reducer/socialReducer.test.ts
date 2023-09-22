@@ -1,78 +1,33 @@
-import socialReducer, {
+import axios from "axios";
+
+import socialReducer from "./socialReducer";
+import actionCreators from "../../duck/actionCreators";
+
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
+import {
   fetchSocialUsersTC,
   fetchSocialUsersOnChangedPageTC,
   setFollowUserTC,
   setUnFollowUserTC,
 } from "./socialReducer";
-import { socialUsersAPI } from "../../../api/API";
+// import { socialUsersAPI } from "../../../api/API";
 
-import socialTypeNames from "../../duck/typesName";
-import actionCreators from "../../duck/actionCreators";
+const userId = 1;
+const initialState: any = {
+  socialUsers: [{ id: userId, followed: false }],
+};
+const expectedState = {
+  socialUsers: [{ id: userId, followed: true }],
+};
+const socialUsers = [{ id: 1, name: "John Doe" }];
+const currentPage = 2;
+const totalUsersCount = 30;
+const loading = true;
 
-import { InitialStateType, SocialUserType } from "./socialReducerTypes";
-
-let mockDispatch: () => void;
-let mockFollowUser: jest.SpyInstance;
-let mockUnFollowUser: jest.SpyInstance;
-
-beforeEach(() => {
-  mockDispatch = jest.fn();
-  mockFollowUser = jest.spyOn(socialUsersAPI, "followUser");
-  mockUnFollowUser = jest.spyOn(socialUsersAPI, "unFollowUser");
-});
-
-afterEach(() => {
-  mockFollowUser.mockRestore();
-  mockUnFollowUser.mockRestore();
-});
-
-describe("Social Reducer Actions", () => {
+// Tests for reducer
+describe("socialReducer", () => {
   it("should return the initial state", () => {
-    expect(socialReducer(undefined, {})).toEqual({
-      socialUsers: [],
-      totalUsersCount: 0,
-      usersCount: 18,
-      currentPage: 1,
-      loading: false,
-      followingBlockedBtn: [],
-    });
-  });
-
-  it("should handle UN_FOLLOW", () => {
-    const userId = 7;
-    const initialState: InitialStateType = {
-      socialUsers: [
-        {
-          id: 7,
-          followed: true,
-          name: "John Doe",
-          uniqueUrlName: null,
-          photos: {
-            small: null,
-            large: null,
-          },
-        },
-      ],
-      totalUsersCount: 1,
-      usersCount: 18,
-      currentPage: 1,
-      loading: false,
-      followingBlockedBtn: [],
-    };
-    const expectedState = {
-      ...initialState,
-      socialUsers: [{ id: 7, followed: false }],
-    };
-
-    expect(
-      socialReducer(initialState, actionCreators.setUnFollowUserAC(userId)),
-    ).toEqual(expectedState);
-  });
-
-  it("should handle SET_USERS", () => {
-    const socialUsers: SocialUserType[] = [
-      { id: 7, name: "John Doe", followed: true },
-    ];
     const initialState = {
       socialUsers: [],
       totalUsersCount: 0,
@@ -81,214 +36,190 @@ describe("Social Reducer Actions", () => {
       loading: false,
       followingBlockedBtn: [],
     };
+    const actions =
+      actionCreators.setFollowUserAC(userId) &&
+      actionCreators.setUnFollowUserAC(userId) &&
+      actionCreators.setUsersAC(socialUsers) &&
+      actionCreators.setCurrentPageAC(currentPage) &&
+      actionCreators.setTotalUsersCountAC(totalUsersCount) &&
+      actionCreators.setLoadingAC(loading) &&
+      actionCreators.setFollowingBlockedBtnAC(true, userId);
+
+    expect(socialReducer(undefined, actions)).toEqual(initialState);
+  });
+
+  // Actions
+  it("should handle FOLLOW action", () => {
+    const action = actionCreators.setFollowUserAC(userId);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
+  });
+
+  it("should handle UN_FOLLOW action", () => {
+    const action = actionCreators.setUnFollowUserAC(userId);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
+  });
+
+  it("should handle SET_USERS action", () => {
+    const initialState: any = {
+      socialUsers: [],
+    };
     const expectedState = {
-      ...initialState,
       socialUsers,
     };
 
-    expect(
-      socialReducer(initialState, actionCreators.setUsersAC(socialUsers)),
-    ).toEqual(expectedState);
+    const action = actionCreators.setUsersAC(socialUsers);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it("should create an action to set follow user", () => {
-    const testUserId = 7;
-    const expectedAction = { type: socialTypeNames.FOLLOW, userId: testUserId };
-
-    expect(actionCreators.setFollowUserAC(testUserId)).toEqual(expectedAction);
-  });
-
-  it("should create an action to set unFollow user", () => {
-    const testUserId = 7;
-    const expectedAction = {
-      type: socialTypeNames.UN_FOLLOW,
-      userId: testUserId,
+  it("should handle SET_CURRENT_PAGE action", () => {
+    const initialState: any = {
+      currentPage: 1,
+    };
+    const expectedState = {
+      currentPage,
     };
 
-    expect(actionCreators.setUnFollowUserAC(testUserId)).toEqual(
-      expectedAction,
-    );
+    const action = actionCreators.setCurrentPageAC(currentPage);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it("should create an action to set users", () => {
-    const testSocialUsers: SocialUserType[] = [{ id: 1, name: "John Doe" }];
-    const expectedAction = {
-      type: socialTypeNames.SET_USERS,
-      socialUsers: testSocialUsers,
+  it("should handle SET_TOTAL_USERS_COUNT action", () => {
+    const initialState: any = {
+      totalUsersCount: 0,
+    };
+    const expectedState = {
+      totalUsersCount,
     };
 
-    expect(actionCreators.setUsersAC(testSocialUsers)).toEqual(expectedAction);
+    const action = actionCreators.setTotalUsersCountAC(totalUsersCount);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it("should create an action to set current page", () => {
-    const testCurrentPage: any = null;
-    const expectedAction = {
-      type: socialTypeNames.SET_CURRENT_PAGE,
-      currentPage: testCurrentPage,
+  it("should handle LOADING action", () => {
+    const initialState: any = {
+      loading: false,
+    };
+    const expectedState = {
+      loading,
     };
 
-    expect(actionCreators.setCurrentPageAC(testCurrentPage)).toEqual(
-      expectedAction,
-    );
+    const action = actionCreators.setLoadingAC(loading);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
   });
 
-  it("should create an action to set total users count", () => {
-    const testTotalUsersCount = 30;
-    const expectedAction = {
-      type: socialTypeNames.SET_TOTAL_USERS_COUNT,
-      totalUsersCount: testTotalUsersCount,
+  it("should handle FOLLOWING_BLOCKED_BTN action", () => {
+    const userId = 1;
+    const initialState: any = {
+      followingBlockedBtn: [],
+    };
+    const expectedState = {
+      followingBlockedBtn: [userId],
     };
 
-    expect(actionCreators.setTotalUsersCountAC(testTotalUsersCount)).toEqual(
-      expectedAction,
-    );
-  });
-
-  it("should create an action to set loading", () => {
-    const testLoading: boolean = false;
-    const expectedAction = {
-      type: socialTypeNames.LOADING,
-      loading: testLoading,
-    };
-
-    expect(actionCreators.setLoadingAC(testLoading)).toEqual(expectedAction);
+    const action = actionCreators.setFollowingBlockedBtnAC(true, userId);
+    expect(socialReducer(initialState, action)).toEqual(expectedState);
   });
 });
 
-describe("Social Reducer Thunk Actions", () => {
-  it("should fetch social users and dispatch corresponding actions", async () => {
-    const mockDispatch = jest.fn();
-    const mockFetchSocialUsers = jest.spyOn(socialUsersAPI, "fetchSocialUsers");
-    mockFetchSocialUsers.mockResolvedValue({
-      items: [
-        {
-          name: "John Doe",
-          id: 1,
-          uniqueUrlName: null,
-          photos: { small: null, large: null },
-          status: "",
-          followed: false,
-        },
-      ],
-      totalCount: 1,
-      error: null,
+// Tests for Thunks
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+// jest.mock("../../../api/socialUsersAPI");
+
+describe("Thunks", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const store: any = mockStore({});
+
+  it("should dispatch actions for fetchSocialUsersTC", () => {
+    const currentPage = 1;
+    const usersCount = 10;
+    const items = [{ id: 1, name: "User 1" }];
+    const totalCount = 1;
+    const expectedActions = [
+      { type: "SET_LOADING", loading: true },
+      { type: "SET_CURRENT_PAGE", currentPage },
+      { type: "SET_LOADING", loading: false },
+      { type: "SET_USERS", socialUsers: items },
+      { type: "SET_TOTAL_USERS_COUNT", totalUsersCount: totalCount },
+    ];
+
+    // Mock the API response
+    (axios.get as jest.Mock).mockResolvedValue({
+      items,
+      totalCount,
     });
 
-    await fetchSocialUsersTC(1, 10)(mockDispatch);
-
-    expect(mockDispatch).toHaveBeenCalledTimes(5); // Number of expected actions dispatched
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setCurrentPageAC(1),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setLoadingAC(true),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setLoadingAC(false),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setUsersAC([
-        {
-          name: "John Doe",
-          id: 1,
-          uniqueUrlName: null,
-          photos: { small: null, large: null },
-          status: "",
-          followed: false,
-        },
-      ]),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setTotalUsersCountAC(1),
-    );
-
-    mockFetchSocialUsers.mockRestore(); // Restore the original function
+    // Dispatch the thunk
+    return store
+      .dispatch(fetchSocialUsersTC(currentPage, usersCount))
+      .then(() => {
+        // Check if the store dispatched the expected actions
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 
-  it("should fetch social users on changed page and dispatch corresponding actions", async () => {
-    const mockDispatch = jest.fn();
-    const mockFetchChangedPageUsers = jest.spyOn(
-      socialUsersAPI,
-      "fetchChangedPageUsers",
-    );
-    mockFetchChangedPageUsers.mockResolvedValue({
-      items: [
-        {
-          name: "Jane Doe",
-          id: 2,
-          uniqueUrlName: null,
-          photos: { small: null, large: null },
-          status: "",
-          followed: true,
-        },
-      ],
-      totalCount: 1,
-      error: null,
+  it("should dispatch actions for fetchSocialUsersOnChangedPageTC", () => {
+    const pageNumber = 2;
+    const usersCount = 10;
+    const items = [{ id: 2, name: "User 2" }];
+    const expectedActions = [
+      { type: "SET_CURRENT_PAGE", currentPage: pageNumber },
+      { type: "SET_LOADING", loading: true },
+      { type: "SET_LOADING", loading: false },
+      { type: "SET_USERS", socialUsers: items },
+    ];
+
+    // Mock the API response
+    (axios.get as jest.Mock).mockResolvedValue({
+      items,
     });
 
-    await fetchSocialUsersOnChangedPageTC(2, 10)(mockDispatch);
-
-    expect(mockDispatch).toHaveBeenCalledTimes(4); // Number of expected actions dispatched
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setCurrentPageAC(2),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setLoadingAC(true),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setLoadingAC(false),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setUsersAC([
-        {
-          name: "Jane Doe",
-          id: 2,
-          uniqueUrlName: null,
-          photos: { small: null, large: null },
-          status: "",
-          followed: true,
-        },
-      ]),
-    );
-
-    mockFetchChangedPageUsers.mockRestore(); // Restore the original function
+    // Dispatch the thunk
+    return store
+      .dispatch(fetchSocialUsersOnChangedPageTC(pageNumber, usersCount))
+      .then(() => {
+        // Check if the store dispatched the expected actions
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 
-  it("should follow a user and dispatch actions", async () => {
-    const userId = 7;
-    const mockData = { resultCode: 0 };
-    mockFollowUser.mockResolvedValue(mockData);
+  it("should dispatch actions for setFollowUserTC", () => {
+    const userId = 3;
+    const expectedActions = [
+      { type: "SET_FOLLOW_USER", userId },
+      { type: "SET_FOLLOWING_BLOCKED_BTN", loading: true, userId },
+      { type: "SET_FOLLOWING_BLOCKED_BTN", loading: false, userId },
+    ];
 
-    await setFollowUserTC(userId)(mockDispatch);
+    // Mock the API response
+    (axios.get as jest.Mock).mockResolvedValue({ resultCode: 0 });
 
-    expect(mockDispatch).toHaveBeenCalledTimes(3);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setFollowingBlockedBtnAC(true, userId),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setFollowUserAC(userId),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setFollowingBlockedBtnAC(false, userId),
-    );
+    // Dispatch the thunk
+    return store.dispatch(setFollowUserTC(userId)).then(() => {
+      // Check if the store dispatched the expected actions
+      expect(store.getActions()).toEqual(expectedActions);
+    });
   });
 
-  it("should unFollow a user and dispatch actions", async () => {
-    const userId = 7;
-    const mockData = { resultCode: 0 };
-    mockUnFollowUser.mockResolvedValue(mockData);
+  it("should dispatch actions for setUnFollowUserTC", () => {
+    const userId = 4;
+    const expectedActions = [
+      { type: "SET_UNFOLLOW_USER", userId },
+      { type: "SET_FOLLOWING_BLOCKED_BTN", loading: true, userId },
+      { type: "SET_FOLLOWING_BLOCKED_BTN", loading: false, userId },
+    ];
 
-    await setUnFollowUserTC(userId)(mockDispatch);
+    // Mock the API response
+    (axios.get as jest.Mock).mockResolvedValue({ resultCode: 0 });
 
-    expect(mockDispatch).toHaveBeenCalledTimes(3);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setFollowingBlockedBtnAC(true, userId),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setUnFollowUserAC(userId),
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      actionCreators.setFollowingBlockedBtnAC(false, userId),
-    );
+    // Dispatch the thunk
+    return store.dispatch(setUnFollowUserTC(userId)).then(() => {
+      // Check if the store dispatched the expected actions
+      expect(store.getActions()).toEqual(expectedActions);
+    });
   });
 });

@@ -1,11 +1,14 @@
-import rootAppTypeNames from "../../duck/typesName";
-
-import { RootDispatch } from "../../store";
+import {
+  INITIALIZED_SUCCESS_ROOT_APP,
+  SET_SERVER_ERROR,
+} from "../../duck/typesName";
 
 import { setIsAuthTC } from "../auth-reducer/authReducer";
 
 import {
   InitialStateType,
+  RootAppActionsTypes,
+  RootAppThunkType,
   SetInitializedSuccessRootAppACType,
   SetServerErrorACType,
 } from "./rootAppReducerTypes";
@@ -17,13 +20,13 @@ const initialState: InitialStateType = {
 
 const rootAppReducer = (
   state = initialState,
-  action: any,
+  action: RootAppActionsTypes,
 ): InitialStateType => {
   switch (action.type) {
-    case rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP:
+    case INITIALIZED_SUCCESS_ROOT_APP:
       return { ...state, initialized: true };
 
-    case rootAppTypeNames.SET_SERVER_ERROR:
+    case SET_SERVER_ERROR:
       return { ...state, serverError: action.serverError };
 
     default:
@@ -33,28 +36,33 @@ const rootAppReducer = (
 
 export default rootAppReducer;
 
+// ACs
 export const setInitializedSuccessRootAppAC =
   (): SetInitializedSuccessRootAppACType => {
     return {
-      type: rootAppTypeNames.INITIALIZED_SUCCESS_ROOT_APP,
+      type: INITIALIZED_SUCCESS_ROOT_APP,
     };
   };
 
 export const setServerErrorAC = (serverError: Object): SetServerErrorACType => {
   return {
-    type: rootAppTypeNames.SET_SERVER_ERROR,
+    type: SET_SERVER_ERROR,
     serverError,
   };
 };
 
-export const setInitializedSuccessRootAppTC = () => (dispatch: any) => {
-  const dispatchResult = dispatch(setIsAuthTC()); //? dispatch вертає результат санки: promise (в санкі setIsAuthTC ми вертаємо authorizationMe (return authAPI.authorizationMe))
+// TCs
+export const setInitializedSuccessRootAppTC =
+  (): RootAppThunkType => (dispatch) => {
+    const dispatchResult = dispatch(setIsAuthTC()); //? dispatch вертає результат санки: promise (в санкі setIsAuthTC ми вертаємо authorizationMe (return authAPI.authorizationMe))
 
-  Promise.all([dispatchResult]).then(() => {
-    dispatch(setInitializedSuccessRootAppAC());
-  });
-};
+    Promise.all([dispatchResult]).then(() => {
+      dispatch(setInitializedSuccessRootAppAC());
+    });
+  };
 
-export const setServerErrorTC = (serverError: Object) => (dispatch: any) => {
-  dispatch(setServerErrorAC(serverError));
-};
+export const setServerErrorTC =
+  (serverError: Object): RootAppThunkType =>
+  (dispatch) => {
+    dispatch(setServerErrorAC(serverError));
+  };

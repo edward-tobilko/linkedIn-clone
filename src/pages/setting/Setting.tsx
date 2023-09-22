@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useState } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 
@@ -7,24 +7,64 @@ import { SettingStyle } from "./settingStyle";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
-import { updateProfilePageTC } from "../../redux/reducers/setting-reducer/settingReducer";
+import {
+  addTodoTC,
+  removeTodoTC,
+} from "../../redux/reducers/setting-reducer/settingReducer";
+import { RootState } from "../../redux/store";
+import { TodoItemType } from "../../redux/reducers/setting-reducer/settingReducerTypes";
 
-const Setting: FC = () => {
+type SettingProps = {
+  todos: Array<TodoItemType>;
+};
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    todos: state.settingPage.todos,
+  };
+};
+
+const Setting: FC<SettingProps> = ({ todos }) => {
   const dispatch = useTypeDispatch();
+  console.log(todos);
 
-  useEffect(() => {
-    dispatch(updateProfilePageTC("hello"));
-  }, [dispatch]);
+  const [text, setText] = useState("");
 
-  return <SettingStyle>Setting</SettingStyle>;
+  const handleAddTodo = () => {
+    dispatch(addTodoTC(text));
+    setText("");
+  };
+
+  return (
+    <SettingStyle>
+      <h1>Todo list</h1>
+
+      <input
+        type="text"
+        value={text}
+        onChange={(e: any) => setText(e.target.value)}
+      />
+      <button onClick={handleAddTodo}>Add todo</button>
+
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <p> {todo.text} </p>
+            <button onClick={() => dispatch(removeTodoTC(todo.id))}>
+              Remove todo
+            </button>
+          </li>
+        ))}
+      </ul>
+    </SettingStyle>
+  );
 };
 
 export default compose(
-  connect(null, {
-    // Санка для оновлення інформації про користувача
-    updateProfilePageTC,
+  connect(mapStateToProps, {
+    addTodoTC,
+    removeTodoTC,
   }),
 
-  // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
 )(Setting);

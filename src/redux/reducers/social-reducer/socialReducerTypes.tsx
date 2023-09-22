@@ -1,5 +1,18 @@
-import socialTypeNames from "../../duck/typesName";
+import { ThunkAction } from "redux-thunk";
 
+import { RootState } from "../../store";
+
+import {
+  FOLLOW,
+  UN_FOLLOW,
+  SET_USERS,
+  SET_CURRENT_PAGE,
+  SET_TOTAL_USERS_COUNT,
+  LOADING,
+  FOLLOWING_BLOCKED_BTN,
+} from "../../duck/typesName";
+
+// Types for initialState
 type SocialUserPhotosType = {
   small: string | null;
   large: string | null;
@@ -23,47 +36,67 @@ type InitialStateType = {
   followingBlockedBtn: Array<number>; //? array of users' id
 };
 
+// Types for action creators
+type SetFollowUserACType = {
+  type: typeof FOLLOW;
+  userId: number;
+};
+
+type SetUnFollowUserACType = {
+  type: typeof UN_FOLLOW;
+  userId: number;
+};
+
+type SetUsersACType = {
+  type: typeof SET_USERS;
+  socialUsers: SocialUserType[];
+};
+
+type SetCurrentPageACType = {
+  type: typeof SET_CURRENT_PAGE;
+  currentPage: number;
+};
+
+type SetTotalUsersCountACType = {
+  type: typeof SET_TOTAL_USERS_COUNT;
+  totalUsersCount: number;
+};
+
+type SetLoadingACType = {
+  type: typeof LOADING;
+  loading: boolean;
+};
+
+type SetFollowingBlockedBtnACType = {
+  type: typeof FOLLOWING_BLOCKED_BTN;
+  loading: boolean;
+  userId: number;
+};
+
+// Types for data response
 type fetchSocialUsersOnChangedPageDataType = {
   items: SocialUserType[];
   totalCount: number;
   error: string;
 };
 
-type SetFollowUserACType = {
-  type: typeof socialTypeNames.FOLLOW;
-  userId: number;
-};
+// Type for actions
+type SocialActionsTypes =
+  | SetFollowUserACType
+  | SetUnFollowUserACType
+  | SetUsersACType
+  | SetCurrentPageACType
+  | SetTotalUsersCountACType
+  | SetLoadingACType
+  | SetFollowingBlockedBtnACType;
 
-type SetUnFollowUserACType = {
-  type: typeof socialTypeNames.UN_FOLLOW;
-  userId: number;
-};
-
-type SetUsersACType = {
-  type: typeof socialTypeNames.SET_USERS;
-  socialUsers: SocialUserType[];
-};
-
-type SetCurrentPageACType = {
-  type: typeof socialTypeNames.SET_CURRENT_PAGE;
-  currentPage: number;
-};
-
-type SetTotalUsersCountACType = {
-  type: typeof socialTypeNames.SET_TOTAL_USERS_COUNT;
-  totalUsersCount: number;
-};
-
-type SetLoadingACType = {
-  type: typeof socialTypeNames.LOADING;
-  loading: boolean;
-};
-
-type SetFollowingBlockedBtnACType = {
-  type: typeof socialTypeNames.FOLLOWING_BLOCKED_BTN;
-  loading: boolean;
-  userId: number;
-};
+// Type for thunks
+type SocialThunkType<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  SocialActionsTypes
+>;
 
 export {
   SocialUserType,
@@ -76,4 +109,6 @@ export {
   SetTotalUsersCountACType,
   SetLoadingACType,
   SetFollowingBlockedBtnACType,
+  SocialThunkType,
+  SocialActionsTypes,
 };

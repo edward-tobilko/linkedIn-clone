@@ -1,15 +1,25 @@
 import { socialUsersAPI } from "../../../api/API";
-import { RootDispatch } from "../../store";
-
-import socialTypeNames from "../../duck/typesName";
-import actionCreators from "../../duck/actionCreators";
-
-import helperReducerFunctions from "../../../utils/helper-functions/helperReducerFunctions";
 
 import {
   InitialStateType,
+  SocialActionsTypes,
+  SocialThunkType,
   fetchSocialUsersOnChangedPageDataType,
 } from "./socialReducerTypes";
+
+import {
+  FOLLOW,
+  UN_FOLLOW,
+  SET_USERS,
+  SET_CURRENT_PAGE,
+  SET_TOTAL_USERS_COUNT,
+  LOADING,
+  FOLLOWING_BLOCKED_BTN,
+} from "../../duck/typesName";
+
+import actionCreators from "../../duck/actionCreators";
+
+import helperReducerFunctions from "../../../utils/helper-functions/helperReducerFunctions";
 
 const initialState: InitialStateType = {
   socialUsers: [],
@@ -21,10 +31,13 @@ const initialState: InitialStateType = {
 };
 
 // Reducer
-const socialReducer = (state = initialState, action: any): InitialStateType => {
+const socialReducer = (
+  state = initialState,
+  action: SocialActionsTypes,
+): InitialStateType => {
   switch (action.type) {
     // Додаємо користувача
-    case socialTypeNames.FOLLOW:
+    case FOLLOW:
       return {
         ...state,
         socialUsers: state.socialUsers.map((socialUser) => {
@@ -37,7 +50,7 @@ const socialReducer = (state = initialState, action: any): InitialStateType => {
       };
 
     // Видаляємо користувача
-    case socialTypeNames.UN_FOLLOW:
+    case UN_FOLLOW:
       return {
         ...state,
         socialUsers: state.socialUsers.map((socialUser) => {
@@ -50,26 +63,26 @@ const socialReducer = (state = initialState, action: any): InitialStateType => {
       };
 
     // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
-    case socialTypeNames.SET_USERS:
+    case SET_USERS:
       return {
         ...state,
         socialUsers: [...action.socialUsers],
       };
 
     // Навігація постранічного вивода користувачів
-    case socialTypeNames.SET_CURRENT_PAGE:
+    case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.currentPage };
 
     // Отримуємо всю к-сть користувачів з сервера
-    case socialTypeNames.SET_TOTAL_USERS_COUNT:
+    case SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.totalUsersCount };
 
     // Додаємо загрузчик
-    case socialTypeNames.LOADING:
+    case LOADING:
       return { ...state, loading: action.loading };
 
     // Блокуємо кнопку при натисканні
-    case socialTypeNames.FOLLOWING_BLOCKED_BTN:
+    case FOLLOWING_BLOCKED_BTN:
       return {
         ...state,
         followingBlockedBtn: action.loading
@@ -89,8 +102,11 @@ export default socialReducer;
 // TC: Thunk creator - anonym function and HOC - fetchSocialUsersTC
 
 // Санка (thunk creator) для отримання користувачів
-export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
-  return (dispatch: any) => {
+export const fetchSocialUsersTC = (
+  currentPage: number,
+  usersCount: number,
+): SocialThunkType => {
+  return (dispatch) => {
     dispatch(actionCreators.setLoadingAC(true));
 
     socialUsersAPI
@@ -109,8 +125,8 @@ export const fetchSocialUsersTC = (currentPage: number, usersCount: number) => {
 export const fetchSocialUsersOnChangedPageTC = (
   pageNumber: number,
   usersCount: number,
-) => {
-  return (dispatch: any) => {
+): SocialThunkType => {
+  return (dispatch) => {
     dispatch(actionCreators.setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
     dispatch(actionCreators.setLoadingAC(true));
 
@@ -125,8 +141,8 @@ export const fetchSocialUsersOnChangedPageTC = (
 };
 
 // ТС для додавання користувача
-export const setFollowUserTC = (userId: number) => {
-  return (dispatch: any) => {
+export const setFollowUserTC = (userId: number): SocialThunkType => {
+  return (dispatch) => {
     helperReducerFunctions.setFollowUnfollowAC(
       dispatch,
       userId,
@@ -137,8 +153,8 @@ export const setFollowUserTC = (userId: number) => {
 };
 
 // ТС для видалення користувача
-export const setUnFollowUserTC = (userId: number) => {
-  return (dispatch: any) => {
+export const setUnFollowUserTC = (userId: number): SocialThunkType => {
+  return (dispatch) => {
     helperReducerFunctions.setFollowUnfollowAC(
       dispatch,
       userId,

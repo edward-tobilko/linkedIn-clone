@@ -4,7 +4,7 @@ import {
   applyMiddleware,
   AnyAction,
 } from "redux";
-import thunkMiddleware, { ThunkDispatch, ThunkAction } from "redux-thunk";
+import thunkMiddleware, { ThunkDispatch } from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension"; //? Підключаємо devtools розширення для Chrome browser (для роботи з Redux)
 
 import profileReducer from "./reducers/profile-reducer/profileReducer";
@@ -34,16 +34,16 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
 
-//? Отримуємо типи для state, dispatch thunk та вказуємо їх в кастомних хуках для більш зручної розробки
+//? Отримуємо типи для state, dispatch thunk та вказуємо їх в кастомних хуках та редюсорах для більш зручної розробки
 export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 export type TypedDispatch = ThunkDispatch<RootState, any, AnyAction>;
-export type TypedThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  AnyAction
->;
+// export type TypedThunk<ReturnType = void> = ThunkAction<
+//   ReturnType,
+//   RootState,
+//   unknown,
+//   AnyAction
+// >;
 
 // declare global {
 //   interface Window {
