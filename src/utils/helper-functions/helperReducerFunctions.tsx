@@ -1,3 +1,4 @@
+import { ResultCodesEnum } from "../../api/apiTypes";
 import actionCreators from "../../redux/duck/actionCreators";
 import {
   SetFollowUserACType,
@@ -26,7 +27,8 @@ const followUnfollowAction = (
 const setFollowUnfollowAC = (
   dispatch: TypedDispatch,
   userId: number,
-  apiMethod: (userId: number) => Promise<void>,
+  // apiMethod: (userId: number) => Promise<void>,
+  apiMethod: any,
   setFollowUnfollow: (
     userId: number,
   ) => SetFollowUserACType | SetUnFollowUserACType,
@@ -35,7 +37,7 @@ const setFollowUnfollowAC = (
 
   apiMethod(userId)
     .then((data: any) => {
-      if (data.resultCode === 0) {
+      if (data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
         dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
       }
 
@@ -44,7 +46,4 @@ const setFollowUnfollowAC = (
     .catch((error: Object) => console.log("Error:", error));
 };
 
-export default {
-  setFollowUnfollowAC,
-  followUnfollowAction,
-};
+export { setFollowUnfollowAC, followUnfollowAction };

@@ -1,11 +1,6 @@
 import { authAPI } from "../../../api/API";
 
-import {
-  AUTH_LOGIN_BTN_LOADING,
-  CAPTCHA,
-  SET_IS_AUTH,
-} from "../../duck/typesName";
-
+import { ResultCodesEnum } from "../../../api/apiTypes";
 import {
   AuthActionsTypes,
   AuthThunkType,
@@ -13,6 +8,12 @@ import {
   SetCaptchaACType,
   SetIsAuthACType,
 } from "./authReducerTypes";
+
+import {
+  AUTH_LOGIN_BTN_LOADING,
+  CAPTCHA,
+  SET_IS_AUTH,
+} from "../../duck/typesName";
 
 type InitialStateType = typeof initialState; //? Так ми можемо переіспользувать тип
 
@@ -87,10 +88,10 @@ export const setIsAuthTC = (): AuthThunkType => {
     return authAPI
       .authorizationMe()
       .then((response) => {
-        if (response.data.resultCode === 0) {
-          let { id, email, login, isAuth } = response.data.data;
+        if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+          let { id, email, login } = response.data.data;
 
-          dispatch(setIsAuthAC(id, email, login, (isAuth = true)));
+          dispatch(setIsAuthAC(id, email, login, true));
         }
       })
       .catch((error) => {
@@ -103,8 +104,8 @@ export const setIsAuthTC = (): AuthThunkType => {
 export const setLoginTC = (
   email: string,
   password: string,
-  rememberMe: boolean,
-  captcha: string,
+  rememberMe: boolean | undefined,
+  captcha: string | undefined,
 ): AuthThunkType => {
   return (dispatch) => {
     dispatch(setAuthLoginBtnLoadingAC(true));
@@ -112,9 +113,11 @@ export const setLoginTC = (
     authAPI
       .getLoginApi(email, password, (rememberMe = false), captcha)
       .then((response) => {
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
           dispatch(setIsAuthTC());
-        } else if (response.data.resultCode === 10) {
+        } else if (
+          response.data.resultCode === ResultCodesEnum.ResultCodeError
+        ) {
           dispatch(setCaptchaTC());
         }
       })
@@ -131,7 +134,7 @@ export const setLoginTC = (
 export const setLogoutTC = (): AuthThunkType => {
   return (dispatch) => {
     authAPI.logoutApi().then((response) => {
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
         dispatch(setIsAuthAC(null, null, null, false));
       }
     });

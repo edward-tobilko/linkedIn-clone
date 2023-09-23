@@ -40,14 +40,18 @@ const mapStateToProps = (state: RootState): ProfileContentProps => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),
+    postUsers: state.profilePage.postUsers,
   };
 };
 
 const ProfileContent: FC<ProfileContentProps> = ({
   currentProfilePage,
   loading,
+  postUsers,
 }) => {
+  // let { userId }: { userId: number | null } = useParams();
   let { userId }: any = useParams();
+
   const dispatch = useTypeDispatch();
 
   if (!userId) {
@@ -83,7 +87,7 @@ const ProfileContent: FC<ProfileContentProps> = ({
               <CreatePostFormList />
             </CreatePostStyle>
 
-            <PostsList />
+            <PostsList postUsers={postUsers} />
           </>
         )}
       </ProfileStyle>

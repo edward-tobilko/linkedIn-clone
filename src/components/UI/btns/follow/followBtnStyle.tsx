@@ -3,16 +3,16 @@ import styled, { css } from "styled-components";
 import { themeVars } from "../../../../utils/vars/themeVars";
 
 export const FollowBtnStyle = styled.button<{
-  primary: any;
-  borderRadius: any;
-  visibleText: any;
-  maxWidth: any;
-  fontSizeIcon: any;
-  margin: any;
-  position: any;
-  top: any;
-  left: any;
-  transformPosition: any;
+  primary: boolean;
+  borderRadius: boolean;
+  visibleText: boolean;
+  maxWidth: boolean;
+  fontSizeIcon: boolean;
+  margin: boolean;
+  position: boolean;
+  top: boolean;
+  left: boolean;
+  transformPosition: boolean;
 }>`
   ${(props) =>
     props.primary &&

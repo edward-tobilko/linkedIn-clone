@@ -1,4 +1,5 @@
-import { RootDispatch } from "../../redux/store";
+import { ItemProps } from "../../redux/reducers/profile-reducer/profileReducerTypes";
+import { TypedDispatch } from "../../redux/store";
 
 // ProfileContent component
 type ContactsTypes = {
@@ -23,7 +24,7 @@ type CurrentProfilePageTypes = {
   aboutMe: string;
   fullName: string;
   contacts: ContactsTypes;
-  userId: string | number;
+  userId: number;
   photos: PhotosTypes;
 };
 
@@ -33,19 +34,20 @@ type CurrentProfilePageProps = {
 
 type ProfileContentProps = CurrentProfilePageProps & {
   loading: boolean;
+  postUsers?: ItemProps[];
 };
 
 type MapDispatchToPropsType = {
   fetchCurrentUserPageTC: (userId: number) => void;
   fetchUserStatusByIdTC: (userId: number) => void;
-  downloadSmallPhotoTC: (dispatch: any) => void;
+  downloadSmallPhotoTC: (dispatch: TypedDispatch) => void;
 };
 
 type OwnPropsType = {};
 
 // CardProfile component
 type CardProfileProps = ProfileContentProps & {
-  downloadSmallPhotoTC: RootDispatch;
+  downloadSmallPhotoTC: TypedDispatch;
 };
 
 export {

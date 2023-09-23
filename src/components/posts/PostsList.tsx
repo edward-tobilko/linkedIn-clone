@@ -1,29 +1,16 @@
 import { FC } from "react";
-import { connect } from "react-redux";
 
 import { PostsListEmptyStyle, PostsListStyle } from "./postsListStyle";
 
-import { PostsItem } from "./PostsItem";
+import { PostsListProps } from "./postsTypes";
 
-import { RootState } from "../../redux/store";
+import { PostsItem } from "./PostsItem";
 
 import { useProfilePosts } from "../../hooks/useProfilePosts";
 import { useMyContext } from "../../context/Context";
 import { IStateContext } from "../../context/contextTypes";
 
-import { IPostsUser } from "./postsTypes";
-
-// Container component
-const mapStateToProps = (state: RootState | any) => {
-  return {
-    postUsers: state.profilePage.postUsers,
-  };
-};
-
-const PostsListContainer = connect(mapStateToProps, null);
-
-// Pure component
-const PostsList: FC<any> = ({ postUsers }) => {
+const PostsList: FC<PostsListProps> = ({ postUsers }) => {
   const props: IStateContext | any = useMyContext();
 
   const searchedPosts = useProfilePosts(postUsers, props?.searchUsers);
@@ -33,7 +20,7 @@ const PostsList: FC<any> = ({ postUsers }) => {
       {searchedPosts?.length !== 0 ? (
         <>
           {searchedPosts
-            ?.map((user: IPostsUser) => <PostsItem key={user.id} user={user} />)
+            ?.map((user) => <PostsItem key={user.id} user={user} />)
             .reverse()}
         </>
       ) : (
@@ -43,4 +30,4 @@ const PostsList: FC<any> = ({ postUsers }) => {
   );
 };
 
-export default PostsListContainer(PostsList);
+export default PostsList;

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, UseFormReturn } from "react-hook-form";
 
 import { AuthFormFieldProps } from "./authFormTypes";
 
@@ -12,7 +12,7 @@ const AuthFormField: FC<AuthFormFieldProps> = ({
   const {
     register,
     formState: { errors },
-  }: any = useFormContext();
+  }: UseFormReturn = useFormContext();
 
   return (
     <div className={className}>
@@ -24,7 +24,7 @@ const AuthFormField: FC<AuthFormFieldProps> = ({
         {...register(name)}
       />
 
-      <p className="error">{errors[name]?.message}</p>
+      <p className="error">{errors[name]?.message?.toString()}</p>
     </div>
   );
 };

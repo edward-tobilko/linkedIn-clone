@@ -1,8 +1,8 @@
 type AuthFormType = {
   email: string;
   password: string;
-  rememberMe: any;
-  captcha: any;
+  rememberMe: boolean | undefined;
+  captcha: string | undefined;
 };
 
 type AuthContainerProps = {
@@ -11,12 +11,13 @@ type AuthContainerProps = {
   captchaUrl: string;
 };
 
+// Type for connect
 type MapDispatchToPropsType = {
   setLoginTC: (
     email: string,
     password: string,
-    rememberMe: boolean,
-    captcha: string,
+    rememberMe: boolean | undefined,
+    captcha: string | undefined,
   ) => void;
 };
 

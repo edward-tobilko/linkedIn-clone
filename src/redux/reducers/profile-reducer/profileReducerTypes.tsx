@@ -80,7 +80,7 @@ type SetStatusACType = {
 
 type SetDownloadSmallPhotoACType = {
   type: typeof DOWNLOAD_SMALL_PHOTO;
-  smallPhoto: string | null;
+  smallPhoto: Object | null;
 };
 
 // Type for actions
@@ -100,6 +100,15 @@ type ProfileThunkType<ReturnType = void> = ThunkAction<
   ProfileActionsTypes
 >;
 
+type PhotoFileType = {
+  name: string;
+  lastModified: number;
+  lastModifiedDate: Object;
+  webkitRelativePath: string;
+  size: number;
+  type: string;
+};
+
 export {
   ItemProps,
   InitialStateProps,
@@ -111,4 +120,5 @@ export {
   SetDownloadSmallPhotoACType,
   ProfileActionsTypes,
   ProfileThunkType,
+  PhotoFileType,
 };

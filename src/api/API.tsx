@@ -1,5 +1,17 @@
 import axios from "axios";
 
+import { CurrentProfilePageTypes } from "../pages/profile/profileTypes";
+import {
+  AuthMeApiType,
+  DownloadPhotoApiType,
+  FetchCurrentUserPageByIdApiType,
+  FetchSocialUsersApiType,
+  FollowUnfollowApiType,
+  LoginLogoutApiType,
+  ProfileInfoEditModeApiType,
+  UpdateUserStatusApiType,
+} from "./apiTypes";
+
 export const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   timeout: 0,
@@ -12,25 +24,33 @@ export const socialUsersAPI = {
   // Отримуємо користувачів
   async fetchSocialUsers(currentPage: number, usersCount: number) {
     return await instance
-      .get(`users?page=${currentPage}&count=${usersCount}`)
+      .get<FetchSocialUsersApiType>(
+        `users?page=${currentPage}&count=${usersCount}`,
+      )
       .then((res) => res.data);
   },
 
   // Отримуємо користувачів при пагінації
   async fetchChangedPageUsers(pageNumber: number, usersCount: number) {
     return await instance
-      .get(`users?page=${pageNumber}&count=${usersCount}`)
+      .get<FetchSocialUsersApiType>(
+        `users?page=${pageNumber}&count=${usersCount}`,
+      )
       .then((res) => res.data);
   },
 
   // Добавляємо користувача (follow)
   async followUser(userId: number) {
-    return await instance.post(`follow/${userId}`, {}).then((res) => res.data);
+    return await instance
+      .post<FollowUnfollowApiType>(`follow/${userId}`, {})
+      .then((res) => res.data);
   },
 
   // Видаляємо користувача (unFollow)
   async unFollowUser(userId: number) {
-    return await instance.delete(`follow/${userId}`).then((res) => res.data); //? В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
+    return await instance
+      .delete<FollowUnfollowApiType>(`follow/${userId}`)
+      .then((res) => res.data); //? В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
 
   // Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI
@@ -50,32 +70,37 @@ export const profileAPI = {
 
   // Отримуємо статус користувача
   async fetchUserStatusById(userId: number | null) {
-    return await instance
-      .get(`profile/status/${userId}`)
-      .then((res) => res.data);
+    return await instance.get<string>(`profile/status/${userId}`);
   },
 
   // Змінюємо динамічно статус
   async updateUserStatus(status: string) {
     return await instance
-      .put(`profile/status`, { status: status })
-      .then((res) => res.data); //? другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
+      .put<UpdateUserStatusApiType>(`profile/status`, { status: status })
+      .then((res) => res.data); //? Другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
   },
 
   // Загрузка фото
   async downloadPhoto(photoFile: any) {
     let formData = new FormData(); //? формуємо новий об'єкт
     formData.append("image", photoFile); //? додаємо першим параметром images (API -> /profile/photo -> Request -> Properties -> image ), а другим параметром файл, який ми отримали з input
-    return await instance.put(`/profile/photo`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
+    return await instance.put<DownloadPhotoApiType>(
+      `/profile/photo`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
-    });
+    );
   },
 
   // Оновлення інформації користувача
-  async profileInfoEditMode(profileProperties: any) {
-    return await instance.put(`/profile`, profileProperties); //? profile object is (API -> /profile -> Request -> Properties)
+  async profileInfoEditMode(profileProperties: CurrentProfilePageTypes) {
+    return await instance.put<ProfileInfoEditModeApiType>(
+      `/profile`,
+      profileProperties,
+    ); //? profile object is (API -> /profile -> Request -> Properties)
   },
 };
 
@@ -83,17 +108,17 @@ export const profileAPI = {
 export const authAPI = {
   // Авторизуємо себе
   async authorizationMe() {
-    return await instance.get("auth/me");
+    return await instance.get<AuthMeApiType>("auth/me"); //? AuthMeApiType - створений тип, який прокидуємо в метод get як дженерик. Що описувати в типі, потрібно дивитися в документацію: https://social-network.samuraijs.com/docs# -> /auth/me -> get.
   },
 
   // Логірування користувача
   async getLoginApi(
     email: string, // 1992eduard777clone@gmail.com
     password: string, // email4769PageClone
-    rememberMe: boolean,
-    captcha: string,
+    rememberMe: boolean | undefined,
+    captcha: string | undefined,
   ) {
-    return await instance.post("auth/login", {
+    return await instance.post<LoginLogoutApiType>("auth/login", {
       email,
       password,
       rememberMe,
@@ -103,11 +128,11 @@ export const authAPI = {
 
   // Вилогірування користувача
   async logoutApi() {
-    return await instance.delete("auth/login");
+    return await instance.delete<LoginLogoutApiType>("auth/login");
   },
 
   // Captcha
   async getCaptchaUrl() {
-    return await instance.get("security/get-captcha-url");
+    return await instance.get<{ url: string }>("security/get-captcha-url");
   },
 };

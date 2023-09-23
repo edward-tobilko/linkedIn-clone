@@ -36,7 +36,7 @@ import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
 import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): ProfileContentProps => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),

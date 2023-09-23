@@ -9,8 +9,8 @@ type UseFetchingTypes = {
 };
 
 export const useFetching = (callback: CallbackType): UseFetchingTypes => {
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [error, setError] = React.useState<string>("");
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   async function fetching() {
     try {

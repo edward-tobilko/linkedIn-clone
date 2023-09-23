@@ -9,9 +9,9 @@ import {
   PostsItemStyle,
 } from "./postsListStyle";
 
-import { IPostItemProps } from "./postsTypes";
+import { PostItemProps } from "./postsTypes";
 
-export const PostsItem: FC<IPostItemProps> = ({ user }) => {
+export const PostsItem: FC<PostItemProps> = ({ user }) => {
   return (
     <>
       <PostsItemStyle>

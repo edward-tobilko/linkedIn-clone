@@ -9,7 +9,7 @@ const Captcha: FC<CaptchaProps> = ({ captchaUrl }) => {
   const {
     register,
     formState: { errors: captchaError },
-  }: any = useFormContext();
+  } = useFormContext();
 
   return (
     <>
@@ -17,7 +17,6 @@ const Captcha: FC<CaptchaProps> = ({ captchaUrl }) => {
         <CaptchaStyle>
           <input
             className="captcha__field"
-            name="captcha"
             type="input"
             {...register("captcha")}
           />

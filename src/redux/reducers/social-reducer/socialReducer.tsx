@@ -19,7 +19,7 @@ import {
 
 import actionCreators from "../../duck/actionCreators";
 
-import helperReducerFunctions from "../../../utils/helper-functions/helperReducerFunctions";
+import { setFollowUnfollowAC } from "../../../utils/helper-functions/helperReducerFunctions";
 
 const initialState: InitialStateType = {
   socialUsers: [],
@@ -143,7 +143,7 @@ export const fetchSocialUsersOnChangedPageTC = (
 // ТС для додавання користувача
 export const setFollowUserTC = (userId: number): SocialThunkType => {
   return (dispatch) => {
-    helperReducerFunctions.setFollowUnfollowAC(
+    setFollowUnfollowAC(
       dispatch,
       userId,
       socialUsersAPI.followUser.bind(socialUsersAPI),
@@ -155,7 +155,7 @@ export const setFollowUserTC = (userId: number): SocialThunkType => {
 // ТС для видалення користувача
 export const setUnFollowUserTC = (userId: number): SocialThunkType => {
   return (dispatch) => {
-    helperReducerFunctions.setFollowUnfollowAC(
+    setFollowUnfollowAC(
       dispatch,
       userId,
       socialUsersAPI.unFollowUser.bind(socialUsersAPI),

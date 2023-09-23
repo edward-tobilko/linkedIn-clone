@@ -4,6 +4,7 @@ import {
   AddNewPostACType,
   ChangePostACType,
   InitialStateProps,
+  PhotoFileType,
   ProfileActionsTypes,
   ProfileThunkType,
   SetCurrentUserPageACType,
@@ -11,7 +12,10 @@ import {
   SetLoadingACType,
   SetStatusACType,
 } from "./profileReducerTypes";
-import { CurrentProfilePageProps } from "../../../pages/profile/profileTypes";
+import {
+  CurrentProfilePageProps,
+  CurrentProfilePageTypes,
+} from "../../../pages/profile/profileTypes";
 
 import {
   CREATE_NEW_POST,
@@ -241,7 +245,7 @@ export const setStatusAC = (status: string): SetStatusACType => {
 };
 
 export const setDownloadSmallPhotoAC = (
-  smallPhoto: string | null,
+  smallPhoto: Object | null,
 ): SetDownloadSmallPhotoACType => {
   return {
     type: DOWNLOAD_SMALL_PHOTO,
@@ -273,7 +277,9 @@ export const fetchUserStatusByIdTC = (
   return (dispatch) => {
     profileAPI
       .fetchUserStatusById(userId)
-      .then((data) => dispatch(setStatusAC(data)))
+      .then((res) => {
+        dispatch(setStatusAC(res.data));
+      })
       .catch((error) => {
         console.log("Error: ", error["message"]);
       });
@@ -314,13 +320,16 @@ export const downloadSmallPhotoTC = (photoFile: any): ProfileThunkType => {
       if (response.data.resultCode === 0) {
         dispatch(setDownloadSmallPhotoAC(response.data.data.photos));
         dispatch(setLoadingAC(false));
+        console.log(photoFile);
       }
     });
   };
 };
 
 // TC для оновлення інформації користувача
-export const profileEditModeTC = (profileProperties: any): ProfileThunkType => {
+export const profileEditModeTC = (
+  profileProperties: CurrentProfilePageTypes,
+): ProfileThunkType => {
   return (dispatch, getState: () => RootState) => {
     const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()
 
