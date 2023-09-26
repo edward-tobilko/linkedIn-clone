@@ -10,18 +10,20 @@ import {
   SET_TOTAL_USERS_COUNT,
   LOADING,
   FOLLOWING_BLOCKED_BTN,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
+
+type Null<T> = T | null;
 
 // Types for initialState
 type SocialUserPhotosType = {
-  small: string | null;
-  large: string | null;
+  small: Null<string>; //? Теж саме, що і string | null
+  large: Null<string>;
 };
 
 type SocialUserType = {
   name: string;
   id: number;
-  uniqueUrlName?: string | null;
+  uniqueUrlName?: Null<string>;
   photos?: SocialUserPhotosType;
   status?: string;
   followed?: boolean;

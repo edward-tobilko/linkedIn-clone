@@ -3,7 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import {
   INITIALIZED_SUCCESS_ROOT_APP,
   SET_SERVER_ERROR,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
 
 import { RootState } from "../../store";
 

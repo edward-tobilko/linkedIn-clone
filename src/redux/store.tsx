@@ -34,10 +34,15 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunkMiddleware)),
 );
 
-//? Отримуємо типи для state, dispatch thunk та вказуємо їх в кастомних хуках та редюсорах для більш зручної розробки
+//? Отримуємо загальні типи для state, action creators, dispatch and thunks, та вказуємо їх в кастомних хуках та редюсорах для більш зручної розробки
 export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 export type TypedDispatch = ThunkDispatch<RootState, any, AnyAction>;
+type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never; //? [key: string] - ключ (назва) AC, наприклад: setIsAuthAC. За допомогою infer ми виводимо значення U - наша ф-я цього ж AC: (id, email) => { return {type, data} }.
+export type TypedActions<
+  T extends { [key: string]: (...args: Array<any>) => any },
+> = ReturnType<PropertiesType<T>>;
+
 // export type TypedThunk<ReturnType = void> = ThunkAction<
 //   ReturnType,
 //   RootState,

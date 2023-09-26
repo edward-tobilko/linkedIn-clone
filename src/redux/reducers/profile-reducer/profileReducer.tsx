@@ -24,7 +24,7 @@ import {
   LOADING,
   SET_STATUS,
   DOWNLOAD_SMALL_PHOTO,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
 
 import { profileAPI } from "../../../api/API";
 import { RootState } from "../../store";

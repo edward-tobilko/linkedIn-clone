@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import socialReducer from "./socialReducer";
-import actionCreators from "../../duck/actionCreators";
+import actionCreators from "../../ducks/actionCreators";
 
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";

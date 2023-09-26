@@ -14,11 +14,9 @@ import { AvatarImgStyle } from "../../rootStyles";
 
 import { HeaderContainerProps } from "./headerTypes";
 
-import {
-  setIsAuthAC,
-  setLogoutTC,
-} from "../../redux/reducers/auth-reducer/authReducer";
+import { setLogoutTC } from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
+import { actions } from "../../redux/reducers/auth-reducer/authReducer";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { useOnClickOutsite } from "../../hooks/useOnClickOutsite";
@@ -155,4 +153,4 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   );
 };
 
-export default connect(mapStateToProps, { setIsAuthAC })(HeaderContainer);
+export default connect(mapStateToProps, { actions })(HeaderContainer);

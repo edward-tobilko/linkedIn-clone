@@ -1,7 +1,7 @@
 import {
   INITIALIZED_SUCCESS_ROOT_APP,
   SET_SERVER_ERROR,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
 
 import { setIsAuthTC } from "../auth-reducer/authReducer";
 

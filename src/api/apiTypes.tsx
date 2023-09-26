@@ -18,9 +18,13 @@ type AuthMeApiType = {
   messages: string[];
 };
 
-type LoginLogoutApiType = {
-  data: Object;
-  resultCode: ResultCodesEnum;
+type LoginApiDataType = {
+  userId: number;
+};
+
+type LoginLogoutApiType<D = {}, RC = ResultCodesEnum> = {
+  data: D;
+  resultCode: RC;
   messages: string[];
 };
 
@@ -71,4 +75,5 @@ export {
   ProfileInfoEditModeApiType,
   FetchSocialUsersApiType,
   FollowUnfollowApiType,
+  LoginApiDataType,
 };

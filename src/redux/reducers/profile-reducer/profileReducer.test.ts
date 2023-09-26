@@ -16,7 +16,7 @@ import {
   SET_CURRENT_USER_PAGE,
   LOADING,
   SET_STATUS,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
 
 jest.mock("../../../api/API.tsx", () => ({
   profileAPI: {

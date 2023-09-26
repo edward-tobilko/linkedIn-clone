@@ -9,7 +9,7 @@ import {
   LOADING,
   SET_STATUS,
   DOWNLOAD_SMALL_PHOTO,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
 
 import { RootState } from "../../store";
 

@@ -2,6 +2,9 @@ import { SubmitHandler } from "react-hook-form";
 
 import { AuthFormType } from "../../../pages/auth/authTypes";
 
+//? Отримуємо всі ключі типа AuthFormFieldProps
+type AuthFormFieldKeys = keyof AuthFormFieldProps;
+
 type AuthFormFieldProps = {
   name: string;
   label: string;

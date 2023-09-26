@@ -1,8 +1,6 @@
-import { setIsAuthAC, setCaptchaAC, setIsAuthTC } from "./authReducer";
+import { actions, setIsAuthTC } from "./authReducer";
 
 import { authAPI } from "../../../api/API";
-
-import { CAPTCHA, SET_IS_AUTH } from "../../duck/typesName";
 
 jest.mock("../../../api/API", () => ({
   authAPI: {
@@ -20,19 +18,21 @@ describe("Auth Reducer Actions", () => {
     const login = "testUser";
     const isAuth = true;
     const expectedAction = {
-      type: SET_IS_AUTH,
+      type: "SET-IS-AUTH",
       data: { id, email, login, isAuth },
-    };
-    expect(setIsAuthAC(id, email, login, isAuth)).toEqual(expectedAction);
+    } as const;
+    expect(actions.setIsAuthAC(id, email, login, isAuth)).toEqual(
+      expectedAction,
+    );
   });
 
   it("should create an action to set captcha", () => {
     const captcha = "mockCaptcha";
     const expectedAction = {
-      type: CAPTCHA,
+      type: "CAPTCHA",
       payload: { captcha },
-    };
-    expect(setCaptchaAC(captcha)).toEqual(expectedAction);
+    } as const;
+    expect(actions.setCaptchaAC(captcha)).toEqual(expectedAction);
   });
 });
 
@@ -52,7 +52,7 @@ describe("Auth Reducer Thunk Actions", () => {
     await setIsAuthTC()(mockDispatch, mockData, mockAction);
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      setIsAuthAC(
+      actions.setIsAuthAC(
         mockData.data.id,
         mockData.data.email,
         mockData.data.login,

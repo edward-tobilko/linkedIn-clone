@@ -15,9 +15,9 @@ import {
   SET_TOTAL_USERS_COUNT,
   LOADING,
   FOLLOWING_BLOCKED_BTN,
-} from "../../duck/typesName";
+} from "../../ducks/typesName";
 
-import actionCreators from "../../duck/actionCreators";
+import actionCreators from "../../ducks/actionCreators";
 
 import { setFollowUnfollowAC } from "../../../utils/helper-functions/helperReducerFunctions";
 

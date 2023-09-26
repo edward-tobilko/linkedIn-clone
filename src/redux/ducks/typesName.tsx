@@ -7,11 +7,6 @@ const LOADING = "profile/duck/LOADING";
 const SET_STATUS = "profile/duck/SET-STATUS";
 const DOWNLOAD_SMALL_PHOTO = "profile/duck/DOWNLOAD-SMALL-PHOTO";
 
-// Auth reducer
-const SET_IS_AUTH = "auth/duck/SET-IS-AUTH";
-const CAPTCHA = "auth/duck/CAPTCHA";
-const AUTH_LOGIN_BTN_LOADING = "auth/duck/AUTH-LOGIN-BTN-LOADING";
-
 // RootApp reducer
 const INITIALIZED_SUCCESS_ROOT_APP =
   "rootApp/duck/INITIALIZED-SUCCESS-ROOT-APP";
@@ -33,9 +28,6 @@ export {
   LOADING,
   SET_STATUS,
   DOWNLOAD_SMALL_PHOTO,
-  SET_IS_AUTH,
-  CAPTCHA,
-  AUTH_LOGIN_BTN_LOADING,
   INITIALIZED_SUCCESS_ROOT_APP,
   SET_SERVER_ERROR,
   FOLLOW,

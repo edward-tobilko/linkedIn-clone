@@ -1,5 +1,5 @@
 import { ResultCodesEnum } from "../../api/apiTypes";
-import actionCreators from "../../redux/duck/actionCreators";
+import actionCreators from "../../redux/ducks/actionCreators";
 import {
   SetFollowUserACType,
   SetUnFollowUserACType,

@@ -1,19 +1,7 @@
 import { authAPI } from "../../../api/API";
 
 import { ResultCodesEnum } from "../../../api/apiTypes";
-import {
-  AuthActionsTypes,
-  AuthThunkType,
-  SetAuthLoginBtnLoadingACType,
-  SetCaptchaACType,
-  SetIsAuthACType,
-} from "./authReducerTypes";
-
-import {
-  AUTH_LOGIN_BTN_LOADING,
-  CAPTCHA,
-  SET_IS_AUTH,
-} from "../../duck/typesName";
+import { AuthActionsTypes, AuthThunkType } from "./authReducerTypes";
 
 type InitialStateType = typeof initialState; //? Так ми можемо переіспользувать тип
 
@@ -32,16 +20,16 @@ const authReducer = (
 ): InitialStateType => {
   switch (action.type) {
     //? Встановлюємо параметри (id, email, login, ) авторизації
-    case SET_IS_AUTH:
+    case "SET-IS-AUTH":
       return {
         ...state,
         ...action.data,
       };
 
-    case CAPTCHA:
+    case "CAPTCHA":
       return { ...state, ...action.payload };
 
-    case AUTH_LOGIN_BTN_LOADING:
+    case "AUTH-LOGIN-BTN-LOADING":
       return { ...state, authLoginBtnLoading: action.authLoginBtnLoading };
 
     default:
@@ -52,36 +40,35 @@ const authReducer = (
 export default authReducer;
 
 // ACs
-export const setIsAuthAC = (
-  id: number | null,
-  email: string | null,
-  login: string | null,
-  isAuth: boolean,
-): SetIsAuthACType => {
-  return {
-    type: SET_IS_AUTH,
-    data: { id, email, login, isAuth },
-  };
+export const actions = {
+  setIsAuthAC: (
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean,
+  ) => {
+    return {
+      type: "SET-IS-AUTH",
+      data: { id, email, login, isAuth },
+    } as const;
+  },
+
+  setCaptchaAC: (captchaUrl: string) => {
+    return {
+      type: "CAPTCHA",
+      payload: { captchaUrl },
+    } as const;
+  },
+
+  setAuthLoginBtnLoadingAC: (authLoginBtnLoading: boolean) => {
+    return {
+      type: "AUTH-LOGIN-BTN-LOADING",
+      authLoginBtnLoading,
+    } as const;
+  },
 };
 
-export const setCaptchaAC = (captchaUrl: string): SetCaptchaACType => {
-  return {
-    type: CAPTCHA,
-    payload: { captchaUrl },
-  };
-};
-
-export const setAuthLoginBtnLoadingAC = (
-  authLoginBtnLoading: boolean,
-): SetAuthLoginBtnLoadingACType => {
-  return {
-    type: AUTH_LOGIN_BTN_LOADING,
-    authLoginBtnLoading,
-  };
-};
-
-// TC: Thunk creator - anonym function and HOC: setIsAuthTC
-
+//? TC: Thunk creator - anonym function and HOC: setIsAuthTC
 // Санка (thunk creator) для авторизації
 export const setIsAuthTC = (): AuthThunkType => {
   return (dispatch) => {
@@ -91,7 +78,7 @@ export const setIsAuthTC = (): AuthThunkType => {
         if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
           let { id, email, login } = response.data.data;
 
-          dispatch(setIsAuthAC(id, email, login, true));
+          dispatch(actions.setIsAuthAC(id, email, login, true));
         }
       })
       .catch((error) => {
@@ -108,7 +95,7 @@ export const setLoginTC = (
   captcha: string | undefined,
 ): AuthThunkType => {
   return (dispatch) => {
-    dispatch(setAuthLoginBtnLoadingAC(true));
+    dispatch(actions.setAuthLoginBtnLoadingAC(true));
 
     authAPI
       .getLoginApi(email, password, (rememberMe = false), captcha)
@@ -125,7 +112,7 @@ export const setLoginTC = (
         console.error("Login failed:", error);
       })
       .finally(() => {
-        dispatch(setAuthLoginBtnLoadingAC(false));
+        dispatch(actions.setAuthLoginBtnLoadingAC(false));
       });
   };
 };
@@ -135,7 +122,7 @@ export const setLogoutTC = (): AuthThunkType => {
   return (dispatch) => {
     authAPI.logoutApi().then((response) => {
       if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-        dispatch(setIsAuthAC(null, null, null, false));
+        dispatch(actions.setIsAuthAC(null, null, null, false));
       }
     });
   };
@@ -144,6 +131,6 @@ export const setLogoutTC = (): AuthThunkType => {
 // TC для капчі
 export const setCaptchaTC = (): AuthThunkType => (dispatch) => {
   return authAPI.getCaptchaUrl().then((response) => {
-    dispatch(setCaptchaAC(response.data.url));
+    dispatch(actions.setCaptchaAC(response.data.url));
   });
 };

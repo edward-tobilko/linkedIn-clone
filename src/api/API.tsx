@@ -7,8 +7,10 @@ import {
   FetchCurrentUserPageByIdApiType,
   FetchSocialUsersApiType,
   FollowUnfollowApiType,
+  LoginApiDataType,
   LoginLogoutApiType,
   ProfileInfoEditModeApiType,
+  ResultCodesEnum,
   UpdateUserStatusApiType,
 } from "./apiTypes";
 
@@ -118,7 +120,9 @@ export const authAPI = {
     rememberMe: boolean | undefined,
     captcha: string | undefined,
   ) {
-    return await instance.post<LoginLogoutApiType>("auth/login", {
+    return await instance.post<
+      LoginLogoutApiType<LoginApiDataType, ResultCodesEnum>
+    >("auth/login", {
       email,
       password,
       rememberMe,
@@ -128,7 +132,9 @@ export const authAPI = {
 
   // Вилогірування користувача
   async logoutApi() {
-    return await instance.delete<LoginLogoutApiType>("auth/login");
+    return await instance.delete<LoginLogoutApiType<ResultCodesEnum>>(
+      "auth/login",
+    );
   },
 
   // Captcha
