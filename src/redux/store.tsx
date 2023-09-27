@@ -38,17 +38,11 @@ const store = createStore(
 export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
 export type TypedDispatch = ThunkDispatch<RootState, any, AnyAction>;
-type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never; //? [key: string] - ключ (назва) AC, наприклад: setIsAuthAC. За допомогою infer ми виводимо значення U - наша ф-я цього ж AC: (id, email) => { return {type, data} }.
-export type TypedActions<
-  T extends { [key: string]: (...args: Array<any>) => any },
-> = ReturnType<PropertiesType<T>>;
-
-// export type TypedThunk<ReturnType = void> = ThunkAction<
-//   ReturnType,
-//   RootState,
-//   unknown,
-//   AnyAction
-// >;
+export type TypedActions<T> = T extends {
+  [key: string]: (...args: any[]) => infer U;
+}
+  ? U
+  : never; //? [key: string] - ключ (назва) AC, наприклад: setIsAuthAC. За допомогою infer ми виводимо значення U - наша ф-я цього ж AC: (id, email) => { return {type, data} }.
 
 // declare global {
 //   interface Window {

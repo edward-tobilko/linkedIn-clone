@@ -96,7 +96,7 @@ type SocialActionsTypes =
 type SocialThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
-  unknown,
+  unknown, // extra arguments
   SocialActionsTypes
 >;
 

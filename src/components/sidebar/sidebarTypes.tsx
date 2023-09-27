@@ -3,7 +3,7 @@ import { ProfileContentProps } from "../../pages/profile/profileTypes";
 import { TypedDispatch } from "../../redux/store";
 
 type SidebarProps = ProfileContentProps & {
-  downloadSmallPhotoTC: TypedDispatch;
+  downloadSmallPhotoTC: any;
 };
 
 type ContactItemProps = {

@@ -9,41 +9,50 @@ import {
 
 import { RootState } from "../redux/store";
 
-type AuthRedirectComponentProps = {
+type MapStateToPropsType = {
   isAuth: boolean;
 };
 
-type WrappedComponentProps = {
-  location: any;
-  navigate: any;
-  params: any;
-};
+type MapDispatchToPropsType = {};
 
-const mapStateToProps = (state: RootState) => ({
-  isAuth: state.authorization.isAuth,
-});
+type OwnPropsType = {};
 
-export const withAuthRedirectHOC = (Component: ComponentType<any>) => {
-  const AuthRedirectComponent: FC<AuthRedirectComponentProps> = (props) => {
+const mapStateToProps = (state: RootState) =>
+  ({
+    isAuth: state.authorization.isAuth,
+  } as MapStateToPropsType);
+
+export function withAuthRedirectHOC(Component: ComponentType<any>) {
+  const AuthRedirectComponent: FC<
+    MapStateToPropsType & MapDispatchToPropsType
+  > = (props) => {
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
 
-    if (!props.isAuth) return <Navigate to="/login" />;
+    const { isAuth, ...restProps } = props;
+
+    if (!isAuth) return <Navigate to="/login" />;
 
     return (
       <Component
-        {...props}
         location={location}
         navigate={navigate}
         params={params}
+        {...restProps}
       />
     );
   };
 
-  const ContainerAuthRedirectComponent = connect(mapStateToProps)(
-    AuthRedirectComponent,
-  );
+  const ContainerAuthRedirectComponent = connect<
+    MapStateToPropsType,
+    MapDispatchToPropsType,
+    OwnPropsType,
+    RootState
+  >(
+    mapStateToProps,
+    {},
+  )(AuthRedirectComponent);
 
   return ContainerAuthRedirectComponent;
-};
+}

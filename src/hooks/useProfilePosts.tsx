@@ -7,10 +7,12 @@ export const useProfilePosts = (
   searchUsers?: string,
 ) => {
   const searchedPosts = useMemo(() => {
-    if (Array.isArray(postUsers)) {
+    if (Array.isArray(postUsers) && postUsers != null) {
       return postUsers.filter((userPost) => {
         return userPost.name.includes(searchUsers!);
       });
+    } else {
+      throw new Error("Post users can not be null");
     }
   }, [postUsers, searchUsers]);
 

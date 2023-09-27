@@ -40,7 +40,7 @@ type ProfileContentProps = CurrentProfilePageProps & {
 type MapDispatchToPropsType = {
   fetchCurrentUserPageTC: (userId: number) => void;
   fetchUserStatusByIdTC: (userId: number) => void;
-  downloadSmallPhotoTC: (dispatch: TypedDispatch) => void;
+  downloadSmallPhotoTC: (dispatch: any) => void;
 };
 
 type OwnPropsType = {};

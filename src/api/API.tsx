@@ -83,7 +83,7 @@ export const profileAPI = {
   },
 
   // Загрузка фото
-  async downloadPhoto(photoFile: any) {
+  async downloadPhoto(photoFile: File) {
     let formData = new FormData(); //? формуємо новий об'єкт
     formData.append("image", photoFile); //? додаємо першим параметром images (API -> /profile/photo -> Request -> Properties -> image ), а другим параметром файл, який ми отримали з input
     return await instance.put<DownloadPhotoApiType>(

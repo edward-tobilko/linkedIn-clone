@@ -28,7 +28,7 @@ type RootAppActionsTypes =
 type RootAppThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
-  unknown,
+  unknown, // extra arguments
   RootAppActionsTypes
 >;
 

@@ -96,18 +96,9 @@ type ProfileActionsTypes =
 type ProfileThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
-  unknown,
+  unknown, // extra arguments
   ProfileActionsTypes
 >;
-
-type PhotoFileType = {
-  name: string;
-  lastModified: number;
-  lastModifiedDate: Object;
-  webkitRelativePath: string;
-  size: number;
-  type: string;
-};
 
 export {
   ItemProps,
@@ -120,5 +111,4 @@ export {
   SetDownloadSmallPhotoACType,
   ProfileActionsTypes,
   ProfileThunkType,
-  PhotoFileType,
 };

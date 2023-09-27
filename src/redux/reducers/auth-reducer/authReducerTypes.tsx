@@ -10,7 +10,7 @@ type AuthActionsTypes = TypedActions<typeof actions>;
 type AuthThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
-  unknown,
+  unknown, // extra arguments
   AuthActionsTypes
 >;
 

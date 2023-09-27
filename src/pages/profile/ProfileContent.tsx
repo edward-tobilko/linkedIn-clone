@@ -1,4 +1,4 @@
-import { FC, useEffect, Suspense, lazy } from "react";
+import { FC, useEffect, Suspense, lazy, ComponentType } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -115,6 +115,6 @@ export default compose(
     },
   ),
 
-  // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
+  // HOC для перенаправлення сторінки на <Auth />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
-)(ProfileContent);
+)(ProfileContent) as ComponentType;

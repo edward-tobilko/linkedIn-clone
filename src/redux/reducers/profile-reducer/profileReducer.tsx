@@ -4,7 +4,6 @@ import {
   AddNewPostACType,
   ChangePostACType,
   InitialStateProps,
-  PhotoFileType,
   ProfileActionsTypes,
   ProfileThunkType,
   SetCurrentUserPageACType,
@@ -27,7 +26,6 @@ import {
 } from "../../ducks/typesName";
 
 import { profileAPI } from "../../../api/API";
-import { RootState } from "../../store";
 import { setServerErrorTC } from "../root-app-reducer/rootAppReducer";
 
 const initialState: InitialStateProps = {
@@ -313,7 +311,7 @@ export const updateUserStatusTC = (status: string): ProfileThunkType => {
 };
 
 // TC для загрузки фото
-export const downloadSmallPhotoTC = (photoFile: any): ProfileThunkType => {
+export const downloadSmallPhotoTC = (photoFile: File): ProfileThunkType => {
   return (dispatch) => {
     dispatch(setLoadingAC(true));
     profileAPI.downloadPhoto(photoFile).then((response) => {
@@ -330,7 +328,7 @@ export const downloadSmallPhotoTC = (photoFile: any): ProfileThunkType => {
 export const profileEditModeTC = (
   profileProperties: CurrentProfilePageTypes,
 ): ProfileThunkType => {
-  return (dispatch, getState: () => RootState) => {
+  return (dispatch, getState) => {
     const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()
 
     dispatch(setLoadingAC(true));

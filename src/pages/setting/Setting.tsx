@@ -14,19 +14,25 @@ import {
 import { RootState } from "../../redux/store";
 import { TodoItemType } from "../../redux/reducers/setting-reducer/settingReducerTypes";
 
-type SettingProps = {
+type SettingPropsType = {
   todos: Array<TodoItemType>;
 };
 
-const mapStateToProps = (state: RootState) => {
+type DispatchPropsType = {
+  addTodoTC: (text: string) => void;
+  removeTodoTC: (id: number) => void;
+};
+
+type OwnPropsType = {};
+
+const mapStateToProps = (state: RootState): SettingPropsType => {
   return {
     todos: state.settingPage.todos,
   };
 };
 
-const Setting: FC<SettingProps> = ({ todos }) => {
+const Setting: FC<SettingPropsType> = ({ todos }) => {
   const dispatch = useTypeDispatch();
-  console.log(todos);
 
   const [text, setText] = useState("");
 
@@ -61,10 +67,13 @@ const Setting: FC<SettingProps> = ({ todos }) => {
 };
 
 export default compose(
-  connect(mapStateToProps, {
-    addTodoTC,
-    removeTodoTC,
-  }),
+  connect<SettingPropsType, DispatchPropsType, OwnPropsType, RootState>(
+    mapStateToProps,
+    {
+      addTodoTC,
+      removeTodoTC,
+    },
+  ),
 
   withAuthRedirectHOC,
 )(Setting);

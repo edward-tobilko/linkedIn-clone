@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { ComponentType, FC, useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -29,6 +29,12 @@ type AppRoutesProps = {
   serverError: Object | null;
 };
 
+type MapDispatchToPropsType = {
+  setInitializedSuccessRootAppTC: () => void;
+};
+
+type OwnPropsType = {};
+
 const mapStateToProps = (state: RootState) => {
   return {
     initialized: initializedSelector(state),
@@ -36,10 +42,13 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const AppRoutesContainer = compose(
-  connect(mapStateToProps, {
-    setInitializedSuccessRootAppTC,
-  }),
+const AppRoutesContainer = compose<ComponentType>(
+  connect<AppRoutesProps, MapDispatchToPropsType, OwnPropsType, RootState>(
+    mapStateToProps,
+    {
+      setInitializedSuccessRootAppTC,
+    },
+  ),
 );
 
 const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {

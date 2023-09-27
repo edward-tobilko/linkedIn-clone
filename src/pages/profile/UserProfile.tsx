@@ -11,7 +11,7 @@ import {
 } from "./profileStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { ProfileContentProps } from "./profileTypes";
+import { OwnPropsType, ProfileContentProps } from "./profileTypes";
 
 import {
   currentProfilePageSelector,
@@ -44,7 +44,10 @@ const mapStateToProps = (state: RootState): ProfileContentProps => {
 };
 
 const UserProfileContainer = compose(
-  connect(mapStateToProps, {}),
+  connect<ProfileContentProps, {}, OwnPropsType, RootState>(
+    mapStateToProps,
+    {},
+  ),
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
 );
