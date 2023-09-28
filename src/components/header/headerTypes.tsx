@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 import { CurrentProfilePageTypes } from "../../pages/profile/profileTypes";
 
@@ -14,10 +14,11 @@ type LinksTypes = {
   path: string;
   name: string;
   description: string;
-  icon: any;
+  icon: ReactNode;
 };
 
 type DropdownContentProps = {
+  // setIsClicked: (isClicked: boolean) => void;
   setIsClicked: any;
   logout: (event: MouseEvent<HTMLElement>) => void;
   currentProfilePage: CurrentProfilePageTypes;

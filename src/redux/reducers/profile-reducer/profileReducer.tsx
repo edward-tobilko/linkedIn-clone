@@ -318,7 +318,6 @@ export const downloadSmallPhotoTC = (photoFile: File): ProfileThunkType => {
       if (response.data.resultCode === 0) {
         dispatch(setDownloadSmallPhotoAC(response.data.data.photos));
         dispatch(setLoadingAC(false));
-        console.log(photoFile);
       }
     });
   };

@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, MouseEvent } from "react";
 
 export type LogoutBtnTypes = {
   children: ReactNode;
-  logout: any;
+  logout: (event: MouseEvent<HTMLElement>) => void;
 };

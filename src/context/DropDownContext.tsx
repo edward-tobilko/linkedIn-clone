@@ -1,15 +1,10 @@
-import { FC, createContext, useState } from "react";
+import { FC, PropsWithChildren, createContext, useState } from "react";
 
-import { IDropDownContextProviderProps } from "./contextTypes";
+import { IDropdownContext } from "./contextTypes";
 
-export const DropdownContext = createContext<any>({
-  isOpenDropdown: true,
-  setIsOpenDropdown: () => {},
-});
+export const DropdownContext = createContext<IDropdownContext | null>(null);
 
-const DropDownContextProvider: FC<IDropDownContextProviderProps> = ({
-  children,
-}) => {
+const DropDownContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   // Open or close dropdown

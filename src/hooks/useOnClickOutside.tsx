@@ -2,12 +2,12 @@ import { FC, useEffect, RefObject } from "react";
 
 type CallbackType = (event: MouseEvent) => void;
 
-type UseOnClickOutsiteTypes = {
+type UseOnClickOutsideTypes = {
   ref: RefObject<HTMLElement>;
   callback: CallbackType;
 };
 
-export const useOnClickOutsite: FC<UseOnClickOutsiteTypes> = ({
+export const useOnClickOutside: FC<UseOnClickOutsideTypes> = ({
   ref,
   callback,
 }) => {

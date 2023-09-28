@@ -16,10 +16,9 @@ import { HeaderContainerProps } from "./headerTypes";
 
 import { setLogoutTC } from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
-import { actions } from "../../redux/reducers/auth-reducer/authReducer";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { useOnClickOutsite } from "../../hooks/useOnClickOutsite";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 import {
   currentProfilePageSelector,
@@ -29,7 +28,7 @@ import { DropdownContent } from "./DropdownContent";
 import { DropdownContext } from "../../context/DropDownContext";
 import SearchInput from "../forms/search-input/SearchInput";
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (state: RootState): HeaderContainerProps => {
   return {
     isAuth: state.authorization.isAuth,
     currentProfilePage: currentProfilePageSelector(state),
@@ -43,13 +42,16 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   currentProfilePage,
   email,
 }) => {
-  const node: any = useRef(null);
+  const node: any = useRef<HTMLElement>(null);
   const dispatch = useTypeDispatch();
-  const { isOpenDropdown, toggleDropdownMode } = useContext(DropdownContext);
+  const props = useContext(DropdownContext);
 
-  const [isClicked, setIsClicked] = useState<{ [key: string]: boolean }>({
+  const initialClickedState = {
     profile: false,
-  });
+  };
+
+  const [isClicked, setIsClicked] = useState(initialClickedState);
+
   const [loading, setLoading] = useState(false);
 
   const logout = (event: MouseEvent<HTMLElement>) => {
@@ -57,18 +59,17 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
 
     dispatch(setLogoutTC());
 
-    setIsClicked({ ...isClicked, profile: false });
+    setIsClicked({ profile: false });
   };
 
   const handleClick = (clicked: string) => {
-    setIsClicked({ ...isClicked, [clicked]: !isClicked[clicked] });
+    setIsClicked({ ...initialClickedState, [clicked]: true });
   };
 
-  useOnClickOutsite(node, () => {
-    // Only if menu is open
-    if (isOpenDropdown) {
+  useOnClickOutside(node, () => {
+    if (props?.isOpenDropdown !== undefined && props.isOpenDropdown) {
       setLoading(true);
-      toggleDropdownMode();
+      props.toggleDropdownMode();
       setLoading(false);
     }
   });
@@ -153,4 +154,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   );
 };
 
-export default connect(mapStateToProps, { actions })(HeaderContainer);
+export default connect<HeaderContainerProps, {}, {}, RootState>(
+  mapStateToProps,
+  {},
+)(HeaderContainer);

@@ -11,7 +11,11 @@ import {
 } from "./profileStyle";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { OwnPropsType, ProfileContentProps } from "./profileTypes";
+import {
+  CurrentProfilePageTypes,
+  OwnPropsType,
+  ProfileContentProps,
+} from "./profileTypes";
 
 import {
   currentProfilePageSelector,
@@ -84,7 +88,7 @@ const UserProfile: FC<ProfileContentProps> = ({
   });
 
   // Submit your data into Redux store
-  const onSubmit: SubmitHandler<any> = (formData) => {
+  const onSubmit: SubmitHandler<any> = (formData: CurrentProfilePageTypes) => {
     dispatch(profileEditModeTC(formData));
     setProfileEditMode(false);
   };

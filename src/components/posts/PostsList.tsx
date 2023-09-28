@@ -11,7 +11,7 @@ import { useMyContext } from "../../context/Context";
 import { IStateContext } from "../../context/contextTypes";
 
 const PostsList: FC<PostsListProps> = ({ postUsers }) => {
-  const props: IStateContext | any = useMyContext();
+  const props: IStateContext | null = useMyContext();
 
   const searchedPosts = useProfilePosts(postUsers, props?.searchUsers);
 

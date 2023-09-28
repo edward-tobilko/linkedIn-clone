@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 // Context component
 interface IVoice {
@@ -11,7 +11,7 @@ interface IChatUsers {
 }
 
 interface IDialogUsers {
-  id: number;
+  id: string;
   name: string;
   voice: IVoice;
   dataTime: string;
@@ -38,17 +38,7 @@ interface IStateContext {
 // DropDownContextProvider component
 interface IDropdownContext {
   isOpenDropdown: boolean;
-  setIsOpenDropdown: Dispatch<SetStateAction<boolean>>;
+  toggleDropdownMode: () => void;
 }
 
-interface IDropDownContextProviderProps {
-  children: ReactNode;
-}
-
-export {
-  IDialogUsers,
-  IStateContext,
-  IChatUsers,
-  IDropdownContext,
-  IDropDownContextProviderProps,
-};
+export { IDialogUsers, IStateContext, IChatUsers, IDropdownContext };

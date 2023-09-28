@@ -4,6 +4,7 @@ import { v4 as uniqueID } from "uuid";
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
 
 import { useMyContext } from "../../../context/Context";
+import { IDialogUsers } from "../../../context/contextTypes";
 
 const date = new Date().toLocaleTimeString();
 
@@ -26,7 +27,7 @@ export const CreateMessagePost = () => {
 
   const newMessagePathRef = useRef<string>(message.voice.say);
 
-  function createMessage(message: string | any) {
+  function createMessage(message: IDialogUsers) {
     props?.setDialogUsers([...props.dialogUsers, message]);
   }
 

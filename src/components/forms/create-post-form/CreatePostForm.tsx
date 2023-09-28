@@ -16,7 +16,7 @@ import { RootDispatch, RootState } from "../../../redux/store";
 import { CreatePostFormProps } from "./createPostFormTypes";
 
 // Container component
-const mapStateToProps = (state: RootState | any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     newPostText: state.profilePage.newPostText,
     currentProfilePage: currentProfilePageSelector(state),
