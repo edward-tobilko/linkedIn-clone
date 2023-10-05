@@ -1,6 +1,7 @@
 import profileReducer from "./customProfileReducer";
 
-const customStore: any = {
+// @ts-ignore
+const customStore = {
   _state: {
     profilePosts: {
       postUsers: [
@@ -110,13 +111,17 @@ const customStore: any = {
     return this._state;
   },
 
-  subscribe(observer: any) {
+  // @ts-ignore
+  subscribe(observer) {
     this._callSubscriber = observer;
   },
 
-  dispatch(action: any) {
+  // @ts-ignore
+  dispatch(action) {
+    // @ts-ignore
     profileReducer(this._state.profilePosts, action);
 
+    // @ts-ignore
     this._callSubscriber(this._state);
   },
 };

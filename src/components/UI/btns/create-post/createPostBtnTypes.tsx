@@ -1,8 +1,8 @@
-import { ReactNode, Dispatch, SetStateAction } from "react";
+import { ReactNode, MouseEvent } from "react";
 
 type CreatePostBtnProps = {
   children: ReactNode;
-  addNewPost: Dispatch<SetStateAction<any>>;
+  addNewPost: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
 export { CreatePostBtnProps };

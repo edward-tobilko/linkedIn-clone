@@ -21,36 +21,26 @@ export const editModeSchema = object()
     lookingForAJob: boolean(),
 
     contacts: object().shape({
-      // facebook: yup
-      //   .string()
-      //   .matches(
-      //     /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
-      //     "Facebook: Enter correct url!",
-      //   ),
-      // website: yup
-      //   .string()
-      //   .matches(
-      //     /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
-      //     "Website: Enter correct url!",
-      //   ),
-      // vk: yup
-      //   .string()
-      //   .matches(
-      //    /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
-      //     "Vk: Enter correct url!",
-      //   ),
-      // twitter: yup
-      //   .string()
-      //   .matches(
-      //    /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
-      //     "Twitter: Enter correct url!",
-      //   ),
-      // instagram: yup
-      //   .string()
-      //   .matches(
-      //     /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
-      //     "Instagram: Enter correct url!",
-      //   ),
+      facebook: string().matches(
+        /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
+        "Facebook: Enter correct url!",
+      ),
+      website: string().matches(
+        /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
+        "Website: Enter correct url!",
+      ),
+      vk: string().matches(
+        /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
+        "Vk: Enter correct url!",
+      ),
+      twitter: string().matches(
+        /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
+        "Twitter: Enter correct url!",
+      ),
+      instagram: string().matches(
+        /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
+        "Instagram: Enter correct url!",
+      ),
       youtube: string().matches(
         /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
         "YouTube: Enter correct url!",
@@ -59,12 +49,10 @@ export const editModeSchema = object()
         /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
         "GitHub: Enter correct url!",
       ),
-      // mainLink: yup
-      //   .string()
-      //   .matches(
-      //     /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
-      //     "MainLink: Enter correct url!",
-      //   ),
+      mainLink: string().matches(
+        /^(http[s]?:\/\/)(www\.)?[^\s$.?#].[^\s]*$/,
+        "MainLink: Enter correct url!",
+      ),
     }),
   })
   .required();

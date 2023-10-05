@@ -86,7 +86,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
     }
   };
 
-  const authForm = useForm<EditModeSchemaType | any>({
+  const authForm = useForm<CurrentProfilePageType | EditModeSchemaType | any>({
     resolver: yupResolver(editModeSchema),
 
     //? Для зберігання введених даних в формі
@@ -98,7 +98,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
   });
 
   // Submit your data into Redux store
-  const onSubmit: SubmitHandler<any> = (formData: CurrentProfilePageType) => {
+  const onSubmit: SubmitHandler<CurrentProfilePageType | any> = (formData) => {
     dispatch(profileEditModeTC(formData));
     setProfileEditMode(false);
   };

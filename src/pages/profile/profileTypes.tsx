@@ -1,5 +1,4 @@
 import { ItemProps } from "../../redux/reducers/profile-reducer/profileReducerTypes";
-import { TypedDispatch } from "../../redux/store";
 
 // ProfileContent component
 type ContactsType = {
@@ -10,7 +9,7 @@ type ContactsType = {
   instagram: string | null;
   youtube: string | null;
   github: string | null;
-  mainLink: string | any;
+  mainLink: string | null;
 };
 
 type PhotosType = {
@@ -47,7 +46,7 @@ type OwnPropsType = {};
 
 // CardProfile component
 type CardProfilePropsType = ProfileContentPropsType & {
-  downloadSmallPhotoTC: TypedDispatch;
+  downloadSmallPhotoTC: any;
 };
 
 // UserProfile component
@@ -59,7 +58,7 @@ type DispatchUserProfileType = {
 // Contacts component
 type ContactItemPropsType = {
   contactKey: string;
-  contactValue: string;
+  contactValue: string | null;
 };
 
 export {

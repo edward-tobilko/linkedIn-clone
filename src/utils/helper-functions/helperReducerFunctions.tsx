@@ -1,4 +1,4 @@
-import { ResultCodesEnum } from "../../api/apiTypes";
+import { AuthMeApiType, ResultCodesEnum } from "../../api/apiTypes";
 import actionCreators from "../../redux/ducks/actionCreators";
 import {
   SetFollowUserACType,
@@ -27,8 +27,7 @@ const followUnfollowAction = (
 const setFollowUnfollowAC = (
   dispatch: TypedDispatch,
   userId: number,
-  // apiMethod: (userId: number) => Promise<void>,
-  apiMethod: any,
+  apiMethod: (userId: number) => Promise<any>,
   setFollowUnfollow: (
     userId: number,
   ) => SetFollowUserACType | SetUnFollowUserACType,
@@ -36,7 +35,7 @@ const setFollowUnfollowAC = (
   dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); //? Блокуємо кнопку при натисканні
 
   apiMethod(userId)
-    .then((data: any) => {
+    .then((data: AuthMeApiType) => {
       if (data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
         dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
       }

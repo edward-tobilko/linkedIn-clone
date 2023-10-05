@@ -1,4 +1,5 @@
 import { ThunkAction } from "redux-thunk";
+import { CombinedState } from "redux";
 
 import { RootState } from "../../store";
 
@@ -95,7 +96,7 @@ type SocialActionsTypes =
 // Type for thunks
 type SocialThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
-  RootState,
+  CombinedState<RootState>,
   unknown, // extra arguments
   SocialActionsTypes
 >;

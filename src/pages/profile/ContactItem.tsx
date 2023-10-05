@@ -12,8 +12,8 @@ const ContactItem: FC<ContactItemPropsType> = ({
     <ContactItemStyle>
       <p>
         {contactKey}:
-        {contactValue?.length > 0 ? (
-          <a href={contactValue} className="link" target="blank">
+        {contactValue?.length! > 0 ? (
+          <a href={contactValue!} className="link" target="blank">
             {contactValue}
           </a>
         ) : (

@@ -5,9 +5,11 @@ import { RootState } from "../redux/store";
 export const CREATE_NEW_POST = "CREATE-NEW-POST";
 export const CHANGE_POST = "CHANGE-POST";
 
-const profileReducer = (state: RootState | any, action: any) => {
+// @ts-ignore
+const profileReducer = (state: RootState, action) => {
   switch (action.type) {
     case CREATE_NEW_POST:
+      // @ts-ignore
       if (state.newText.trim() !== "") {
         let myNewPost = {
           id: uniqueID(),
@@ -29,16 +31,22 @@ const profileReducer = (state: RootState | any, action: any) => {
           company: {
             name: "Romaguera-Crona",
             catchPhrase: "Multi-layered client-server neural-net",
+
+            // @ts-ignore
             bs: state.newText,
           },
         };
 
+        // @ts-ignore
         state.postUsers.push(myNewPost);
+
+        // @ts-ignore
         state.newText = "";
       }
       break;
 
     case CHANGE_POST:
+      // @ts-ignore
       state.newText = action.text;
       break;
 
