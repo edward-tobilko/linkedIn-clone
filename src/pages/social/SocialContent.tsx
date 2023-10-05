@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { ComponentType, FC, useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
@@ -135,4 +135,4 @@ const SocialContent: FC<SocialContentProps> = ({
 };
 
 //? Ф-я compose працює з права -> на ліво: перебирає всі наші створені обробники (ф-ї, хоки і тд.)
-export default compose(SocialContentContainer)(SocialContent);
+export default compose<ComponentType>(SocialContentContainer)(SocialContent);

@@ -1,10 +1,10 @@
-import { MouseEvent, ReactNode } from "react";
+import { Dispatch, MouseEvent, ReactNode, SetStateAction } from "react";
 
-import { CurrentProfilePageTypes } from "../../pages/profile/profileTypes";
+import { CurrentProfilePageType } from "../../pages/profile/profileTypes";
 
 type HeaderContainerProps = {
   isAuth: boolean;
-  currentProfilePage: CurrentProfilePageTypes;
+  currentProfilePage: CurrentProfilePageType;
   email: string | null;
   loading: boolean;
 };
@@ -18,10 +18,9 @@ type LinksTypes = {
 };
 
 type DropdownContentProps = {
-  // setIsClicked: (isClicked: boolean) => void;
-  setIsClicked: any;
+  setIsClicked: Dispatch<SetStateAction<{ profile: boolean }>>;
   logout: (event: MouseEvent<HTMLElement>) => void;
-  currentProfilePage: CurrentProfilePageTypes;
+  currentProfilePage: CurrentProfilePageType;
   email: string | null;
   loading: boolean;
 };

@@ -7,13 +7,20 @@ import { RootState } from "../../../redux/store";
 
 import { SocialNetworkManagementInputProps } from "./socialNetworkManagementInputTypes";
 
-const mapStateToProps = (state: RootState) => {
+const mapStateToProps = (
+  state: RootState,
+): SocialNetworkManagementInputProps => {
   return {
     email: state.authorization.email,
   };
 };
 
-const SocialNetworkManagementInputContainer = connect(mapStateToProps, null);
+const SocialNetworkManagementInputContainer = connect<
+  SocialNetworkManagementInputProps,
+  {},
+  {},
+  RootState
+>(mapStateToProps, {});
 
 const SocialNetworkManagementInput: FC<SocialNetworkManagementInputProps> = ({
   email,

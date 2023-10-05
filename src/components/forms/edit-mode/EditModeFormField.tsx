@@ -12,22 +12,17 @@ const EditModeFormField: FC<EditModeFormFieldProps> = ({
   const {
     register,
     formState: { errors: editModeError },
-  }: any = useFormContext();
+  } = useFormContext();
 
   return (
     <div className={className}>
       <label htmlFor={name} className="edit__mode-form-field-label">
         {label}
       </label>
-      <input
-        type={type}
-        name={name}
-        placeholder={`Enter ${label}`}
-        {...register(name)}
-      />
+      <input type={type} placeholder={`Enter ${label}`} {...register(name)} />
 
       {editModeError[name] && (
-        <p className="error">{editModeError[name]?.message}</p>
+        <p className="error">{editModeError[name]?.message?.toString()}</p>
       )}
     </div>
   );

@@ -2,11 +2,11 @@ import { FC } from "react";
 
 import { ContactsStyle } from "./profileStyle";
 
-import { CurrentProfilePageProps } from "./profileTypes";
+import { CurrentProfilePagePropsType } from "./profileTypes";
 
 import ContactItem from "./ContactItem";
 
-const Contacts: FC<CurrentProfilePageProps> = ({ currentProfilePage }) => {
+const Contacts: FC<CurrentProfilePagePropsType> = ({ currentProfilePage }) => {
   if (!currentProfilePage || !currentProfilePage.contacts) {
     return null;
   }

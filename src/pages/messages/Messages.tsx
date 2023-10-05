@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { ComponentType, FC } from "react";
 import { compose } from "redux";
 
 import { MessagesStyle } from "./messagesStyle";
@@ -27,4 +27,4 @@ const Messages: FC = () => {
 export default compose(
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
-)(Messages);
+)(Messages) as ComponentType;

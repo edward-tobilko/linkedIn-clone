@@ -12,8 +12,8 @@ import {
   SetStatusACType,
 } from "./profileReducerTypes";
 import {
-  CurrentProfilePageProps,
-  CurrentProfilePageTypes,
+  CurrentProfilePagePropsType,
+  CurrentProfilePageType,
 } from "../../../pages/profile/profileTypes";
 
 import {
@@ -195,7 +195,7 @@ const profileReducer = (
         currentProfilePage: {
           ...state.currentProfilePage,
           photos: action.smallPhoto,
-        } as CurrentProfilePageProps,
+        } as CurrentProfilePagePropsType,
       };
 
     default:
@@ -220,7 +220,7 @@ export const changePostAC = (newPostText: string): ChangePostACType => {
 };
 
 export const setCurrentUserPageAC = (
-  currentProfilePage: CurrentProfilePageProps | null,
+  currentProfilePage: CurrentProfilePagePropsType | null,
 ): SetCurrentUserPageACType => {
   return {
     type: SET_CURRENT_USER_PAGE,
@@ -325,7 +325,7 @@ export const downloadSmallPhotoTC = (photoFile: File): ProfileThunkType => {
 
 // TC для оновлення інформації користувача
 export const profileEditModeTC = (
-  profileProperties: CurrentProfilePageTypes,
+  profileProperties: CurrentProfilePageType,
 ): ProfileThunkType => {
   return (dispatch, getState) => {
     const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()

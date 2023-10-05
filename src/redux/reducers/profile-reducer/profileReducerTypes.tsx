@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 
-import { CurrentProfilePageProps } from "../../../pages/profile/profileTypes";
+import { CurrentProfilePagePropsType } from "../../../pages/profile/profileTypes";
 
 import {
   CREATE_NEW_POST,
@@ -48,7 +48,7 @@ type InitialStateProps = {
   postUsers: ItemProps[];
   newPostText: string;
   name: string;
-  currentProfilePage: CurrentProfilePageProps | null;
+  currentProfilePage: CurrentProfilePagePropsType | null;
   loading: boolean;
   status: string;
 };
@@ -64,7 +64,7 @@ type ChangePostACType = {
 };
 
 type SetCurrentUserPageACType = {
-  currentProfilePage: CurrentProfilePageProps | null;
+  currentProfilePage: CurrentProfilePagePropsType | null;
   type: typeof SET_CURRENT_USER_PAGE;
 };
 

@@ -1,5 +1,5 @@
 import { SubmitHandler } from "react-hook-form";
-import { CurrentProfilePageTypes } from "../../../pages/profile/profileTypes";
+import { CurrentProfilePageType } from "../../../pages/profile/profileTypes";
 
 type EditModeFormFieldProps = {
   className: string;
@@ -9,7 +9,7 @@ type EditModeFormFieldProps = {
 };
 
 type EditModeFormProps = {
-  currentProfilePage: CurrentProfilePageTypes;
+  currentProfilePage: CurrentProfilePageType;
   setProfileEditMode: (editMode: boolean) => void;
   onSubmit: SubmitHandler<FormData>;
   authForm: any;

@@ -2,9 +2,12 @@ import { FC } from "react";
 
 import { ContactItemStyle } from "./profileStyle";
 
-import { ContactItemProps } from "../../components/sidebar/sidebarTypes";
+import { ContactItemPropsType } from "./profileTypes";
 
-const ContactItem: FC<ContactItemProps> = ({ contactKey, contactValue }) => {
+const ContactItem: FC<ContactItemPropsType> = ({
+  contactKey,
+  contactValue,
+}) => {
   return (
     <ContactItemStyle>
       <p>

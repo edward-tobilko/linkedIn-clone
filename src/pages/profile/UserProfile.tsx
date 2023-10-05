@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, ChangeEvent } from "react";
+import { FC, useEffect, useMemo, ChangeEvent, ComponentType } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
@@ -12,16 +12,20 @@ import {
 import { AvatarImgStyle } from "../../rootStyles";
 
 import {
-  CurrentProfilePageTypes,
+  CurrentProfilePageType,
+  DispatchUserProfileType,
   OwnPropsType,
-  ProfileContentProps,
+  ProfileContentPropsType,
 } from "./profileTypes";
 
 import {
   currentProfilePageSelector,
   loadingSelector,
 } from "../../utils/selectors/profileSelectors";
-import { editModeSchema } from "../../utils/validators/editModeSchema";
+import {
+  EditModeSchemaType,
+  editModeSchema,
+} from "../../utils/validators/editModeSchema";
 import { useMyContext } from "../../context/Context";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
@@ -40,23 +44,29 @@ import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
 import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
-const mapStateToProps = (state: RootState): ProfileContentProps => {
+const mapStateToProps = (state: RootState): ProfileContentPropsType | any => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),
   };
 };
 
-const UserProfileContainer = compose(
-  connect<ProfileContentProps, {}, OwnPropsType, RootState>(
-    mapStateToProps,
-    {},
-  ),
+const UserProfileContainer = compose<ComponentType>(
+  connect<
+    ProfileContentPropsType,
+    DispatchUserProfileType,
+    OwnPropsType,
+    RootState
+  >(mapStateToProps, {
+    downloadSmallPhotoTC,
+    profileEditModeTC,
+  }),
+
   // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
 );
 
-const UserProfile: FC<ProfileContentProps> = ({
+const UserProfile: FC<ProfileContentPropsType> = ({
   currentProfilePage,
   loading,
 }) => {
@@ -76,7 +86,7 @@ const UserProfile: FC<ProfileContentProps> = ({
     }
   };
 
-  const authForm = useForm<any>({
+  const authForm = useForm<EditModeSchemaType | any>({
     resolver: yupResolver(editModeSchema),
 
     //? Для зберігання введених даних в формі
@@ -88,7 +98,7 @@ const UserProfile: FC<ProfileContentProps> = ({
   });
 
   // Submit your data into Redux store
-  const onSubmit: SubmitHandler<any> = (formData: CurrentProfilePageTypes) => {
+  const onSubmit: SubmitHandler<any> = (formData: CurrentProfilePageType) => {
     dispatch(profileEditModeTC(formData));
     setProfileEditMode(false);
   };

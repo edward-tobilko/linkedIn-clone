@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { ChangeEvent, ComponentType, FC, useState } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 
@@ -48,7 +48,7 @@ const Setting: FC<SettingPropsType> = ({ todos }) => {
       <input
         type="text"
         value={text}
-        onChange={(e: any) => setText(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
       />
       <button onClick={handleAddTodo}>Add todo</button>
 
@@ -76,4 +76,4 @@ export default compose(
   ),
 
   withAuthRedirectHOC,
-)(Setting);
+)(Setting) as ComponentType;

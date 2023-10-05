@@ -7,13 +7,13 @@ import { CardProfileEditorStyle, CardProfileStyle } from "./profileStyle";
 import Status from "../../components/forms/status-input/Status";
 import { CardProfileLoader } from "../../components/UI/loaders/profile-loaders/CardProfileLoader";
 
-import { CardProfileProps } from "./profileTypes";
+import { CardProfilePropsType } from "./profileTypes";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { setLoadingAC } from "../../redux/reducers/profile-reducer/profileReducer";
 
-export const CardProfile: FC<CardProfileProps> = ({
+export const CardProfile: FC<CardProfilePropsType> = ({
   currentProfilePage,
   downloadSmallPhotoTC,
   loading,

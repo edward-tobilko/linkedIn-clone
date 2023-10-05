@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useFormContext } from "react-hook-form";
 
 import { EditModeFormStyle } from "./editModeFormStyle";
 
@@ -16,10 +15,6 @@ const EditModeForm: FC<EditModeFormProps> = ({
   setProfileEditMode,
   loading,
 }) => {
-  const {
-    formState: { errors: editModeContactsError },
-  }: any = useFormContext();
-
   return (
     <EditModeFormStyle>
       <div className="edit__mode">
@@ -81,13 +76,6 @@ const EditModeForm: FC<EditModeFormProps> = ({
                   name={`contacts.${key}`}
                   type="text"
                 />
-
-                {editModeContactsError?.contacts &&
-                  editModeContactsError?.contacts[key] && (
-                    <p className="error">
-                      {editModeContactsError?.contacts[key]?.message}
-                    </p>
-                  )}
               </div>
             ))}
 

@@ -1,6 +1,6 @@
 import { RootState } from "../../redux/store";
 
-export const currentProfilePageSelector = (state: RootState | any) => {
+export const currentProfilePageSelector = (state: RootState) => {
   return state.profilePage.currentProfilePage;
 };
 

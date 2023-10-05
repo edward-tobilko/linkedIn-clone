@@ -1,13 +1,13 @@
 import React, { useEffect, FC } from "react";
 
+import { CardProfilePropsType } from "../../pages/profile/profileTypes";
+
 import { SidebarStyle } from "./sidebarStyle";
 
 import { MdVisibility } from "react-icons/md";
 
 import { CardProfile } from "../../pages/profile/CardProfile";
 import { SocialContentLoader } from "../UI/loaders/social-loaders/SocialContentLoader";
-
-import { SidebarProps } from "./sidebarTypes";
 
 // UI time elements
 function UITimeElements() {
@@ -65,7 +65,7 @@ function UITimeElements() {
   );
 }
 
-const Sidebar: FC<SidebarProps> = ({
+const Sidebar: FC<CardProfilePropsType> = ({
   currentProfilePage,
   downloadSmallPhotoTC,
   loading,

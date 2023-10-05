@@ -1,6 +1,12 @@
 import { FC, MouseEvent, ChangeEvent } from "react";
 import { connect } from "react-redux";
 
+import {
+  CreatePostFormDispatchType,
+  CreatePostFormPropsType,
+  MyOwnPropsType,
+} from "./createPostFormTypes";
+
 import { AvatarImgStyle } from "../../../rootStyles";
 import { CreatePostFormStyle, TextareaStyle } from "./createPostFormStyle";
 
@@ -13,34 +19,40 @@ import {
 } from "../../../redux/reducers/profile-reducer/profileReducer";
 import { RootDispatch, RootState } from "../../../redux/store";
 
-import { CreatePostFormProps } from "./createPostFormTypes";
-
 // Container component
 const mapStateToProps = (state: RootState) => {
   return {
     newPostText: state.profilePage.newPostText,
     currentProfilePage: currentProfilePageSelector(state),
-  };
+  } as any;
 };
 
 const mapDispatchToProps = (dispatch: RootDispatch) => {
   return {
-    // Створюємо новий пост на сторінку profile
+    //? Створюємо новий пост на сторінку profile
     addNewPostDispatch() {
       dispatch(addNewPostAC());
     },
 
-    // Для динамічної поведінки onChange обробника подій
+    //? Для динамічної поведінки onChange обробника подій
     changePostDispatch(newPostText: string) {
       dispatch(changePostAC(newPostText));
     },
   };
 };
 
-const CreatePostFormContainer = connect(mapStateToProps, mapDispatchToProps);
+//? При типізації connect, mapStateToProps буде сваритися на значення "newPostText" так як його в нас немає на сервері. (Вигадане нами значення для створення постів).
+const CreatePostFormContainer = connect<
+  CreatePostFormPropsType,
+  CreatePostFormDispatchType,
+  MyOwnPropsType,
+  RootState
+>(mapStateToProps, mapDispatchToProps);
 
 // Pure component
-const CreatePostForm: FC<CreatePostFormProps> = (props) => {
+const CreatePostForm: FC<
+  CreatePostFormPropsType & CreatePostFormDispatchType
+> = (props) => {
   const changePost = (event: ChangeEvent<HTMLInputElement>) => {
     props.changePostDispatch(event.target.value);
   };

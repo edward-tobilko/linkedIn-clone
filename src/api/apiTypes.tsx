@@ -1,4 +1,4 @@
-import { CurrentProfilePageTypes } from "../pages/profile/profileTypes";
+import { CurrentProfilePageType } from "../pages/profile/profileTypes";
 import { SocialUserType } from "../redux/reducers/social-reducer/socialReducerTypes";
 
 //? Перечислення наборів створених нами констант, можуть бути числа або строки.
@@ -29,7 +29,7 @@ type LoginLogoutApiType<D = {}, RC = ResultCodesEnum> = {
 };
 
 // profileAPI
-type FetchCurrentUserPageByIdApiType = CurrentProfilePageTypes;
+type FetchCurrentUserPageByIdApiType = CurrentProfilePageType;
 
 type UpdateUserStatusApiType = {
   data: Object;

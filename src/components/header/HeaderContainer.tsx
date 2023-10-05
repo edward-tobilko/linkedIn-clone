@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useContext, useRef, useState } from "react";
+import { FC, MouseEvent, useContext, useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -18,7 +18,6 @@ import { setLogoutTC } from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 import {
   currentProfilePageSelector,
@@ -28,7 +27,7 @@ import { DropdownContent } from "./DropdownContent";
 import { DropdownContext } from "../../context/DropDownContext";
 import SearchInput from "../forms/search-input/SearchInput";
 
-const mapStateToProps = (state: RootState): HeaderContainerProps => {
+const mapStateToProps = (state: RootState): HeaderContainerProps | any => {
   return {
     isAuth: state.authorization.isAuth,
     currentProfilePage: currentProfilePageSelector(state),
@@ -42,11 +41,11 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   currentProfilePage,
   email,
 }) => {
-  const node: any = useRef<HTMLElement>(null);
+  const node = useRef<HTMLDivElement>(null);
   const dispatch = useTypeDispatch();
   const props = useContext(DropdownContext);
 
-  const initialClickedState = {
+  const initialClickedState: { profile: boolean } = {
     profile: false,
   };
 
@@ -66,13 +65,27 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     setIsClicked({ ...initialClickedState, [clicked]: true });
   };
 
-  useOnClickOutside(node, () => {
-    if (props?.isOpenDropdown !== undefined && props.isOpenDropdown) {
-      setLoading(true);
-      props.toggleDropdownMode();
-      setLoading(false);
-    }
-  });
+  useEffect(() => {
+    const _onClick = (event: MouseEvent | TouchEvent): void => {
+      event.preventDefault();
+
+      if (!node?.current || node?.current.contains(event.target as Node)) {
+        return;
+      }
+
+      if (props?.isOpenDropdown != null && props.isOpenDropdown) {
+        setLoading(true);
+        props.toggleDropdownMode();
+        setLoading(false);
+      }
+    };
+
+    document.addEventListener("touchstart", _onClick);
+
+    return () => {
+      document.removeEventListener("touchstart", _onClick);
+    };
+  }, [node, props]);
 
   return (
     <>

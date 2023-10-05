@@ -19,7 +19,7 @@ import {
 
 import StatusField from "./StatusField";
 
-const mapStateToProps = (state: RootState): IStatusProps => {
+const mapStateToProps = (state: RootState): IStatusProps | any => {
   return {
     serverError: serverErrorSelector(state),
     status: statusSelector(state),
@@ -64,11 +64,11 @@ const StatusContainer: FC<IStatusProps> = ({
       }
     };
 
-    // Register the server error handler
+    //? Register the server error handler
     window.addEventListener("error", handleServerError);
 
     return () => {
-      // Unregister the server error handler when the component unmounts
+      //? Unregister the server error handler when the component unmounts
       window.removeEventListener("error", handleServerError);
     };
   }, [serverError, dispatch]);

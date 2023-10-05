@@ -1,19 +1,8 @@
 import { FC, ChangeEvent } from "react";
-import { connect } from "react-redux";
 
 import { SearchInputStyle } from "./searchInputStyle";
 
-import { RootState } from "../../../redux/store";
 import { useMyContext } from "../../../context/Context";
-
-// Container component
-const mapStateToProps = (state: RootState) => {
-  return {
-    postUsers: state.profilePage.postUsers,
-  };
-};
-
-const SearchInputContainer = connect(mapStateToProps, null);
 
 const SearchInput: FC = () => {
   const props = useMyContext();
@@ -33,4 +22,4 @@ const SearchInput: FC = () => {
   );
 };
 
-export default SearchInputContainer(SearchInput);
+export default SearchInput;

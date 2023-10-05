@@ -3,7 +3,7 @@ import { FC, useEffect, RefObject } from "react";
 type CallbackType = (event: MouseEvent) => void;
 
 type UseOnClickOutsideTypes = {
-  ref: RefObject<HTMLElement>;
+  ref: RefObject<HTMLDivElement>;
   callback: CallbackType;
 };
 

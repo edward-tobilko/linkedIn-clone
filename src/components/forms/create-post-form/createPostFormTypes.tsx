@@ -1,8 +1,17 @@
-type CreatePostFormProps = {
+import { CurrentProfilePageType } from "../../../pages/profile/profileTypes";
+
+type CreatePostFormPropsType = {
   changePostDispatch: (newPostText: string) => void;
   addNewPostDispatch(): void;
   newPostText: string;
-  currentProfilePage: any;
+  currentProfilePage: CurrentProfilePageType;
 };
 
-export { CreatePostFormProps };
+type CreatePostFormDispatchType = {
+  addNewPostDispatch: () => void;
+  changePostDispatch: (newPostText: string) => void;
+};
+
+type MyOwnPropsType = {};
+
+export { CreatePostFormPropsType, CreatePostFormDispatchType, MyOwnPropsType };

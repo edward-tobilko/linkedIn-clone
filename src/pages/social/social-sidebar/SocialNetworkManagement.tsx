@@ -20,7 +20,7 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
   usersCount,
   socialUsers,
 }) => {
-  const filteredUsers = socialUsers.filter((item: any) => item.followed);
+  const filteredUsers = socialUsers.filter((item) => item.followed);
 
   const result = calculatePaginationTotalCountPagesHelper(
     totalUsersCount,

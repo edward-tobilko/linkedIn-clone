@@ -30,13 +30,13 @@ import {
 import {
   MapDispatchToPropsType,
   OwnPropsType,
-  ProfileContentProps,
+  ProfileContentPropsType,
 } from "./profileTypes";
 
 // Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
 
-const mapStateToProps = (state: RootState): ProfileContentProps => {
+const mapStateToProps = (state: RootState): ProfileContentPropsType | any => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),
@@ -44,13 +44,12 @@ const mapStateToProps = (state: RootState): ProfileContentProps => {
   };
 };
 
-const ProfileContent: FC<ProfileContentProps> = ({
+const ProfileContent: FC<ProfileContentPropsType> = ({
   currentProfilePage,
   loading,
   postUsers,
 }) => {
-  // let { userId }: { userId: number | null } = useParams();
-  let { userId }: any = useParams();
+  let { userId } = useParams() as any;
 
   const dispatch = useTypeDispatch();
 
@@ -98,23 +97,25 @@ const ProfileContent: FC<ProfileContentProps> = ({
 //? <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState> - в connect потрібно передати дженериком 4 параметра: 1 - props, які ми прокинули в компоненту, 2 - mapDispatchToProps: ф-ї (AC or TC), 3 - власні параметри, які ми створимо в компоненті, 4 - mapStateToProps: initialState (RootState), який ми прокидуємо з reducer (profileReducer).
 
 //? Ф-я compose працює з права -> на ліво: перебирає всі наші створені обробники (ф-ї, хоки і тд.)
-export default compose(
-  connect<ProfileContentProps, MapDispatchToPropsType, OwnPropsType, RootState>(
-    mapStateToProps,
-    {
-      //? Коли ми передаємо TC або AC-функції в HOC connect, то він нам автоматично створює callback з такою ж самою назвою, параметрами і тд.
+export default compose<ComponentType>(
+  connect<
+    ProfileContentPropsType,
+    MapDispatchToPropsType,
+    OwnPropsType,
+    RootState
+  >(mapStateToProps, {
+    //? Коли ми передаємо TC або AC-функції в HOC connect, то він нам автоматично створює callback з такою ж самою назвою, параметрами і тд.
 
-      // Санка (thunk creator) для отримання поточної сторінки іншого користувача
-      fetchCurrentUserPageTC,
+    // Санка (thunk creator) для отримання поточної сторінки іншого користувача
+    fetchCurrentUserPageTC,
 
-      // TC для отримання статусу іншого користувача
-      fetchUserStatusByIdTC,
+    // TC для отримання статусу іншого користувача
+    fetchUserStatusByIdTC,
 
-      // TC для загрузки фото
-      downloadSmallPhotoTC,
-    },
-  ),
+    // TC для загрузки фото
+    downloadSmallPhotoTC,
+  }),
 
   // HOC для перенаправлення сторінки на <Auth />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
-)(ProfileContent) as ComponentType;
+)(ProfileContent);

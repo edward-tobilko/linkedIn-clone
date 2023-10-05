@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { CurrentProfilePageTypes } from "../../../pages/profile/profileTypes";
+import { CurrentProfilePageType } from "../../../pages/profile/profileTypes";
 
 interface IStatusProps {
   status: string;
-  currentProfilePage?: CurrentProfilePageTypes;
+  currentProfilePage: CurrentProfilePageType;
   serverError: Object | null;
 }
 

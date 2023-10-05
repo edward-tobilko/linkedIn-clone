@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CurrentProfilePageTypes } from "../pages/profile/profileTypes";
+import { CurrentProfilePageType } from "../pages/profile/profileTypes";
 import {
   AuthMeApiType,
   DownloadPhotoApiType,
@@ -98,7 +98,7 @@ export const profileAPI = {
   },
 
   // Оновлення інформації користувача
-  async profileInfoEditMode(profileProperties: CurrentProfilePageTypes) {
+  async profileInfoEditMode(profileProperties: CurrentProfilePageType) {
     return await instance.put<ProfileInfoEditModeApiType>(
       `/profile`,
       profileProperties,
