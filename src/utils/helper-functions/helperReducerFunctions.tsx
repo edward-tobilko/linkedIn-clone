@@ -1,4 +1,4 @@
-import { AuthMeApiType, ResultCodesEnum } from "../../api/apiTypes";
+import { FollowUnfollowApiType, ResultCodesEnum } from "../../api/apiTypes";
 import actionCreators from "../../redux/ducks/actionCreators";
 import {
   SetFollowUserACType,
@@ -6,7 +6,7 @@ import {
   SocialUserType,
 } from "../../redux/reducers/social-reducer/socialReducerTypes";
 
-import { TypedDispatch } from "../../redux/store";
+import { RootState, TypedDispatch } from "../../redux/store";
 
 // Social reducer
 const followUnfollowAction = (
@@ -24,25 +24,27 @@ const followUnfollowAction = (
   });
 };
 
-const setFollowUnfollowAC = (
-  dispatch: TypedDispatch,
+const setFollowUnfollowAC = async (
+  dispatch: TypedDispatch<RootState>,
   userId: number,
-  apiMethod: (userId: number) => Promise<any>,
+  apiMethod: (userId: number) => Promise<FollowUnfollowApiType>,
   setFollowUnfollow: (
     userId: number,
   ) => SetFollowUserACType | SetUnFollowUserACType,
 ) => {
   dispatch(actionCreators.setFollowingBlockedBtnAC(true, userId)); //? Блокуємо кнопку при натисканні
 
-  apiMethod(userId)
-    .then((data: AuthMeApiType) => {
-      if (data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-        dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
-      }
+  try {
+    const data = await apiMethod(userId);
 
-      dispatch(actionCreators.setFollowingBlockedBtnAC(false, userId));
-    })
-    .catch((error: Object) => console.log("Error:", error));
+    if (data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+      dispatch(setFollowUnfollow(userId)); //? Діспатчимо виклик AC-ра, а не сам AC!
+    }
+
+    dispatch(actionCreators.setFollowingBlockedBtnAC(false, userId));
+  } catch (error) {
+    console.log("Server error:", error);
+  }
 };
 
 export { setFollowUnfollowAC, followUnfollowAction };

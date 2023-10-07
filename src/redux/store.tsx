@@ -37,7 +37,7 @@ const store = createStore(
 //? Отримуємо загальні типи для state, action creators, dispatch and thunks, та вказуємо їх в кастомних хуках та редюсорах для більш зручної розробки
 export type RootState = ReturnType<typeof rootReducer>;
 export type RootDispatch = typeof store.dispatch;
-export type TypedDispatch = ThunkDispatch<RootState, any, AnyAction>;
+export type TypedDispatch<T> = ThunkDispatch<T, any, AnyAction>;
 export type TypedActions<T> = T extends {
   [key: string]: (...args: any[]) => infer U;
 }

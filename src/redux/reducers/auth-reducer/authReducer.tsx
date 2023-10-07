@@ -5,7 +5,7 @@ import { AuthActionsTypes, AuthThunkType } from "./authReducerTypes";
 
 type InitialStateType = typeof initialState; //? Так ми можемо переіспользувать тип
 
-const initialState = {
+export const initialState = {
   id: null as number | null,
   email: null as string | null,
   login: null as string | null,

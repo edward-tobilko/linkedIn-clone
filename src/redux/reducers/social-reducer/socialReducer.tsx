@@ -106,10 +106,10 @@ export const fetchSocialUsersTC = (
   currentPage: number,
   usersCount: number,
 ): SocialThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(actionCreators.setLoadingAC(true));
 
-    socialUsersAPI
+    await socialUsersAPI
       .fetchSocialUsers(currentPage, usersCount)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(actionCreators.setCurrentPageAC(currentPage));
@@ -142,8 +142,8 @@ export const fetchSocialUsersOnChangedPageTC = (
 
 // ТС для додавання користувача
 export const setFollowUserTC = (userId: number): SocialThunkType => {
-  return (dispatch) => {
-    setFollowUnfollowAC(
+  return async (dispatch) => {
+    await setFollowUnfollowAC(
       dispatch,
       userId,
       socialUsersAPI.followUser.bind(socialUsersAPI),
@@ -154,8 +154,8 @@ export const setFollowUserTC = (userId: number): SocialThunkType => {
 
 // ТС для видалення користувача
 export const setUnFollowUserTC = (userId: number): SocialThunkType => {
-  return (dispatch) => {
-    setFollowUnfollowAC(
+  return async (dispatch) => {
+    await setFollowUnfollowAC(
       dispatch,
       userId,
       socialUsersAPI.unFollowUser.bind(socialUsersAPI),
