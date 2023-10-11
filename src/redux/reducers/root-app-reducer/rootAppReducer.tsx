@@ -53,10 +53,10 @@ export const setServerErrorAC = (serverError: Object): SetServerErrorACType => {
 
 // TCs
 export const setInitializedSuccessRootAppTC =
-  (): RootAppThunkType => (dispatch) => {
+  (): RootAppThunkType => async (dispatch) => {
     const dispatchResult = dispatch(setIsAuthTC()); //? dispatch вертає результат санки: promise (в санкі setIsAuthTC ми вертаємо authorizationMe (return authAPI.authorizationMe))
 
-    Promise.all([dispatchResult]).then(() => {
+    await Promise.all([dispatchResult]).then(() => {
       dispatch(setInitializedSuccessRootAppAC());
     });
   };

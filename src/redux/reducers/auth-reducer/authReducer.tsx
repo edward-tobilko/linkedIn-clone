@@ -68,11 +68,11 @@ export const actions = {
   },
 };
 
-//? TC: Thunk creator - anonym function and HOC: setIsAuthTC
-// Санка (thunk creator) для авторизації
+// TC: Thunk creator - anonym function and HOC: setIsAuthTC
+//? Санка (thunk creator) для авторизації
 export const setIsAuthTC = (): AuthThunkType => {
-  return (dispatch) => {
-    return authAPI
+  return async (dispatch) => {
+    return await authAPI
       .authorizationMe()
       .then((response) => {
         if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
@@ -87,7 +87,7 @@ export const setIsAuthTC = (): AuthThunkType => {
   };
 };
 
-// TC для логірування користувача
+//? TC для логірування користувача
 export const setLoginTC = (
   email: string,
   password: string,
@@ -117,7 +117,7 @@ export const setLoginTC = (
   };
 };
 
-// TC для вилогірування користувача
+//? TC для вилогірування користувача
 export const setLogoutTC = (): AuthThunkType => {
   return (dispatch) => {
     authAPI.logoutApi().then((response) => {
@@ -128,7 +128,7 @@ export const setLogoutTC = (): AuthThunkType => {
   };
 };
 
-// TC для капчі
+//? TC для капчі
 export const setCaptchaTC = (): AuthThunkType => (dispatch) => {
   return authAPI.getCaptchaUrl().then((response) => {
     dispatch(actions.setCaptchaAC(response.data.url));

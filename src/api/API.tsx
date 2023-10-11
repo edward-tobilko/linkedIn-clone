@@ -23,7 +23,7 @@ export const instance = axios.create({
 
 // For the Social component
 export const socialUsersAPI = {
-  // Отримуємо користувачів
+  //? Отримуємо користувачів
   async fetchSocialUsers(currentPage: number, usersCount: number) {
     return await instance
       .get<FetchSocialUsersApiType>(
@@ -32,7 +32,7 @@ export const socialUsersAPI = {
       .then((res) => res.data);
   },
 
-  // Отримуємо користувачів при пагінації
+  //? Отримуємо користувачів при пагінації
   async fetchChangedPageUsers(pageNumber: number, usersCount: number) {
     return await instance
       .get<FetchSocialUsersApiType>(
@@ -41,21 +41,21 @@ export const socialUsersAPI = {
       .then((res) => res.data);
   },
 
-  // Добавляємо користувача (follow)
+  //? Добавляємо користувача (follow)
   async followUser(userId: number) {
     return await instance
       .post<FollowUnfollowApiType>(`follow/${userId}`, {})
       .then((res) => res.data);
   },
 
-  // Видаляємо користувача (unFollow)
+  //? Видаляємо користувача (unFollow)
   async unFollowUser(userId: number) {
     return await instance
       .delete<FollowUnfollowApiType>(`follow/${userId}`)
       .then((res) => res.data); //? В get и delete другим параметром вказуємо об'єкт настройки(withCredentials: true) - URI параметр
   },
 
-  // Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI
+  //? Отримуємо статус користувача - цей метод переадрисовує нас на об'єкт profileAPI
   async fetchUserStatusById(userId: number | null) {
     console.warn("Please, go to the profileAPI method!");
 
@@ -65,24 +65,24 @@ export const socialUsersAPI = {
 
 // For the Profile component
 export const profileAPI = {
-  // Отримуємо поточну сторінку користувача
+  //? Отримуємо поточну сторінку користувача
   async fetchCurrentUserPageById(userId: number | null) {
     return await instance.get(`profile/${userId}`).then((res) => res.data);
   },
 
-  // Отримуємо статус користувача
+  //? Отримуємо статус користувача
   async fetchUserStatusById(userId: number | null) {
     return await instance.get<string>(`profile/status/${userId}`);
   },
 
-  // Змінюємо динамічно статус
+  //? Змінюємо динамічно статус
   async updateUserStatus(status: string) {
     return await instance
       .put<UpdateUserStatusApiType>(`profile/status`, { status: status })
       .then((res) => res.data); //? Другим параметром мы додаємо JSON об'єкт, який потребує сервер, в нашому випадку це status (дивитися в API -> /profile/status -> PUT -> Request -> Type and Properties)
   },
 
-  // Загрузка фото
+  //? Загрузка фото
   async downloadPhoto(photoFile: File) {
     let formData = new FormData(); //? формуємо новий об'єкт
     formData.append("image", photoFile); //? додаємо першим параметром images (API -> /profile/photo -> Request -> Properties -> image ), а другим параметром файл, який ми отримали з input
@@ -97,7 +97,7 @@ export const profileAPI = {
     );
   },
 
-  // Оновлення інформації користувача
+  //? Оновлення інформації користувача
   async profileInfoEditMode(profileProperties: CurrentProfilePageType) {
     return await instance.put<ProfileInfoEditModeApiType>(
       `/profile`,
@@ -108,12 +108,12 @@ export const profileAPI = {
 
 // For the AppRoutes, Auth components
 export const authAPI = {
-  // Авторизуємо себе
+  //? Авторизуємо себе
   async authorizationMe() {
     return await instance.get<AuthMeApiType>("auth/me"); //? AuthMeApiType - створений тип, який прокидуємо в метод get як дженерик. Що описувати в типі, потрібно дивитися в документацію: https://social-network.samuraijs.com/docs# -> /auth/me -> get.
   },
 
-  // Логірування користувача
+  //? Логірування користувача
   async getLoginApi(
     email: string, // 1992eduard777clone@gmail.com
     password: string, // email4769PageClone
@@ -130,14 +130,14 @@ export const authAPI = {
     });
   },
 
-  // Вилогірування користувача
+  //? Вилогірування користувача
   async logoutApi() {
     return await instance.delete<LoginLogoutApiType<ResultCodesEnum>>(
       "auth/login",
     );
   },
 
-  // Captcha
+  //? Captcha
   async getCaptchaUrl() {
     return await instance.get<{ url: string }>("security/get-captcha-url");
   },

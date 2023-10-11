@@ -135,9 +135,9 @@ const profileReducer = (
   action: ProfileActionsTypes,
 ): InitialStateProps => {
   switch (action.type) {
-    // Створюємо новий пост на сторінку profile
+    //? Створюємо новий пост на сторінку profile
     case CREATE_NEW_POST:
-      // Вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
+      //? Вертаємо новий об'єкт (return {}), в якому розгортаємо старий об'єкт (...state), після робимо глибоку копію масива постів (...state.postUsers) та пушимо новий об'єкт в масив і зануляємо інпут (newPostText: "");
       return {
         ...state,
         postUsers: [
@@ -169,26 +169,26 @@ const profileReducer = (
         newPostText: "",
       };
 
-    // Для динамічної поведінки onChange обробника подій
+    //? Для динамічної поведінки onChange обробника подій
     case CHANGE_POST:
       return {
         ...state,
         newPostText: action.newPostText,
       };
 
-    // Показуємо поточну сторінку іншого користувача
+    //? Показуємо поточну сторінку іншого користувача
     case SET_CURRENT_USER_PAGE:
       return { ...state, currentProfilePage: action.currentProfilePage };
 
-    // Додаємо загрузчик
+    //? Додаємо загрузчик
     case LOADING:
       return { ...state, loading: action.loading };
 
-    // Показуємо статус користувача
+    //? Показуємо статус користувача
     case SET_STATUS:
       return { ...state, status: action.status };
 
-    // Загрузка фото
+    //? Загрузка фото
     case DOWNLOAD_SMALL_PHOTO:
       return {
         ...state,
@@ -253,14 +253,14 @@ export const setDownloadSmallPhotoAC = (
 
 // TC: Thunk creator - anonym function and HOC - fetchCurrentUserPageTC
 
-// Санка (thunk creator) для отримання поточної сторінки іншого користувача
+//? Санка (thunk creator) для отримання поточної сторінки іншого користувача
 export const fetchCurrentUserPageTC = (
   userId: number | null,
 ): ProfileThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(setLoadingAC(true));
 
-    profileAPI.fetchCurrentUserPageById(userId).then((data) => {
+    await profileAPI.fetchCurrentUserPageById(userId).then((data) => {
       dispatch(setCurrentUserPageAC(data));
 
       dispatch(setLoadingAC(false));
@@ -268,12 +268,12 @@ export const fetchCurrentUserPageTC = (
   };
 };
 
-// TC для отримання статусу користувача
+//? TC для отримання статусу користувача
 export const fetchUserStatusByIdTC = (
   userId: number | null,
 ): ProfileThunkType => {
-  return (dispatch) => {
-    profileAPI
+  return async (dispatch) => {
+    await profileAPI
       .fetchUserStatusById(userId)
       .then((res) => {
         dispatch(setStatusAC(res.data));
@@ -284,10 +284,10 @@ export const fetchUserStatusByIdTC = (
   };
 };
 
-// TC для динамічної зміни статусу
+//? TC для динамічної зміни статусу
 export const updateUserStatusTC = (status: string): ProfileThunkType => {
-  return (dispatch) => {
-    profileAPI
+  return async (dispatch) => {
+    await profileAPI
       .updateUserStatus(status)
       .then((data) => {
         if (data.resultCode === 0) {
@@ -310,11 +310,11 @@ export const updateUserStatusTC = (status: string): ProfileThunkType => {
   };
 };
 
-// TC для загрузки фото
+//? TC для загрузки фото
 export const downloadSmallPhotoTC = (photoFile: File): ProfileThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(setLoadingAC(true));
-    profileAPI.downloadPhoto(photoFile).then((response) => {
+    await profileAPI.downloadPhoto(photoFile).then((response) => {
       if (response.data.resultCode === 0) {
         dispatch(setDownloadSmallPhotoAC(response.data.data.photos));
         dispatch(setLoadingAC(false));
@@ -323,16 +323,16 @@ export const downloadSmallPhotoTC = (photoFile: File): ProfileThunkType => {
   };
 };
 
-// TC для оновлення інформації користувача
+//? TC для оновлення інформації користувача
 export const profileEditModeTC = (
   profileProperties: CurrentProfilePageType,
 ): ProfileThunkType => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const myId = getState().authorization.id; //? Отримуємо будь-який параметр через глобальний метод getState()
 
     dispatch(setLoadingAC(true));
 
-    profileAPI.profileInfoEditMode(profileProperties).then((res) => {
+    await profileAPI.profileInfoEditMode(profileProperties).then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(fetchCurrentUserPageTC(myId));
         dispatch(setLoadingAC(false));

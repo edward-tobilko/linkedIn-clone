@@ -23,11 +23,11 @@ import { setFollowUnfollowAC } from "../../../utils/helper-functions/helperReduc
 
 const initialState: InitialStateType = {
   socialUsers: [],
-  totalUsersCount: 0, // загальна к-сть користувачів
-  usersCount: 18, // к-сть користувачів на одній сторінці
-  currentPage: 1, // поточна активна сторінка
+  totalUsersCount: 0, //? Загальна к-сть користувачів
+  usersCount: 18, //? К-сть користувачів на одній сторінці
+  currentPage: 1, //? Поточна активна сторінка
   loading: false,
-  followingBlockedBtn: [], // для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
+  followingBlockedBtn: [], //? Для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
 };
 
 // Reducer
@@ -36,7 +36,7 @@ const socialReducer = (
   action: SocialActionsTypes,
 ): InitialStateType => {
   switch (action.type) {
-    // Додаємо користувача
+    //? Додаємо користувача
     case FOLLOW:
       return {
         ...state,
@@ -49,7 +49,7 @@ const socialReducer = (
         }),
       };
 
-    // Видаляємо користувача
+    //? Видаляємо користувача
     case UN_FOLLOW:
       return {
         ...state,
@@ -62,26 +62,26 @@ const socialReducer = (
         }),
       };
 
-    // Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
+    //? Встановлюємо (відображаємо) користувачів в стейт (на сторінці)
     case SET_USERS:
       return {
         ...state,
         socialUsers: [...action.socialUsers],
       };
 
-    // Навігація постранічного вивода користувачів
+    //? Навігація постранічного вивода користувачів
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.currentPage };
 
-    // Отримуємо всю к-сть користувачів з сервера
+    //? Отримуємо всю к-сть користувачів з сервера
     case SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.totalUsersCount };
 
-    // Додаємо загрузчик
+    //? Додаємо загрузчик
     case LOADING:
       return { ...state, loading: action.loading };
 
-    // Блокуємо кнопку при натисканні
+    //? Блокуємо кнопку при натисканні
     case FOLLOWING_BLOCKED_BTN:
       return {
         ...state,
@@ -100,8 +100,7 @@ const socialReducer = (
 export default socialReducer;
 
 // TC: Thunk creator - anonym function and HOC - fetchSocialUsersTC
-
-// Санка (thunk creator) для отримання користувачів
+//? Санка (thunk creator) для отримання користувачів
 export const fetchSocialUsersTC = (
   currentPage: number,
   usersCount: number,
@@ -121,7 +120,7 @@ export const fetchSocialUsersTC = (
   };
 };
 
-// Санка (TC) для отримання користувачів при переходах по пагінації
+//? Санка (TC) для отримання користувачів при переходах по пагінації
 export const fetchSocialUsersOnChangedPageTC = (
   pageNumber: number,
   usersCount: number,
@@ -140,7 +139,7 @@ export const fetchSocialUsersOnChangedPageTC = (
   };
 };
 
-// ТС для додавання користувача
+//? ТС для додавання користувача
 export const setFollowUserTC = (userId: number): SocialThunkType => {
   return async (dispatch) => {
     await setFollowUnfollowAC(
@@ -152,7 +151,7 @@ export const setFollowUserTC = (userId: number): SocialThunkType => {
   };
 };
 
-// ТС для видалення користувача
+//? ТС для видалення користувача
 export const setUnFollowUserTC = (userId: number): SocialThunkType => {
   return async (dispatch) => {
     await setFollowUnfollowAC(
