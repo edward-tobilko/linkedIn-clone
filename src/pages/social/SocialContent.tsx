@@ -20,6 +20,7 @@ import {
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { useSocialUsers } from "../../hooks/useSocialUsers";
 
 import { SocialContentLoader } from "../../components/UI/loaders/social-loaders/SocialContentLoader";
 import SocialUsersList from "./SocialUsersList";
@@ -35,6 +36,7 @@ import {
   loadingSelector,
   followingBlockedBtnSelector,
   isAuthSelector,
+  searchTermSelector,
 } from "../../utils/selectors/socialSelectors";
 
 const mapStateToProps = (state: RootState): SocialContentProps => {
@@ -46,6 +48,7 @@ const mapStateToProps = (state: RootState): SocialContentProps => {
     loading: loadingSelector(state),
     followingBlockedBtn: followingBlockedBtnSelector(state),
     isAuth: isAuthSelector(state),
+    searchTerm: searchTermSelector(state),
   };
 };
 
@@ -80,11 +83,16 @@ const SocialContent: FC<SocialContentProps> = ({
   loading,
   followingBlockedBtn,
   isAuth,
+  searchTerm,
 }) => {
   const dispatch = useTypeDispatch();
 
+  const searchedUsers = useSocialUsers(socialUsers, searchTerm.term);
+
   const { fetching } = useFetching(async () => {
-    await dispatch(fetchSocialUsersTC(currentPage, usersCount));
+    await dispatch(
+      fetchSocialUsersTC(currentPage, usersCount, searchTerm.term),
+    );
   });
 
   const onChangedPage = (pageNumber: number) => {
@@ -119,7 +127,7 @@ const SocialContent: FC<SocialContentProps> = ({
           <SocialUsersListStyle>
             {socialUsers?.length ? (
               <SocialUsersList
-                socialUsers={socialUsers}
+                searchedUsers={searchedUsers}
                 followingBlockedBtn={followingBlockedBtn}
                 setFollowUserTC={setFollowUserTC}
                 setUnFollowUserTC={setUnFollowUserTC}

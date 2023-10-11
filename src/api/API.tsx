@@ -24,10 +24,14 @@ export const instance = axios.create({
 // For the Social component
 export const socialUsersAPI = {
   //? Отримуємо користувачів
-  async fetchSocialUsers(currentPage: number, usersCount: number) {
+  async fetchSocialUsers(
+    currentPage: number,
+    usersCount: number,
+    searchTerm: string,
+  ) {
     return await instance
       .get<FetchSocialUsersApiType>(
-        `users?page=${currentPage}&count=${usersCount}`,
+        `users?page=${currentPage}&count=${usersCount}$term=${searchTerm}`,
       )
       .then((res) => res.data);
   },

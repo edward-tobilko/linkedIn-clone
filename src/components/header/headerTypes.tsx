@@ -7,6 +7,7 @@ type HeaderContainerProps = {
   currentProfilePage: CurrentProfilePageType;
   email: string | null;
   loading: boolean;
+  searchTerm: string;
 };
 
 type LinksTypes = {

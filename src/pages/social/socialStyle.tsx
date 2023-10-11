@@ -25,6 +25,15 @@ export const SocialUsersListStyle = styled.ul`
 `;
 
 // SocialUsersList component
+export const SocialUsersListEmptyStyle = styled.h1`
+  text-align: center;
+  color: ${themeVars.colors.errorColor};
+  font-size: 16px;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+`;
+
+// SocialUsersItem component
 export const SocialUserItemStyle = styled.li`
   max-width: 180px;
   width: 100%;

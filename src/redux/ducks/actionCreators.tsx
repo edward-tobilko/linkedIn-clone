@@ -3,6 +3,7 @@ import {
   SetCurrentPageACType,
   SetFollowUserACType,
   SetFollowingBlockedBtnACType,
+  SetSearchTermACType,
   SetTotalUsersCountACType,
   SetUnFollowUserACType,
   SetUsersACType,
@@ -17,9 +18,9 @@ import {
   SET_TOTAL_USERS_COUNT,
   LOADING,
   FOLLOWING_BLOCKED_BTN,
+  SEARCH_TERM,
 } from "./typesName";
 
-// Social reducer
 const setFollowUserAC = (userId: number): SetFollowUserACType => {
   return {
     type: FOLLOW,
@@ -75,6 +76,13 @@ const setFollowingBlockedBtnAC = (
   };
 };
 
+const setSearchTermAC = (term: string): SetSearchTermACType => {
+  return {
+    type: SEARCH_TERM,
+    payload: { term },
+  };
+};
+
 export default {
   setFollowUserAC,
   setUnFollowUserAC,
@@ -83,4 +91,5 @@ export default {
   setTotalUsersCountAC,
   setLoadingAC,
   setFollowingBlockedBtnAC,
+  setSearchTermAC,
 };

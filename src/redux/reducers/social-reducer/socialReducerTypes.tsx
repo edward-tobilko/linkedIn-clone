@@ -11,6 +11,7 @@ import {
   SET_TOTAL_USERS_COUNT,
   LOADING,
   FOLLOWING_BLOCKED_BTN,
+  SEARCH_TERM,
 } from "../../ducks/typesName";
 
 type Null<T> = T | null;
@@ -35,6 +36,7 @@ type InitialStateType = {
   totalUsersCount: number;
   usersCount: number;
   currentPage: number;
+  searchTerm: { term: string };
   loading: boolean;
   followingBlockedBtn: Array<number>; //? array of users' id
 };
@@ -76,6 +78,11 @@ type SetFollowingBlockedBtnACType = {
   userId: number;
 };
 
+type SetSearchTermACType = {
+  type: typeof SEARCH_TERM;
+  payload: { term: string };
+};
+
 // Types for data response
 type fetchSocialUsersOnChangedPageDataType = {
   items: SocialUserType[];
@@ -91,7 +98,8 @@ type SocialActionsTypes =
   | SetCurrentPageACType
   | SetTotalUsersCountACType
   | SetLoadingACType
-  | SetFollowingBlockedBtnACType;
+  | SetFollowingBlockedBtnACType
+  | SetSearchTermACType;
 
 // Type for thunks
 type SocialThunkType<ReturnType = void> = ThunkAction<
@@ -114,4 +122,5 @@ export {
   SetFollowingBlockedBtnACType,
   SocialThunkType,
   SocialActionsTypes,
+  SetSearchTermACType,
 };

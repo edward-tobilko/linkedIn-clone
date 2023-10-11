@@ -2,21 +2,27 @@ import { FC, ChangeEvent } from "react";
 
 import { SearchInputStyle } from "./searchInputStyle";
 
-import { useMyContext } from "../../../context/Context";
+import { useTypeDispatch } from "../../../hooks/useTypeSelector";
 
-const SearchInput: FC = () => {
-  const props = useMyContext();
+import actionCreators from "../../../redux/ducks/actionCreators";
+
+type SearchInputType = {
+  searchTerm: string;
+};
+
+const SearchInput: FC<SearchInputType> = ({ searchTerm }) => {
+  const dispatch = useTypeDispatch();
 
   return (
     <>
       <i className="bx bx-search"></i>
       <SearchInputStyle
         type="text"
-        placeholder="Search by name..."
+        placeholder="Search user by name..."
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          props?.setSearchUsers(event.target.value)
+          dispatch(actionCreators.setSearchTermAC(event.target.value))
         }
-        value={props?.searchUsers}
+        value={searchTerm}
       />
     </>
   );

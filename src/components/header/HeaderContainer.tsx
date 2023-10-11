@@ -2,6 +2,8 @@ import { FC, MouseEvent, useContext, useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
+import { HeaderContainerProps } from "./headerTypes";
+
 import {
   HeaderLeftStyle,
   HeaderCenterStyle,
@@ -12,10 +14,9 @@ import {
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
 
-import { HeaderContainerProps } from "./headerTypes";
-
 import { setLogoutTC } from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
+import { DropdownContext } from "../../context/DropDownContext";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
@@ -23,8 +24,9 @@ import {
   currentProfilePageSelector,
   loadingSelector,
 } from "../../utils/selectors/profileSelectors";
+import { searchTermSelector } from "../../utils/selectors/socialSelectors";
+
 import { DropdownContent } from "./DropdownContent";
-import { DropdownContext } from "../../context/DropDownContext";
 import SearchInput from "../forms/search-input/SearchInput";
 
 const mapStateToProps = (state: RootState): HeaderContainerProps | any => {
@@ -33,6 +35,7 @@ const mapStateToProps = (state: RootState): HeaderContainerProps | any => {
     currentProfilePage: currentProfilePageSelector(state),
     email: state.authorization.email,
     loading: loadingSelector(state),
+    searchTerm: searchTermSelector(state),
   };
 };
 
@@ -40,6 +43,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   isAuth,
   currentProfilePage,
   email,
+  searchTerm,
 }) => {
   const node = useRef<HTMLDivElement>(null);
   const dispatch = useTypeDispatch();
@@ -92,7 +96,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
       <HeaderStyle ref={node}>
         <HeaderLeftStyle>
           <i className="bx bxs-id-card"></i>
-          <SearchInput />
+          <SearchInput searchTerm={searchTerm} />
         </HeaderLeftStyle>
 
         <HeaderCenterStyle>

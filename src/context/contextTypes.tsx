@@ -25,9 +25,6 @@ interface IStateContext {
   chatUsers: IChatUsers[];
   setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
 
-  searchUsers: string;
-  setSearchUsers: Dispatch<SetStateAction<string>>;
-
   profileEditMode: boolean;
   setProfileEditMode: (profileEditMode: boolean) => void;
 

@@ -15,6 +15,7 @@ import {
   SET_TOTAL_USERS_COUNT,
   LOADING,
   FOLLOWING_BLOCKED_BTN,
+  SEARCH_TERM,
 } from "../../ducks/typesName";
 
 import actionCreators from "../../ducks/actionCreators";
@@ -28,6 +29,9 @@ const initialState: InitialStateType = {
   currentPage: 1, //? Поточна активна сторінка
   loading: false,
   followingBlockedBtn: [], //? Для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
+  searchTerm: {
+    term: "",
+  },
 };
 
 // Reducer
@@ -92,6 +96,13 @@ const socialReducer = (
             ),
       };
 
+    //? Пошук користувача
+    case SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+
     default:
       return state;
   }
@@ -104,12 +115,14 @@ export default socialReducer;
 export const fetchSocialUsersTC = (
   currentPage: number,
   usersCount: number,
+  searchTerm: string,
 ): SocialThunkType => {
   return async (dispatch) => {
     dispatch(actionCreators.setLoadingAC(true));
+    dispatch(actionCreators.setSearchTermAC(searchTerm));
 
     await socialUsersAPI
-      .fetchSocialUsers(currentPage, usersCount)
+      .fetchSocialUsers(currentPage, usersCount, searchTerm)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(actionCreators.setCurrentPageAC(currentPage));
         dispatch(actionCreators.setLoadingAC(false)); // Додаємо загрузчик;

@@ -19,6 +19,7 @@ const SET_USERS = "social/duck/SET-USERS";
 const SET_CURRENT_PAGE = "social/duck/SET-CURRENT-PAGE";
 const SET_TOTAL_USERS_COUNT = "social/duck/SET-TOTAL-USERS-COUNT";
 const FOLLOWING_BLOCKED_BTN = "social/duck/FOLLOWING-BLOCKED-BTN";
+const SEARCH_TERM = "social/duck/SEARCH-TERM";
 
 export {
   CREATE_NEW_POST,
@@ -36,4 +37,5 @@ export {
   SET_CURRENT_PAGE,
   SET_TOTAL_USERS_COUNT,
   FOLLOWING_BLOCKED_BTN,
+  SEARCH_TERM,
 };

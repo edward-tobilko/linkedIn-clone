@@ -9,10 +9,17 @@ type SocialContentProps = {
   loading: boolean;
   followingBlockedBtn: Array<number>;
   isAuth: boolean;
+  searchTerm: {
+    term: string;
+  };
 };
 
 type MapDispatchToPropsType = {
-  fetchSocialUsersTC: (currentPage: number, usersCount: number) => void;
+  fetchSocialUsersTC: (
+    currentPage: number,
+    usersCount: number,
+    searchTerm: string,
+  ) => void;
   fetchSocialUsersOnChangedPageTC: (
     pageNumber: number,
     usersCount: number,
@@ -25,7 +32,7 @@ type OwnPropsType = {};
 
 // SocialUsersList component
 type SocialUsersListProps = {
-  socialUsers?: SocialUserType[];
+  searchedUsers?: SocialUserType[];
   followingBlockedBtn: number[];
   setFollowUserTC: (id: number) => void;
   setUnFollowUserTC: (id: number) => void;

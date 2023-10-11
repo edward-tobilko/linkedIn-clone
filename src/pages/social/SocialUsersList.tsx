@@ -4,23 +4,31 @@ import SocialUsersItem from "./SocialUsersItem";
 
 import { SocialUsersListProps } from "./socialTypes";
 
+import { SocialUsersListEmptyStyle } from "./socialStyle";
+
 const SocialUsersList: FC<SocialUsersListProps> = ({
-  socialUsers,
+  searchedUsers,
   followingBlockedBtn,
   setFollowUserTC,
   setUnFollowUserTC,
 }) => {
   return (
     <>
-      {socialUsers?.map((socialUser) => (
-        <SocialUsersItem
-          key={socialUser?.id}
-          socialUser={socialUser}
-          followingBlockedBtn={followingBlockedBtn}
-          setFollowUserTC={setFollowUserTC}
-          setUnFollowUserTC={setUnFollowUserTC}
-        />
-      ))}
+      {searchedUsers?.length !== 0 ? (
+        <>
+          {searchedUsers?.map((socialUser) => (
+            <SocialUsersItem
+              key={socialUser?.id}
+              socialUser={socialUser}
+              followingBlockedBtn={followingBlockedBtn}
+              setFollowUserTC={setFollowUserTC}
+              setUnFollowUserTC={setUnFollowUserTC}
+            />
+          ))}
+        </>
+      ) : (
+        <SocialUsersListEmptyStyle>Users not found!</SocialUsersListEmptyStyle>
+      )}
     </>
   );
 };
