@@ -7,16 +7,16 @@ import { SocialUsersListProps } from "./socialTypes";
 import { SocialUsersListEmptyStyle } from "./socialStyle";
 
 const SocialUsersList: FC<SocialUsersListProps> = ({
-  searchedUsers,
+  socialUsers,
   followingBlockedBtn,
   setFollowUserTC,
   setUnFollowUserTC,
 }) => {
   return (
     <>
-      {searchedUsers?.length !== 0 ? (
+      {socialUsers?.length !== 0 ? (
         <>
-          {searchedUsers?.map((socialUser) => (
+          {socialUsers?.map((socialUser) => (
             <SocialUsersItem
               key={socialUser?.id}
               socialUser={socialUser}

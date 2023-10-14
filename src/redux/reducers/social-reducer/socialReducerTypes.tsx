@@ -36,7 +36,9 @@ type InitialStateType = {
   totalUsersCount: number;
   usersCount: number;
   currentPage: number;
-  searchTerm: { term: string };
+  searchTerm: {
+    term: string;
+  };
   loading: boolean;
   followingBlockedBtn: Array<number>; //? array of users' id
 };

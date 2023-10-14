@@ -31,4 +31,4 @@ export const followingBlockedBtnSelector = (state: RootState) =>
 export const isAuthSelector = (state: RootState) => state.authorization.isAuth;
 
 export const searchTermSelector = (state: RootState) =>
-  state.socialPage.searchTerm;
+  state.socialPage.searchTerm.term;

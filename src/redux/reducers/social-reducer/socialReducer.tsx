@@ -22,6 +22,8 @@ import actionCreators from "../../ducks/actionCreators";
 
 import { setFollowUnfollowAC } from "../../../utils/helper-functions/helperReducerFunctions";
 
+export type SearchTermType = typeof initialState.searchTerm; //? Виділили окремо тип для searchTerm з initialState
+
 const initialState: InitialStateType = {
   socialUsers: [],
   totalUsersCount: 0, //? Загальна к-сть користувачів
@@ -29,9 +31,7 @@ const initialState: InitialStateType = {
   currentPage: 1, //? Поточна активна сторінка
   loading: false,
   followingBlockedBtn: [], //? Для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
-  searchTerm: {
-    term: "",
-  },
+  searchTerm: { term: "" },
 };
 
 // Reducer
@@ -119,15 +119,15 @@ export const fetchSocialUsersTC = (
 ): SocialThunkType => {
   return async (dispatch) => {
     dispatch(actionCreators.setLoadingAC(true));
+    dispatch(actionCreators.setCurrentPageAC(currentPage));
     dispatch(actionCreators.setSearchTermAC(searchTerm));
 
     await socialUsersAPI
       .fetchSocialUsers(currentPage, usersCount, searchTerm)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
-        dispatch(actionCreators.setCurrentPageAC(currentPage));
-        dispatch(actionCreators.setLoadingAC(false)); // Додаємо загрузчик;
-        dispatch(actionCreators.setUsersAC(data.items)); // Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
-        dispatch(actionCreators.setTotalUsersCountAC(data.totalCount)); // Отримуємо всю к-сть користувачів з сервера;
+        dispatch(actionCreators.setLoadingAC(false)); //? Додаємо загрузчик;
+        dispatch(actionCreators.setUsersAC(data.items)); //? Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
+        dispatch(actionCreators.setTotalUsersCountAC(data.totalCount)); //? Отримуємо всю к-сть користувачів з сервера;
       })
       .catch((error) => console.log("Error:", error));
   };
@@ -137,13 +137,15 @@ export const fetchSocialUsersTC = (
 export const fetchSocialUsersOnChangedPageTC = (
   pageNumber: number,
   usersCount: number,
+  searchTerm: string,
 ): SocialThunkType => {
   return (dispatch) => {
-    dispatch(actionCreators.setCurrentPageAC(pageNumber)); // Навігація постранічного вивода користувачів (показуємо стиль кнопок);
+    dispatch(actionCreators.setCurrentPageAC(pageNumber)); //? Навігація постранічного вивода користувачів (показуємо стиль кнопок);
     dispatch(actionCreators.setLoadingAC(true));
+    dispatch(actionCreators.setSearchTermAC(searchTerm));
 
     socialUsersAPI
-      .fetchChangedPageUsers(pageNumber, usersCount)
+      .fetchChangedPageUsers(pageNumber, usersCount, searchTerm)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(actionCreators.setLoadingAC(false));
         dispatch(actionCreators.setUsersAC(data.items));

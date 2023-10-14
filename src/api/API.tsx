@@ -31,16 +31,20 @@ export const socialUsersAPI = {
   ) {
     return await instance
       .get<FetchSocialUsersApiType>(
-        `users?page=${currentPage}&count=${usersCount}$term=${searchTerm}`,
+        `users?page=${currentPage}&count=${usersCount}&term=${searchTerm}`,
       )
       .then((res) => res.data);
   },
 
   //? Отримуємо користувачів при пагінації
-  async fetchChangedPageUsers(pageNumber: number, usersCount: number) {
+  async fetchChangedPageUsers(
+    pageNumber: number,
+    usersCount: number,
+    searchTerm: string,
+  ) {
     return await instance
       .get<FetchSocialUsersApiType>(
-        `users?page=${pageNumber}&count=${usersCount}`,
+        `users?page=${pageNumber}&count=${usersCount}&term=${searchTerm}`,
       )
       .then((res) => res.data);
   },

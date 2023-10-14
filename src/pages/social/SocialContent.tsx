@@ -20,7 +20,6 @@ import {
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { useSocialUsers } from "../../hooks/useSocialUsers";
 
 import { SocialContentLoader } from "../../components/UI/loaders/social-loaders/SocialContentLoader";
 import SocialUsersList from "./SocialUsersList";
@@ -48,7 +47,7 @@ const mapStateToProps = (state: RootState): SocialContentProps => {
     loading: loadingSelector(state),
     followingBlockedBtn: followingBlockedBtnSelector(state),
     isAuth: isAuthSelector(state),
-    searchTerm: searchTermSelector(state),
+    term: searchTermSelector(state),
   };
 };
 
@@ -83,20 +82,18 @@ const SocialContent: FC<SocialContentProps> = ({
   loading,
   followingBlockedBtn,
   isAuth,
-  searchTerm,
+  term,
 }) => {
   const dispatch = useTypeDispatch();
 
-  const searchedUsers = useSocialUsers(socialUsers, searchTerm.term);
-
   const { fetching } = useFetching(async () => {
-    await dispatch(
-      fetchSocialUsersTC(currentPage, usersCount, searchTerm.term),
-    );
+    dispatch(fetchSocialUsersTC(currentPage, usersCount, ""));
   });
 
-  const onChangedPage = (pageNumber: number) => {
-    dispatch(fetchSocialUsersOnChangedPageTC(pageNumber, usersCount));
+  const onChangedPage = (pageNumber: number, searchTerm: string) => {
+    dispatch(
+      fetchSocialUsersOnChangedPageTC(pageNumber, usersCount, searchTerm),
+    );
   };
 
   useEffect(() => {
@@ -119,6 +116,7 @@ const SocialContent: FC<SocialContentProps> = ({
           usersCount={usersCount}
           currentPage={currentPage}
           onChangedPage={onChangedPage}
+          term={term}
         />
 
         {loading ? (
@@ -127,7 +125,7 @@ const SocialContent: FC<SocialContentProps> = ({
           <SocialUsersListStyle>
             {socialUsers?.length ? (
               <SocialUsersList
-                searchedUsers={searchedUsers}
+                socialUsers={socialUsers}
                 followingBlockedBtn={followingBlockedBtn}
                 setFollowUserTC={setFollowUserTC}
                 setUnFollowUserTC={setUnFollowUserTC}

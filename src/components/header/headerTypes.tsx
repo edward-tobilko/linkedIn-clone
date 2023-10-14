@@ -8,6 +8,8 @@ type HeaderContainerProps = {
   email: string | null;
   loading: boolean;
   searchTerm: string;
+  usersCount: number;
+  currentPage: number;
 };
 
 type LinksTypes = {

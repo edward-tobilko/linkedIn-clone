@@ -17,6 +17,7 @@ import { AvatarImgStyle } from "../../rootStyles";
 import { setLogoutTC } from "../../redux/reducers/auth-reducer/authReducer";
 import { RootState } from "../../redux/store";
 import { DropdownContext } from "../../context/DropDownContext";
+import { fetchSocialUsersTC } from "../../redux/reducers/social-reducer/socialReducer";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
@@ -24,18 +25,24 @@ import {
   currentProfilePageSelector,
   loadingSelector,
 } from "../../utils/selectors/profileSelectors";
-import { searchTermSelector } from "../../utils/selectors/socialSelectors";
+import {
+  currentPageSelector,
+  usersCountSelector,
+} from "../../utils/selectors/socialSelectors";
 
 import { DropdownContent } from "./DropdownContent";
 import SearchInput from "../forms/search-input/SearchInput";
 
-const mapStateToProps = (state: RootState): HeaderContainerProps | any => {
+const mapStateToProps = (state: RootState): HeaderContainerProps => {
   return {
     isAuth: state.authorization.isAuth,
+
+    // @ts-ignore
     currentProfilePage: currentProfilePageSelector(state),
     email: state.authorization.email,
     loading: loadingSelector(state),
-    searchTerm: searchTermSelector(state),
+    currentPage: currentPageSelector(state),
+    usersCount: usersCountSelector(state),
   };
 };
 
@@ -43,7 +50,8 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   isAuth,
   currentProfilePage,
   email,
-  searchTerm,
+  currentPage,
+  usersCount,
 }) => {
   const node = useRef<HTMLDivElement>(null);
   const dispatch = useTypeDispatch();
@@ -67,6 +75,10 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
 
   const handleClick = (clicked: string) => {
     setIsClicked({ ...initialClickedState, [clicked]: true });
+  };
+
+  const onSearchTermChanged = (searchTerm: string) => {
+    dispatch(fetchSocialUsersTC(currentPage, usersCount, searchTerm));
   };
 
   useEffect(() => {
@@ -96,7 +108,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
       <HeaderStyle ref={node}>
         <HeaderLeftStyle>
           <i className="bx bxs-id-card"></i>
-          <SearchInput searchTerm={searchTerm} />
+          <SearchInput onSearchTermChanged={onSearchTermChanged} />
         </HeaderLeftStyle>
 
         <HeaderCenterStyle>
@@ -171,7 +183,15 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   );
 };
 
-export default connect<HeaderContainerProps, {}, {}, RootState>(
-  mapStateToProps,
+export default connect<
+  HeaderContainerProps,
+  {
+    fetchSocialUsersTC: (
+      currentPage: number,
+      usersCount: number,
+      searchTerm: string,
+    ) => void;
+  },
   {},
-)(HeaderContainer);
+  RootState
+>(mapStateToProps, { fetchSocialUsersTC })(HeaderContainer);

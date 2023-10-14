@@ -1,29 +1,41 @@
-import { FC, ChangeEvent } from "react";
+import { FC } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { SearchInputStyle } from "./searchInputStyle";
 
-import { useTypeDispatch } from "../../../hooks/useTypeSelector";
-
-import actionCreators from "../../../redux/ducks/actionCreators";
-
 type SearchInputType = {
+  onSearchTermChanged: (searchTerm: string) => void;
+};
+
+type FormType = {
   searchTerm: string;
 };
 
-const SearchInput: FC<SearchInputType> = ({ searchTerm }) => {
-  const dispatch = useTypeDispatch();
+const SearchInput: FC<SearchInputType> = ({ onSearchTermChanged }) => {
+  const { handleSubmit, register } = useForm<FormType>({
+    defaultValues: {
+      searchTerm: "",
+    },
+  });
+
+  const onSubmit: SubmitHandler<any> = (data) => {
+    onSearchTermChanged(data.searchTerm);
+
+    console.log(data.searchTerm);
+  };
 
   return (
     <>
-      <i className="bx bx-search"></i>
-      <SearchInputStyle
-        type="text"
-        placeholder="Search user by name..."
-        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          dispatch(actionCreators.setSearchTermAC(event.target.value))
-        }
-        value={searchTerm}
-      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <i className="bx bx-search"></i>
+        <SearchInputStyle
+          type="text"
+          placeholder="Search user by name..."
+          {...register("searchTerm")}
+        />
+
+        <button type="submit">Find</button>
+      </form>
     </>
   );
 };
