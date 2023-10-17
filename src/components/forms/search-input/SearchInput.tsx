@@ -1,41 +1,52 @@
 import { FC } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { SearchInputStyle } from "./searchInputStyle";
+import { SearchFormStyle, SearchInputStyle } from "./searchInputStyle";
 
 type SearchInputType = {
-  onSearchTermChanged: (searchTerm: string) => void;
+  onSearchTermChanged: (
+    searchTerm: string,
+    filteredFriends: null | boolean,
+  ) => void;
 };
 
 type FormType = {
   searchTerm: string;
+  filteredFriends: null | boolean;
 };
 
 const SearchInput: FC<SearchInputType> = ({ onSearchTermChanged }) => {
-  const { handleSubmit, register } = useForm<FormType>({
+  const { handleSubmit, register, setValue } = useForm<FormType>({
     defaultValues: {
       searchTerm: "",
+      filteredFriends: null,
     },
   });
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    onSearchTermChanged(data.searchTerm);
-
-    console.log(data.searchTerm);
+  const onSubmit: SubmitHandler<FormType> = (data) => {
+    onSearchTermChanged(data.searchTerm, data.filteredFriends);
+    // setValue("searchTerm", "");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <i className="bx bx-search"></i>
+      <SearchFormStyle onSubmit={handleSubmit(onSubmit)}>
+        <button type="submit" className="searchBtn">
+          <i className="bx bx-search"></i>
+        </button>
+
         <SearchInputStyle
           type="text"
           placeholder="Search user by name..."
           {...register("searchTerm")}
         />
 
-        <button type="submit">Find</button>
-      </form>
+        <select {...register("filteredFriends")}>
+          <option defaultValue="null">All</option>
+          <option value="true">Followed Users</option>
+          <option value="false">UnFollowed Users</option>
+        </select>
+      </SearchFormStyle>
     </>
   );
 };

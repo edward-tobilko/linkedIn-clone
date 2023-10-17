@@ -49,7 +49,7 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
             </p>
 
             <span className="network__management-count">
-              {result.paginationLengthCount}
+              {result.totalPagesCount}
             </span>
           </li>
           <li className="network__management-list">

@@ -63,12 +63,16 @@ const SocialUsersItem: FC<SocialUsersItemProps> = ({
             </SocialUsersItemRemoveBtn>
           </div>
 
-          <FollowBtn
-            socialUser={socialUser}
-            followingBlockedBtn={followingBlockedBtn}
-            setUnFollowUserTC={setUnFollowUserTC}
-            setFollowUserTC={setFollowUserTC}
-          />
+          {socialUser.id === 29793 ? (
+            <h1 style={{ paddingBottom: 25 }}>It's me</h1>
+          ) : (
+            <FollowBtn
+              socialUser={socialUser}
+              followingBlockedBtn={followingBlockedBtn}
+              setUnFollowUserTC={setUnFollowUserTC}
+              setFollowUserTC={setFollowUserTC}
+            />
+          )}
         </div>
       </SocialUserItemStyle>
     </>

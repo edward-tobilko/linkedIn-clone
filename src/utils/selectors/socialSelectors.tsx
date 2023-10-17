@@ -32,3 +32,6 @@ export const isAuthSelector = (state: RootState) => state.authorization.isAuth;
 
 export const searchTermSelector = (state: RootState) =>
   state.socialPage.searchTerm.term;
+
+export const filteredUsersSelector = (state: RootState) =>
+  state.socialPage.searchTerm.friend;

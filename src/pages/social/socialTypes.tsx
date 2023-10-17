@@ -10,6 +10,7 @@ type SocialContentProps = {
   followingBlockedBtn: Array<number>;
   isAuth: boolean;
   term: string;
+  friend: null | boolean;
 };
 
 type MapDispatchToPropsType = {
@@ -17,11 +18,13 @@ type MapDispatchToPropsType = {
     currentPage: number,
     usersCount: number,
     searchTerm: string,
+    filteredFriends: null | boolean,
   ) => void;
   fetchSocialUsersOnChangedPageTC: (
     pageNumber: number,
     usersCount: number,
     searchTerm: string,
+    filteredFriends: null | boolean,
   ) => void;
   setFollowUserTC: (id: number) => void;
   setUnFollowUserTC: (id: number) => void;

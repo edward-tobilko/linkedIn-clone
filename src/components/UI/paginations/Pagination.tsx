@@ -11,6 +11,7 @@ export const Pagination: FC<PaginationProps> = ({
   currentPage,
   onChangedPage,
   term,
+  friend,
 }) => {
   const [lengthNumber, setLengthNumber] = useState(1);
 
@@ -48,7 +49,7 @@ export const Pagination: FC<PaginationProps> = ({
           <p key={index}>
             <span
               className={currentPage === page ? "active__page" : undefined}
-              onClick={() => onChangedPage(page, term)}
+              onClick={() => onChangedPage(page, term, friend)}
             >
               {page}
             </span>

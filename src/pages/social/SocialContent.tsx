@@ -36,6 +36,7 @@ import {
   followingBlockedBtnSelector,
   isAuthSelector,
   searchTermSelector,
+  filteredUsersSelector,
 } from "../../utils/selectors/socialSelectors";
 
 const mapStateToProps = (state: RootState): SocialContentProps => {
@@ -48,6 +49,7 @@ const mapStateToProps = (state: RootState): SocialContentProps => {
     followingBlockedBtn: followingBlockedBtnSelector(state),
     isAuth: isAuthSelector(state),
     term: searchTermSelector(state),
+    friend: filteredUsersSelector(state),
   };
 };
 
@@ -83,16 +85,26 @@ const SocialContent: FC<SocialContentProps> = ({
   followingBlockedBtn,
   isAuth,
   term,
+  friend,
 }) => {
   const dispatch = useTypeDispatch();
 
   const { fetching } = useFetching(async () => {
-    dispatch(fetchSocialUsersTC(currentPage, usersCount, ""));
+    dispatch(fetchSocialUsersTC(currentPage, usersCount, "", null));
   });
 
-  const onChangedPage = (pageNumber: number, searchTerm: string) => {
+  const onChangedPage = (
+    pageNumber: number,
+    searchTerm: string,
+    filteredFriends: null | boolean,
+  ) => {
     dispatch(
-      fetchSocialUsersOnChangedPageTC(pageNumber, usersCount, searchTerm),
+      fetchSocialUsersOnChangedPageTC(
+        pageNumber,
+        usersCount,
+        searchTerm,
+        filteredFriends,
+      ),
     );
   };
 
@@ -117,6 +129,7 @@ const SocialContent: FC<SocialContentProps> = ({
           currentPage={currentPage}
           onChangedPage={onChangedPage}
           term={term}
+          friend={friend}
         />
 
         {loading ? (

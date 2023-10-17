@@ -38,6 +38,7 @@ type InitialStateType = {
   currentPage: number;
   searchTerm: {
     term: string;
+    friend: null | boolean;
   };
   loading: boolean;
   followingBlockedBtn: Array<number>; //? array of users' id
@@ -82,7 +83,7 @@ type SetFollowingBlockedBtnACType = {
 
 type SetSearchTermACType = {
   type: typeof SEARCH_TERM;
-  payload: { term: string };
+  payload: { term: string; friend: null | boolean };
 };
 
 // Types for data response

@@ -31,7 +31,7 @@ const initialState: InitialStateType = {
   currentPage: 1, //? Поточна активна сторінка
   loading: false,
   followingBlockedBtn: [], //? Для засвітлювання кнопки, щоб не натиснути більше ніж один раз поки запит йде на сервер
-  searchTerm: { term: "" },
+  searchTerm: { term: "", friend: null },
 };
 
 // Reducer
@@ -115,15 +115,16 @@ export default socialReducer;
 export const fetchSocialUsersTC = (
   currentPage: number,
   usersCount: number,
-  searchTerm: string,
+  searchedTerm: string,
+  filteredFriends: null | boolean,
 ): SocialThunkType => {
   return async (dispatch) => {
     dispatch(actionCreators.setLoadingAC(true));
     dispatch(actionCreators.setCurrentPageAC(currentPage));
-    dispatch(actionCreators.setSearchTermAC(searchTerm));
+    dispatch(actionCreators.setSearchTermAC(searchedTerm, filteredFriends));
 
     await socialUsersAPI
-      .fetchSocialUsers(currentPage, usersCount, searchTerm)
+      .fetchSocialUsers(currentPage, usersCount, searchedTerm, filteredFriends)
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(actionCreators.setLoadingAC(false)); //? Додаємо загрузчик;
         dispatch(actionCreators.setUsersAC(data.items)); //? Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
@@ -138,14 +139,20 @@ export const fetchSocialUsersOnChangedPageTC = (
   pageNumber: number,
   usersCount: number,
   searchTerm: string,
+  filteredFriends: null | boolean,
 ): SocialThunkType => {
   return (dispatch) => {
     dispatch(actionCreators.setCurrentPageAC(pageNumber)); //? Навігація постранічного вивода користувачів (показуємо стиль кнопок);
     dispatch(actionCreators.setLoadingAC(true));
-    dispatch(actionCreators.setSearchTermAC(searchTerm));
+    dispatch(actionCreators.setSearchTermAC(searchTerm, filteredFriends));
 
     socialUsersAPI
-      .fetchChangedPageUsers(pageNumber, usersCount, searchTerm)
+      .fetchChangedPageUsers(
+        pageNumber,
+        usersCount,
+        searchTerm,
+        filteredFriends,
+      )
       .then((data: fetchSocialUsersOnChangedPageDataType) => {
         dispatch(actionCreators.setLoadingAC(false));
         dispatch(actionCreators.setUsersAC(data.items));

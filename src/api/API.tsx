@@ -27,11 +27,13 @@ export const socialUsersAPI = {
   async fetchSocialUsers(
     currentPage: number,
     usersCount: number,
-    searchTerm: string,
+    searchTerm: string = "",
+    filteredFriends: null | boolean = null,
   ) {
     return await instance
       .get<FetchSocialUsersApiType>(
-        `users?page=${currentPage}&count=${usersCount}&term=${searchTerm}`,
+        `users?page=${currentPage}&count=${usersCount}&term=${searchTerm}` +
+          (filteredFriends === null ? "" : `&friend=${filteredFriends}`),
       )
       .then((res) => res.data);
   },
@@ -40,11 +42,13 @@ export const socialUsersAPI = {
   async fetchChangedPageUsers(
     pageNumber: number,
     usersCount: number,
-    searchTerm: string,
+    searchTerm: string = "",
+    filteredFriends: null | boolean = null,
   ) {
     return await instance
       .get<FetchSocialUsersApiType>(
-        `users?page=${pageNumber}&count=${usersCount}&term=${searchTerm}`,
+        `users?page=${pageNumber}&count=${usersCount}&term=${searchTerm}` +
+          (filteredFriends === null ? "" : `&friend=${filteredFriends}`),
       )
       .then((res) => res.data);
   },

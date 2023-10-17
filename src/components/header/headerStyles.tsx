@@ -12,16 +12,8 @@ export const HeaderStyle = styled.header`
 `;
 
 export const HeaderLeftStyle = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
-
-  .bx-search {
-    position: absolute;
-    top: 50%;
-    left: 50px;
-    transform: translateY(-50%);
-  }
 
   .bxs-id-card {
     font-size: 35px;

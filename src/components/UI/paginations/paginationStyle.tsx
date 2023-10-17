@@ -7,7 +7,7 @@ export const PaginationStyle = styled.div`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   cursor: pointer;
@@ -35,6 +35,7 @@ export const PaginationStyle = styled.div`
     padding: 12px;
     background: ${themeVars.colors.lightGreyColor};
     border-radius: 50%;
+    margin: 0 5px;
 
     span {
       font-size: 14.5px;

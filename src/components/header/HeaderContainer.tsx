@@ -77,8 +77,18 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     setIsClicked({ ...initialClickedState, [clicked]: true });
   };
 
-  const onSearchTermChanged = (searchTerm: string) => {
-    dispatch(fetchSocialUsersTC(currentPage, usersCount, searchTerm));
+  const onSearchTermChanged = (
+    searchedTerm: string,
+    filteredFriends: null | boolean,
+  ) => {
+    dispatch(
+      fetchSocialUsersTC(
+        currentPage,
+        usersCount,
+        searchedTerm,
+        filteredFriends,
+      ),
+    );
   };
 
   useEffect(() => {
@@ -190,6 +200,7 @@ export default connect<
       currentPage: number,
       usersCount: number,
       searchTerm: string,
+      filteredFriends: null | boolean,
     ) => void;
   },
   {},

@@ -76,10 +76,13 @@ const setFollowingBlockedBtnAC = (
   };
 };
 
-const setSearchTermAC = (term: string): SetSearchTermACType => {
+const setSearchTermAC = (
+  term: string,
+  friend: null | boolean,
+): SetSearchTermACType => {
   return {
     type: SEARCH_TERM,
-    payload: { term },
+    payload: { term, friend },
   };
 };
 
