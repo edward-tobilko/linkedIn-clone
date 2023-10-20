@@ -11,6 +11,7 @@ import Auth from "./pages/auth/AuthContainer";
 import Social from "./pages/social/Social";
 import Profile from "./pages/profile/Profile";
 import UserProfile from "./pages/profile/UserProfile";
+import MyTasks from "./pages/my-tasks/MyTasks";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
 import { RootLoader } from "./components/UI/loaders/root-loader/RootLoader";
@@ -108,11 +109,12 @@ const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
           <Route index path="/" element={<Navigate to={"/profile"} />} />
         </Route>
         <Route path="user-profile" element={<UserProfile />} />
-        <Route path="social" element={<Social />} />
+        <Route path="users" element={<Social />} />
         <Route path="messages">
           <Route path=":id?" element={<Messages />} />
         </Route>
         <Route path="setting" element={<Setting />} />
+        <Route path="my-tasks" element={<MyTasks />} />
         <Route path="login" element={<Auth />} />
         <Route path="not-found" element={<NotFound />} />
 

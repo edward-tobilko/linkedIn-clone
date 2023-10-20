@@ -127,7 +127,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
               <i className="bx bxs-home"></i>
               <p>Home</p>
             </NavLink>
-            <NavLink to="/social">
+            <NavLink to="/users">
               <i className="bx bx-group"></i>
               <p>Social</p>
             </NavLink>

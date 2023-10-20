@@ -1,6 +1,7 @@
 import { ComponentType, FC, useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import {
   fetchSocialUsersTC,
@@ -88,6 +89,11 @@ const SocialContent: FC<SocialContentProps> = ({
   friend,
 }) => {
   const dispatch = useTypeDispatch();
+  const navigate = useNavigate();
+
+  // const location = useLocation();
+  // const [searchParams] = useSearchParams(location.search);
+  // console.log(searchParams.get(`?term=${term}&friend=${friend}`));
 
   const { fetching } = useFetching(async () => {
     dispatch(fetchSocialUsersTC(currentPage, usersCount, "", null));
@@ -107,6 +113,11 @@ const SocialContent: FC<SocialContentProps> = ({
       ),
     );
   };
+
+  useEffect(() => {
+    //? Відображаємо URL посилання в адресній строкі
+    navigate(`?term=${term}&friend=${friend}&page=${currentPage}`);
+  }, [term, friend, currentPage]);
 
   useEffect(() => {
     fetching();
