@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Navigate } from "react-router-dom";
-import { connect } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 
@@ -13,29 +12,19 @@ import {
   captchaSelector,
   isAuthSelector,
 } from "../../utils/selectors/authSelectors";
-import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { useTypeDispatch, useTypeSelector } from "../../hooks/useTypeSelector";
 
 import { setLoginTC } from "../../redux/reducers/auth-reducer/authReducer";
-import { RootState } from "../../redux/store";
 
-import {
-  AuthContainerProps,
-  AuthFormType,
-  MapDispatchToPropsType,
-  OwnPropsType,
-} from "./authTypes";
+import { AuthFormType } from "./authTypes";
 
-const mapStateToProps = (state: RootState): AuthContainerProps => ({
-  isAuth: isAuthSelector(state),
-  captchaUrl: captchaSelector(state),
-  authLoginBtnLoading: state.authorization.authLoginBtnLoading,
-});
+const AuthContainer: FC = () => {
+  const isAuth = useTypeSelector(isAuthSelector);
+  const captchaUrl = useTypeSelector(captchaSelector);
+  const authLoginBtnLoading = useTypeSelector(
+    (state) => state.authorization.authLoginBtnLoading,
+  );
 
-const AuthContainer: FC<AuthContainerProps> = ({
-  isAuth,
-  captchaUrl,
-  authLoginBtnLoading,
-}) => {
   const dispatch = useTypeDispatch();
 
   const authForm = useForm<AuthFormType>({
@@ -63,7 +52,6 @@ const AuthContainer: FC<AuthContainerProps> = ({
     }
 
     const { email, password, rememberMe, captcha } = data;
-    console.log(data);
 
     dispatch(setLoginTC(email, password, rememberMe, captcha));
   };
@@ -84,17 +72,4 @@ const AuthContainer: FC<AuthContainerProps> = ({
   );
 };
 
-//? <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState> - в connect потрібно передати дженериком 4 параметра: 1 - props, які ми прокинули в компоненту, 2 - mapDispatchToProps: ф-ї (AC or TC), 3 - власні параметри, які ми створимо в компоненті, 4 - mapStateToProps: initialState (RootState), який ми прокидуємо з reducer (authReducer).
-
-// Connect your component with redux
-export default connect<
-  AuthContainerProps,
-  MapDispatchToPropsType,
-  OwnPropsType,
-  RootState
->(mapStateToProps, {
-  //? Коли ми передаємо TC або AC-функції в HOC connect, то він нам автоматично створює callback з такою ж самою назвою, параметрами і тд.
-
-  // CT для логірування користувача
-  setLoginTC,
-})(AuthContainer);
+export default AuthContainer;
