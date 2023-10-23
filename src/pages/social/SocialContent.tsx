@@ -1,7 +1,7 @@
 import { ComponentType, FC, useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import {
   fetchSocialUsersTC,
@@ -89,14 +89,21 @@ const SocialContent: FC<SocialContentProps> = ({
   friend,
 }) => {
   const dispatch = useTypeDispatch();
-  const navigate = useNavigate();
 
-  // const location = useLocation();
-  // const [searchParams] = useSearchParams(location.search);
-  // console.log(searchParams.get(`?term=${term}&friend=${friend}`));
+  const [searchParams, setSearchParams] = useSearchParams();
+  let actualQueryParamsCurrentPage: number;
+  let actualQueryParamsTerm: string;
+  let actualQueryParamsFriend: null | boolean;
 
   const { fetching } = useFetching(async () => {
-    dispatch(fetchSocialUsersTC(currentPage, usersCount, "", null));
+    dispatch(
+      fetchSocialUsersTC(
+        actualQueryParamsCurrentPage,
+        usersCount,
+        actualQueryParamsTerm,
+        actualQueryParamsFriend,
+      ),
+    );
   });
 
   const onChangedPage = (
@@ -114,14 +121,40 @@ const SocialContent: FC<SocialContentProps> = ({
     );
   };
 
+  //? 1 - Спочатку синхронізуємо (відображаємо) дані з BLL
   useEffect(() => {
-    //? Відображаємо URL посилання в адресній строкі
-    navigate(`?term=${term}&friend=${friend}&page=${currentPage}`);
-  }, [term, friend, currentPage]);
+    const result: any = {};
 
-  useEffect(() => {
+    for (const [key, value] of searchParams.entries()) {
+      let numberValue: number | string | boolean = Number(value);
+
+      if (isNaN(numberValue)) numberValue = value;
+
+      if (value === "true") {
+        numberValue = true;
+      } else if (value === "false") {
+        numberValue = false;
+      }
+
+      result[key] = numberValue;
+    }
+
+    actualQueryParamsCurrentPage = result.page || currentPage;
+    actualQueryParamsTerm = result.term || term;
+    actualQueryParamsFriend = result.friend || friend;
+
     fetching();
   }, [dispatch]);
+
+  //? 2 - А потім відображаємо URL посилання в адресній строкі з UI
+  useEffect(() => {
+    const urlQuery =
+      (term === "" ? "" : `&term=${term}`) +
+      (friend === null ? "" : `&friend=${friend}`) +
+      (currentPage === 1 ? `&page=1` : `&page=${currentPage}`);
+
+    setSearchParams(urlQuery);
+  }, [term, friend, currentPage]);
 
   return (
     <>

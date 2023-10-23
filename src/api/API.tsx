@@ -4,7 +4,6 @@ import { CurrentProfilePageType } from "../pages/profile/profileTypes";
 import {
   AuthMeApiType,
   DownloadPhotoApiType,
-  FetchCurrentUserPageByIdApiType,
   FetchSocialUsersApiType,
   FollowUnfollowApiType,
   LoginApiDataType,
