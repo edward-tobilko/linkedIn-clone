@@ -127,11 +127,13 @@ export const UserProfileStyle = styled.div`
           color: ${themeVars.colors.lightGreyColor};
           padding: 7px 0;
           word-break: break-word;
+          position: absolute;
         }
 
         &-descriptions {
           border-bottom: 0.5px solid ${themeVars.colors.lightGreyColor};
           padding-bottom: 10px;
+          padding-top: 60px;
 
           &-title {
             letter-spacing: 0.5px;
@@ -145,7 +147,7 @@ export const UserProfileStyle = styled.div`
               padding-left: 10px;
               font-weight: 300;
               color: ${themeVars.colors.whiteColor};
-              opacity: 0.8;
+              opacity: 0.6;
             }
 
             i {

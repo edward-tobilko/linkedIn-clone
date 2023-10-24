@@ -58,8 +58,8 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
   }
 
   const { fetching } = useFetching(async () => {
-    await dispatch(fetchCurrentUserPageTC(userId));
-    await dispatch(fetchUserStatusByIdTC(userId));
+    dispatch(fetchCurrentUserPageTC(userId));
+    dispatch(fetchUserStatusByIdTC(userId));
   });
 
   useEffect(() => {
@@ -116,6 +116,6 @@ export default compose<ComponentType>(
     downloadSmallPhotoTC,
   }),
 
-  // HOC для перенаправлення сторінки на <Auth />, якщо користувач не зареєстрований
+  //? HOC для перенаправлення сторінки на <Auth />, якщо користувач не зареєстрований
   withAuthRedirectHOC,
 )(ProfileContent);

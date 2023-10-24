@@ -1,7 +1,7 @@
 import { ComponentType, FC, useEffect } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import {
   fetchSocialUsersTC,
@@ -10,6 +10,7 @@ import {
   setUnFollowUserTC,
 } from "../../redux/reducers/social-reducer/socialReducer";
 import { RootState } from "../../redux/store";
+import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 
 import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
 
@@ -90,12 +91,17 @@ const SocialContent: FC<SocialContentProps> = ({
 }) => {
   const dispatch = useTypeDispatch();
 
+  let { userId } = useParams() as any;
+
+  if (!userId) userId = 29793;
+
   const [searchParams, setSearchParams] = useSearchParams();
   let actualQueryParamsCurrentPage: number;
   let actualQueryParamsTerm: string;
   let actualQueryParamsFriend: null | boolean;
 
   const { fetching } = useFetching(async () => {
+    dispatch(fetchCurrentUserPageTC(userId));
     dispatch(
       fetchSocialUsersTC(
         actualQueryParamsCurrentPage,
@@ -144,7 +150,7 @@ const SocialContent: FC<SocialContentProps> = ({
     actualQueryParamsFriend = result.friend || friend;
 
     fetching();
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   //? 2 - А потім відображаємо URL посилання в адресній строкі з UI
   useEffect(() => {

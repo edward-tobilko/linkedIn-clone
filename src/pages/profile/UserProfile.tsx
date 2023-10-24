@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useParams } from "react-router-dom";
 
 import {
   CardProfileEditorStyle,
@@ -33,7 +34,9 @@ import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { RootState } from "../../redux/store";
 import {
   downloadSmallPhotoTC,
+  fetchCurrentUserPageTC,
   profileEditModeTC,
+  fetchUserStatusByIdTC,
   setLoadingAC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 
@@ -42,7 +45,7 @@ import Status from "../../components/forms/status-input/StatusContainer";
 import Contacts from "./Contacts";
 import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
 import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
-import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
+import { useFetching } from "../../hooks/useFetching";
 
 const mapStateToProps = (state: RootState): ProfileContentPropsType | any => {
   return {
@@ -61,9 +64,6 @@ const UserProfileContainer = compose<ComponentType>(
     downloadSmallPhotoTC,
     profileEditModeTC,
   }),
-
-  // HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
-  withAuthRedirectHOC,
 );
 
 const UserProfile: FC<ProfileContentPropsType> = ({
@@ -71,6 +71,11 @@ const UserProfile: FC<ProfileContentPropsType> = ({
   loading,
 }) => {
   const dispatch = useTypeDispatch();
+
+  let { userId } = useParams() as any;
+
+  if (!userId) userId = 29793;
+
   const {
     localLoading,
     profileEditMode,
@@ -103,6 +108,11 @@ const UserProfile: FC<ProfileContentPropsType> = ({
     setProfileEditMode(false);
   };
 
+  const { fetching } = useFetching(async () => {
+    dispatch(fetchCurrentUserPageTC(userId));
+    dispatch(fetchUserStatusByIdTC(userId));
+  });
+
   useEffect(() => {
     let timer: NodeJS.Timeout;
     let delay: number = 1200;
@@ -114,10 +124,12 @@ const UserProfile: FC<ProfileContentPropsType> = ({
       }, delay);
     }
 
+    fetching();
+
     return () => {
       clearTimeout(timer);
     };
-  }, [localLoading]);
+  }, [localLoading, userId]);
 
   useEffect(() => {
     authForm.reset(currentProfilePage || {});

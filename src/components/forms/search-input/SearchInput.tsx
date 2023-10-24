@@ -1,7 +1,11 @@
 import { FC, useEffect, useMemo } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { SearchFormStyle, SearchInputStyle } from "./searchInputStyle";
+import {
+  SearchFormStyle,
+  SearchInputStyle,
+  SelectStyle,
+} from "./searchInputStyle";
 
 import {
   SearchInputType,
@@ -12,12 +16,14 @@ import {
 import { useTypeSelector } from "../../../hooks/useTypeSelector";
 import {
   filteredUsersSelector,
+  isAuthSelector,
   searchTermSelector,
 } from "../../../utils/selectors/socialSelectors";
 
 const SearchInput: FC<SearchInputType> = ({ onSearchTermChanged }) => {
   const term = useTypeSelector(searchTermSelector);
   const friend = useTypeSelector(filteredUsersSelector);
+  const isAuth = useTypeSelector(isAuthSelector);
 
   const defaultValues = useMemo(() => {
     return {
@@ -58,11 +64,13 @@ const SearchInput: FC<SearchInputType> = ({ onSearchTermChanged }) => {
           {...register("searchTerm")}
         />
 
-        <select {...register("filteredFriends")}>
-          <option value="null">All</option>
-          <option value="true">Followed Users</option>
-          <option value="false">UnFollowed Users</option>
-        </select>
+        {isAuth ? (
+          <SelectStyle {...register("filteredFriends")}>
+            <option value="null">All</option>
+            <option value="true">Followed Users</option>
+            <option value="false">UnFollowed Users</option>
+          </SelectStyle>
+        ) : null}
       </SearchFormStyle>
     </>
   );

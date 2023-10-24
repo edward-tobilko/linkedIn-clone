@@ -5,6 +5,8 @@ import { themeVars } from "../../../utils/vars/themeVars";
 // SearchInput component
 export const SearchFormStyle = styled.form`
   position: relative;
+  display: flex;
+  align-items: center;
 
   .searchBtn {
     position: absolute;
@@ -38,4 +40,22 @@ export const SearchInputStyle = styled.input`
   font-size: 13px;
   padding-left: 37px;
   font-weight: 300;
+`;
+
+export const SelectStyle = styled.select`
+  background: ${themeVars.colors.greyColor};
+  border: 0;
+  box-shadow: none;
+  color: ${themeVars.colors.whiteColor};
+  height: 26px;
+  border-radius: 6px;
+  font-size: 13px;
+  padding-left: 7px;
+  font-weight: 300;
+  margin-left: 10px;
+  cursor: pointer;
+
+  option {
+    background-color: grey;
+  }
 `;
