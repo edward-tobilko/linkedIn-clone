@@ -1,4 +1,4 @@
-import { FC, useEffect, Suspense, lazy, ComponentType } from "react";
+import { FC, useEffect, lazy, ComponentType } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -9,7 +9,6 @@ import CreatePostForm from "../../components/forms/create-post-form/CreatePostFo
 import { CreatePostFormList } from "../../components/forms/create-post-form/CreatePostFormList";
 import PostsList from "../../components/posts/PostsList";
 import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
-import { ProfileContentSkeleton } from "../../components/UI/loaders/profile-loaders/ProfileContentSkeleton";
 
 import {
   fetchCurrentUserPageTC,
@@ -20,6 +19,7 @@ import { RootState } from "../../redux/store";
 
 import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
+import { withSuspenseHOC } from "../../hocs/withSuspenseHOC";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import {
@@ -28,14 +28,19 @@ import {
 } from "../../utils/selectors/profileSelectors";
 
 import {
+  CardProfilePropsType,
   MapDispatchToPropsType,
   OwnPropsType,
   ProfileContentPropsType,
 } from "./profileTypes";
 
-// Lazy loading of components
+//? Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
 
+//? Suspens components
+const SuspendedSidebar = withSuspenseHOC<CardProfilePropsType | any>(Sidebar);
+
+//? State
 const mapStateToProps = (state: RootState): ProfileContentPropsType | any => {
   return {
     currentProfilePage: currentProfilePageSelector(state),
@@ -68,13 +73,11 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
 
   return (
     <>
-      <Suspense fallback={<ProfileContentSkeleton />}>
-        <Sidebar
-          currentProfilePage={currentProfilePage}
-          downloadSmallPhotoTC={downloadSmallPhotoTC}
-          loading={loading}
-        />
-      </Suspense>
+      <SuspendedSidebar
+        currentProfilePage={currentProfilePage}
+        downloadSmallPhotoTC={downloadSmallPhotoTC}
+        loading={loading}
+      />
 
       <ProfileStyle>
         {loading ? (
