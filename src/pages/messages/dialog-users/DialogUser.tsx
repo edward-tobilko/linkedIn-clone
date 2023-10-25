@@ -1,18 +1,20 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
+import { IMessagesProps } from "../../../context/contextTypes";
+
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-import { IDialogUserProps } from "./dialogUsersTypes";
-
-export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
+export const DialogUser: FC<{ dialogUser: IMessagesProps }> = ({
+  dialogUser,
+}) => {
   return (
     <DialogUserStyle>
       <AvatarImgStyle
         width="40px"
         height="40px"
-        src="https://place-hold.it/60"
+        src={dialogUser ? dialogUser.photo : "https://place-hold.it/60"}
         alt=""
         position={false}
         bottom="0"
@@ -21,12 +23,13 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
 
       <div className="dialog__user">
         <div className="dialog__user-header">
-          <NavLink to={`/messages/${dialogUser.id}`}>{dialogUser.name}</NavLink>
-          <p> {dialogUser.dataTime} </p>
+          <NavLink to={`/messages/${dialogUser.userId}`}>
+            {dialogUser.userName}
+          </NavLink>
         </div>
 
         <div className="dialog__user-content">
-          <p> {dialogUser.voice.say} </p>
+          <p> {dialogUser.message} </p>
         </div>
       </div>
     </DialogUserStyle>

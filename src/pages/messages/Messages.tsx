@@ -1,4 +1,4 @@
-import { ComponentType, FC, useEffect } from "react";
+import { ComponentType, FC, Suspense, useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -14,8 +14,11 @@ import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
+import { useMyContext } from "../../context/Context";
 
 const Messages: FC = () => {
+  const props = useMyContext();
+
   let { userId } = useParams() as any;
 
   const dispatch = useTypeDispatch();
@@ -29,20 +32,28 @@ const Messages: FC = () => {
   });
 
   useEffect(() => {
+    const newWs: any = new WebSocket(
+      "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
+    );
+
+    newWs.addEventListener("message", (e: any) => {
+      props?.setMessages(JSON.parse(e.data));
+    });
+
     fetching();
   }, [dispatch, userId]);
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <MessagesStyle>
         <CreateMessagePost />
 
         <div className="messages">
           <ChatUsers />
-          <DialogUsers />
+          <DialogUsers messages={props?.messages} />
         </div>
       </MessagesStyle>
-    </>
+    </Suspense>
   );
 };
 

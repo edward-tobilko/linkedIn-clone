@@ -5,6 +5,26 @@ export const ChatUsersStyle = styled.div`
   list-style: none;
   width: 30%;
   position: relative;
+  height: 600px;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${themeVars.colors.lightGreyColor};
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${themeVars.colors.greyColor};
+  }
 
   &:after {
     content: "";
@@ -24,6 +44,7 @@ export const ChatUsersStyle = styled.div`
     font-size: 17px;
     color: ${themeVars.colors.whiteColor};
     text-decoration: none;
+
     &:hover {
       text-decoration: underline;
     }
@@ -31,21 +52,20 @@ export const ChatUsersStyle = styled.div`
 `;
 
 export const ChatUserStyle = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   margin-bottom: 35px;
-  position: relative;
 
   &:after {
     content: "";
     display: block;
-    width: 25%;
+    width: 10%;
     height: 1px;
     background-color: ${themeVars.colors.lightGreyColor};
     position: absolute;
     bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 7px;
   }
 
   &:last-child:after {
