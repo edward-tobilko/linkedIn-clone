@@ -31,14 +31,15 @@ export const CreateMessagePost = () => {
     event.preventDefault();
 
     if (message.trim() !== "") {
-      let myNewMessage: any = {
-        userId: props?.messages,
-        // userName: props?.messages,
-        // photo: props?.messages,
+      let newMessageObject = {
+        userId: 1,
+        userName: "eduard",
+        message: message,
+        photo: "https://place-hold.it/60",
       };
 
       if (newMessagePathRef.current !== null) {
-        createMessage(myNewMessage);
+        createMessage(newMessageObject);
         setMessage("");
       }
     }

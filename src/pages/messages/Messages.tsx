@@ -3,6 +3,8 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
+import { IMessagesProps } from "../../context/contextTypes";
+
 import { MessagesStyle } from "./messagesStyle";
 
 import { ChatUsers } from "./chat-users/ChatUsers";
@@ -32,12 +34,15 @@ const Messages: FC = () => {
   });
 
   useEffect(() => {
-    const newWs: any = new WebSocket(
+    const newWs = new WebSocket(
       "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
     );
 
-    newWs.addEventListener("message", (e: any) => {
-      props?.setMessages(JSON.parse(e.data));
+    //? Отримуємо смс по каналу WebSocket
+    newWs.addEventListener("message", (e) => {
+      const receivedMessage = JSON.parse(e.data) as IMessagesProps;
+
+      props?.setMessages([...props.messages, receivedMessage]);
     });
 
     fetching();

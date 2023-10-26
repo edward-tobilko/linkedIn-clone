@@ -9,8 +9,8 @@ import { DialogUser } from "./DialogUser";
 export const DialogUsers: FC<IDialogUsersProps> = ({ messages }) => {
   return (
     <DialogUsersStyle>
-      {messages?.map((dialogUser) => (
-        <DialogUser key={dialogUser.userId} dialogUser={dialogUser} />
+      {messages?.map((dialogUser, index) => (
+        <DialogUser key={index} dialogUser={dialogUser} />
       ))}
     </DialogUsersStyle>
   );

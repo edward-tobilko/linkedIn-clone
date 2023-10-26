@@ -14,7 +14,6 @@ interface IMessagesProps {
 
 interface IStateContext {
   messages: IMessagesProps[];
-  // setMessages: Dispatch<SetStateAction<IMessagesProps[]>>;
   setMessages: (messages: Array<IMessagesProps>) => void;
 
   chatUsers: IChatUsers[];
