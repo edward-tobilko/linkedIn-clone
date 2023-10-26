@@ -126,8 +126,8 @@ export const authAPI = {
 
   //? Логірування користувача
   async getLoginApi(
-    email: string, // eduardtobilko@gmail.com
-    password: string, // testAccount
+    email: string, // 1992eduard777clone@gmail.com
+    password: string, // email4769PageClone
     rememberMe: boolean | undefined,
     captcha: string | undefined,
   ) {

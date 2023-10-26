@@ -78,7 +78,7 @@ const StatusContainer: FC<IStatusProps> = ({
       <StatusStyle>
         {!editMode ? (
           <>
-            {currentProfilePage?.userId === 30231 ? (
+            {currentProfilePage?.userId === 29793 ? (
               <>
                 <div
                   className="status__name"

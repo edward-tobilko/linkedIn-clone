@@ -25,7 +25,7 @@ const SocialNetworkManagementInputContainer = connect<
 const SocialNetworkManagementInput: FC<SocialNetworkManagementInputProps> = ({
   email,
 }) => {
-  const [value, setValue] = useState(email! || "eduardtobilko@gmail.com");
+  const [value, setValue] = useState(email! || "1992eduard777clone@gmail.com");
 
   return (
     <SocialNetworkManagementInputStyle

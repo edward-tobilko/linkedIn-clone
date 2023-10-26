@@ -59,7 +59,7 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
   const dispatch = useTypeDispatch();
 
   if (!userId) {
-    userId = 30231;
+    userId = 29793;
   }
 
   const { fetching } = useFetching(async () => {

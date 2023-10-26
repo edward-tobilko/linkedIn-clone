@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useParams } from "react-router-dom";
 
 import {
   CardProfileEditorStyle,
@@ -34,9 +33,7 @@ import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { RootState } from "../../redux/store";
 import {
   downloadSmallPhotoTC,
-  fetchCurrentUserPageTC,
   profileEditModeTC,
-  fetchUserStatusByIdTC,
   setLoadingAC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 
@@ -45,7 +42,6 @@ import Status from "../../components/forms/status-input/StatusContainer";
 import Contacts from "./Contacts";
 import EditModeForm from "../../components/forms/edit-mode/EditModeForm";
 import { ProfileContentLoader } from "../../components/UI/loaders/profile-loaders/ProfileContentLoader";
-import { useFetching } from "../../hooks/useFetching";
 
 const mapStateToProps = (state: RootState): ProfileContentPropsType | any => {
   return {
@@ -71,10 +67,6 @@ const UserProfile: FC<ProfileContentPropsType> = ({
   loading,
 }) => {
   const dispatch = useTypeDispatch();
-
-  let { userId } = useParams() as any;
-
-  if (!userId) userId = 30231;
 
   const {
     localLoading,
@@ -108,11 +100,6 @@ const UserProfile: FC<ProfileContentPropsType> = ({
     setProfileEditMode(false);
   };
 
-  const { fetching } = useFetching(async () => {
-    dispatch(fetchCurrentUserPageTC(userId));
-    dispatch(fetchUserStatusByIdTC(userId));
-  });
-
   useEffect(() => {
     let timer: NodeJS.Timeout;
     let delay: number = 1200;
@@ -124,12 +111,10 @@ const UserProfile: FC<ProfileContentPropsType> = ({
       }, delay);
     }
 
-    fetching();
-
     return () => {
       clearTimeout(timer);
     };
-  }, [localLoading, userId]);
+  }, [localLoading]);
 
   useEffect(() => {
     authForm.reset(currentProfilePage || {});
@@ -150,7 +135,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
                 }
               />
 
-              {currentProfilePage?.userId === 30231 && (
+              {currentProfilePage?.userId === 29793 && (
                 <CardProfileEditorStyle
                   $sidebarTop={false}
                   $sidebarRight={false}
@@ -226,7 +211,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
               </div>
 
               <div className="user__profile-content-editing">
-                {currentProfilePage?.userId === 30231 && (
+                {currentProfilePage?.userId === 29793 && (
                   <>
                     {profileEditMode ? (
                       <EditModeForm

@@ -93,7 +93,7 @@ const SocialContent: FC<SocialContentProps> = ({
 
   let { userId } = useParams() as any;
 
-  if (!userId) userId = 30231;
+  if (!userId) userId = 29793;
 
   const [searchParams, setSearchParams] = useSearchParams();
   let actualQueryParamsCurrentPage: number;

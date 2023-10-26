@@ -140,7 +140,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
 
         {isAuth ? (
           <HeaderRightStyle>
-            {currentProfilePage?.userId === 30231 && (
+            {currentProfilePage?.userId === 29793 && (
               <div className="header__right">
                 <AvatarImgStyle
                   src={currentProfilePage?.photos?.small}

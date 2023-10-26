@@ -36,7 +36,7 @@ export const CardProfile: FC<CardProfilePropsType> = ({
         className="cardProfile__wrapper"
       />
 
-      {currentProfilePage?.userId === 30231 && (
+      {currentProfilePage?.userId === 29793 && (
         <CardProfileEditorStyle $sidebarTop={true} $sidebarRight={true}>
           <input
             type="file"
