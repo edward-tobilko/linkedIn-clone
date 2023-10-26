@@ -3,4 +3,7 @@
 [0506/153656.124:ERROR:process_info.cc(359)] UncheckedAllocate
 [1023/154532.545:ERROR:http_transport_win.cc(382)] HTTP status 403
 [1024/151314.352:ERROR:http_transport_win.cc(382)] HTTP status 403
+<<<<<<< HEAD
 [1025/202816.373:ERROR:http_transport_win.cc(382)] HTTP status 403
+=======
+>>>>>>> master

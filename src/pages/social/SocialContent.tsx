@@ -131,7 +131,7 @@ const SocialContent: FC<SocialContentProps> = ({
   useEffect(() => {
     const result: any = {};
 
-    for (const [key, value] of searchParams.entries()) {
+    for (const [key, value] of searchParams?.entries()) {
       let numberValue: number | string | boolean = Number(value);
 
       if (isNaN(numberValue)) numberValue = value;
