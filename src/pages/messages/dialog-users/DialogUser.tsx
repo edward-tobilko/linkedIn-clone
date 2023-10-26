@@ -6,6 +6,11 @@ import { IMessagesProps } from "../../../context/contextTypes";
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
+<<<<<<< HEAD
+=======
+import { IMessagesProps } from "../../../context/contextTypes";
+
+>>>>>>> fdbb08802ed0af0473a22876a2b89ee76183363a
 export const DialogUser: FC<{ dialogUser: IMessagesProps }> = ({
   dialogUser,
 }) => {

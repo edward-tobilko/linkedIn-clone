@@ -1,5 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 
+<<<<<<< HEAD
+=======
+// Context component
+>>>>>>> fdbb08802ed0af0473a22876a2b89ee76183363a
 interface IChatUsers {
   id: number;
   name: string;

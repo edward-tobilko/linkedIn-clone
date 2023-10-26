@@ -74,7 +74,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
 
   let { userId } = useParams() as any;
 
-  if (!userId) userId = 29793;
+  if (!userId) userId = 30231;
 
   const {
     localLoading,
@@ -150,7 +150,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
                 }
               />
 
-              {currentProfilePage?.userId === 29793 && (
+              {currentProfilePage?.userId === 30231 && (
                 <CardProfileEditorStyle
                   $sidebarTop={false}
                   $sidebarRight={false}
@@ -226,7 +226,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
               </div>
 
               <div className="user__profile-content-editing">
-                {currentProfilePage?.userId === 29793 && (
+                {currentProfilePage?.userId === 30231 && (
                   <>
                     {profileEditMode ? (
                       <EditModeForm

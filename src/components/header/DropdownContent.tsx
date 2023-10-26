@@ -71,7 +71,7 @@ export const DropdownContent: FC<DropdownContentProps> = ({
                 </DropdownContentRemoveBtn>
               </div>
               <div className="profile__container-aboutMe">
-                {currentProfilePage?.userId === 29793 && (
+                {currentProfilePage?.userId === 30231 && (
                   <AvatarImgStyle
                     src={currentProfilePage?.photos?.small}
                     alt=""
