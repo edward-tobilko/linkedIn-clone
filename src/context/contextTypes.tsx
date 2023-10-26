@@ -1,26 +1,21 @@
 import { Dispatch, SetStateAction } from "react";
 
 // Context component
-interface IVoice {
-  say: string;
-}
-
 interface IChatUsers {
   id: number;
   name: string;
 }
 
-interface IDialogUsers {
-  id: string;
-  name: string;
-  voice: IVoice;
-  dataTime: string;
+interface IMessagesProps {
+  userId: number;
+  userName: string;
+  message: string;
+  photo: string;
 }
 
 interface IStateContext {
-  dialogUsers: IDialogUsers[];
-  setDialogUsers: Dispatch<SetStateAction<IDialogUsers[]>>;
-  // setDialogUsers: (dialogUsers: Array<IDialogUsersType>) => void;
+  messages: IMessagesProps[];
+  setMessages: (messages: Array<IMessagesProps>) => void;
 
   chatUsers: IChatUsers[];
   setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
@@ -38,4 +33,4 @@ interface IDropdownContext {
   toggleDropdownMode: () => void;
 }
 
-export { IDialogUsers, IStateContext, IChatUsers, IDropdownContext };
+export { IMessagesProps, IStateContext, IChatUsers, IDropdownContext };

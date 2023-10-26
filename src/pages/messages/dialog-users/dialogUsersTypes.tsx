@@ -1,5 +1,7 @@
-import { IDialogUsers } from "../../../context/contextTypes";
+import { IMessagesProps } from "../../../context/contextTypes";
 
-export interface IDialogUserProps {
-  dialogUser: IDialogUsers;
+interface IDialogUsersProps {
+  messages?: IMessagesProps[];
 }
+
+export { IDialogUsersProps };

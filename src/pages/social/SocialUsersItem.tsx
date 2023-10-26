@@ -63,7 +63,7 @@ const SocialUsersItem: FC<SocialUsersItemProps> = ({
             </SocialUsersItemRemoveBtn>
           </div>
 
-          {socialUser.id === 29793 ? (
+          {socialUser.id === 30231 ? (
             <h1 style={{ paddingBottom: 25 }}>It's me</h1>
           ) : (
             <FollowBtn

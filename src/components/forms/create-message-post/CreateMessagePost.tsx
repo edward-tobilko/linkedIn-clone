@@ -1,10 +1,10 @@
 import { useRef, useState, MouseEvent, ChangeEvent } from "react";
-import { v4 as uniqueID } from "uuid";
+
+import { IMessagesProps } from "../../../context/contextTypes";
 
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
 
 import { useMyContext } from "../../../context/Context";
-import { IDialogUsers } from "../../../context/contextTypes";
 
 const date = new Date().toLocaleTimeString();
 
@@ -17,34 +17,30 @@ const date = new Date().toLocaleTimeString();
 // const hour = date.getHours();
 
 export const CreateMessagePost = () => {
-  const [message, setMessage] = useState({
-    voice: {
-      say: "",
-    },
-  });
+  const [message, setMessage] = useState("");
 
   const props = useMyContext();
 
-  const newMessagePathRef = useRef<string>(message.voice.say);
+  const newMessagePathRef = useRef<string>(message);
 
-  function createMessage(message: IDialogUsers) {
-    props?.setDialogUsers([...props.dialogUsers, message]);
+  function createMessage(message: IMessagesProps) {
+    props?.setMessages([...props.messages, message]);
   }
 
   const addNewMessage = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (message.voice.say.trim() !== "") {
-      let myNewMessage = {
-        ...message,
-        id: uniqueID(),
-        name: "eduard.tobilko",
-        dataTime: date,
+    if (message.trim() !== "") {
+      let newMessageObject = {
+        userId: 1,
+        userName: 'This message from "Test account"',
+        message: message,
+        photo: "https://place-hold.it/60",
       };
 
       if (newMessagePathRef.current !== null) {
-        createMessage(myNewMessage);
-        setMessage({ voice: { say: "" } });
+        createMessage(newMessageObject);
+        setMessage("");
       }
     }
   };
@@ -54,14 +50,11 @@ export const CreateMessagePost = () => {
       <form method="post">
         <div className="create__message__post-textarea">
           <textarea
-            value={message.voice.say}
+            value={message}
             name="text"
             placeholder="Add new message"
             onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-              setMessage({
-                ...message,
-                voice: { say: event.target.value },
-              })
+              setMessage(event.target.value)
             }
           ></textarea>
         </div>

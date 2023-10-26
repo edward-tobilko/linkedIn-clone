@@ -42,8 +42,8 @@ const AuthContainer: FC = () => {
   // Submit your data into Redux store
   const onSubmit: SubmitHandler<AuthFormType> = (data) => {
     if (
-      data.email !== "1992eduard777clone@gmail.com" ||
-      data.password !== "email4769PageClone"
+      data.email !== "eduardtobilko@gmail.com" ||
+      data.password !== "testAccount"
     ) {
       authForm.setError("password", {
         type: "manual",

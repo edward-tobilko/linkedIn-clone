@@ -1,7 +1,9 @@
-import { ComponentType, FC, useEffect } from "react";
+import { ComponentType, FC, useEffect, Suspense } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+
+import { IMessagesProps } from "../../context/contextTypes";
 
 import { MessagesStyle } from "./messagesStyle";
 
@@ -14,14 +16,17 @@ import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
+import { useMyContext } from "../../context/Context";
 
 const Messages: FC = () => {
+  const props = useMyContext();
+
   let { userId } = useParams() as any;
 
   const dispatch = useTypeDispatch();
 
   if (!userId) {
-    userId = 29793;
+    userId = 30231;
   }
 
   const { fetching } = useFetching(async () => {
@@ -29,11 +34,26 @@ const Messages: FC = () => {
   });
 
   useEffect(() => {
+    const newWs = new WebSocket(
+      "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
+    );
+
+    //? Отримуємо смс по каналу WebSocket
+    newWs.addEventListener("message", (e) => {
+      let receivedMessage = JSON.parse(e.data) as IMessagesProps;
+
+      // @ts-ignore
+      props?.setMessages((prevMessages) => [
+        ...prevMessages,
+        receivedMessage as IMessagesProps,
+      ]);
+    });
+
     fetching();
   }, [dispatch, userId]);
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <MessagesStyle>
         <CreateMessagePost />
 
@@ -42,7 +62,7 @@ const Messages: FC = () => {
           <DialogUsers />
         </div>
       </MessagesStyle>
-    </>
+    </Suspense>
   );
 };
 

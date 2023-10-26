@@ -1,15 +1,16 @@
+import { FC } from "react";
+
+import { IDialogUsersProps } from "./dialogUsersTypes";
+
 import { DialogUsersStyle } from "./dialogUsersStyle";
 
 import { DialogUser } from "./DialogUser";
-import { useMyContext } from "../../../context/Context";
 
-export const DialogUsers = () => {
-  const props = useMyContext();
-
+export const DialogUsers: FC<IDialogUsersProps> = ({ messages }) => {
   return (
     <DialogUsersStyle>
-      {props?.dialogUsers.map((dialogUser) => (
-        <DialogUser key={dialogUser.id} dialogUser={dialogUser} />
+      {messages?.map((dialogUser, index) => (
+        <DialogUser key={index} dialogUser={dialogUser} />
       ))}
     </DialogUsersStyle>
   );

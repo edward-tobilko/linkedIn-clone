@@ -4,9 +4,11 @@ import { NavLink } from "react-router-dom";
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
 
-import { IDialogUserProps } from "./dialogUsersTypes";
+import { IMessagesProps } from "../../../context/contextTypes";
 
-export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
+export const DialogUser: FC<{ dialogUser: IMessagesProps }> = ({
+  dialogUser,
+}) => {
   return (
     <DialogUserStyle>
       <AvatarImgStyle
@@ -21,12 +23,13 @@ export const DialogUser: FC<IDialogUserProps> = ({ dialogUser }) => {
 
       <div className="dialog__user">
         <div className="dialog__user-header">
-          <NavLink to={`/messages/${dialogUser.id}`}>{dialogUser.name}</NavLink>
-          <p> {dialogUser.dataTime} </p>
+          <NavLink to={`/messages/${dialogUser.userId}`}>
+            {dialogUser.userName}
+          </NavLink>
         </div>
 
         <div className="dialog__user-content">
-          <p> {dialogUser.voice.say} </p>
+          <p> {dialogUser.message} </p>
         </div>
       </div>
     </DialogUserStyle>
