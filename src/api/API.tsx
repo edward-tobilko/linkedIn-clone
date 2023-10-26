@@ -17,7 +17,7 @@ export const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
   timeout: 0,
   withCredentials: true, //? завдяки цьому параметру cookie робить запит на інший домен
-  headers: { "API-KEY": "aeecff0a-0646-43b9-a0dd-39f979f0df41" },
+  headers: { "API-KEY": "5fa4dfc4-2064-42ad-b7e8-4d24ffa78ea5" },
 });
 
 // For the Social component

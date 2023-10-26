@@ -40,9 +40,13 @@ const Messages: FC = () => {
 
     //? Отримуємо смс по каналу WebSocket
     newWs.addEventListener("message", (e) => {
-      const receivedMessage = JSON.parse(e.data) as IMessagesProps;
+      let receivedMessage = JSON.parse(e.data) as IMessagesProps;
 
-      props?.setMessages([...props.messages, receivedMessage]);
+      // @ts-ignore
+      props?.setMessages((prevMessages) => [
+        ...prevMessages,
+        receivedMessage as IMessagesProps,
+      ]);
     });
 
     fetching();
