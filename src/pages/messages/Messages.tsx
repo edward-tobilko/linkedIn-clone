@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { ComponentType, FC, Suspense, useEffect } from "react";
-=======
-import { ComponentType, FC, useEffect, Suspense } from "react";
->>>>>>> fdbb08802ed0af0473a22876a2b89ee76183363a
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";

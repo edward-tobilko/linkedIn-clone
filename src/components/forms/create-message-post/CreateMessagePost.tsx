@@ -33,11 +33,7 @@ export const CreateMessagePost = () => {
     if (message.trim() !== "") {
       let newMessageObject = {
         userId: 1,
-<<<<<<< HEAD
         userName: "eduard",
-=======
-        userName: 'This message from "Test account"',
->>>>>>> fdbb08802ed0af0473a22876a2b89ee76183363a
         message: message,
         photo: "https://place-hold.it/60",
       };
