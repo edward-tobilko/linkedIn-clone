@@ -1,10 +1,6 @@
-import { useRef, useState, MouseEvent, ChangeEvent } from "react";
-
-import { IMessagesProps } from "../../../context/contextTypes";
+import { useState, MouseEvent, ChangeEvent, useEffect, FC } from "react";
 
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
-
-import { useMyContext } from "../../../context/Context";
 
 const date = new Date().toLocaleTimeString();
 
@@ -16,34 +12,38 @@ const date = new Date().toLocaleTimeString();
 // const minutes = date.getMinutes();
 // const hour = date.getHours();
 
-export const CreateMessagePost = () => {
+export const CreateMessagePost: FC<{ newWs: WebSocket | null }> = ({
+  newWs,
+}) => {
   const [message, setMessage] = useState("");
+  const [readyState, setReadyState] = useState<"pending" | "ready">("pending"); //? Стан для WebSocket каналу, щоб на початку підгрузився канал, а потім компонента, тобто в стані "pending" кнопка буде "disable".
 
-  const props = useMyContext();
-
-  const newMessagePathRef = useRef<string>(message);
-
-  function createMessage(message: IMessagesProps) {
-    props?.setMessages([...props.messages, message]);
-  }
+  newWs = new WebSocket(
+    "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
+  );
 
   const addNewMessage = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    if (message.trim() !== "") {
-      let newMessageObject = {
-        userId: 1,
-        userName: "eduard",
-        message: message,
-        photo: "https://place-hold.it/60",
-      };
-
-      if (newMessagePathRef.current !== null) {
-        createMessage(newMessageObject);
-        setMessage("");
-      }
+    if (message && newWs) {
+      newWs.send(message);
+      setMessage("");
     }
   };
+
+  useEffect(() => {
+    const openHandler = () => {
+      setReadyState("ready");
+    };
+
+    newWs?.addEventListener("open", openHandler);
+
+    //? Щоб дістатися до старого стейту newWs після перерисовки нам потрібно від нього відписатися
+    return () => {
+      // cleanup
+      newWs?.removeEventListener("open", openHandler);
+    };
+  }, [newWs]);
 
   return (
     <CreateMessagePostStyle>
@@ -64,7 +64,11 @@ export const CreateMessagePost = () => {
             <input type="file" accept="image/*" />
             <img src="https://w7.pngwing.com/pngs/1014/1020/png-transparent-logo-computer-icons-email-send-email-button-miscellaneous-angle-text.png" />
           </label>
-          <button type="button" onClick={addNewMessage}>
+          <button
+            disabled={newWs === null || readyState !== "ready"}
+            type="button"
+            onClick={addNewMessage}
+          >
             Send
           </button>
         </div>

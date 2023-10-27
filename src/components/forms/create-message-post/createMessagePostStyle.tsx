@@ -86,6 +86,15 @@ export const CreateMessagePostStyle = styled.div`
         cursor: pointer;
         border: none;
         font-size: 14px;
+
+        &:hover {
+          filter: brightness(75%);
+        }
+
+        &:disabled {
+          filter: brightness(75%);
+          cursor: auto;
+        }
       }
     }
   }

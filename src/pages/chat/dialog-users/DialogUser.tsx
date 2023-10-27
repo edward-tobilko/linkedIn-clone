@@ -14,7 +14,7 @@ export const DialogUser: FC<{ dialogUser: IMessagesProps }> = ({
       <AvatarImgStyle
         width="40px"
         height="40px"
-        src={dialogUser ? dialogUser.photo : "https://place-hold.it/60"}
+        src={dialogUser.photo ? dialogUser.photo : "https://place-hold.it/60"}
         alt=""
         position={false}
         bottom="0"
@@ -23,7 +23,7 @@ export const DialogUser: FC<{ dialogUser: IMessagesProps }> = ({
 
       <div className="dialog__user">
         <div className="dialog__user-header">
-          <NavLink to={`/messages/${dialogUser.userId}`}>
+          <NavLink to={`/profile/${dialogUser.userId}`}>
             {dialogUser.userName}
           </NavLink>
         </div>

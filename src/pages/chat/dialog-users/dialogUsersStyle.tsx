@@ -29,13 +29,14 @@ export const DialogUsersStyle = styled.div`
 export const DialogUserStyle = styled.li`
   padding: 15px;
   display: flex;
+  align-items: flex-end;
 
   .dialog__user {
     background: ${themeVars.colors.headerBackgroundColorLighter};
     padding: 15px;
     margin-left: 10px;
     opacity: 0.8;
-    border-radius: 10px;
+    border-radius: 10px 10px 10px 0px;
     min-width: 150px;
     max-width: 380px;
     word-break: break-word;
@@ -76,7 +77,7 @@ export const DialogUserStyle = styled.li`
       padding-top: 20px;
 
       p {
-        filter: blur(2px);
+        /* filter: blur(2px); */
       }
     }
   }

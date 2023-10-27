@@ -131,9 +131,9 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
               <i className="bx bx-group"></i>
               <p>Social</p>
             </NavLink>
-            <NavLink to="/messages">
+            <NavLink to="/chat">
               <i className="bx bx-chat"></i>
-              <p>Messages</p>
+              <p>Chat</p>
             </NavLink>
           </ul>
         </HeaderCenterStyle>
