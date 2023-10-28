@@ -1,4 +1,12 @@
-import { ComponentType, FC, Suspense, useEffect, useState } from "react";
+import {
+  ComponentType,
+  FC,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -33,55 +41,55 @@ const Chat: FC = () => {
   });
 
   //? Отримуємо з'єднання з WebSocket
-  useEffect(() => {
-    let wsChannel: WebSocket;
+  const reconnectWsMemoized = useMemo(() => {
+    return () => {
+      let wsChannel: WebSocket;
 
-    const closeHandler = (e: CloseEvent) => {
-      console.log(
-        "Socket is closed. Reconnect will be attempted in 3 seconds.",
-        e.reason,
-      );
+      const closeHandler = (e: CloseEvent) => {
+        console.log(
+          "Socket is closed. Reconnect will be attempted in 3 seconds.",
+          e.reason,
+        );
 
-      setTimeout(() => {
-        reconnectWs();
-      }, 3000);
-    };
+        setTimeout(() => {
+          reconnectWs();
+        }, 3000);
+      };
 
-    //? Отримуємо з'єднання з WebSocket, якщо у нас або в когось відбулось роз'єднання з інтернетом, тобто повторно отримує WebSocket канал
-    function reconnectWs() {
-      if (wsChannel !== null) {
-        wsChannel?.removeEventListener("close", closeHandler);
+      //? Отримуємо з'єднання з WebSocket, якщо у нас або в когось відбулось роз'єднання з інтернетом, тобто повторно отримує WebSocket канал
+      function reconnectWs() {
+        if (wsChannel !== null) {
+          wsChannel?.removeEventListener("close", closeHandler);
+        }
+
+        wsChannel = new WebSocket(
+          "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
+        );
+        setNewWs(wsChannel);
+
+        wsChannel?.addEventListener("close", closeHandler);
+
+        //? Якщо помилка на сервері
+        wsChannel?.addEventListener("error", (event) => {
+          console.error("Socket encountered error: Closing socket", event);
+
+          wsChannel.close();
+        });
       }
 
-      wsChannel = new WebSocket(
-        "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
-      );
-      setNewWs(wsChannel);
+      reconnectWs(); // recursion
 
-      wsChannel?.addEventListener("close", closeHandler);
-
-      //? Якщо помилка на сервері
-      wsChannel?.addEventListener("error", (event) => {
-        console.error("Socket encountered error: Closing socket", event);
-
-        wsChannel.close();
-      });
-    }
-
-    //? Витік пам'яті - це накопчення обробників, підписків.
-
-    reconnectWs();
-
-    // cleanup
-    return () => {
-      wsChannel?.removeEventListener("close", closeHandler);
-      wsChannel?.close();
+      //? cleanup function - Витік пам'яті - це накопчення обробників, підписків.
+      return () => {
+        wsChannel?.removeEventListener("close", closeHandler);
+        wsChannel?.close();
+      };
     };
   }, []);
 
   //? Отримуємо смс по каналу WebSocket
-  useEffect(() => {
-    const messageHandler = (e: MessageEvent) => {
+  const messageHandlerMemo = useCallback(
+    (e: MessageEvent) => {
       let receivedMessage = JSON.parse(e.data);
 
       // @ts-ignore
@@ -89,13 +97,20 @@ const Chat: FC = () => {
         ...prevMessages,
         ...receivedMessage,
       ]);
-    };
+    },
+    [props],
+  );
 
-    newWs?.addEventListener("message", messageHandler);
+  useEffect(() => {
+    newWs?.addEventListener("message", messageHandlerMemo);
 
     // cleanup
-    return () => newWs?.removeEventListener("message", messageHandler);
-  }, [newWs]);
+    return () => newWs?.removeEventListener("message", messageHandlerMemo);
+  }, [newWs, messageHandlerMemo]);
+
+  useEffect(() => {
+    reconnectWsMemoized();
+  }, []);
 
   //? При перезавантаженні виводимо dropdown свого профілю
   useEffect(() => {

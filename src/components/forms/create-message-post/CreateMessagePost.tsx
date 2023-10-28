@@ -54,7 +54,7 @@ export const CreateMessagePost: FC<{ newWs: WebSocket | null }> = ({
             name="text"
             placeholder="Add new message"
             onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
-              setMessage(event.target.value)
+              setMessage(event.currentTarget.value)
             }
           ></textarea>
         </div>
