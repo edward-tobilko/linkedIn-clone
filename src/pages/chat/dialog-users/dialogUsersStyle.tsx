@@ -45,8 +45,11 @@ export const DialogUserStyle = styled.li`
     &-header {
       padding-bottom: 10px;
       position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-      a {
+      &-link {
         text-decoration: none;
         color: ${themeVars.colors.whiteColor};
         &:hover {
@@ -54,10 +57,9 @@ export const DialogUserStyle = styled.li`
         }
       }
 
-      p {
+      &-time {
         font-size: 11px;
         font-style: italic;
-        padding-top: 10px;
       }
 
       &:after {
@@ -76,7 +78,7 @@ export const DialogUserStyle = styled.li`
     &-content {
       padding-top: 20px;
 
-      p {
+      &-msg {
         /* filter: blur(2px); */
       }
     }

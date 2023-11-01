@@ -6,10 +6,13 @@ interface IChatUsers {
 }
 
 interface IMessagesProps {
-  userId: number;
-  userName: string;
-  message: string;
-  photo: string;
+  obj: {
+    userId: number;
+    userName: string;
+    message: string;
+    photo: string;
+  };
+  time: string;
 }
 
 interface IStateContext {

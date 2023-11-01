@@ -26,6 +26,7 @@ import { useMyContext } from "../../context/Context";
 
 const Chat: FC = () => {
   const [newWs, setNewWs] = useState<WebSocket | null>(null);
+
   const props = useMyContext();
 
   let { userId } = useParams() as any;
@@ -52,6 +53,7 @@ const Chat: FC = () => {
         );
 
         setTimeout(() => {
+          wsChannel.close();
           reconnectWs();
         }, 3000);
       };
@@ -90,12 +92,20 @@ const Chat: FC = () => {
   //? Отримуємо смс по каналу WebSocket
   const messageHandlerMemo = useCallback(
     (e: MessageEvent) => {
-      let receivedMessage = JSON.parse(e.data);
+      let receivedMessages = JSON.parse(e.data);
+      let currentTime = new Date().toLocaleTimeString();
+
+      const receivedMessageWithCurrentTime = receivedMessages.map(
+        (msg: Object) => ({
+          obj: msg,
+          time: currentTime,
+        }),
+      );
 
       // @ts-ignore
       props?.setMessages((prevMessages) => [
         ...prevMessages,
-        ...receivedMessage,
+        ...receivedMessageWithCurrentTime,
       ]);
     },
     [props],
@@ -110,7 +120,7 @@ const Chat: FC = () => {
 
   useEffect(() => {
     reconnectWsMemoized();
-  }, []);
+  }, [reconnectWsMemoized]);
 
   //? При перезавантаженні виводимо dropdown свого профілю
   useEffect(() => {

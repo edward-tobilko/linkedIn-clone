@@ -2,16 +2,6 @@ import { useState, MouseEvent, ChangeEvent, useEffect, FC } from "react";
 
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
 
-const date = new Date().toLocaleTimeString();
-
-// console.log(date.toDateString());
-// console.log(date.toTimeString());
-// console.log(date.toLocaleDateString());
-// console.log(date.toLocaleTimeString());
-
-// const minutes = date.getMinutes();
-// const hour = date.getHours();
-
 export const CreateMessagePost: FC<{ newWs: WebSocket | null }> = ({
   newWs,
 }) => {
@@ -64,6 +54,7 @@ export const CreateMessagePost: FC<{ newWs: WebSocket | null }> = ({
             <input type="file" accept="image/*" />
             <img src="https://w7.pngwing.com/pngs/1014/1020/png-transparent-logo-computer-icons-email-send-email-button-miscellaneous-angle-text.png" />
           </label>
+
           <button
             disabled={newWs === null || readyState !== "ready"}
             type="button"
