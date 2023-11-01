@@ -62,6 +62,19 @@ type FollowUnfollowApiType = {
   messages: string[];
 };
 
+// chatAPI
+type MessagesPropsType = {
+  obj: {
+    userId: number;
+    userName: string;
+    message: string;
+    photo: string;
+  };
+  time: string;
+};
+
+type CallbackType = (messages: MessagesPropsType[]) => void;
+
 export {
   ResultCodesEnum,
   AuthMeApiType,
@@ -72,4 +85,6 @@ export {
   FetchSocialUsersApiType,
   FollowUnfollowApiType,
   LoginApiDataType,
+  MessagesPropsType,
+  CallbackType,
 };

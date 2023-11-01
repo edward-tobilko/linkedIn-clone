@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useCallback } from "react";
 
 import { CurrentProfilePageType } from "../pages/profile/profileTypes";
 import {
   AuthMeApiType,
+  CallbackType,
   DownloadPhotoApiType,
   FetchSocialUsersApiType,
   FollowUnfollowApiType,
@@ -154,20 +156,8 @@ export const authAPI = {
   },
 };
 
-// WebSocket chat
-type MessagesPropsType = {
-  obj: {
-    userId: number;
-    userName: string;
-    message: string;
-    photo: string;
-  };
-  time: string;
-};
-
-type CallbackType = (messages: MessagesPropsType[]) => void;
-
-const messages = [] as CallbackType[];
+// For the WebSocket chat
+let messages = [] as CallbackType[];
 let wsChannel: WebSocket;
 
 const closeHandler = (e: CloseEvent) => {
@@ -200,10 +190,51 @@ function reconnectWs() {
 
     wsChannel.close();
   });
+
+  wsChannel.addEventListener("message", messageHandler);
 }
 
+//? Отримуємо повідомлення по каналу WebSocket
+const messageHandler = (e: MessageEvent) => {
+  let receivedMessages = JSON.parse(e.data);
+  let currentTime = new Date().toLocaleTimeString();
+
+  const receivedMessageWithCurrentTime = receivedMessages.map(
+    (msg: Object) => ({
+      obj: msg,
+      time: currentTime,
+    }),
+  );
+
+  messages.forEach((msg) => msg(receivedMessageWithCurrentTime));
+};
+
 export const chatAPI = {
+  //? Підключаємся до WebSocket
+  start() {
+    reconnectWs();
+  },
+
+  //? Відключаємося від WebSocket
+  stop() {
+    messages = [];
+    wsChannel?.removeEventListener("close", closeHandler);
+    wsChannel?.removeEventListener("message", messageHandler);
+    wsChannel.close();
+  },
+
+  //? Отримуємо повідомлення
   fetchMessages(callback: CallbackType) {
     messages.push(callback);
+  },
+
+  //? Видаляємо повідомлення
+  deleteMessages(callback: CallbackType) {
+    messages = messages.filter((msg) => msg !== callback);
+  },
+
+  //? Додаємо нове повідомлення
+  addNewMessage(message: string) {
+    wsChannel.send(message);
   },
 };

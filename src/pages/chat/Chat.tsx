@@ -1,12 +1,4 @@
-import {
-  ComponentType,
-  FC,
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ComponentType, FC, Suspense, useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -22,13 +14,12 @@ import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
-import { useMyContext } from "../../context/Context";
+import {
+  removeMessagesTC,
+  setMessagesTC,
+} from "../../redux/reducers/chat-reducer/chatReducer";
 
 const Chat: FC = () => {
-  const [newWs, setNewWs] = useState<WebSocket | null>(null);
-
-  const props = useMyContext();
-
   let { userId } = useParams() as any;
 
   const dispatch = useTypeDispatch();
@@ -41,49 +32,11 @@ const Chat: FC = () => {
     dispatch(fetchCurrentUserPageTC(userId));
   });
 
-  //? Отримуємо з'єднання з WebSocket
-  const reconnectWsMemoized = useMemo(() => {
-    return () => {
-      //? cleanup function - Витік пам'яті - це накопчення обробників, підписків.
-      return () => {
-        wsChannel?.removeEventListener("close", closeHandler);
-        wsChannel?.close();
-      };
-    };
+  useEffect(() => {
+    dispatch(setMessagesTC());
+
+    return () => dispatch(removeMessagesTC());
   }, []);
-
-  //? Отримуємо смс по каналу WebSocket
-  const messageHandlerMemo = useCallback(
-    (e: MessageEvent) => {
-      let receivedMessages = JSON.parse(e.data);
-      let currentTime = new Date().toLocaleTimeString();
-
-      const receivedMessageWithCurrentTime = receivedMessages.map(
-        (msg: Object) => ({
-          obj: msg,
-          time: currentTime,
-        }),
-      );
-
-      // @ts-ignore
-      props?.setMessages((prevMessages) => [
-        ...prevMessages,
-        ...receivedMessageWithCurrentTime,
-      ]);
-    },
-    [props],
-  );
-
-  useEffect(() => {
-    newWs?.addEventListener("message", messageHandlerMemo);
-
-    // cleanup
-    return () => newWs?.removeEventListener("message", messageHandlerMemo);
-  }, [newWs, messageHandlerMemo]);
-
-  useEffect(() => {
-    reconnectWsMemoized();
-  }, [reconnectWsMemoized]);
 
   //? При перезавантаженні виводимо dropdown свого профілю
   useEffect(() => {
@@ -93,11 +46,11 @@ const Chat: FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <ChatStyle>
-        <CreateMessagePost newWs={newWs} />
+        <CreateMessagePost />
 
         <div className="messages">
           <ChatUsers />
-          <DialogUsers messages={props?.messages} />
+          <DialogUsers />
         </div>
       </ChatStyle>
     </Suspense>

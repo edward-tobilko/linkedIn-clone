@@ -1,12 +1,11 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 
-import { IMessagesProps } from "../../../context/contextTypes";
-
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
+import { MessagesPropsType } from "../../../api/apiTypes";
 
-export const DialogUser: FC<{ dialogUser: IMessagesProps }> = ({
+export const DialogUser: FC<{ dialogUser: MessagesPropsType }> = ({
   dialogUser,
 }) => {
   return (

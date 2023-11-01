@@ -1,12 +1,13 @@
 import { FC, useEffect, useRef } from "react";
 
-import { IDialogUsersProps } from "./dialogUsersTypes";
-
 import { DialogUsersStyle } from "./dialogUsersStyle";
 
 import { DialogUser } from "./DialogUser";
+import { useTypeSelector } from "../../../hooks/useTypeSelector";
 
-export const DialogUsers: FC<IDialogUsersProps> = ({ messages }) => {
+export const DialogUsers: FC = () => {
+  const messages = useTypeSelector((state) => state.chatPage.messages);
+
   const chatContainerRef = useRef<HTMLDivElement | null>(null); //? Ref for chat container
 
   useEffect(() => {
