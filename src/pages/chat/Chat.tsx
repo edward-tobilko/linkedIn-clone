@@ -44,43 +44,6 @@ const Chat: FC = () => {
   //? Отримуємо з'єднання з WebSocket
   const reconnectWsMemoized = useMemo(() => {
     return () => {
-      let wsChannel: WebSocket;
-
-      const closeHandler = (e: CloseEvent) => {
-        console.log(
-          "Socket is closed. Reconnect will be attempted in 3 seconds.",
-          e.reason,
-        );
-
-        setTimeout(() => {
-          wsChannel.close();
-          reconnectWs();
-        }, 3000);
-      };
-
-      //? Отримуємо з'єднання з WebSocket, якщо у нас або в когось відбулось роз'єднання з інтернетом, тобто повторно отримує WebSocket канал
-      function reconnectWs() {
-        if (wsChannel !== null) {
-          wsChannel?.removeEventListener("close", closeHandler);
-        }
-
-        wsChannel = new WebSocket(
-          "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
-        );
-        setNewWs(wsChannel);
-
-        wsChannel?.addEventListener("close", closeHandler);
-
-        //? Якщо помилка на сервері
-        wsChannel?.addEventListener("error", (event) => {
-          console.error("Socket encountered error: Closing socket", event);
-
-          wsChannel.close();
-        });
-      }
-
-      reconnectWs(); // recursion
-
       //? cleanup function - Витік пам'яті - це накопчення обробників, підписків.
       return () => {
         wsChannel?.removeEventListener("close", closeHandler);

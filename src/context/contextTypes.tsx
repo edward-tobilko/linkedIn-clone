@@ -5,20 +5,7 @@ interface IChatUsers {
   name: string;
 }
 
-interface IMessagesProps {
-  obj: {
-    userId: number;
-    userName: string;
-    message: string;
-    photo: string;
-  };
-  time: string;
-}
-
 interface IStateContext {
-  messages: IMessagesProps[];
-  setMessages: (messages: Array<IMessagesProps>) => void;
-
   chatUsers: IChatUsers[];
   setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
 
@@ -35,4 +22,4 @@ interface IDropdownContext {
   toggleDropdownMode: () => void;
 }
 
-export { IMessagesProps, IStateContext, IChatUsers, IDropdownContext };
+export { IStateContext, IChatUsers, IDropdownContext };

@@ -153,3 +153,57 @@ export const authAPI = {
     return await instance.get<{ url: string }>("security/get-captcha-url");
   },
 };
+
+// WebSocket chat
+type MessagesPropsType = {
+  obj: {
+    userId: number;
+    userName: string;
+    message: string;
+    photo: string;
+  };
+  time: string;
+};
+
+type CallbackType = (messages: MessagesPropsType[]) => void;
+
+const messages = [] as CallbackType[];
+let wsChannel: WebSocket;
+
+const closeHandler = (e: CloseEvent) => {
+  console.log(
+    "Socket is closed. Reconnect will be attempted in 3 seconds.",
+    e.reason,
+  );
+
+  setTimeout(() => {
+    wsChannel.close();
+    reconnectWs();
+  }, 3000);
+};
+
+//? Отримуємо з'єднання з WebSocket, якщо у нас або в когось відбулось роз'єднання з інтернетом, тобто повторно отримує WebSocket канал
+function reconnectWs() {
+  if (wsChannel !== null) {
+    wsChannel?.removeEventListener("close", closeHandler);
+  }
+
+  wsChannel = new WebSocket(
+    "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
+  );
+
+  wsChannel?.addEventListener("close", closeHandler);
+
+  //? Якщо помилка на сервері
+  wsChannel?.addEventListener("error", (event) => {
+    console.error("Socket encountered error: Closing socket", event);
+
+    wsChannel.close();
+  });
+}
+
+export const chatAPI = {
+  fetchMessages(callback: CallbackType) {
+    messages.push(callback);
+  },
+};

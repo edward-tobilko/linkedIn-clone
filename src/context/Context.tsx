@@ -6,12 +6,11 @@ import {
   FC,
 } from "react";
 
-import { IMessagesProps, IStateContext } from "./contextTypes";
+import { IStateContext } from "./contextTypes";
 
 export const Context = createContext<IStateContext | null>(null);
 
 export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
-  const [messages, setMessages] = useState<IMessagesProps[]>([]);
   const [chatUsers, setChatUsers] = useState([
     { id: 7, name: "Anna Young" },
     { id: 1, name: "Sophia Lee" },
@@ -32,11 +31,9 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        messages,
         chatUsers,
         profileEditMode,
         localLoading,
-        setMessages,
         setChatUsers,
         setProfileEditMode,
         setLocalLoading,
