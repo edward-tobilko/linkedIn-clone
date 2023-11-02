@@ -1,10 +1,9 @@
 import axios from "axios";
-import { useCallback } from "react";
 
 import { CurrentProfilePageType } from "../pages/profile/profileTypes";
 import {
   AuthMeApiType,
-  CallbackType,
+  MessagesReceivedCallbackType,
   DownloadPhotoApiType,
   FetchSocialUsersApiType,
   FollowUnfollowApiType,
@@ -13,7 +12,9 @@ import {
   ProfileInfoEditModeApiType,
   ResultCodesEnum,
   UpdateUserStatusApiType,
+  StatusChangedCallbackType,
 } from "./apiTypes";
+import { StatusType } from "../redux/reducers/chat-reducer/chatReducerTypes";
 
 export const instance = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -157,9 +158,14 @@ export const authAPI = {
 };
 
 // For the WebSocket chat
-let messages = [] as CallbackType[];
+//? Objects
+let messages = {
+  "messages-received": [] as MessagesReceivedCallbackType[],
+  "status-changed": [] as StatusChangedCallbackType[],
+};
 let wsChannel: WebSocket;
 
+//? Extra functions
 const closeHandler = (e: CloseEvent) => {
   console.log(
     "Socket is closed. Reconnect will be attempted in 3 seconds.",
@@ -172,6 +178,24 @@ const closeHandler = (e: CloseEvent) => {
   }, 3000);
 };
 
+const cleanUp = () => {
+  wsChannel?.removeEventListener("close", closeHandler);
+  wsChannel?.removeEventListener("message", messageHandler);
+  wsChannel.addEventListener("open", () =>
+    notifySubscribersAboutStatus("ready"),
+  );
+  wsChannel?.addEventListener("error", (event) => {
+    console.error("Socket encountered error: Closing socket", event);
+
+    wsChannel.close();
+  });
+};
+
+const notifySubscribersAboutStatus = (status: StatusType) => {
+  messages["status-changed"].forEach((statusChanged) => statusChanged(status));
+};
+
+//? Main functions
 //? Отримуємо з'єднання з WebSocket, якщо у нас або в когось відбулось роз'єднання з інтернетом, тобто повторно отримує WebSocket канал
 function reconnectWs() {
   if (wsChannel !== null) {
@@ -181,8 +205,13 @@ function reconnectWs() {
   wsChannel = new WebSocket(
     "wss://social-network.samuraijs.com/handlers/ChatHandler.ashx",
   );
+  notifySubscribersAboutStatus("pending");
 
   wsChannel?.addEventListener("close", closeHandler);
+  wsChannel.addEventListener("message", messageHandler);
+  wsChannel.addEventListener("open", () => {
+    notifySubscribersAboutStatus("ready");
+  });
 
   //? Якщо помилка на сервері
   wsChannel?.addEventListener("error", (event) => {
@@ -190,8 +219,6 @@ function reconnectWs() {
 
     wsChannel.close();
   });
-
-  wsChannel.addEventListener("message", messageHandler);
 }
 
 //? Отримуємо повідомлення по каналу WebSocket
@@ -206,7 +233,9 @@ const messageHandler = (e: MessageEvent) => {
     }),
   );
 
-  messages.forEach((msg) => msg(receivedMessageWithCurrentTime));
+  messages["messages-received"].forEach((msg) =>
+    msg(receivedMessageWithCurrentTime),
+  );
 };
 
 export const chatAPI = {
@@ -217,20 +246,34 @@ export const chatAPI = {
 
   //? Відключаємося від WebSocket
   stop() {
-    messages = [];
-    wsChannel?.removeEventListener("close", closeHandler);
-    wsChannel?.removeEventListener("message", messageHandler);
+    messages["messages-received"] = [];
+    messages["status-changed"] = [];
+    cleanUp();
     wsChannel.close();
   },
 
-  //? Отримуємо повідомлення
-  fetchMessages(callback: CallbackType) {
-    messages.push(callback);
+  //? Отримуємо підписку на канал WS
+  fetchSubscribeMessages(callback: MessagesReceivedCallbackType) {
+    messages["messages-received"].push(callback);
   },
 
-  //? Видаляємо повідомлення
-  deleteMessages(callback: CallbackType) {
-    messages = messages.filter((msg) => msg !== callback);
+  //? Відписуємося від каналу WS
+  unsubscribeMessages(callback: MessagesReceivedCallbackType) {
+    messages["messages-received"] = messages["messages-received"].filter(
+      (msg) => msg !== callback,
+    );
+  },
+
+  //? Отримуємо статус WS
+  fetchStatus(callback: StatusChangedCallbackType) {
+    messages["status-changed"].push(callback);
+  },
+
+  //? Змінюємо статус WS
+  changeStatus(callback: StatusChangedCallbackType) {
+    messages["status-changed"] = messages["status-changed"].filter(
+      (status) => status !== callback,
+    );
   },
 
   //? Додаємо нове повідомлення

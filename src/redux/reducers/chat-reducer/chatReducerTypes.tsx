@@ -13,4 +13,6 @@ type ChatThunkType<ReturnType = void> = ThunkAction<
   ChatActionsTypes
 >;
 
-export { ChatActionsTypes, ChatThunkType };
+type StatusType = "pending" | "ready";
+
+export { ChatActionsTypes, ChatThunkType, StatusType };

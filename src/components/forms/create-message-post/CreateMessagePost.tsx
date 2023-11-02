@@ -2,13 +2,17 @@ import { useState, MouseEvent, ChangeEvent, FC } from "react";
 
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
 
-import { useTypeDispatch } from "../../../hooks/useTypeSelector";
+import {
+  useTypeDispatch,
+  useTypeSelector,
+} from "../../../hooks/useTypeSelector";
 
 import { addNewMessageTC } from "../../../redux/reducers/chat-reducer/chatReducer";
 
 export const CreateMessagePost: FC = () => {
   const [message, setMessage] = useState("");
-  const [readyState, setReadyState] = useState<"pending" | "ready">("pending"); //? Стан для WebSocket каналу, щоб на початку підгрузився канал, а потім компонента, тобто в стані "pending" кнопка буде "disable".
+
+  const status = useTypeSelector((state) => state.chatPage.status);
 
   const dispatch = useTypeDispatch();
 
@@ -41,7 +45,11 @@ export const CreateMessagePost: FC = () => {
             <img src="https://w7.pngwing.com/pngs/1014/1020/png-transparent-logo-computer-icons-email-send-email-button-miscellaneous-angle-text.png" />
           </label>
 
-          <button disabled={false} type="button" onClick={addNewMessage}>
+          <button
+            disabled={status !== "ready"}
+            type="button"
+            onClick={addNewMessage}
+          >
             Send
           </button>
         </div>

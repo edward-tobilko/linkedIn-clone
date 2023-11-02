@@ -1,3 +1,4 @@
+import { StatusType } from "../redux/reducers/chat-reducer/chatReducerTypes";
 import { SocialUserType } from "../redux/reducers/social-reducer/socialReducerTypes";
 
 //? Перечислення наборів створених нами констант, можуть бути числа або строки.
@@ -73,7 +74,10 @@ type MessagesPropsType = {
   time: string;
 };
 
-type CallbackType = (messages: MessagesPropsType[]) => void;
+type MessagesReceivedCallbackType = (messages: MessagesPropsType[]) => void;
+type StatusChangedCallbackType = (status: StatusType) => void;
+
+type EventsNamesType = "messages-received" | "status-changed";
 
 export {
   ResultCodesEnum,
@@ -86,5 +90,7 @@ export {
   FollowUnfollowApiType,
   LoginApiDataType,
   MessagesPropsType,
-  CallbackType,
+  MessagesReceivedCallbackType,
+  StatusChangedCallbackType,
+  EventsNamesType,
 };
