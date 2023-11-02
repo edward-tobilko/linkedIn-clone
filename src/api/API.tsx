@@ -224,18 +224,8 @@ function reconnectWs() {
 //? Отримуємо повідомлення по каналу WebSocket
 const messageHandler = (e: MessageEvent) => {
   let receivedMessages = JSON.parse(e.data);
-  let currentTime = new Date().toLocaleTimeString();
 
-  const receivedMessageWithCurrentTime = receivedMessages.map(
-    (msg: Object) => ({
-      obj: msg,
-      time: currentTime,
-    }),
-  );
-
-  messages["messages-received"].forEach((msg) =>
-    msg(receivedMessageWithCurrentTime),
-  );
+  messages["messages-received"].forEach((msg) => msg(receivedMessages));
 };
 
 export const chatAPI = {

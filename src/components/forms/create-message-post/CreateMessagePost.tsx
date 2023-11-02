@@ -1,4 +1,4 @@
-import { useState, MouseEvent, ChangeEvent, FC } from "react";
+import { useState, ChangeEvent, FC } from "react";
 
 import { CreateMessagePostStyle } from "./createMessagePostStyle";
 
@@ -16,11 +16,25 @@ export const CreateMessagePost: FC = () => {
 
   const dispatch = useTypeDispatch();
 
-  const addNewMessage = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const onKeyPressInTextArea = (e: any) => {
+    if (e.ctrlKey && e.code === "Enter") {
+      addNewMessage();
+    }
+  };
+
+  const addNewMessage = () => {
+    if (!message) {
+      alert("There should be something written in the field!");
+      return;
+    }
+
+    // const date = new Date();
+    // const time = String(date.getHours() + ":" + date.getMinutes());
+    const currentTime = String(new Date().toLocaleTimeString());
+    const messageWithTime = `${message}: ${currentTime}`;
 
     if (message) {
-      dispatch(addNewMessageTC(message));
+      dispatch(addNewMessageTC(messageWithTime));
       setMessage("");
     }
   };
@@ -36,6 +50,7 @@ export const CreateMessagePost: FC = () => {
             onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
               setMessage(event.currentTarget.value)
             }
+            onKeyPress={onKeyPressInTextArea}
           ></textarea>
         </div>
 

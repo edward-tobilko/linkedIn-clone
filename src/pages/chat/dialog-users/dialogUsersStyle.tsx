@@ -5,7 +5,7 @@ export const DialogUsersStyle = styled.div`
   width: 70%;
   list-style: none;
   height: 600px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   ::-webkit-scrollbar {
     width: 10px;

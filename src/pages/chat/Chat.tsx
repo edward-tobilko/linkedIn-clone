@@ -36,7 +36,7 @@ const Chat: FC = () => {
     dispatch(setMessagesTC());
 
     return () => dispatch(removeMessagesTC());
-  }, []);
+  }, [dispatch]);
 
   //? При перезавантаженні виводимо dropdown свого профілю
   useEffect(() => {

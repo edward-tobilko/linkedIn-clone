@@ -65,13 +65,10 @@ type FollowUnfollowApiType = {
 
 // chatAPI
 type MessagesPropsType = {
-  obj: {
-    userId: number;
-    userName: string;
-    message: string;
-    photo: string;
-  };
-  time: string;
+  userId: number;
+  userName: string;
+  message: string;
+  photo: string;
 };
 
 type MessagesReceivedCallbackType = (messages: MessagesPropsType[]) => void;

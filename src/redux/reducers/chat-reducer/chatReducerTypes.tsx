@@ -1,5 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 
+import { MessagesPropsType } from "../../../api/apiTypes";
+
 import { RootState, TypedActions } from "../../store";
 
 import { actions } from "./chatReducer";
@@ -15,4 +17,6 @@ type ChatThunkType<ReturnType = void> = ThunkAction<
 
 type StatusType = "pending" | "ready";
 
-export { ChatActionsTypes, ChatThunkType, StatusType };
+type MessagesWithId = MessagesPropsType & { id: string };
+
+export { ChatActionsTypes, ChatThunkType, StatusType, MessagesWithId };

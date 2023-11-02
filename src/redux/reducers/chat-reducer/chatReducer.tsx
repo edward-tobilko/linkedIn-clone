@@ -4,22 +4,41 @@ import { MessagesPropsType } from "../../../api/apiTypes";
 import {
   ChatActionsTypes,
   ChatThunkType,
+  MessagesWithId,
   StatusType,
 } from "./chatReducerTypes";
 
 import { chatAPI } from "../../../api/API";
 
+import { uniqueIdWithCurrentTimePlusIndex } from "../../../utils/helper-functions/helperReducerFunctions";
+
 const initialState = {
-  messages: [] as MessagesPropsType[],
+  messages: [] as MessagesWithId[],
   status: "pending" as StatusType, //? Стан для WebSocket каналу, щоб на початку підгрузився канал, а потім компонента, тобто в стані "pending" кнопка буде "disable".
 };
 
 export const chatReducer = (state = initialState, action: ChatActionsTypes) => {
   switch (action.type) {
     case "SET-MESSAGES":
+      //? Проходимо по повідомленнях та додаємо кожному смс "id". Це потрібно, щоб при зміщенні повідомлень в масиві не дублювався "index", так як в массиві у нас буде max = 100 повідомлень, тобто коли буде 100 повідомлень - старі (верхні) будут видалятися, а нові (нижні) додаватися і так у нас буде в кожному повідомленні унікальний "id".
+      const messagesWithId = action.payload.messages.map((msg, index) => {
+        const uniqueId = uniqueIdWithCurrentTimePlusIndex(index);
+
+        return {
+          ...msg,
+          id: uniqueId,
+        };
+      });
+
+      const messagesCompose = [...state.messages, ...messagesWithId];
+
+      const last100messages = messagesCompose.filter(
+        (msg, index, arr) => index >= arr.length - 100,
+      );
+
       return {
         ...state,
-        messages: [...state.messages, ...action.payload.messages],
+        messages: last100messages,
       };
 
     case "SET-STATUS":
