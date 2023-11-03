@@ -1,90 +1,59 @@
-import { FC, useState, useEffect } from "react";
+import { useState, SyntheticEvent, ChangeEvent } from "react";
 
-import { SettingStyle } from "./settingStyle";
-import { useFetching } from "../../hooks/useFetching";
-import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { useParams } from "react-router-dom";
-import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
-
-type PostType = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-};
-
-function Post() {
-  const [posts, setPosts] = useState<PostType[]>([]);
-  const [error, setError] = useState(null);
-
-  let { userId } = useParams() as any;
-
-  if (!userId) {
-    userId = 29793;
-  }
-
-  const dispatch = useTypeDispatch();
-
-  const { fetching } = useFetching(async () => {
-    dispatch(fetchCurrentUserPageTC(userId));
-  });
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    fetch("https://jsonplaceholder.typicode.com/posts", { signal: signal })
-      .then((res) => res.json())
-      .then((res) => setPosts(res))
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          console.log("successfully aborted");
-        } else {
-          setError(err);
-        }
-      });
-
-    //? Функцію очищення хука useEffect, щоб запобігти витоку пам'яті та оптимізувати роботу додатків. Тобто, ми повинні при натисканні на "showPosts" або встановити стан кнопки "disable" або робити очищення еффекта "useEffect", щоб не переривати надсилання на сервер першого запиту.
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  useEffect(() => {
-    fetching();
-  }, [dispatch, userId]);
-
-  return (
-    <div>
-      {!error ? (
-        posts.map((post) => (
-          <ul key={post.id}>
-            <li>
-              <span> {post.id}. </span>
-              {post.title}
-            </li>
-          </ul>
-        ))
-      ) : (
-        <p>{error}</p>
-      )}
-    </div>
-  );
+interface Message {
+  text: string;
+  file?: File;
 }
 
-const Setting: FC = () => {
-  const [showPosts, setShowPosts] = useState(false);
+const Chat = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [message, setMessage] = useState<string>("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const showPostsHandler = () => {
-    setShowPosts(!showPosts);
+  const handleMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMessage(event.currentTarget.value);
+  };
+
+  const handleFileChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    if (event.currentTarget.files && event.currentTarget.files.length) {
+      setSelectedFile(event.currentTarget.files[0]);
+    }
+  };
+
+  const sendMessage = (): void => {
+    if (message || selectedFile) {
+      const newMessage: Message = {
+        text: message,
+        file: selectedFile!,
+      };
+
+      setMessages([...messages, newMessage]);
+
+      setMessage("");
+      setSelectedFile(null);
+    }
   };
 
   return (
-    <SettingStyle>
-      <button onClick={showPostsHandler}>Show Posts</button>
-
-      {showPosts && <Post />}
-    </SettingStyle>
+    <div>
+      <div className="chat-messages">
+        {messages.map((msg, index) => (
+          <div key={index}>
+            {msg.text}
+            {msg.file && <img src={URL.createObjectURL(msg.file)} alt="File" />}
+          </div>
+        ))}
+      </div>
+      <input
+        type="text"
+        value={message}
+        onChange={handleMessageChange}
+        placeholder="Type your message"
+      />
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={sendMessage}>Send</button>
+    </div>
   );
 };
 
-export default Setting;
+export default Chat;
