@@ -24,6 +24,19 @@ export const DialogUsersStyle = styled.div`
   ::-webkit-scrollbar-thumb:hover {
     background: ${themeVars.colors.greyColor};
   }
+
+  .notification {
+    position: absolute;
+    bottom: -20px;
+    right: 70px;
+    z-index: 1;
+
+    border: 1px solid ${themeVars.colors.whiteColor};
+    border-radius: 12px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: ${themeVars.colors.whiteColor};
+  }
 `;
 
 export const DialogUserStyle = styled.li`

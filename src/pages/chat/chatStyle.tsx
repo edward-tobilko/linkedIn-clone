@@ -9,5 +9,6 @@ export const ChatStyle = styled.div`
 
   .messages {
     display: flex;
+    position: relative;
   }
 `;

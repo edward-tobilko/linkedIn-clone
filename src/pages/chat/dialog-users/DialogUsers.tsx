@@ -7,7 +7,7 @@ import { useTypeSelector } from "../../../hooks/useTypeSelector";
 
 export const DialogUsers: FC = () => {
   const [autoScroll, setAutoScroll] = useState(true);
-  const [notification, setNotification] = useState("You have unread messages!");
+  const [notification, setNotification] = useState(0);
 
   const messages = useTypeSelector((state) => state.chatPage.messages);
 
@@ -23,6 +23,7 @@ export const DialogUsers: FC = () => {
       300
     ) {
       !autoScroll && setAutoScroll(true);
+      setNotification(0);
     } else {
       autoScroll && setAutoScroll(false);
     }
@@ -35,14 +36,29 @@ export const DialogUsers: FC = () => {
         top: chatContainerRef.current.scrollHeight,
         behavior: "smooth",
       });
+    } else {
+      //? Calculate unread messages when not at the bottom
+      const lastReadMessages = messages[messages.length - notification - 1];
+      const newUnreadMessages = messages.filter(
+        (unreadMsg) => unreadMsg.id > lastReadMessages.id,
+      ).length;
+
+      setNotification(newUnreadMessages);
     }
-  }, [messages]);
+  }, [messages, autoScroll]);
 
   return (
     <DialogUsersStyle ref={chatContainerRef} onScroll={scrollHandler}>
       {messages?.map((dialogUser) => (
         <DialogUser key={dialogUser.id} dialogUser={dialogUser} />
       ))}
+
+      {notification > 0 && (
+        <div className="notification">
+          You have {notification} unread
+          {notification > 1 ? " messages" : "message"}
+        </div>
+      )}
     </DialogUsersStyle>
   );
 };

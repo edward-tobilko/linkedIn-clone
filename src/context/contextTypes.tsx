@@ -1,22 +1,21 @@
-import { Dispatch, SetStateAction } from "react";
-
 interface IChatUsers {
-  id: number;
   name: string;
+  id: number;
+  uniqueUrlName: null;
+  photos: {
+    small: string;
+    large: string;
+  };
+  status: string;
+  followed: boolean;
 }
 
 interface IStateContext {
-  chatUsers: IChatUsers[];
-  setChatUsers: Dispatch<SetStateAction<IChatUsers[]>>;
-
   profileEditMode: boolean;
   setProfileEditMode: (profileEditMode: boolean) => void;
 
   localLoading: boolean;
   setLocalLoading: (profileEditMode: boolean) => void;
-
-  // file: File | null;
-  // setFile: (file: File | null) => void;
 }
 
 // DropDownContextProvider component

@@ -54,7 +54,7 @@ export const CreateMessagePost: FC = () => {
     if (message || file) {
       dispatch(addNewMessageTC(messageWithTime));
 
-      if (currentProfilePage?.currentProfilePage.userId === 29793)
+      if (currentProfilePage?.currentProfilePage?.userId === 29793)
         dispatch(addNewFileTC(file));
 
       setMessage("");

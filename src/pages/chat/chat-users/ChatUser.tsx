@@ -8,13 +8,18 @@ import { IChatUserProps } from "./chatUsersTypes";
 
 export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {
   let pathChatUser = `/messages/${chatUser.id}`;
+  console.log(chatUser);
 
   return (
     <ChatUserStyle>
       <AvatarImgStyle
         width="40px"
         height="40px"
-        src="https://place-hold.it/60"
+        src={
+          chatUser.photos.large
+            ? chatUser.photos.large
+            : "https://place-hold.it/60"
+        }
         alt=""
         position={false}
         bottom="0"
