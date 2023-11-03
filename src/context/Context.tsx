@@ -27,6 +27,7 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   ]);
   const [profileEditMode, setProfileEditMode] = useState(false);
   const [localLoading, setLocalLoading] = useState(false);
+  // const [file, setFile] = useState<File | null>(null);
 
   return (
     <Context.Provider
@@ -34,9 +35,11 @@ export const ContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
         chatUsers,
         profileEditMode,
         localLoading,
+        // file,
         setChatUsers,
         setProfileEditMode,
         setLocalLoading,
+        // setFile,
       }}
     >
       {children}

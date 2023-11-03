@@ -3,38 +3,43 @@ import { NavLink } from "react-router-dom";
 
 import { DialogUserStyle } from "./dialogUsersStyle";
 import { AvatarImgStyle } from "../../../rootStyles";
-import { MessagesPropsType } from "../../../api/apiTypes";
 
-export const DialogUser: FC<{ dialogUser: MessagesPropsType }> = React.memo(
-  ({ dialogUser }) => {
-    return (
-      <DialogUserStyle>
-        <AvatarImgStyle
-          width="40px"
-          height="40px"
-          src={dialogUser.photo ? dialogUser.photo : "https://place-hold.it/60"}
-          alt=""
-          position={false}
-          bottom="0"
-          left="0"
-        />
+import { MessagesWithId } from "../../../redux/reducers/chat-reducer/chatReducerTypes";
+import { useTypeSelector } from "../../../hooks/useTypeSelector";
 
-        <div className="dialog__user">
-          <div className="dialog__user-header">
-            <NavLink
-              to={`/profile/${dialogUser.userId}`}
-              className="dialog__user-header-link"
-            >
-              {dialogUser.userName}
-            </NavLink>
-            <p className="dialog__user-header-time"> Current time </p>
-          </div>
+export const DialogUser: FC<{
+  dialogUser: MessagesWithId;
+}> = React.memo(({ dialogUser }) => {
+  const file = useTypeSelector((state) => state.chatPage.file);
 
-          <div className="dialog__user-content">
-            <p className="dialog__user-content-msg">{dialogUser.message}</p>
-          </div>
+  return (
+    <DialogUserStyle>
+      <AvatarImgStyle
+        width="40px"
+        height="40px"
+        src={dialogUser.photo ? dialogUser.photo : "https://place-hold.it/60"}
+        alt=""
+        position={false}
+        bottom="0"
+        left="0"
+      />
+
+      <div className="dialog__user">
+        <div className="dialog__user-header">
+          <NavLink
+            to={`/profile/${dialogUser.userId}`}
+            className="dialog__user-header-link"
+          >
+            {dialogUser.userName}
+          </NavLink>
         </div>
-      </DialogUserStyle>
-    );
-  },
-);
+
+        <div className="dialog__user-content">
+          <p className="dialog__user-content-msg">{dialogUser.message}</p>
+
+          {file && <img src={URL.createObjectURL(file)} alt="File" />}
+        </div>
+      </div>
+    </DialogUserStyle>
+  );
+});

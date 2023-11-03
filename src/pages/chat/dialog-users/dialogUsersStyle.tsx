@@ -57,11 +57,6 @@ export const DialogUserStyle = styled.li`
         }
       }
 
-      &-time {
-        font-size: 11px;
-        font-style: italic;
-      }
-
       &:after {
         content: "";
         display: block;

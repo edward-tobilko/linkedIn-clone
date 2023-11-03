@@ -11,3 +11,7 @@
 [1101/112617.609:ERROR:http_transport_win.cc(382)] HTTP status 403
 [1101/123235.728:ERROR:process_info.cc(375)] NtQuerySystemInformation SystemExtendedHandleInformation: {Not Enough Quota} Not enough virtual memory or paging file quota is available to complete the specified operation. (0xc0000017)
 [1101/123237.042:ERROR:http_transport_win.cc(382)] HTTP status 403
+[1103/123636.909:ERROR:http_transport_win.cc(382)] HTTP status 403
+[1103/151435.424:ERROR:http_transport_win.cc(382)] HTTP status 403
+[1103/184139.527:ERROR:process_reader_win.cc(90)] NtQuerySystemInformation: {Not Enough Quota} Not enough virtual memory or paging file quota is available to complete the specified operation. (0xc0000017)
+[1103/184139.529:ERROR:exception_snapshot_win.cc(98)] thread ID 24656 not found in process

@@ -165,7 +165,7 @@ let messages = {
 };
 let wsChannel: WebSocket;
 
-//? Extra functions
+//? Helper functions
 const closeHandler = (e: CloseEvent) => {
   console.log(
     "Socket is closed. Reconnect will be attempted in 3 seconds.",
@@ -229,7 +229,7 @@ const messageHandler = (e: MessageEvent) => {
 };
 
 export const chatAPI = {
-  //? Підключаємся до WebSocket
+  //? Підключаємося до WebSocket
   start() {
     reconnectWs();
   },

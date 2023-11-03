@@ -47,17 +47,4 @@ const setFollowUnfollowAC = async (
   }
 };
 
-// Chat reducer
-const uniqueIdWithCurrentTimePlusIndex = (index: number | string) => {
-  const date = new Date();
-  let output = String(date.getTime());
-  output = output + "_" + index;
-
-  return output;
-};
-
-export {
-  setFollowUnfollowAC,
-  followUnfollowAction,
-  uniqueIdWithCurrentTimePlusIndex,
-};
+export { setFollowUnfollowAC, followUnfollowAction };

@@ -17,6 +17,8 @@ type ChatThunkType<ReturnType = void> = ThunkAction<
 
 type StatusType = "pending" | "ready";
 
-type MessagesWithId = MessagesPropsType & { id: string };
+type MessagesWithId = MessagesPropsType & {
+  id: string;
+};
 
 export { ChatActionsTypes, ChatThunkType, StatusType, MessagesWithId };

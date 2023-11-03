@@ -40,8 +40,8 @@ export const DialogUsers: FC = () => {
 
   return (
     <DialogUsersStyle ref={chatContainerRef} onScroll={scrollHandler}>
-      {messages?.map((dialogUser, index) => (
-        <DialogUser key={index} dialogUser={dialogUser} />
+      {messages?.map((dialogUser) => (
+        <DialogUser key={dialogUser.id} dialogUser={dialogUser} />
       ))}
     </DialogUsersStyle>
   );

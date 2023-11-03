@@ -14,6 +14,9 @@ interface IStateContext {
 
   localLoading: boolean;
   setLocalLoading: (profileEditMode: boolean) => void;
+
+  // file: File | null;
+  // setFile: (file: File | null) => void;
 }
 
 // DropDownContextProvider component
