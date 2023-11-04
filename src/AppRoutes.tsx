@@ -12,6 +12,7 @@ import Social from "./pages/social/Social";
 import Profile from "./pages/profile/Profile";
 import UserProfile from "./pages/profile/UserProfile";
 import MyTasks from "./pages/my-tasks/MyTasks";
+import FollowedUsersPage from "./pages/followed-users/FollowedUsersPage";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
 import { RootLoader } from "./components/UI/loaders/root-loader/RootLoader";
@@ -110,6 +111,7 @@ const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
         </Route>
         <Route path="user-profile" element={<UserProfile />} />
         <Route path="users" element={<Social />} />
+        <Route path="followed-users" element={<FollowedUsersPage />} />
         <Route path="chat" element={<Chat />} />
         <Route path="setting" element={<Setting />} />
         <Route path="my-tasks" element={<MyTasks />} />

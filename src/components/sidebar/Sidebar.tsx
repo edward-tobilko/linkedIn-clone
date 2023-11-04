@@ -1,4 +1,5 @@
 import React, { useEffect, FC } from "react";
+import { NavLink } from "react-router-dom";
 
 import { CardProfilePropsType } from "../../pages/profile/profileTypes";
 
@@ -8,6 +9,7 @@ import { MdVisibility } from "react-icons/md";
 
 import { CardProfile } from "../../pages/profile/CardProfile";
 import { SocialContentLoader } from "../UI/loaders/social-loaders/SocialContentLoader";
+import { followedUsersHelper } from "../../utils/helper-functions/helperComponentFunctions";
 
 // UI time elements
 function UITimeElements() {
@@ -73,10 +75,6 @@ const Sidebar: FC<CardProfilePropsType> = ({
 }) => {
   if (!currentProfilePage) return <SocialContentLoader />;
 
-  const sidebarUsersFollowed = chatUsers?.filter(
-    (followedUsers) => followedUsers.followed,
-  );
-
   return (
     <SidebarStyle>
       <div className="sidebar">
@@ -89,7 +87,9 @@ const Sidebar: FC<CardProfilePropsType> = ({
         <div className="sidebar-followers">
           <p>
             <i className="bx bx-group"></i>
-            <span> {sidebarUsersFollowed?.length} followers</span>
+            <NavLink to={`/followed-users`}>
+              <span> {followedUsersHelper(chatUsers)?.length} followers</span>
+            </NavLink>
           </p>
           <p>
             <MdVisibility /> <span>354 views of your profile</span>

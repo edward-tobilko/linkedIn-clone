@@ -50,6 +50,11 @@ export const SidebarStyle = styled.aside`
         width: 100%;
         transition: all 0.2s ease-in-out;
 
+        a {
+          color: ${themeVars.colors.whiteColor};
+          text-decoration: none;
+        }
+
         span {
           padding-left: 7px;
         }

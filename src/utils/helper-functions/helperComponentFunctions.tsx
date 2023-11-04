@@ -1,3 +1,5 @@
+import { SocialUserType } from "../../redux/reducers/social-reducer/socialReducerTypes";
+
 type CalculatePaginationTotalCountPagesHelperResultType = {
   totalPagesCount: number;
   paginationLengthCount: number;
@@ -14,4 +16,12 @@ const calculatePaginationTotalCountPagesHelper = (
   return { totalPagesCount, paginationLengthCount };
 };
 
-export { calculatePaginationTotalCountPagesHelper };
+const followedUsersHelper = (chatUsers?: SocialUserType[]) => {
+  const sidebarUsersFollowed = chatUsers?.filter(
+    (followedUsers) => followedUsers.followed,
+  );
+
+  return sidebarUsersFollowed;
+};
+
+export { calculatePaginationTotalCountPagesHelper, followedUsersHelper };
