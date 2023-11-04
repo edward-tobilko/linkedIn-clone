@@ -37,7 +37,7 @@ import {
 //? Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
 
-//? Suspens components
+//? Suspense components
 const SuspendedSidebar = withSuspenseHOC<CardProfilePropsType | any>(Sidebar);
 
 //? State
