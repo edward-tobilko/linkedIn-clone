@@ -1,15 +1,3 @@
-interface IChatUsers {
-  name: string;
-  id: number;
-  uniqueUrlName: null;
-  photos: {
-    small: string;
-    large: string;
-  };
-  status: string;
-  followed: boolean;
-}
-
 interface IStateContext {
   profileEditMode: boolean;
   setProfileEditMode: (profileEditMode: boolean) => void;
@@ -24,4 +12,4 @@ interface IDropdownContext {
   toggleDropdownMode: () => void;
 }
 
-export { IStateContext, IChatUsers, IDropdownContext };
+export { IStateContext, IDropdownContext };

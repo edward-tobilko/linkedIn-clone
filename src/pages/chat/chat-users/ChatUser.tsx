@@ -7,8 +7,7 @@ import { AvatarImgStyle } from "../../../rootStyles";
 import { IChatUserProps } from "./chatUsersTypes";
 
 export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {
-  let pathChatUser = `/messages/${chatUser.id}`;
-  console.log(chatUser);
+  let pathChatUser = `/profile/${chatUser.id}`;
 
   return (
     <ChatUserStyle>
@@ -16,8 +15,8 @@ export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {
         width="40px"
         height="40px"
         src={
-          chatUser.photos.large
-            ? chatUser.photos.large
+          chatUser?.photos?.large
+            ? chatUser?.photos?.large
             : "https://place-hold.it/60"
         }
         alt=""

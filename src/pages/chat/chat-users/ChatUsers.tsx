@@ -1,31 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { ChatUsersStyle } from "./chatUsersStyle";
 
 import { ChatUser } from "./ChatUser";
-import { instance } from "../../../api/API";
 
-export const ChatUsers = () => {
-  const [dataState, setDataState] = useState<any>([]);
+import {
+  useTypeDispatch,
+  useTypeSelector,
+} from "../../../hooks/useTypeSelector";
+import { getChatUsersTC } from "../../../redux/reducers/chat-reducer/chatReducer";
 
-  const fetchSocialUsers = async () => {
-    const result = await instance.get("users?count=100&page=3");
-    const data = result.data;
-
-    setDataState(data.items);
-  };
-
-  const socialUsersFollowed = dataState.filter((user: any) => user.followed);
+const ChatUsers = () => {
+  const dispatch = useTypeDispatch();
+  const chatUsers = useTypeSelector((state) => state.chatPage.chatUsers);
 
   useEffect(() => {
-    fetchSocialUsers();
-  }, []);
+    dispatch(getChatUsersTC());
+  }, [dispatch]);
 
   return (
     <ChatUsersStyle>
-      {socialUsersFollowed != null ? (
+      {chatUsers != null ? (
         <>
-          {[...socialUsersFollowed]
+          {[...chatUsers]
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((chatUser) => (
               <ChatUser key={chatUser.id} chatUser={chatUser} />
@@ -35,3 +32,5 @@ export const ChatUsers = () => {
     </ChatUsersStyle>
   );
 };
+
+export default ChatUsers;

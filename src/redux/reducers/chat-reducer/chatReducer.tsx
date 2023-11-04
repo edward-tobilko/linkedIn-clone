@@ -10,16 +10,18 @@ import {
 } from "./chatReducerTypes";
 
 import { chatAPI } from "../../../api/API";
+import { SocialUserType } from "../social-reducer/socialReducerTypes";
 
 const initialState = {
   messages: [] as MessagesWithId[],
   status: "pending" as StatusType, //? Стан для WebSocket каналу, щоб на початку підгрузився канал, а потім компонента, тобто в стані "pending" кнопка буде "disable".
   file: null as File | null,
+  chatUsers: [] as SocialUserType[],
 };
 
 export const chatReducer = (state = initialState, action: ChatActionsTypes) => {
   switch (action.type) {
-    case "SET-MESSAGES":
+    case "SET_MESSAGES":
       //? Проходимо по повідомленнях та додаємо кожному смс "id". Це потрібно, щоб при зміщенні повідомлень в масиві не дублювався "index", так як в массиві у нас буде max = 100 повідомлень, тобто коли буде 100 повідомлень - старі (верхні) будут видалятися, а нові (нижні) додаватися і так у нас буде в кожному повідомленні унікальний "id".
       const messagesWithIdAndDate = action.payload.messages.map((msg) => {
         const uniqueId = v1();
@@ -41,16 +43,22 @@ export const chatReducer = (state = initialState, action: ChatActionsTypes) => {
         messages: last100messages,
       };
 
-    case "SET-STATUS":
+    case "SET_STATUS":
       return {
         ...state,
         status: action.payload.status,
       };
 
-    case "SET-FILE":
+    case "SET_FILE":
       return {
         ...state,
         file: action.payload.file,
+      };
+
+    case "SET_CHATUSERS":
+      return {
+        ...state,
+        chatUsers: action.payload.chatUsers,
       };
 
     default:
@@ -61,22 +69,29 @@ export const chatReducer = (state = initialState, action: ChatActionsTypes) => {
 export const actions = {
   setMessagesAC: (messages: MessagesPropsType[]) => {
     return {
-      type: "SET-MESSAGES",
+      type: "SET_MESSAGES",
       payload: { messages },
     } as const;
   },
 
   setStatusAC: (status: StatusType) => {
     return {
-      type: "SET-STATUS",
+      type: "SET_STATUS",
       payload: { status },
     } as const;
   },
 
   setFileAC: (file: File | null) => {
     return {
-      type: "SET-FILE",
+      type: "SET_FILE",
       payload: { file },
+    } as const;
+  },
+
+  setChatUsersAC: (chatUsers: SocialUserType[]) => {
+    return {
+      type: "SET_CHATUSERS",
+      payload: { chatUsers },
     } as const;
   },
 };
@@ -130,5 +145,13 @@ export const addNewMessageTC = (message: string): ChatThunkType => {
 export const addNewFileTC = (file: File | null): ChatThunkType => {
   return async (dispatch) => {
     dispatch(actions.setFileAC(file));
+  };
+};
+
+export const getChatUsersTC = (): ChatThunkType => {
+  return (dispatch) => {
+    chatAPI
+      .fetchChatUsers()
+      .then((data) => dispatch(actions.setChatUsersAC(data.items)));
   };
 };

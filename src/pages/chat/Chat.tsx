@@ -1,13 +1,13 @@
-import { ComponentType, FC, Suspense, useEffect } from "react";
+import { ComponentType, FC, Suspense, lazy, useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { ChatStyle } from "./chatStyle";
 
-import { ChatUsers } from "./chat-users/ChatUsers";
 import { DialogUsers } from "./dialog-users/DialogUsers";
 import { CreateMessagePost } from "../../components/forms/create-message-post/CreateMessagePost";
+import { ChatSkeleton } from "../../components/UI/loaders/chat-loader/chatSkeleton";
 
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 import { useFetching } from "../../hooks/useFetching";
@@ -18,6 +18,9 @@ import {
   removeMessagesTC,
   setMessagesTC,
 } from "../../redux/reducers/chat-reducer/chatReducer";
+
+//? Lazy loading of components
+const ChatUsers = lazy(() => import("./chat-users/ChatUsers"));
 
 const Chat: FC = () => {
   let { userId } = useParams() as any;
@@ -44,16 +47,17 @@ const Chat: FC = () => {
   }, [dispatch, userId]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ChatStyle>
-        <CreateMessagePost />
+    <ChatStyle>
+      <CreateMessagePost />
 
-        <div className="messages">
+      <div className="messages">
+        <Suspense fallback={<ChatSkeleton />}>
           <ChatUsers />
-          <DialogUsers />
-        </div>
-      </ChatStyle>
-    </Suspense>
+        </Suspense>
+
+        <DialogUsers />
+      </div>
+    </ChatStyle>
   );
 };
 

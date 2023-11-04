@@ -270,4 +270,11 @@ export const chatAPI = {
   addNewMessage(message: string) {
     wsChannel.send(message);
   },
+
+  //? Отримуємо користувачів для чату
+  async fetchChatUsers() {
+    return await instance
+      .get<FetchSocialUsersApiType>("users?count=100")
+      .then((res) => res.data);
+  },
 };

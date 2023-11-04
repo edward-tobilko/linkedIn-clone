@@ -1,5 +1,5 @@
-import { IChatUsers } from "../../../context/contextTypes";
+import { SocialUserType } from "../../../redux/reducers/social-reducer/socialReducerTypes";
 
 export interface IChatUserProps {
-  chatUser: IChatUsers;
+  chatUser: SocialUserType;
 }
