@@ -16,6 +16,7 @@ import {
   downloadSmallPhotoTC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
 import { RootState } from "../../redux/store";
+import { getChatUsersTC } from "../../redux/reducers/chat-reducer/chatReducer";
 
 import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
@@ -46,6 +47,7 @@ const mapStateToProps = (state: RootState): ProfileContentPropsType | any => {
     currentProfilePage: currentProfilePageSelector(state),
     loading: loadingSelector(state),
     postUsers: state.profilePage.postUsers,
+    chatUsers: state.chatPage.chatUsers,
   };
 };
 
@@ -53,6 +55,7 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
   currentProfilePage,
   loading,
   postUsers,
+  chatUsers,
 }) => {
   let { userId } = useParams() as any;
 
@@ -65,6 +68,7 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
   const { fetching } = useFetching(async () => {
     dispatch(fetchCurrentUserPageTC(userId));
     dispatch(fetchUserStatusByIdTC(userId));
+    dispatch(getChatUsersTC());
   });
 
   useEffect(() => {
@@ -77,6 +81,7 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
         currentProfilePage={currentProfilePage}
         downloadSmallPhotoTC={downloadSmallPhotoTC}
         loading={loading}
+        chatUsers={chatUsers}
       />
 
       <ProfileStyle>

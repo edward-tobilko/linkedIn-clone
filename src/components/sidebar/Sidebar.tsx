@@ -69,8 +69,13 @@ const Sidebar: FC<CardProfilePropsType> = ({
   currentProfilePage,
   downloadSmallPhotoTC,
   loading,
+  chatUsers,
 }) => {
   if (!currentProfilePage) return <SocialContentLoader />;
+
+  const sidebarUsersFollowed = chatUsers?.filter(
+    (followedUsers) => followedUsers.followed,
+  );
 
   return (
     <SidebarStyle>
@@ -83,7 +88,8 @@ const Sidebar: FC<CardProfilePropsType> = ({
 
         <div className="sidebar-followers">
           <p>
-            <i className="bx bx-group"></i> <span>1,299 followers</span>
+            <i className="bx bx-group"></i>
+            <span> {sidebarUsersFollowed?.length} followers</span>
           </p>
           <p>
             <MdVisibility /> <span>354 views of your profile</span>

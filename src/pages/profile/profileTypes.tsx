@@ -1,4 +1,5 @@
 import { ItemProps } from "../../redux/reducers/profile-reducer/profileReducerTypes";
+import { SocialUserType } from "../../redux/reducers/social-reducer/socialReducerTypes";
 
 // ProfileContent component
 type ContactsType = {
@@ -34,6 +35,7 @@ type CurrentProfilePagePropsType = {
 type ProfileContentPropsType = CurrentProfilePagePropsType & {
   loading: boolean;
   postUsers?: ItemProps[];
+  chatUsers?: SocialUserType[];
 };
 
 type MapDispatchToPropsType = {
