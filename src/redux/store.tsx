@@ -11,7 +11,6 @@ import profileReducer from "./reducers/profile-reducer/profileReducer";
 import socialReducer from "./reducers/social-reducer/socialReducer";
 import authReducer from "./reducers/auth-reducer/authReducer";
 import rootAppReducer from "./reducers/root-app-reducer/rootAppReducer";
-import settingReducer from "./reducers/setting-reducer/settingReducer";
 import { chatReducer } from "./reducers/chat-reducer/chatReducer";
 
 // Reducer
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   socialPage: socialReducer,
   authorization: authReducer,
   rootApp: rootAppReducer,
-  settingPage: settingReducer,
   chatPage: chatReducer,
 });
 

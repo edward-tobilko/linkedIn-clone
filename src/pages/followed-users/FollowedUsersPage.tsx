@@ -26,7 +26,7 @@ const FollowedUsersPage: FC = () => {
 
   useEffect(() => {
     fetching();
-  }, [dispatch, userId]);
+  }, [dispatch]);
 
   return (
     <div>

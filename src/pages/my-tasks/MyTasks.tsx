@@ -1,80 +1,60 @@
-import { ComponentType, FC, useState, ChangeEvent } from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-
-import { TodoItemType } from "../../redux/reducers/setting-reducer/settingReducerTypes";
+import { FC, useEffect, useState } from "react";
+import axios from "axios";
 
 import { MyTasksStyle } from "./myTasksStyle";
 
-import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
-import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { SearchUsersType, UsersType } from "./myTasksTypes";
 
-import { RootState } from "../../redux/store";
-import {
-  addTodoTC,
-  removeTodoTC,
-} from "../../redux/reducers/setting-reducer/settingReducer";
+import GitHubUser from "./GitHubUser";
+import GitHubUserDetails from "./GitHubUserDetails";
+import GitHubSearchUsers from "./GitHubSearchUsers";
 
-type SettingPropsType = {
-  todos: Array<TodoItemType>;
-};
+const MyTasks: FC = () => {
+  const [users, setUsers] = useState<UsersType[]>([]);
+  const [selectedUser, setSelectedUser] = useState<UsersType | null>(null);
+  const [searchUser, setSearchUser] = useState("user");
 
-type DispatchPropsType = {
-  addTodoTC: (text: string) => void;
-  removeTodoTC: (id: number) => void;
-};
+  useEffect(() => {
+    axios
+      .get<SearchUsersType>(
+        `https://api.github.com/search/users?q=${searchUser}`,
+      )
+      .then((res) => {
+        setUsers(res.data.items);
+      });
+  }, [searchUser]);
 
-type OwnPropsType = {};
-
-const mapStateToProps = (state: RootState): SettingPropsType => {
-  return {
-    todos: state.settingPage.todos,
-  };
-};
-
-const MyTasks: FC<SettingPropsType> = ({ todos }) => {
-  const dispatch = useTypeDispatch();
-
-  const [text, setText] = useState("");
-
-  const handleAddTodo = () => {
-    dispatch(addTodoTC(text));
-    setText("");
-  };
+  useEffect(() => {
+    if (selectedUser) {
+      document.title = selectedUser?.login;
+    }
+  }, [selectedUser]);
 
   return (
     <MyTasksStyle>
-      <h1>Todo list</h1>
+      <div className="container">
+        <GitHubSearchUsers
+          searchUser={searchUser}
+          setSearchUser={setSearchUser}
+        />
 
-      <input
-        type="text"
-        value={text}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-      />
-      <button onClick={handleAddTodo}>Add todo</button>
+        <ul className="container__menu">
+          {users.map((user) => (
+            <GitHubUser
+              key={user.id}
+              user={user}
+              selectedUser={selectedUser}
+              setSelectedUser={setSelectedUser}
+            />
+          ))}
+        </ul>
+      </div>
 
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <p> {todo.text} </p>
-            <button onClick={() => dispatch(removeTodoTC(todo.id))}>
-              Remove todo
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="container__details">
+        <GitHubUserDetails selectedUser={selectedUser} />
+      </div>
     </MyTasksStyle>
   );
 };
 
-export default compose(
-  connect<SettingPropsType, DispatchPropsType, OwnPropsType, RootState>(
-    mapStateToProps,
-    {
-      addTodoTC,
-      removeTodoTC,
-    },
-  ),
-
-  withAuthRedirectHOC,
-)(MyTasks) as ComponentType;
+export default MyTasks;
