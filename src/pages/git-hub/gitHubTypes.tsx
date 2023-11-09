@@ -1,3 +1,4 @@
+// GitHub component
 type UsersType = {
   login: string;
   id: number;
@@ -39,4 +40,36 @@ type SearchUsersType = {
   items: Array<UsersType>;
 };
 
-export { UsersType, SearchUsersType };
+// GitHubUserDetails component
+type GitHubUserDetailsType = {
+  selectedUser: UsersType | null;
+};
+
+type TimerType = {
+  seconds: number;
+  setUserDetails: (userDetails: UsersType | null) => void;
+  setSeconds: (seconds: any) => void;
+};
+
+// GitHubUser component
+type GitHubUserType = {
+  user: UsersType;
+  selectedUser: UsersType | null;
+  setSelectedUser: (selectedUser: UsersType | null) => void;
+};
+
+// GitHubSearchUsers component
+type GitHubSearchUsersType = {
+  searchTerm: string;
+  findCallbackFunc: (value: string) => void;
+  resetCallbackFunc: () => void;
+};
+
+export {
+  UsersType,
+  SearchUsersType,
+  GitHubUserDetailsType,
+  TimerType,
+  GitHubUserType,
+  GitHubSearchUsersType,
+};

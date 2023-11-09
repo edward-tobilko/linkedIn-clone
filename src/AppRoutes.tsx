@@ -11,7 +11,7 @@ import Auth from "./pages/auth/AuthContainer";
 import Social from "./pages/social/Social";
 import Profile from "./pages/profile/Profile";
 import UserProfile from "./pages/profile/UserProfile";
-import MyTasks from "./pages/my-tasks/MyTasks";
+import GitHub from "./pages/git-hub/GitHub";
 import FollowedUsersPage from "./pages/followed-users/FollowedUsersPage";
 
 import { NotFound } from "./components/notifications/not-found/NotFound";
@@ -114,7 +114,7 @@ const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
         <Route path="followed-users" element={<FollowedUsersPage />} />
         <Route path="chat" element={<Chat />} />
         <Route path="setting" element={<Setting />} />
-        <Route path="my-tasks" element={<MyTasks />} />
+        <Route path="git-hub" element={<GitHub />} />
         <Route path="login" element={<Auth />} />
         <Route path="not-found" element={<NotFound />} />
 

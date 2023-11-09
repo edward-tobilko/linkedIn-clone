@@ -31,9 +31,9 @@ const links: LinksTypes[] = [
   },
   {
     id: uuidv4(),
-    path: "my-tasks",
-    name: "My Tasks",
-    description: "To-do and Daily Tasks",
+    path: "git-hub",
+    name: "GitHub",
+    description: "Fetch users from GitHub API",
     icon: <FiCreditCard />,
   },
 ];

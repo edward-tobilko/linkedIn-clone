@@ -1,11 +1,6 @@
 import { FC } from "react";
-import { UsersType } from "./myTasksTypes";
 
-type GitHubUserType = {
-  user: UsersType;
-  selectedUser: UsersType | null;
-  setSelectedUser: (selectedUser: UsersType | null) => void;
-};
+import { GitHubUserType } from "./gitHubTypes";
 
 const GitHubUser: FC<GitHubUserType> = ({
   user,
