@@ -49,6 +49,7 @@ type TimerType = {
   seconds: number;
   setUserDetails: (userDetails: UsersType | null) => void;
   setSeconds: (seconds: any) => void;
+  timerKey: string;
 };
 
 // GitHubUser component

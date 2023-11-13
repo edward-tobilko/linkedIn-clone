@@ -1,18 +1,20 @@
 import { FC, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { GitHubStyle } from "./gitHubStyle";
 
 import { SearchUsersType, UsersType } from "./gitHubTypes";
 
 import { instance } from "./gitHubApi";
+import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 
 import GitHubUser from "./GitHubUser";
 import GitHubUserDetails from "./GitHubUserDetails";
 import GitHubSearchUsers from "./GitHubSearchUsers";
+import { GitHubSkeleton } from "../../components/UI/loaders/gitHub-loaders/GitHubSkeleton";
+
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
-import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
-import { useParams } from "react-router-dom";
 
 const GitHub: FC = () => {
   let initialSearchUserState = "edward-tobilko";
@@ -20,6 +22,7 @@ const GitHub: FC = () => {
   const [users, setUsers] = useState<UsersType[]>([]);
   const [selectedUser, setSelectedUser] = useState<UsersType | null>(null);
   const [searchTerm, setSearchTerm] = useState(initialSearchUserState);
+  const [gitHubLoading, setGitHubLoading] = useState(false);
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
@@ -39,10 +42,12 @@ const GitHub: FC = () => {
   }, [selectedUser]);
 
   useEffect(() => {
+    setGitHubLoading(true);
     instance
       .get<SearchUsersType>(`search/users?q=${searchTerm}`)
       .then((res) => {
         setUsers(res.data.items);
+        setGitHubLoading(false);
       });
 
     fetching();
@@ -58,14 +63,20 @@ const GitHub: FC = () => {
         />
 
         <ul className="container__menu">
-          {users.map((user) => (
-            <GitHubUser
-              key={user.id}
-              user={user}
-              selectedUser={selectedUser}
-              setSelectedUser={setSelectedUser}
-            />
-          ))}
+          {gitHubLoading ? (
+            <GitHubSkeleton />
+          ) : (
+            <>
+              {users.map((user) => (
+                <GitHubUser
+                  key={user.id}
+                  user={user}
+                  selectedUser={selectedUser}
+                  setSelectedUser={setSelectedUser}
+                />
+              ))}
+            </>
+          )}
         </ul>
       </div>
 

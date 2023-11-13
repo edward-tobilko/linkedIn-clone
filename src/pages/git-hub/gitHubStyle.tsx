@@ -20,6 +20,15 @@ export const GitHubStyle = styled.div`
         color: ${themeVars.colors.errorColor};
       }
     }
+
+    &__details {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      max-width: 500px;
+      width: 100%;
+    }
   }
 `;
 
