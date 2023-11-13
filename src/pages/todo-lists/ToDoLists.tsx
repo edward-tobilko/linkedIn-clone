@@ -19,6 +19,8 @@ type TasksType = {
   isDone: boolean;
 };
 
+type FilteredTasksType = "all" | "checked" | "empty";
+
 const ToDoLists: FC = () => {
   const [tasks, setTasks] = useState<TasksType[]>([
     { id: uuidv4(), title: "HTML&CSS", isDone: true },
@@ -28,6 +30,8 @@ const ToDoLists: FC = () => {
     { id: uuidv4(), title: "GraphQL", isDone: true },
   ]);
   const [todo, setTodo] = useState("");
+  const [filterTasks, setFilterTasks] = useState<FilteredTasksType>("all");
+  let filteredTasks = tasks;
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
@@ -46,14 +50,43 @@ const ToDoLists: FC = () => {
 
   const addTodo = (title: string) => {
     const newTodo = {
-      ...tasks,
       id: uuidv4(),
       title: title,
       isDone: false,
     };
 
-    setTasks(newTodo);
+    const newTasks = [...tasks, newTodo];
+
+    setTasks(newTasks);
+    setTodo("");
   };
+
+  const removeTodo = (id: string) => {
+    const filteredTasks = tasks.filter(
+      (filteredTask) => filteredTask.id !== id,
+    );
+
+    setTasks(filteredTasks);
+  };
+
+  const onKeyPressHandler = (event: any) => {
+    if (event.ctrlKey) {
+    }
+  };
+
+  const handleCheckedChangeStatus = () => {};
+
+  if (filterTasks === "checked") {
+    filteredTasks = tasks.filter(
+      (filteredTask) => filteredTask.isDone === true,
+    );
+  }
+
+  if (filterTasks === "empty") {
+    filteredTasks = tasks.filter(
+      (filteredTask) => filteredTask.isDone === false,
+    );
+  }
 
   // useEffect(() => {
   //   const fetchTasks = async () => {
@@ -75,21 +108,23 @@ const ToDoLists: FC = () => {
         onChange={handleTodoChange}
         placeholder="Type your todo"
         className="input"
+        onKeyDown={onKeyPressHandler}
       />
-      <button onClick={addTodo(todo)} className="btn">
+      <button onClick={() => addTodo(todo)} className="btn">
         Send
       </button>
 
       <div className="tasks">
-        {tasks.map((task) => (
+        {filteredTasks.map((task) => (
           <div key={task.id} className="task">
             <input
               type="checkbox"
               className="task__checkbox"
               checked={task.isDone}
+              onChange={() => {}}
             />
             <p className="task__title"> {task.title} </p>
-            <button onClick={() => {}} className="task__btn">
+            <button onClick={() => removeTodo(task.id)} className="task__btn">
               Remove
             </button>
           </div>
@@ -97,9 +132,21 @@ const ToDoLists: FC = () => {
       </div>
 
       <div className="filtered">
-        <button className="filtered__btn">All</button>
-        <button className="filtered__btn">Checked</button>
-        <button className="filtered__btn">Empty</button>
+        <button className="filtered__btn" onClick={() => setFilterTasks("all")}>
+          All
+        </button>
+        <button
+          className="filtered__btn"
+          onClick={() => setFilterTasks("checked")}
+        >
+          Checked
+        </button>
+        <button
+          className="filtered__btn"
+          onClick={() => setFilterTasks("empty")}
+        >
+          Empty
+        </button>
       </div>
     </ToDoListsStyle>
   );
