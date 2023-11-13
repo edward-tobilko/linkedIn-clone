@@ -6,7 +6,7 @@ import { compose } from "redux";
 import { ServerErrorStyle } from "./rootStyles";
 
 import Chat from "./pages/chat/Chat";
-import Setting from "./pages/setting/Setting";
+import ToDoLists from "./pages/todo-lists/ToDoLists";
 import Auth from "./pages/auth/AuthContainer";
 import Social from "./pages/social/Social";
 import Profile from "./pages/profile/Profile";
@@ -113,7 +113,7 @@ const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
         <Route path="users" element={<Social />} />
         <Route path="followed-users" element={<FollowedUsersPage />} />
         <Route path="chat" element={<Chat />} />
-        <Route path="setting" element={<Setting />} />
+        <Route path="todo-lists" element={<ToDoLists />} />
         <Route path="git-hub" element={<GitHub />} />
         <Route path="login" element={<Auth />} />
         <Route path="not-found" element={<NotFound />} />

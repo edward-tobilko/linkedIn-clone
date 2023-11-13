@@ -24,10 +24,10 @@ const links: LinksTypes[] = [
   },
   {
     id: uuidv4(),
-    path: "setting",
-    name: "Setting",
-    description: "Setting account",
-    icon: <i className="bx bx-cog"></i>,
+    path: "todo-lists",
+    name: "ToDoLists",
+    description: "ToDo lists description",
+    icon: <i className="bx bx-list-check"></i>,
   },
   {
     id: uuidv4(),
