@@ -1,37 +1,40 @@
-import { FC, useState, ChangeEvent, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import { ToDoListsStyle } from "./todoListsStyle";
 
-import { instance } from "../../api/API";
+import { TasksType, FilteredTasksType, ToDoListsType } from "./todoListsTypes";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { useFetching } from "../../hooks/useFetching";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
-
-type TasksType = {
-  id: string;
-  title: string;
-  // addedDate: string;
-  // order: number;
-  isDone: boolean;
-};
-
-type FilteredTasksType = "all" | "checked" | "empty";
+import ToDoList from "./ToDoList";
 
 const ToDoLists: FC = () => {
-  const [tasks, setTasks] = useState<TasksType[]>([
-    { id: uuidv4(), title: "HTML&CSS", isDone: true },
-    { id: uuidv4(), title: "JS", isDone: true },
-    { id: uuidv4(), title: "React&Redux", isDone: false },
-    { id: uuidv4(), title: "Rest API", isDone: false },
-    { id: uuidv4(), title: "GraphQL", isDone: true },
+  let todoListID1 = uuidv4();
+  let todoListID2 = uuidv4();
+
+  const [todoLists, setTodoLists] = useState<Array<ToDoListsType>>([
+    { id: todoListID1, title: "What to learn", filterTasks: "checked" },
+    { id: todoListID2, title: "What to do", filterTasks: "empty" },
   ]);
-  const [todo, setTodo] = useState("");
-  const [filterTasks, setFilterTasks] = useState<FilteredTasksType>("all");
-  let filteredTasks = tasks;
+  const [tasksObject, setTasksObject] = useState({
+    [todoListID1]: [
+      { id: uuidv4(), name: "HTML&CSS", isDone: true },
+      { id: uuidv4(), name: "JS", isDone: true },
+      { id: uuidv4(), name: "React&Redux", isDone: false },
+      { id: uuidv4(), name: "Rest API", isDone: false },
+      { id: uuidv4(), name: "GraphQL", isDone: true },
+    ],
+    [todoListID2]: [
+      { id: uuidv4(), name: "Read tutorials", isDone: true },
+      { id: uuidv4(), name: "A lot of practice", isDone: false },
+      { id: uuidv4(), name: "Search for new information", isDone: false },
+      { id: uuidv4(), name: "Never give up", isDone: true },
+    ],
+  });
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
@@ -44,49 +47,74 @@ const ToDoLists: FC = () => {
     dispatch(fetchCurrentUserPageTC(userId));
   });
 
-  const handleTodoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTodo(event.currentTarget.value);
-  };
-
-  const addTodo = (title: string) => {
+  const addTodo = (name: string, todoListId: string) => {
     const newTodo = {
       id: uuidv4(),
-      title: title,
+      name: name,
       isDone: false,
     };
+    let tasks = tasksObject[todoListId];
 
     const newTasks = [...tasks, newTodo];
+    tasksObject[todoListId] = newTasks;
 
-    setTasks(newTasks);
-    setTodo("");
+    setTasksObject({ ...tasksObject });
   };
 
-  const removeTodo = (id: string) => {
+  const removeTodo = (id: string, todoListId: string) => {
+    let tasks = tasksObject[todoListId];
+
     const filteredTasks = tasks.filter(
       (filteredTask) => filteredTask.id !== id,
     );
+    tasksObject[todoListId] = filteredTasks;
 
-    setTasks(filteredTasks);
+    setTasksObject({ ...tasksObject });
   };
 
-  const onKeyPressHandler = (event: any) => {
-    if (event.ctrlKey) {
+  const handleChangeStatus = (
+    taskId: string,
+    isDone: boolean,
+    todoListId: string,
+  ) => {
+    let tasks = tasksObject[todoListId];
+
+    let task = tasks.find((checkedTask) => checkedTask.id === taskId);
+
+    //? Перевіряємо на "псевдоистинну или псевдоложь" та міняємо значення на протилежне собі.
+    if (task) {
+      task.isDone = isDone;
+
+      //? React реагує тільки на змінені дані в массиві, тому нам потрібно завжди робити копію массива та вертати її.
+      // setTasks(tasksObject); //! Don't do that.
+
+      setTasksObject({ ...tasksObject }); //? Деструктуризація
     }
   };
 
-  const handleCheckedChangeStatus = () => {};
+  const changeFilterTasks = (
+    filterTasks: FilteredTasksType,
+    todoListId: string,
+  ) => {
+    let todoList = todoLists.find((todoList) => todoList.id === todoListId);
 
-  if (filterTasks === "checked") {
-    filteredTasks = tasks.filter(
-      (filteredTask) => filteredTask.isDone === true,
-    );
-  }
+    if (todoList) {
+      todoList.filterTasks = filterTasks;
+      setTodoLists([...todoLists]);
+    }
+  };
 
-  if (filterTasks === "empty") {
-    filteredTasks = tasks.filter(
-      (filteredTask) => filteredTask.isDone === false,
+  const removeTodoList = (todoListId: string) => {
+    let filteredTodoLists = todoLists.filter(
+      (todoList) => todoList.id !== todoListId,
     );
-  }
+
+    setTodoLists(filteredTodoLists);
+
+    //? Видаляємо свойство об'єкта
+    delete tasksObject[todoListId];
+    setTasksObject({ ...tasksObject });
+  };
 
   // useEffect(() => {
   //   const fetchTasks = async () => {
@@ -102,52 +130,35 @@ const ToDoLists: FC = () => {
 
   return (
     <ToDoListsStyle>
-      <input
-        type="text"
-        value={todo}
-        onChange={handleTodoChange}
-        placeholder="Type your todo"
-        className="input"
-        onKeyDown={onKeyPressHandler}
-      />
-      <button onClick={() => addTodo(todo)} className="btn">
-        Send
-      </button>
+      {todoLists.map((todoList) => {
+        let filteredTasksById = tasksObject[todoList.id];
 
-      <div className="tasks">
-        {filteredTasks.map((task) => (
-          <div key={task.id} className="task">
-            <input
-              type="checkbox"
-              className="task__checkbox"
-              checked={task.isDone}
-              onChange={() => {}}
-            />
-            <p className="task__title"> {task.title} </p>
-            <button onClick={() => removeTodo(task.id)} className="task__btn">
-              Remove
-            </button>
-          </div>
-        ))}
-      </div>
+        if (todoList.filterTasks === "checked") {
+          filteredTasksById = filteredTasksById.filter(
+            (filteredTask) => filteredTask.isDone === true,
+          );
+        }
 
-      <div className="filtered">
-        <button className="filtered__btn" onClick={() => setFilterTasks("all")}>
-          All
-        </button>
-        <button
-          className="filtered__btn"
-          onClick={() => setFilterTasks("checked")}
-        >
-          Checked
-        </button>
-        <button
-          className="filtered__btn"
-          onClick={() => setFilterTasks("empty")}
-        >
-          Empty
-        </button>
-      </div>
+        if (todoList.filterTasks === "empty") {
+          filteredTasksById = filteredTasksById.filter(
+            (filteredTask) => filteredTask.isDone === false,
+          );
+        }
+        return (
+          <ToDoList
+            key={todoList.id}
+            title={todoList.title}
+            filterTasks={todoList.filterTasks}
+            todoListId={todoList.id}
+            filteredTasks={filteredTasksById}
+            addTodo={addTodo}
+            removeTodo={removeTodo}
+            handleChangeStatus={handleChangeStatus}
+            changeFilterTasks={changeFilterTasks}
+            removeTodoList={removeTodoList}
+          />
+        );
+      })}
     </ToDoListsStyle>
   );
 };
