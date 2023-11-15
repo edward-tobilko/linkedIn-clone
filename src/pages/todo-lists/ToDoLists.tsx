@@ -2,25 +2,30 @@ import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import { ToDoListsStyle } from "./todoListsStyle";
+import { ToDoListsContainerStyle, ToDoListsStyle } from "./todoListsStyle";
 
-import { TasksType, FilteredTasksType, ToDoListsType } from "./todoListsTypes";
+import {
+  FilteredTasksType,
+  TasksObjectType,
+  ToDoListsType,
+} from "./todoListsTypes";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { useFetching } from "../../hooks/useFetching";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 import ToDoList from "./ToDoList";
+import AddTodoItemForm from "./AddTodoItemForm";
 
 const ToDoLists: FC = () => {
   let todoListID1 = uuidv4();
   let todoListID2 = uuidv4();
 
   const [todoLists, setTodoLists] = useState<Array<ToDoListsType>>([
-    { id: todoListID1, title: "What to learn", filterTasks: "checked" },
-    { id: todoListID2, title: "What to do", filterTasks: "empty" },
+    { id: todoListID1, title: "What to learn", filterTasks: "all" },
+    { id: todoListID2, title: "What to do", filterTasks: "all" },
   ]);
-  const [tasksObject, setTasksObject] = useState({
+  const [tasksObject, setTasksObject] = useState<TasksObjectType>({
     [todoListID1]: [
       { id: uuidv4(), name: "HTML&CSS", isDone: true },
       { id: uuidv4(), name: "JS", isDone: true },
@@ -77,17 +82,20 @@ const ToDoLists: FC = () => {
     isDone: boolean,
     todoListId: string,
   ) => {
+    //? Отримуємо потрібний нам масив по ключу, в якому ми будемо щось змінювати
     let tasks = tasksObject[todoListId];
 
+    //? Отримуємо поточний об'єкт, який нам потрібен
     let task = tasks.find((checkedTask) => checkedTask.id === taskId);
 
-    //? Перевіряємо на "псевдоистинну или псевдоложь" та міняємо значення на протилежне собі.
+    //? Перевіряємо на "псевдоістину чи псевдобрехню" та міняємо значення на протилежне собі.
     if (task) {
       task.isDone = isDone;
 
       //? React реагує тільки на змінені дані в массиві, тому нам потрібно завжди робити копію массива та вертати її.
-      // setTasks(tasksObject); //! Don't do that.
+      // setTasksObject(tasksObject); //! Don't do that.
 
+      //? Сетаємо нові змінення в об'єкта tasksObject, щоб дані відобразилися потрібно зробити копію об'єкта, щоб React відреагував та відобразив новий масив з об'єктами.
       setTasksObject({ ...tasksObject }); //? Деструктуризація
     }
   };
@@ -116,50 +124,88 @@ const ToDoLists: FC = () => {
     setTasksObject({ ...tasksObject });
   };
 
-  // useEffect(() => {
-  //   const fetchTasks = async () => {
-  //     await instance.get("todo-lists").then((res) => setTasks(res.data));
-  //   };
+  const addTodoList = (title: string) => {
+    let newTodoList: ToDoListsType = {
+      id: uuidv4(),
+      title: title,
+      filterTasks: "all",
+    };
+    setTodoLists((prevTodoLists) => [...prevTodoLists, newTodoList]);
+    setTasksObject({ ...tasksObject, [newTodoList.id]: [] });
 
-  //   fetchTasks();
-  // }, []);
+    console.log(title);
+  };
+
+  const changeEditTaskName = (
+    taskId: string,
+    newValue: string,
+    todoListId: string,
+  ) => {
+    let tasks = tasksObject[todoListId];
+
+    let task = tasks.find((editedTask) => editedTask.id === taskId);
+
+    if (task) {
+      task.name = newValue;
+
+      setTasksObject({ ...tasksObject });
+    }
+  };
+
+  const changeEditTodoTitle = (taskId: string, newTitle: string) => {
+    let todoList = todoLists.find((editedTodo) => editedTodo.id === taskId);
+
+    if (todoList) {
+      todoList.title = newTitle;
+
+      setTodoLists([...todoLists]);
+    }
+  };
 
   useEffect(() => {
     fetching();
   }, [dispatch]);
 
   return (
-    <ToDoListsStyle>
-      {todoLists.map((todoList) => {
-        let filteredTasksById = tasksObject[todoList.id];
+    <ToDoListsContainerStyle>
+      <h1 className="todoListsContainer__title">Add new Todo Item</h1>
 
-        if (todoList.filterTasks === "checked") {
-          filteredTasksById = filteredTasksById.filter(
-            (filteredTask) => filteredTask.isDone === true,
-          );
-        }
+      <AddTodoItemForm addTodoLayout={addTodoList} />
 
-        if (todoList.filterTasks === "empty") {
-          filteredTasksById = filteredTasksById.filter(
-            (filteredTask) => filteredTask.isDone === false,
+      <ToDoListsStyle>
+        {todoLists.map((todoList) => {
+          let filteredTasksById = tasksObject[todoList.id];
+
+          if (todoList.filterTasks === "checked") {
+            filteredTasksById = filteredTasksById.filter(
+              (filteredTask) => filteredTask.isDone === true,
+            );
+          }
+
+          if (todoList.filterTasks === "empty") {
+            filteredTasksById = filteredTasksById.filter(
+              (filteredTask) => filteredTask.isDone === false,
+            );
+          }
+          return (
+            <ToDoList
+              key={todoList.id}
+              title={todoList.title}
+              filterTasks={todoList.filterTasks}
+              todoListId={todoList.id}
+              filteredTasks={filteredTasksById}
+              addTodo={addTodo}
+              removeTodo={removeTodo}
+              handleChangeStatus={handleChangeStatus}
+              changeFilterTasks={changeFilterTasks}
+              removeTodoList={removeTodoList}
+              changeEditTaskName={changeEditTaskName}
+              changeEditTodoTitle={changeEditTodoTitle}
+            />
           );
-        }
-        return (
-          <ToDoList
-            key={todoList.id}
-            title={todoList.title}
-            filterTasks={todoList.filterTasks}
-            todoListId={todoList.id}
-            filteredTasks={filteredTasksById}
-            addTodo={addTodo}
-            removeTodo={removeTodo}
-            handleChangeStatus={handleChangeStatus}
-            changeFilterTasks={changeFilterTasks}
-            removeTodoList={removeTodoList}
-          />
-        );
-      })}
-    </ToDoListsStyle>
+        })}
+      </ToDoListsStyle>
+    </ToDoListsContainerStyle>
   );
 };
 

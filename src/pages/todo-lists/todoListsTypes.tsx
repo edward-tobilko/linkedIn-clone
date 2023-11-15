@@ -1,9 +1,11 @@
 type TasksType = {
   id: string;
   name: string;
-  // addedDate: string;
-  // order: number;
   isDone: boolean;
+};
+
+type TasksObjectType = {
+  [key: string]: Array<TasksType>;
 };
 
 type FilteredTasksType = "all" | "checked" | "empty";
@@ -31,6 +33,29 @@ type ToDoListType = {
     todoListId: string,
   ) => void;
   removeTodoList: (todoListId: string) => void;
+  changeEditTaskName: (
+    taskId: string,
+    newValue: string,
+    todoListId: string,
+  ) => void;
+  changeEditTodoTitle: (taskId: string, newTitle: string) => void;
 };
 
-export { TasksType, FilteredTasksType, ToDoListType, ToDoListsType };
+type AddTodoItemFormType = {
+  addTodoLayout: (name: string) => void;
+};
+
+type EditInputTaskNameType = {
+  name: string;
+  handleEdit: (newValue: string) => void;
+};
+
+export {
+  TasksType,
+  FilteredTasksType,
+  ToDoListType,
+  ToDoListsType,
+  AddTodoItemFormType,
+  TasksObjectType,
+  EditInputTaskNameType,
+};

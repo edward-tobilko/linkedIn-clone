@@ -1,8 +1,11 @@
-import { FC, ChangeEvent, KeyboardEvent, useState } from "react";
+import { FC, ChangeEvent } from "react";
 
 import { ToDoListType } from "./todoListsTypes";
 
 import { ToDoListStyle } from "./todoListsStyle";
+
+import AddTodoItemForm from "./AddTodoItemForm";
+import { EditInputTaskName } from "./EditInputTaskName";
 
 const ToDoList: FC<ToDoListType> = ({
   filteredTasks,
@@ -14,53 +17,28 @@ const ToDoList: FC<ToDoListType> = ({
   handleChangeStatus,
   changeFilterTasks,
   removeTodoList,
+  changeEditTaskName,
+  changeEditTodoTitle,
 }) => {
-  const [todo, setTodo] = useState("");
-  const [error, setError] = useState<string | null>(null);
-
-  function addTodoHandler() {
-    if (todo.trim() !== "") {
-      addTodo(todo, todoListId);
-      setTodo("");
-    } else {
-      setError("This field is required");
-    }
+  //? Функція-обгортка для додавання списків та задач
+  function addTodoLayout(name: string) {
+    addTodo(name, todoListId);
   }
 
-  const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.ctrlKey) addTodoHandler();
-  };
-
-  const handleTodoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
-    setTodo(event.currentTarget.value);
-    setError(null);
-  };
+  function handleEditTodoTitle(newTitle: string) {
+    changeEditTodoTitle(todoListId, newTitle);
+  }
 
   return (
     <ToDoListStyle>
       <button onClick={() => removeTodoList(todoListId)}>
         Remove todo list
       </button>
-      <h1 className="title"> {title} </h1>
+      {/* <h1 className="title"> {title} </h1> */}
 
-      <form className="form">
-        <input
-          type="text"
-          value={todo}
-          onChange={handleTodoChange}
-          placeholder="Type your todo"
-          className={error ? "error__input" : "input"}
-          onKeyUp={onKeyPressHandler}
-        />
+      <EditInputTaskName name={title} handleEdit={handleEditTodoTitle} />
 
-        {error && <p className="error"> {error} </p>}
-
-        <button onClick={addTodoHandler} className="btn">
-          Send
-        </button>
-      </form>
+      <AddTodoItemForm addTodoLayout={addTodoLayout} />
 
       <div className="tasks">
         {filteredTasks.map((task) => {
@@ -76,6 +54,10 @@ const ToDoList: FC<ToDoListType> = ({
             );
           };
 
+          function handleEditTaskName(newValue: string) {
+            changeEditTaskName(task.id, newValue, todoListId);
+          }
+
           return (
             <div key={task.id} className={task.isDone ? "task isDone" : "task"}>
               <input
@@ -84,7 +66,12 @@ const ToDoList: FC<ToDoListType> = ({
                 checked={task.isDone}
                 onChange={onChangeHandlerStatus}
               />
-              <p className="task__title"> {task.name} </p>
+
+              <EditInputTaskName
+                name={task.name}
+                handleEdit={handleEditTaskName}
+              />
+
               <button
                 onClick={() => removeTodo(task.id, todoListId)}
                 className="task__btn"
