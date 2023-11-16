@@ -2,10 +2,15 @@ import { FC, ChangeEvent } from "react";
 
 import { ToDoListType } from "./todoListsTypes";
 
-import { ToDoListStyle } from "./todoListsStyle";
+import { Button, Checkbox, IconButton, styled, Box } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import AddTodoItemForm from "./AddTodoItemForm";
 import { EditInputTaskName } from "./EditInputTaskName";
+
+const CustomFilterBtn = styled(Button)({
+  margin: "0 10px",
+});
 
 const ToDoList: FC<ToDoListType> = ({
   filteredTasks,
@@ -30,17 +35,31 @@ const ToDoList: FC<ToDoListType> = ({
   }
 
   return (
-    <ToDoListStyle>
-      <button onClick={() => removeTodoList(todoListId)}>
+    <Box
+      sx={{
+        margin: "0 30px",
+        maxWidth: "350px",
+        width: "100%",
+        textAlign: "center",
+        background: "#1d2226",
+        padding: "15px 30px",
+        borderRadius: "10px",
+      }}
+    >
+      <Button
+        variant="outlined"
+        startIcon={<DeleteIcon />}
+        color="warning"
+        onClick={() => removeTodoList(todoListId)}
+      >
         Remove todo list
-      </button>
-      {/* <h1 className="title"> {title} </h1> */}
+      </Button>
 
       <EditInputTaskName name={title} handleEdit={handleEditTodoTitle} />
 
       <AddTodoItemForm addTodoLayout={addTodoLayout} />
 
-      <div className="tasks">
+      <Box sx={{ paddingTop: "25px" }}>
         {filteredTasks.map((task) => {
           const onChangeHandlerStatus = (
             event: ChangeEvent<HTMLInputElement>,
@@ -59,10 +78,17 @@ const ToDoList: FC<ToDoListType> = ({
           }
 
           return (
-            <div key={task.id} className={task.isDone ? "task isDone" : "task"}>
-              <input
-                type="checkbox"
-                className="task__checkbox"
+            <Box
+              key={task.id}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "5px",
+                opacity: task.isDone ? 0.6 : 1,
+              }}
+            >
+              <Checkbox
                 checked={task.isDone}
                 onChange={onChangeHandlerStatus}
               />
@@ -72,38 +98,49 @@ const ToDoList: FC<ToDoListType> = ({
                 handleEdit={handleEditTaskName}
               />
 
-              <button
+              <IconButton
+                aria-label="delete"
+                size="large"
                 onClick={() => removeTodo(task.id, todoListId)}
-                className="task__btn"
               >
-                Remove
-              </button>
-            </div>
+                <DeleteIcon
+                  sx={{
+                    "& path": {
+                      color: "#ff0000",
+
+                      "&:hover": {
+                        color: "#ff00007f",
+                      },
+                    },
+                  }}
+                />
+              </IconButton>
+            </Box>
           );
         })}
-      </div>
+      </Box>
 
-      <div className="filtered">
-        <button
-          className={filterTasks === "all" ? "active" : "filtered__btn"}
+      <Box sx={{ paddingTop: "20px" }}>
+        <CustomFilterBtn
+          variant={filterTasks === "all" ? "contained" : "outlined"}
           onClick={() => changeFilterTasks("all", todoListId)}
         >
           All
-        </button>
-        <button
-          className={filterTasks === "checked" ? "active" : "filtered__btn"}
+        </CustomFilterBtn>
+        <CustomFilterBtn
+          variant={filterTasks === "checked" ? "contained" : "outlined"}
           onClick={() => changeFilterTasks("checked", todoListId)}
         >
           Checked
-        </button>
-        <button
-          className={filterTasks === "empty" ? "active" : "filtered__btn"}
+        </CustomFilterBtn>
+        <CustomFilterBtn
+          variant={filterTasks === "empty" ? "contained" : "outlined"}
           onClick={() => changeFilterTasks("empty", todoListId)}
         >
           Empty
-        </button>
-      </div>
-    </ToDoListStyle>
+        </CustomFilterBtn>
+      </Box>
+    </Box>
   );
 };
 

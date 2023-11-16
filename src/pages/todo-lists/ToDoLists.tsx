@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import { ToDoListsContainerStyle, ToDoListsStyle } from "./todoListsStyle";
+import { Grid, Box, Typography } from "@mui/material";
 
 import {
   FilteredTasksType,
@@ -167,12 +167,30 @@ const ToDoLists: FC = () => {
   }, [dispatch]);
 
   return (
-    <ToDoListsContainerStyle>
-      <h1 className="todoListsContainer__title">Add new Todo Item</h1>
+    <Box sx={{ width: "100%" }}>
+      <Typography
+        variant="h1"
+        sx={{
+          textTransform: "uppercase",
+          fontSize: "23px",
+          textAlign: "center",
+          paddingBottom: "10px",
+          fontWeight: 600,
+        }}
+      >
+        Add new Todo Item
+      </Typography>
 
       <AddTodoItemForm addTodoLayout={addTodoList} />
 
-      <ToDoListsStyle>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}
+      >
         {todoLists.map((todoList) => {
           let filteredTasksById = tasksObject[todoList.id];
 
@@ -188,24 +206,25 @@ const ToDoLists: FC = () => {
             );
           }
           return (
-            <ToDoList
-              key={todoList.id}
-              title={todoList.title}
-              filterTasks={todoList.filterTasks}
-              todoListId={todoList.id}
-              filteredTasks={filteredTasksById}
-              addTodo={addTodo}
-              removeTodo={removeTodo}
-              handleChangeStatus={handleChangeStatus}
-              changeFilterTasks={changeFilterTasks}
-              removeTodoList={removeTodoList}
-              changeEditTaskName={changeEditTaskName}
-              changeEditTodoTitle={changeEditTodoTitle}
-            />
+            <Grid key={todoList.id}>
+              <ToDoList
+                title={todoList.title}
+                filterTasks={todoList.filterTasks}
+                todoListId={todoList.id}
+                filteredTasks={filteredTasksById}
+                addTodo={addTodo}
+                removeTodo={removeTodo}
+                handleChangeStatus={handleChangeStatus}
+                changeFilterTasks={changeFilterTasks}
+                removeTodoList={removeTodoList}
+                changeEditTaskName={changeEditTaskName}
+                changeEditTodoTitle={changeEditTodoTitle}
+              />
+            </Grid>
           );
         })}
-      </ToDoListsStyle>
-    </ToDoListsContainerStyle>
+      </Box>
+    </Box>
   );
 };
 
