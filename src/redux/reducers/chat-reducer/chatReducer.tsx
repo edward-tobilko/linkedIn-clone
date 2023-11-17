@@ -55,7 +55,7 @@ export const chatReducer = (state = initialState, action: ChatActionsTypes) => {
         file: action.payload.file,
       };
 
-    case "SET_CHATUSERS":
+    case "SET_CHAT_USERS":
       return {
         ...state,
         chatUsers: action.payload.chatUsers,
@@ -90,7 +90,7 @@ export const actions = {
 
   setChatUsersAC: (chatUsers: SocialUserType[]) => {
     return {
-      type: "SET_CHATUSERS",
+      type: "SET_CHAT_USERS",
       payload: { chatUsers },
     } as const;
   },
