@@ -377,6 +377,16 @@ export const ContentStyle = styled.div`
   justify-content: space-between;
   padding: 20px 0;
   width: 100%;
+
+  &.dark {
+    background: ${themeVars.colors.blackColor};
+    color: ${themeVars.colors.whiteColor};
+  }
+
+  &.light {
+    background: ${themeVars.colors.whiteColor};
+    color: ${themeVars.colors.blueColor};
+  }
 `;
 
 // Server error
