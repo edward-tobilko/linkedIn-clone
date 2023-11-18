@@ -71,9 +71,7 @@
   "jest": {
     "transformIgnorePatterns": [
       "node_modules/(?!(react-leaflet|@react-leaflet|d3-*|axios))"
-    ],
-    "testTimeout": 30000,
-    "maxWorkers": 1
+    ]
   },
   "devDependencies": {
     "@testing-library/dom": "^9.3.1",
