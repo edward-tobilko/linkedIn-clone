@@ -1,4 +1,7 @@
-import { StatusType } from "../redux/reducers/chat-reducer/chatReducerTypes";
+import {
+  MessagesWithId,
+  StatusType,
+} from "../redux/reducers/chat-reducer/chatReducerTypes";
 import { SocialUserType } from "../redux/reducers/social-reducer/socialReducerTypes";
 
 //? Перечислення наборів створених нами констант, можуть бути числа або строки.
@@ -71,7 +74,7 @@ type MessagesPropsType = {
   photo: string;
 };
 
-type MessagesReceivedCallbackType = (messages: MessagesPropsType[]) => void;
+type MessagesReceivedCallbackType = (messages: MessagesWithId[]) => void;
 type StatusChangedCallbackType = (status: StatusType) => void;
 
 type EventsNamesType = "messages-received" | "status-changed";
