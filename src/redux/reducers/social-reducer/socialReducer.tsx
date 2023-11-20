@@ -123,14 +123,23 @@ export const fetchSocialUsersTC = (
     dispatch(actionCreators.setCurrentPageAC(currentPage));
     dispatch(actionCreators.setSearchTermAC(searchedTerm, filteredFriends));
 
-    await socialUsersAPI
-      .fetchSocialUsers(currentPage, usersCount, searchedTerm, filteredFriends)
-      .then((data: fetchSocialUsersOnChangedPageDataType) => {
-        dispatch(actionCreators.setLoadingAC(false)); //? Додаємо загрузчик;
-        dispatch(actionCreators.setUsersAC(data.items)); //? Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
-        dispatch(actionCreators.setTotalUsersCountAC(data.totalCount)); //? Отримуємо всю к-сть користувачів з сервера;
-      })
-      .catch((error) => console.log("Error:", error));
+    try {
+      const data: fetchSocialUsersOnChangedPageDataType =
+        await socialUsersAPI.fetchSocialUsers(
+          currentPage,
+          usersCount,
+          searchedTerm,
+          filteredFriends,
+        );
+
+      dispatch(actionCreators.setUsersAC(data.items)); //? Встановлюємо (відображаємо) користувачів в стейт (на сторінці);
+      dispatch(actionCreators.setTotalUsersCountAC(data.totalCount)); //? Отримуємо всю к-сть користувачів з сервера;
+    } catch (error) {
+      console.error("Error:", error);
+      dispatch(actionCreators.setUsersAC([]));
+    } finally {
+      dispatch(actionCreators.setLoadingAC(false));
+    }
   };
 };
 

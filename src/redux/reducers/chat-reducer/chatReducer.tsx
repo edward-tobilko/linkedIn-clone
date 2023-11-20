@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { v1 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 import { MessagesPropsType } from "../../../api/apiTypes";
 import {
@@ -24,7 +24,7 @@ export const chatReducer = (state = initialState, action: ChatActionsTypes) => {
     case "SET_MESSAGES":
       //? Проходимо по повідомленнях та додаємо кожному смс "id". Це потрібно, щоб при зміщенні повідомлень в масиві не дублювався "index", так як в массиві у нас буде max = 100 повідомлень, тобто коли буде 100 повідомлень - старі (верхні) будут видалятися, а нові (нижні) додаватися і так у нас буде в кожному повідомленні унікальний "id".
       const messagesWithIdAndDate = action.payload.messages.map((msg) => {
-        const uniqueId = v1();
+        const uniqueId = uuidv4();
 
         return {
           ...msg,
@@ -100,7 +100,7 @@ export const actions = {
 let _newMessageHandler: ((messages: MessagesPropsType[]) => void) | null = null; //? "_" - означає приватність, тобто цю перемінну не чіпати, а викор. її тільки в HOC!
 let _newStatusHandler: ((status: StatusType) => void) | null = null;
 
-const newMessagesHandlerHOC = (dispatch: Dispatch) => {
+export const newMessagesHandlerHOC = (dispatch: Dispatch) => {
   if (_newMessageHandler === null) {
     _newMessageHandler = (messages) => {
       dispatch(actions.setMessagesAC(messages));
@@ -110,7 +110,7 @@ const newMessagesHandlerHOC = (dispatch: Dispatch) => {
   return _newMessageHandler;
 };
 
-const newStatusHandlerHOC = (dispatch: Dispatch) => {
+export const newStatusHandlerHOC = (dispatch: Dispatch) => {
   if (_newStatusHandler === null) {
     _newStatusHandler = (status) => {
       dispatch(actions.setStatusAC(status));
@@ -122,9 +122,9 @@ const newStatusHandlerHOC = (dispatch: Dispatch) => {
 
 export const setMessagesTC = (): ChatThunkType => {
   return async (dispatch) => {
-    chatAPI.start();
-    chatAPI.fetchSubscribeMessages(newMessagesHandlerHOC(dispatch));
-    chatAPI.fetchStatus(newStatusHandlerHOC(dispatch));
+    await chatAPI.start();
+    await chatAPI.fetchSubscribeMessages(newMessagesHandlerHOC(dispatch));
+    await chatAPI.fetchStatus(newStatusHandlerHOC(dispatch));
   };
 };
 

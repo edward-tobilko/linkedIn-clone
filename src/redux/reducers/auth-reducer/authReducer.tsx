@@ -72,18 +72,17 @@ export const actions = {
 //? Санка (thunk creator) для авторизації
 export const setIsAuthTC = (): AuthThunkType => {
   return async (dispatch) => {
-    return await authAPI
-      .authorizationMe()
-      .then((response) => {
-        if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-          let { id, email, login } = response.data.data;
+    try {
+      const response = await authAPI.authorizationMe();
 
-          dispatch(actions.setIsAuthAC(id, email, login, true));
-        }
-      })
-      .catch((error) => {
-        console.error("Authorization failed:", error);
-      });
+      if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+        let { id, email, login } = response.data.data;
+
+        dispatch(actions.setIsAuthAC(id, email, login, true));
+      }
+    } catch (error) {
+      console.log("Authorization failed:", error);
+    }
   };
 };
 
@@ -94,26 +93,29 @@ export const setLoginTC = (
   rememberMe: boolean | undefined,
   captcha: string | undefined,
 ): AuthThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(actions.setAuthLoginBtnLoadingAC(true));
 
-    authAPI
-      .getLoginApi(email, password, (rememberMe = false), captcha)
-      .then((response) => {
-        if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-          dispatch(setIsAuthTC());
-        } else if (
-          response.data.resultCode === ResultCodesEnum.ResultCodeError
-        ) {
-          dispatch(setCaptchaTC());
-        }
-      })
-      .catch((error) => {
-        console.error("Login failed:", error);
-      })
-      .finally(() => {
-        dispatch(actions.setAuthLoginBtnLoadingAC(false));
-      });
+    try {
+      const response = await authAPI.getLoginApi(
+        email,
+        password,
+        (rememberMe = false),
+        captcha,
+      );
+
+      if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+        dispatch(setIsAuthTC());
+      } else if (response.data.resultCode === ResultCodesEnum.ResultCodeError) {
+        dispatch(setCaptchaTC());
+      } else {
+        console.error("Login failed:", response.data.messages);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      dispatch(actions.setAuthLoginBtnLoadingAC(false));
+    }
   };
 };
 
