@@ -39,6 +39,7 @@ describe("socialReducer", () => {
       currentPage: 1,
       loading: false,
       followingBlockedBtn: [],
+      searchTerm: { term: "", friend: null },
     };
   });
 

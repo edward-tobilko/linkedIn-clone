@@ -20,6 +20,8 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
   it("dispatches the expected actions on successful API call", async () => {
     const currentPage: number = 1;
     const usersCount: number = 10;
+    const searchedTerm: string = "";
+    const filteredFriends: null | boolean = null;
 
     //? Mock the API response data
     const mockData = {
@@ -35,6 +37,7 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
     const expectedActions = [
       actionCreators.setLoadingAC(true),
       actionCreators.setCurrentPageAC(currentPage),
+      actionCreators.setSearchTermAC(searchedTerm, filteredFriends),
       actionCreators.setLoadingAC(false),
       actionCreators.setUsersAC(mockData.items),
       actionCreators.setTotalUsersCountAC(mockData.totalCount),
@@ -43,7 +46,14 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
     const store = mockStore();
 
     //? Dispatch the thunk
-    await store.dispatch(fetchSocialUsersTC(currentPage, usersCount));
+    await store.dispatch(
+      fetchSocialUsersTC(
+        currentPage,
+        usersCount,
+        searchedTerm,
+        filteredFriends,
+      ),
+    );
 
     //? Assert that the expected actions were dispatched
     expect(store.getActions()).toEqual(expectedActions);
@@ -52,18 +62,31 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
   it("dispatches an error action on API call failure", async () => {
     const currentPage: number = 1;
     const usersCount: number = 10;
+    const searchedTerm: string = "";
+    const filteredFriends: null | boolean = null;
 
     //? Mock the API call to simulate an error
     (socialUsersAPIMock.fetchSocialUsers as jest.Mock).mockRejectedValueOnce(
       new Error("API Error"),
     );
 
-    const expectedActions = [actionCreators.setLoadingAC(true)];
+    const expectedActions = [
+      actionCreators.setLoadingAC(true),
+      actionCreators.setUsersAC([]),
+      actionCreators.setLoadingAC(false),
+    ];
 
     const store = mockStore();
 
     //? Dispatch the thunk
-    await store.dispatch(fetchSocialUsersTC(currentPage, usersCount));
+    await store.dispatch(
+      fetchSocialUsersTC(
+        currentPage,
+        usersCount,
+        searchedTerm,
+        filteredFriends,
+      ),
+    );
 
     //? Assert that the expected error actions were dispatched
     expect(store.getActions()).toEqual(expectedActions);
@@ -72,6 +95,8 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
   it("dispatches the expected actions on successful API call on the changed page", async () => {
     const pageNumber: number = 1;
     const usersCount: number = 10;
+    const searchTerm: string = "";
+    const filteredFriends: null | boolean = null;
 
     //? Mock the API response data
     const mockData = {
@@ -86,6 +111,7 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
     const expectedActions = [
       actionCreators.setCurrentPageAC(pageNumber),
       actionCreators.setLoadingAC(true),
+      actionCreators.setSearchTermAC(searchTerm, filteredFriends),
       actionCreators.setLoadingAC(false),
       actionCreators.setUsersAC(mockData.items),
     ];
@@ -94,7 +120,12 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
 
     //? Dispatch the thunk
     await store.dispatch(
-      fetchSocialUsersOnChangedPageTC(pageNumber, usersCount),
+      fetchSocialUsersOnChangedPageTC(
+        pageNumber,
+        usersCount,
+        searchTerm,
+        filteredFriends,
+      ),
     );
 
     //? Assert that the expected actions were dispatched
@@ -104,6 +135,8 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
   it("dispatches an error action on API call failure on the changed page", async () => {
     const pageNumber: number = 1;
     const usersCount: number = 10;
+    const searchTerm: string = "";
+    const filteredFriends: null | boolean = null;
 
     //? Mock the API call to simulate an error
     (
@@ -119,7 +152,12 @@ describe("fetchSocialUsersTC and fetchSocialUsersOnChangedPageTC (thunks)", () =
 
     //? Dispatch the thunk
     await store.dispatch(
-      fetchSocialUsersOnChangedPageTC(pageNumber, usersCount),
+      fetchSocialUsersOnChangedPageTC(
+        pageNumber,
+        usersCount,
+        searchTerm,
+        filteredFriends,
+      ),
     );
 
     //? Assert that the expected error actions were dispatched

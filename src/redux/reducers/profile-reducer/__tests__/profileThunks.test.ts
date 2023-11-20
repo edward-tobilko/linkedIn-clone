@@ -26,7 +26,7 @@ jest.mock("../../../../api/API.tsx", () => ({
   },
 }));
 
-// Configure mock store
+//? Configure mock store
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -103,7 +103,7 @@ describe("Profile Reducer Thunk Actions", () => {
     ]);
   });
 
-  it("should dispatch actions for profile edit mode", async () => {
+  it("should dispatch setLoadingAC(true) and setLoadingAC(false) actions on success in the profile edit mode", async () => {
     const mockProfileProperties: CurrentProfilePageType = {
       aboutMe: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
       contacts: {
@@ -140,14 +140,55 @@ describe("Profile Reducer Thunk Actions", () => {
       },
     });
 
-    // Mock the fetchCurrentUserPageTC action since it's being dispatched in the thunk
-    jest.spyOn(store, "dispatch").mockImplementation(async () => {
-      await Promise.resolve();
+    await store.dispatch(profileEditModeTC(mockProfileProperties));
+
+    expect(store.getActions()).toEqual([
+      setLoadingAC(true),
+      fetchCurrentUserPageTC(2),
+      setLoadingAC(false),
+    ]);
+  });
+
+  it("should handle an error and dispatch setLoadingAC(true) and setLoadingAC(false) actions in the profile edit mode", async () => {
+    const mockProfileProperties: CurrentProfilePageType = {
+      aboutMe: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      contacts: {
+        facebook: "https://facebook.com",
+        website: "https://google.com",
+        vk: "https://vk.com",
+        twitter: "https://twitter.com",
+        instagram: "https://instagram.com",
+        youtube: "https://www.youtube.com",
+        github: "https://github.com/edward-tobilko",
+        mainLink: "https://google.com",
+      },
+      lookingForAJob: false,
+      lookingForAJobDescription: "react / redux / typescript",
+      fullName: "john_doe",
+      userId: 29793,
+      photos: {
+        small:
+          "https://social-network.samuraijs.com/activecontent/images/users/29793/user-small.jpg?v=74",
+        large:
+          "https://social-network.samuraijs.com/activecontent/images/users/29793/user.jpg?v=74",
+      },
+    };
+
+    const errorMessage = "Server error occurred";
+
+    (profileAPI.profileInfoEditMode as jest.Mock).mockResolvedValue({
+      data: {
+        messages: [errorMessage],
+      },
+    });
+
+    const store = mockStore({
+      authorization: {
+        id: 2,
+      },
     });
 
     await store.dispatch(profileEditModeTC(mockProfileProperties));
-
-    await Promise.resolve();
 
     expect(store.getActions()).toEqual([
       setLoadingAC(true),

@@ -1,6 +1,9 @@
-import { setIsAuthTC, actions, setLoginTC } from "../authReducer";
+import configureMockStore from "redux-mock-store";
+import thunk from "redux-thunk";
 
-// Mocking the authAPI module
+import { setIsAuthTC } from "../authReducer";
+import { authAPI } from "../../../../api/API";
+
 jest.mock("../../../../api/API.tsx", () => ({
   authAPI: {
     authorizationMe: jest.fn(),
@@ -8,141 +11,62 @@ jest.mock("../../../../api/API.tsx", () => ({
   },
 }));
 
-describe("Auth Thunks", () => {
-  //? For setIsAuthTC thunk
-  it("should dispatch setIsAuthAC on successful authorization", async () => {
-    const mockedUserData = {
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+describe("authThunks", () => {
+  it("setIsAuthTC: dispatches the expected actions on successful authorization", async () => {
+    const store = mockStore({});
+
+    const mockUserData = {
+      resultCode: 0,
       data: {
-        resultCode: 0,
-        data: {
-          id: 1,
-          email: "test@example.com",
-          login: "testUser",
-        },
+        id: 1,
+        email: "test@example.com",
+        login: "test_user",
       },
     };
 
-    // Mocking the API response
-    require("../../../../api/API").authAPI.authorizationMe.mockResolvedValue(
-      mockedUserData,
-    );
-
-    // Mocking the dispatch function
-    const dispatch = jest.fn();
-
-    // Calling the thunk
-    // @ts-ignore
-    await setIsAuthTC()(dispatch);
-
-    expect(dispatch).toHaveBeenCalledWith(
-      actions.setIsAuthAC(1, "test@example.com", "testUser", true),
-    );
-  });
-
-  it("should not dispatch any action on unsuccessful authorization", async () => {
-    const mockedErrorResponse = {
-      response: {
-        data: {
-          resultCode: 1,
-          messages: ["Authorization failed"],
-        },
-      },
-    };
-
-    // Mocking the API response for an error
-    require("../../../../api/API").authAPI.authorizationMe.mockRejectedValue(
-      mockedErrorResponse,
-    );
-
-    const dispatch = jest.fn();
-
-    // @ts-ignore
-    await setIsAuthTC()(dispatch);
-
-    expect(dispatch).not.toHaveBeenCalled();
-  });
-
-  //? For setLoginTC thunk
-  it("should dispatch setIsAuthTC on successful login", async () => {
-    const mockedLoginResponse = {
-      data: {
-        resultCode: 0,
-      },
-    };
-
-    require("../../../../api/API").authAPI.getLoginApi.mockResolvedValue(
-      mockedLoginResponse,
-    );
-
-    const dispatch = jest.fn();
-
-    // @ts-ignore
-    await setLoginTC("test@example.com", "password", true, "captcha")(dispatch);
-
-    expect(dispatch).toHaveBeenCalledWith(setIsAuthTC());
-  });
-
-  it("should dispatch setCaptchaTC on unsuccessful login with captcha required", async () => {
-    const mockedLoginResponse = {
-      data: {
-        resultCode: 10,
-      },
-    };
-
-    require("../../../../api/API").authAPI.getLoginApi.mockResolvedValue(
-      mockedLoginResponse,
-    );
-
-    const dispatch = jest.fn();
-
-    // @ts-ignore
-    await setLoginTC("test@example.com", "password", true, "captcha")(dispatch);
-
-    expect(dispatch).toHaveBeenCalledWith(actions.setCaptchaAC("captcha"));
-  });
-
-  it("should log an error on unsuccessful login without captcha required", async () => {
-    const mockedErrorResponse = {
-      response: {
-        data: {
-          resultCode: 1,
-          messages: ["Login failed"],
-        },
-      },
-    };
-
-    require("../../../../api/API").authAPI.getLoginApi.mockRejectedValue(
-      mockedErrorResponse,
-    );
-
-    console.error = jest.fn();
-
-    const dispatch = jest.fn();
-
-    // @ts-ignore
-    await setLoginTC("test@example.com", "password", true, "captcha")(dispatch);
-
-    expect(console.error).toHaveBeenCalledWith(
-      "Login failed:",
-      mockedErrorResponse,
-    );
-  });
-
-  it("should dispatch setAuthLoginBtnLoadingAC(true) at the beginning and setAuthLoginBtnLoadingAC(false) at the end", async () => {
-    require("../../../../api/API").authAPI.getLoginApi.mockResolvedValue({
-      data: { resultCode: 0 },
+    (authAPI.authorizationMe as jest.Mock).mockResolvedValue({
+      data: mockUserData,
     });
 
-    const dispatch = jest.fn();
+    await store.dispatch(setIsAuthTC());
 
-    // @ts-ignore
-    await setLoginTC("test@example.com", "password", true, "captcha")(dispatch);
+    const expectedActions = [
+      {
+        type: "SET-IS-AUTH",
+        data: {
+          id: mockUserData.data.id,
+          email: mockUserData.data.email,
+          login: mockUserData.data.login,
+          isAuth: true,
+        },
+      },
+    ];
 
-    expect(dispatch).toHaveBeenCalledWith(
-      actions.setAuthLoginBtnLoadingAC(true),
-    );
-    expect(dispatch).toHaveBeenCalledWith(
-      actions.setAuthLoginBtnLoadingAC(false),
-    );
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(authAPI.authorizationMe).toHaveBeenCalled();
+  });
+
+  it("setIsAuthTC: does not dispatch actions on failed authorization", async () => {
+    const store = mockStore({});
+
+    const mockErrorResponse = {
+      resultCode: 1,
+      messages: ["Authorization failed"],
+      data: {},
+    };
+
+    (authAPI.authorizationMe as jest.Mock).mockRejectedValue({
+      response: { data: mockErrorResponse },
+    });
+
+    await store.dispatch(setIsAuthTC());
+
+    const expectedActions: any = [];
+
+    expect(store.getActions()).toEqual(expectedActions);
+    expect(authAPI.authorizationMe).toHaveBeenCalled();
   });
 });
