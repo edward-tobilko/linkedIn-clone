@@ -121,18 +121,28 @@ export const setLoginTC = (
 
 //? TC для вилогірування користувача
 export const setLogoutTC = (): AuthThunkType => {
-  return (dispatch) => {
-    authAPI.logoutApi().then((response) => {
+  return async (dispatch) => {
+    try {
+      const response = await authAPI.logoutApi();
+
       if (response.data.resultCode === ResultCodesEnum.ResultCodeSuccess) {
         dispatch(actions.setIsAuthAC(null, null, null, false));
+      } else {
+        console.error("Logout failed:", response.data.messages);
       }
-    });
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 };
 
 //? TC для капчі
-export const setCaptchaTC = (): AuthThunkType => (dispatch) => {
-  return authAPI.getCaptchaUrl().then((response) => {
+export const setCaptchaTC = (): AuthThunkType => async (dispatch) => {
+  try {
+    const response = await authAPI.getCaptchaUrl();
+
     dispatch(actions.setCaptchaAC(response.data.url));
-  });
+  } catch (error) {
+    console.log("Captcha failed:", error);
+  }
 };
