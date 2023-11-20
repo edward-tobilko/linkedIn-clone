@@ -29,6 +29,7 @@ const ToDoList: FC<ToDoListType> = ({
   function addTodoLayout(name: string) {
     addTodo(name, todoListId);
   }
+  console.log(todoListId);
 
   function handleEditTodoTitle(newTitle: string) {
     changeEditTodoTitle(todoListId, newTitle);
