@@ -73,6 +73,7 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
         />
 
         <CustomButton
+          data-testid="custom-button"
           onClick={addTodoHandler}
           variant="contained"
           endIcon={<AddIcon />}
