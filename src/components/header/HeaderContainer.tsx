@@ -1,8 +1,9 @@
 import { FC, MouseEvent, useContext, useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
-import { HeaderContainerProps } from "./headerTypes";
+import { HeaderContainerProps, HeaderNavigationType } from "./headerTypes";
 
 import {
   HeaderLeftStyle,
@@ -11,6 +12,7 @@ import {
   HeaderStyle,
   LogOutStyle,
   NavLinkStyle,
+  LogOutBurgerMenuStyle,
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
 
@@ -32,6 +34,14 @@ import {
 
 import { DropdownContent } from "./DropdownContent";
 import SearchInput from "../forms/search-input/SearchInput";
+
+const headerNavigation: HeaderNavigationType[] = [
+  { id: uuidv4(), link: "/profile", name: "Profile" },
+  { id: uuidv4(), link: "/users", name: "Social" },
+  { id: uuidv4(), link: "/chat", name: "Chat" },
+  { id: uuidv4(), link: "/todo-lists", name: "ToDoLists" },
+  { id: uuidv4(), link: "/git-hub", name: "GitHub" },
+];
 
 const mapStateToProps = (state: RootState): HeaderContainerProps => {
   return {
@@ -62,8 +72,8 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
   };
 
   const [isClicked, setIsClicked] = useState(initialClickedState);
-
   const [loading, setLoading] = useState(false);
+  const [burgerMenu, setBurgerMenu] = useState(false);
 
   const logout = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -71,6 +81,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     dispatch(setLogoutTC());
 
     setIsClicked({ profile: false });
+    setBurgerMenu(false);
   };
 
   const handleClick = (clicked: string) => {
@@ -91,10 +102,19 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     );
   };
 
+  //? При відкритому бургер-меню - блокуємо скрол
+  const fixedHeader = () => {
+    const fixedHeader = document.querySelector(".fixed__header");
+
+    if (fixedHeader) {
+      window.scrollY >= 250
+        ? fixedHeader.classList.add("fixed__header")
+        : fixedHeader.classList.remove("fixed__header");
+    }
+  };
+
   useEffect(() => {
     const _onClick = (event: MouseEvent | TouchEvent): void => {
-      event.preventDefault();
-
       if (!node?.current || node?.current.contains(event.target as Node)) {
         return;
       }
@@ -113,9 +133,24 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     };
   }, [node, props]);
 
+  //? При відкритому бургер-меню - блокуємо скрол
+  useEffect(() => {
+    if (burgerMenu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    window.addEventListener("scroll", fixedHeader);
+
+    return () => {
+      window.removeEventListener("scroll", fixedHeader);
+    };
+  }, [burgerMenu]);
+
   return (
     <>
-      <HeaderStyle ref={node}>
+      <HeaderStyle ref={node} className="fixed__header">
         <HeaderLeftStyle>
           <i className="bx bxs-id-card"></i>
           <SearchInput onSearchTermChanged={onSearchTermChanged} />
@@ -187,6 +222,45 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
               <p>Log in</p>
             </NavLink>
           </NavLinkStyle>
+        )}
+
+        {!burgerMenu ? (
+          <div className="burger" onClick={() => setBurgerMenu(true)}>
+            <span></span>
+          </div>
+        ) : (
+          <>
+            <div className="burger__menu">
+              <div
+                className="burger__close"
+                onClick={() => setBurgerMenu(false)}
+              >
+                <span></span>
+              </div>
+              <ul className="header__navbar burger__menu-content__navbar">
+                {headerNavigation.map((link) => {
+                  return (
+                    <li
+                      key={link.id}
+                      className="header__navbar-list burger__menu-content__navbar-list"
+                    >
+                      <NavLink
+                        to={link.link}
+                        className="burger__menu-content__navbar-list-link"
+                        onClick={() => setBurgerMenu(false)}
+                      >
+                        {link.name}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+
+                <LogOutBurgerMenuStyle onClick={logout}>
+                  Log out
+                </LogOutBurgerMenuStyle>
+              </ul>
+            </div>
+          </>
         )}
       </HeaderStyle>
     </>
