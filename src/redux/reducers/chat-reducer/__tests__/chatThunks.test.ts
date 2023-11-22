@@ -21,7 +21,7 @@ jest.mock("../../../../api/API.tsx", () => ({
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("Tests thunks", () => {
+describe("Chat thunks", () => {
   it("newStatusHandlerHOC: should dispatch set status action", () => {
     const mockDispatch = jest.fn();
 
