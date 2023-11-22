@@ -13,4 +13,14 @@ export const themeVars = {
     lightBlueColor: "#34abd3",
     backgroundRGBA: "rgba(0, 0, 0, 0.6)",
   },
+
+  breakpoints: {
+    breakpoint1440: "1440px",
+    breakpoint1200: "1200px",
+    breakpoint992: "992px",
+    breakpoint768: "768px",
+    breakpoint576: "576px",
+    breakpoint420: "420px",
+    breakpoint320: "320px",
+  },
 };
