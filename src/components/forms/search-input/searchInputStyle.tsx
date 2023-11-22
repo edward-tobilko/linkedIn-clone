@@ -27,6 +27,10 @@ export const SearchFormStyle = styled.form`
       background: ${themeVars.colors.greyColor};
     }
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    display: none;
+  }
 `;
 
 export const SearchInputStyle = styled.input`

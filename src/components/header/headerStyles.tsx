@@ -9,6 +9,176 @@ export const HeaderStyle = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+
+  .fixed__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    background: rgba(24, 41, 54, 0.62);
+    /* animation: showHeader 0.5s ease; */
+  }
+
+  /* Burger */
+  .burger {
+    display: none;
+  }
+  .burger__menu {
+    display: none;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    justify-content: flex-start;
+
+    .burger__menu-content__navbar {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      max-width: 200px;
+      width: 100%;
+      margin: 0 auto;
+      animation: showBurgerMenu 1.3s ease-in-out;
+
+      &-list {
+        font-size: 22px;
+        margin: 10px 0;
+        text-transform: uppercase;
+
+        &-link {
+          color: ${themeVars.colors.whiteColor};
+          text-decoration: none;
+          &:hover {
+            color: ${themeVars.colors.lightBlueColor};
+          }
+        }
+      }
+    }
+
+    /* Burger */
+    .burger {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      z-index: 1;
+
+      display: block;
+      height: 20px;
+      width: 30px;
+      cursor: pointer;
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: ${themeVars.colors.whiteColor};
+        transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s all;
+      }
+
+      &:before {
+        top: 0;
+      }
+
+      &::after {
+        bottom: 0;
+      }
+
+      span {
+        position: absolute;
+        top: 9px;
+        right: 0;
+        width: 100%;
+        background: ${themeVars.colors.whiteColor};
+        height: 2px;
+        transform: scale(1);
+        transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s all;
+      }
+    }
+
+    /* Burger close */
+    .burger__close {
+      position: absolute;
+      top: 35px;
+      right: 35px;
+      z-index: 1;
+
+      display: block;
+      height: 20px;
+      width: 30px;
+      cursor: pointer;
+
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background: ${themeVars.colors.whiteColor};
+        transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s all;
+      }
+
+      &:before {
+        background: ${themeVars.colors.whiteColor};
+        transform: rotate(45deg);
+        transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s all;
+        top: 8px;
+      }
+
+      &:after {
+        background: ${themeVars.colors.whiteColor};
+        transform: rotate(-45deg);
+        bottom: 10px;
+        transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s all;
+      }
+
+      & span {
+        transform: scale(0);
+      }
+    }
+
+    /* Burger menu */
+    .burger__menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 1000;
+
+      display: block;
+      width: 100%;
+      height: 100%;
+      pointer-events: all;
+      background: ${themeVars.colors.headerBackgroundColor};
+
+      animation: fade 0.5s linear;
+    }
+
+    /* Animations */
+    @keyframes fade {
+      0% {
+        height: 0px;
+      }
+
+      100% {
+        height: 100%;
+      }
+    }
+
+    @keyframes showBurgerMenu {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 export const HeaderLeftStyle = styled.div`
@@ -18,6 +188,10 @@ export const HeaderLeftStyle = styled.div`
   .bxs-id-card {
     font-size: 35px;
     padding-right: 10px;
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+      display: none;
+    }
   }
 `;
 
@@ -54,6 +228,10 @@ export const HeaderCenterStyle = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    display: none;
+  }
 `;
 
 export const HeaderRightStyle = styled.div`
@@ -83,6 +261,10 @@ export const HeaderRightStyle = styled.div`
       &:hover {
         color: ${themeVars.colors.whiteColor};
       }
+
+      @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+        display: none;
+      }
     }
   }
 
@@ -97,6 +279,25 @@ export const LogOutStyle = styled.button`
   background: inherit;
   border: none;
   cursor: pointer;
+
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${themeVars.colors.orangeColor};
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    display: none;
+  }
+`;
+
+export const LogOutBurgerMenuStyle = styled.button`
+  color: ${themeVars.colors.whiteColor};
+  background: inherit;
+  border: 1px solid ${themeVars.colors.lightBlueColor};
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-top: 15px;
 
   transition: color 0.2s ease-in-out;
 
