@@ -28,4 +28,15 @@ type DropdownContentProps = {
   loading: boolean;
 };
 
-export { HeaderContainerProps, LinksTypes, DropdownContentProps };
+type HeaderNavigationType = {
+  id: string;
+  link: string;
+  name: string;
+};
+
+export {
+  HeaderContainerProps,
+  LinksTypes,
+  DropdownContentProps,
+  HeaderNavigationType,
+};
