@@ -68,6 +68,7 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
               },
             },
           }}
+          data-testid="error-message"
         />
       ) : (
         <p style={{ margin: "15px 0" }} onDoubleClick={activateEditMode}>

@@ -50,6 +50,22 @@ type EditInputTaskNameType = {
   handleEdit: (newValue: string) => void;
 };
 
+type ToDoItemType = {
+  task: TasksType;
+  handleChangeStatus: (
+    taskId: string,
+    isDone: boolean,
+    todoListId: string,
+  ) => void;
+  changeEditTaskName: (
+    taskId: string,
+    newValue: string,
+    todoListId: string,
+  ) => void;
+  todoListId: string;
+  removeTodo: (id: string, todoListId: string) => void;
+};
+
 export {
   TasksType,
   FilteredTasksType,
@@ -58,4 +74,5 @@ export {
   AddTodoItemFormType,
   TasksObjectType,
   EditInputTaskNameType,
+  ToDoItemType,
 };

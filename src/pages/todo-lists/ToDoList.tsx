@@ -1,12 +1,13 @@
-import { FC, ChangeEvent } from "react";
+import { FC } from "react";
 
 import { ToDoListType } from "./todoListsTypes";
 
-import { Button, Checkbox, IconButton, styled, Box } from "@mui/material";
+import { Button, styled, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import AddTodoItemForm from "./AddTodoItemForm";
 import { EditInputTaskName } from "./EditInputTaskName";
+import ToDoItem from "./ToDoItem";
 
 const CustomFilterBtn = styled(Button)({
   margin: "0 10px",
@@ -29,7 +30,6 @@ const ToDoList: FC<ToDoListType> = ({
   function addTodoLayout(name: string) {
     addTodo(name, todoListId);
   }
-  console.log(todoListId);
 
   function handleEditTodoTitle(newTitle: string) {
     changeEditTodoTitle(todoListId, newTitle);
@@ -61,64 +61,16 @@ const ToDoList: FC<ToDoListType> = ({
       <AddTodoItemForm addTodoLayout={addTodoLayout} />
 
       <Box sx={{ paddingTop: "25px" }}>
-        {filteredTasks.map((task) => {
-          const onChangeHandlerStatus = (
-            event: ChangeEvent<HTMLInputElement>,
-          ) => {
-            console.log(task.id + event.currentTarget.checked + " changed");
-
-            handleChangeStatus(
-              task.id,
-              event.currentTarget.checked,
-              todoListId,
-            );
-          };
-
-          function handleEditTaskName(newValue: string) {
-            changeEditTaskName(task.id, newValue, todoListId);
-          }
-
-          return (
-            <Box
-              key={task.id}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "5px",
-                opacity: task.isDone ? 0.6 : 1,
-              }}
-            >
-              <Checkbox
-                checked={task.isDone}
-                onChange={onChangeHandlerStatus}
-              />
-
-              <EditInputTaskName
-                name={task.name}
-                handleEdit={handleEditTaskName}
-              />
-
-              <IconButton
-                aria-label="delete"
-                size="large"
-                onClick={() => removeTodo(task.id, todoListId)}
-              >
-                <DeleteIcon
-                  sx={{
-                    "& path": {
-                      color: "#ff0000",
-
-                      "&:hover": {
-                        color: "#ff00007f",
-                      },
-                    },
-                  }}
-                />
-              </IconButton>
-            </Box>
-          );
-        })}
+        {filteredTasks.map((task) => (
+          <ToDoItem
+            key={task.id}
+            task={task}
+            todoListId={todoListId}
+            handleChangeStatus={handleChangeStatus}
+            changeEditTaskName={changeEditTaskName}
+            removeTodo={removeTodo}
+          />
+        ))}
       </Box>
 
       <Box sx={{ paddingTop: "20px" }}>
