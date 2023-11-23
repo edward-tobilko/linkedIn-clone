@@ -22,6 +22,7 @@ export const DialogUser: FC<{
         position={false}
         bottom="0"
         left="0"
+        display={true}
       />
 
       <div className="dialog__user">

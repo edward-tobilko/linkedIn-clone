@@ -167,6 +167,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
                 position={true}
                 bottom="-60px"
                 left="50px"
+                display={true}
               />
             </div>
 

@@ -18,10 +18,12 @@ export const CreatePostBtnStyle = styled.button<{ disabled: boolean }>`
   box-shadow: 0 0px 7px -5px rgba(0, 0, 0, 0.5);
   font-size: 15px;
   pointer-events: ${(props) => (props.disabled ? "none" : null)};
+
   &:hover {
     background: rgb(193, 228, 248);
     color: rgb(33, 0, 85);
   }
+
   &:active {
     transform: scale(0.97);
   }
@@ -68,5 +70,10 @@ export const CreatePostBtnStyle = styled.button<{ disabled: boolean }>`
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    font-size: 12px;
+    padding: 7px 10px;
   }
 `;

@@ -59,6 +59,7 @@ export const CardProfile: FC<CardProfilePropsType> = ({
           position={false}
           bottom="0"
           left="0"
+          display={true}
         />
 
         <h1 className="cardProfile__desc-suptitle">

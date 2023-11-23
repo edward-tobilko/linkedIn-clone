@@ -10,6 +10,18 @@ export const ProfileStyle = styled.main`
   @media screen and (max-width: ${themeVars.breakpoints.breakpoint1200}) {
     max-width: 650px;
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    max-width: 500px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    max-width: 350px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    max-width: 300px;
+  }
 `;
 
 // CreatePostForm component

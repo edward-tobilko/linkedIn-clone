@@ -80,6 +80,7 @@ export const DropdownContent: FC<DropdownContentProps> = ({
                     position={false}
                     bottom="0"
                     left="0"
+                    display={true}
                   />
                 )}
 

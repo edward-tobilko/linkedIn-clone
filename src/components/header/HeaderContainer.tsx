@@ -175,6 +175,7 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
                     position={false}
                     bottom="0"
                     left="0"
+                    display={true}
                   />
 
                   <p

@@ -25,6 +25,7 @@ export const PostsItem: FC<PostItemProps> = ({ user }) => {
               position={false}
               bottom="0"
               left="0"
+              display={true}
             />
 
             <PostsItemAboutStyle>

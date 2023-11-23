@@ -4,6 +4,34 @@ import { themeVars } from "../../utils/vars/themeVars";
 
 // Sidebar component
 export const SidebarStyle = styled.aside`
+  .show__sidebarBtn {
+    display: none;
+
+    .bx {
+      font-size: 35px;
+      color: ${themeVars.colors.whiteColor};
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+      display: block;
+      background: initial;
+      border: none;
+
+      position: absolute;
+      left: -15px;
+      bottom: 20px;
+    }
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+      left: -30px;
+    }
+  }
+
   .sidebar {
     position: relative;
     max-width: 280px;
@@ -222,44 +250,43 @@ export const SidebarStyle = styled.aside`
           background-color: ${themeVars.colors.lightGreyColor};
           opacity: 0.7;
         }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+          display: none;
+        }
       }
     }
 
     @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
-      /* display: none;
+      display: none;
 
       &.visible {
         display: block;
-
-        position: absolute;
-        top: 60px;
-        left: -25px;
-        z-index: 999;
-      } */
+      }
     }
   }
 
-  .show__sidebarBtn {
-    display: none;
+  /* Snackbar */
+  .css-cpgvjg-MuiSnackbar-root {
+    bottom: 0;
+    top: 150px;
+    left: 0;
+    align-items: flex-start;
+    height: 500px;
 
-    .bx {
-      font-size: 35px;
-      color: ${themeVars.colors.whiteColor};
-      opacity: 0.7;
-
-      &:hover {
-        opacity: 1;
-      }
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+      top: 130px;
     }
+  }
 
-    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
-      /* display: block;
-      background: initial;
-      border: none;
+  .css-1eqdgzv-MuiPaper-root-MuiSnackbarContent-root {
+    box-shadow: none;
+    background-color: transparent;
+    padding: 0;
+    line-height: 1;
+  }
 
-      position: absolute;
-      left: -10px;
-      top: 20px; */
-    }
+  .css-1exqwzz-MuiSnackbarContent-message {
+    padding: 0;
   }
 `;

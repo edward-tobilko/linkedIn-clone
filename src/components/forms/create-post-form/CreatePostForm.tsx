@@ -76,6 +76,7 @@ const CreatePostForm: FC<
           position={false}
           bottom="0"
           left="0"
+          display={false}
         />
       )}
 

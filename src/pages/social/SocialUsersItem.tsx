@@ -43,6 +43,7 @@ const SocialUsersItem: FC<SocialUsersItemProps> = ({
               position={false}
               bottom="0"
               left="0"
+              display={true}
             />
             <p>
               <NavLink to={`/profile/${socialUser?.id}`}>

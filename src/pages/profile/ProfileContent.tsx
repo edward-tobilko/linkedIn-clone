@@ -94,7 +94,7 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
               <CreatePostFormList />
             </CreatePostStyle>
 
-            <PostsList postUsers={postUsers} />
+            {/* <PostsList postUsers={postUsers} /> */}
           </>
         )}
       </ProfileStyle>
