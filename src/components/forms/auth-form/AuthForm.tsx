@@ -48,7 +48,10 @@ const AuthForm: FC<AuthFormProps> = ({
               className="show__psw-label-check"
             />
 
-            <p className="hover__text">Show password</p>
+            <p className="hover__text">
+              Show <span className="hover__text-long">password</span>
+              <span className="hover__text-short">pswd</span>
+            </p>
           </label>
         </div>
 

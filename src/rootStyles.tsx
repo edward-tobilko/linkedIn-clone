@@ -342,16 +342,18 @@ export default createGlobalStyle`
   }
 `;
 
-// App component
-export const HeaderStyle = styled.div`
-  background: ${themeVars.colors.headerBackgroundColor};
-`;
-
 // Container component'
 export const ContainerStyle = styled.div`
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 90px auto 20px;
   padding: 0 15px;
+  position: relative;
+
+  &.darken__background {
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+      /* background-color: ${themeVars.colors.errorColor}; */
+    }
+  }
 `;
 
 // Avatar img component
@@ -372,11 +374,13 @@ export const AvatarImgStyle = styled.img<{
   left: ${(props) => props.left};
 `;
 
+// Content
 export const ContentStyle = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 0;
   width: 100%;
+  position: relative;
 
   &.dark {
     background: ${themeVars.colors.blackColor};
@@ -386,6 +390,14 @@ export const ContentStyle = styled.div`
   &.light {
     background: ${themeVars.colors.whiteColor};
     color: ${themeVars.colors.blueColor};
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint1200}) {
+    justify-content: space-around;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    justify-content: center;
   }
 `;
 

@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { ContainerStyle, ContentStyle, HeaderStyle } from "./rootStyles";
+import { ContainerStyle, ContentStyle } from "./rootStyles";
 import GlobalStyle from "./rootStyles";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { Button } from "@mui/material";
@@ -9,23 +9,20 @@ import { ContextProvider } from "./context/Context";
 
 import { Header } from "./components/header/Header";
 import AppRoutes from "./AppRoutes";
-import { useDarkMode } from "./hooks/useDarkMode";
+import { useDarkMode, useShowSidebar } from "./hooks/useDarkMode";
 
 const App: FC = () => {
   const { darkModeTheme, toggleDarkMode } = useDarkMode();
+  const { showSidebar } = useShowSidebar();
 
   return (
     <>
       <GlobalStyle />
 
       <ContextProvider>
-        <HeaderStyle>
-          <ContainerStyle>
-            <Header />
-          </ContainerStyle>
-        </HeaderStyle>
+        <Header />
 
-        <ContainerStyle>
+        <ContainerStyle className={showSidebar ? "darken__background" : ""}>
           <Button
             onClick={toggleDarkMode}
             endIcon={<LightModeIcon />}

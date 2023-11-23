@@ -1,15 +1,17 @@
-import React, { useEffect, FC } from "react";
+import React, { useEffect, FC, useState, ComponentType } from "react";
 import { NavLink } from "react-router-dom";
 
 import { CardProfilePropsType } from "../../pages/profile/profileTypes";
 
 import { SidebarStyle } from "./sidebarStyle";
+import { SlideProps, Snackbar, Slide } from "@mui/material";
 
 import { MdVisibility } from "react-icons/md";
 
 import { CardProfile } from "../../pages/profile/CardProfile";
 import { SocialContentLoader } from "../UI/loaders/social-loaders/SocialContentLoader";
 import { followedUsersHelper } from "../../utils/helper-functions/helperComponentFunctions";
+import { useShowSidebar } from "../../hooks/useDarkMode";
 
 // UI time elements
 function UITimeElements() {
@@ -67,44 +69,83 @@ function UITimeElements() {
   );
 }
 
+type TransitionPropsType = Omit<SlideProps, "direction">;
+
+function TransitionLeft(props: TransitionPropsType) {
+  return <Slide {...props} direction="left" />;
+}
+
 const Sidebar: FC<CardProfilePropsType> = ({
   currentProfilePage,
   downloadSmallPhotoTC,
   loading,
   chatUsers,
 }) => {
+  const [transition, setTransition] = useState<
+    ComponentType<TransitionPropsType> | undefined
+  >(undefined);
+
+  const { showSidebar, setShowSidebar } = useShowSidebar();
+
+  const handleClick =
+    (Transition: ComponentType<TransitionPropsType>) => () => {
+      setTransition(() => Transition);
+      setShowSidebar(true);
+    };
+
+  const handleClose = () => {
+    setShowSidebar(false);
+  };
+
   if (!currentProfilePage) return <SocialContentLoader />;
 
   return (
-    <SidebarStyle>
-      <div className="sidebar">
-        <CardProfile
-          currentProfilePage={currentProfilePage}
-          downloadSmallPhotoTC={downloadSmallPhotoTC}
-          loading={loading}
+    <>
+      <SidebarStyle>
+        <button
+          onClick={handleClick(TransitionLeft)}
+          className="show__sidebarBtn"
+        >
+          <i className="bx bxs-right-arrow-square"></i>
+        </button>
+
+        <Snackbar
+          open={showSidebar}
+          onClose={handleClose}
+          TransitionComponent={transition}
+          message="I love snacks"
+          key={transition ? transition.name : ""}
         />
 
-        <div className="sidebar-followers">
-          <p>
-            <i className="bx bx-group"></i>
-            <NavLink to={`/followed-users`}>
-              <span> {followedUsersHelper(chatUsers)?.length} followers</span>
-            </NavLink>
-          </p>
-          <p>
-            <MdVisibility /> <span>354 views of your profile</span>
-          </p>
-        </div>
+        <div className={`sidebar ${showSidebar ? "visible" : ""}`}>
+          <CardProfile
+            currentProfilePage={currentProfilePage}
+            downloadSmallPhotoTC={downloadSmallPhotoTC}
+            loading={loading}
+          />
 
-        <div className="sidebar-elements">
-          <div className="sidebar-elements__time">{UITimeElements()}</div>
+          <div className="sidebar-followers">
+            <p>
+              <i className="bx bx-group"></i>
+              <NavLink to={`/followed-users`}>
+                <span> {followedUsersHelper(chatUsers)?.length} followers</span>
+              </NavLink>
+            </p>
+            <p>
+              <MdVisibility /> <span>354 views of your profile</span>
+            </p>
+          </div>
 
-          <div className="sidebar-elements__action">
-            <i className="bx bxs-bookmark"></i> <span>My elements</span>
+          <div className="sidebar-elements">
+            <div className="sidebar-elements__time">{UITimeElements()}</div>
+
+            <div className="sidebar-elements__action">
+              <i className="bx bxs-bookmark"></i> <span>My elements</span>
+            </div>
           </div>
         </div>
-      </div>
-    </SidebarStyle>
+      </SidebarStyle>
+    </>
   );
 };
 

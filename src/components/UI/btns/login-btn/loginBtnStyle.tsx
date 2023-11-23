@@ -28,8 +28,14 @@ export const LoginBtnStyle = styled.button`
   }
 
   /* Media */
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
     max-width: 100px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    padding: 5px 10px;
+    max-width: 80px;
+    font-size: 14px;
   }
 `;
 

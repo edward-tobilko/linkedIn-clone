@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const useLocalStorage = (key: string, initialState: boolean) => {
   const [localStorageState, setLocalStorageState] = useState(() => {
@@ -31,4 +31,13 @@ export const useDarkMode = (initialState = true) => {
   };
 
   return { darkModeTheme, toggleDarkMode };
+};
+
+export const useShowSidebar = (initialState = false) => {
+  const [showSidebar, setShowSidebar] = useLocalStorage(
+    "showSidebar",
+    initialState,
+  );
+
+  return { showSidebar, setShowSidebar };
 };

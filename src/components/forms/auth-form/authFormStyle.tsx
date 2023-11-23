@@ -5,10 +5,10 @@ import { themeVars } from "../../../utils/vars/themeVars";
 // AuthForm component
 export const AuthFormStyle = styled.form`
   position: absolute;
-  top: 50%;
+  top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
+  transform: translateX(-50%);
+  z-index: 100;
 
   width: 500px;
   padding: 40px 25px;
@@ -147,13 +147,17 @@ export const AuthFormStyle = styled.form`
           border-radius: 0 12px 12px 12px;
           font-size: 14px;
           font-weight: 600;
+
+          &-short {
+            display: none;
+          }
         }
       }
     }
   }
 
   /* Media */
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
     max-width: 400px;
     width: 100%;
 
@@ -162,7 +166,7 @@ export const AuthFormStyle = styled.form`
     }
   }
 
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
     max-width: 300px;
     padding: 20px 10px;
 
@@ -171,6 +175,7 @@ export const AuthFormStyle = styled.form`
     }
     .container-field-input {
       padding: 7px 10px;
+      font-size: 13px;
     }
     .container-field label {
       display: flex;
@@ -181,20 +186,36 @@ export const AuthFormStyle = styled.form`
       font-size: 12px;
       padding-left: 5px;
     }
-  }
 
-  @media screen and (max-width: 420px) {
-    .header-logo-subtitle {
-      margin: 10px 0 0 7px;
+    .container-field .checkbox__error {
+      font-size: 13px;
+      right: 10px;
+      bottom: -30px;
+      width: 180px;
+      height: 30px;
+    }
+    .container .show__psw-label:hover .hover__text {
+      right: 0;
+      font-size: 12px;
+      border-radius: 12px 0 12px 12px;
     }
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    .header-logo-subtitle {
+      margin: 10px 0 0 7px;
+    }
+    .container-field label {
+      font-size: 13px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint320}) {
     max-width: 250px;
     padding: 20px 10px;
 
     .container-title {
-      margin: 10px 0 !important;
+      margin: 10px 0;
     }
     .container-field {
       margin: 15px auto;
@@ -208,6 +229,24 @@ export const AuthFormStyle = styled.form`
     .container-field-login {
       padding: 7px 10px;
       max-width: 80px;
+    }
+    .container-field .checkbox__error {
+      font-size: 11.5px;
+      right: 5px;
+      bottom: -25px;
+      width: 160px;
+      height: 25px;
+    }
+    .container .show__psw-label:hover .hover__text {
+      bottom: -55px;
+
+      &-short {
+        display: block;
+      }
+
+      &-long {
+        display: none;
+      }
     }
   }
 `;

@@ -4,11 +4,10 @@ import { themeVars } from "../../utils/vars/themeVars";
 
 // Sidebar component
 export const SidebarStyle = styled.aside`
-  max-width: 280px;
-  width: 100%;
-
   .sidebar {
     position: relative;
+    max-width: 280px;
+    width: 100%;
 
     &-followers {
       background-color: ${themeVars.colors.headerBackgroundColor};
@@ -224,6 +223,43 @@ export const SidebarStyle = styled.aside`
           opacity: 0.7;
         }
       }
+    }
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+      /* display: none;
+
+      &.visible {
+        display: block;
+
+        position: absolute;
+        top: 60px;
+        left: -25px;
+        z-index: 999;
+      } */
+    }
+  }
+
+  .show__sidebarBtn {
+    display: none;
+
+    .bx {
+      font-size: 35px;
+      color: ${themeVars.colors.whiteColor};
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+      /* display: block;
+      background: initial;
+      border: none;
+
+      position: absolute;
+      left: -10px;
+      top: 20px; */
     }
   }
 `;

@@ -102,17 +102,6 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
     );
   };
 
-  //? При відкритому бургер-меню - блокуємо скрол
-  const fixedHeader = () => {
-    const fixedHeader = document.querySelector(".fixed__header");
-
-    if (fixedHeader) {
-      window.scrollY >= 250
-        ? fixedHeader.classList.add("fixed__header")
-        : fixedHeader.classList.remove("fixed__header");
-    }
-  };
-
   useEffect(() => {
     const _onClick = (event: MouseEvent | TouchEvent): void => {
       if (!node?.current || node?.current.contains(event.target as Node)) {
@@ -141,16 +130,16 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
       document.body.style.overflow = "unset";
     }
 
-    window.addEventListener("scroll", fixedHeader);
+    window.addEventListener("scroll", () => {});
 
     return () => {
-      window.removeEventListener("scroll", fixedHeader);
+      window.removeEventListener("scroll", () => {});
     };
   }, [burgerMenu]);
 
   return (
     <>
-      <HeaderStyle ref={node} className="fixed__header">
+      <HeaderStyle ref={node} className="header">
         <HeaderLeftStyle>
           <i className="bx bxs-id-card"></i>
           <SearchInput onSearchTermChanged={onSearchTermChanged} />
@@ -174,47 +163,88 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
         </HeaderCenterStyle>
 
         {isAuth ? (
-          <HeaderRightStyle>
-            {currentProfilePage?.userId === 29793 && (
-              <div className="header__right">
-                <AvatarImgStyle
-                  src={currentProfilePage?.photos?.small}
-                  alt=""
-                  width="40px"
-                  height="40px"
-                  position={false}
-                  bottom="0"
-                  left="0"
-                />
-
-                <p
-                  className="header__right-dropdown"
-                  onClick={() => handleClick("profile")}
-                >
-                  Profile
-                  {isClicked.profile ? (
-                    <i className="bx bx-down-arrow"></i>
-                  ) : (
-                    <i className="bx bx-up-arrow"></i>
-                  )}
-                </p>
-
-                {isClicked.profile && (
-                  <DropdownContent
-                    setIsClicked={setIsClicked}
-                    logout={logout}
-                    currentProfilePage={currentProfilePage}
-                    email={email}
-                    loading={loading}
+          <>
+            <HeaderRightStyle>
+              {currentProfilePage?.userId === 29793 && (
+                <div className="header__right">
+                  <AvatarImgStyle
+                    src={currentProfilePage?.photos?.small}
+                    alt=""
+                    width="40px"
+                    height="40px"
+                    position={false}
+                    bottom="0"
+                    left="0"
                   />
-                )}
+
+                  <p
+                    className="header__right-dropdown"
+                    onClick={() => handleClick("profile")}
+                  >
+                    Profile
+                    {isClicked.profile ? (
+                      <i className="bx bx-down-arrow"></i>
+                    ) : (
+                      <i className="bx bx-up-arrow"></i>
+                    )}
+                  </p>
+
+                  {isClicked.profile && (
+                    <DropdownContent
+                      setIsClicked={setIsClicked}
+                      logout={logout}
+                      currentProfilePage={currentProfilePage}
+                      email={email}
+                      loading={loading}
+                    />
+                  )}
+                </div>
+              )}
+
+              <p> {currentProfilePage?.fullName} </p>
+
+              <LogOutStyle onClick={logout}>Log out</LogOutStyle>
+            </HeaderRightStyle>
+
+            {!burgerMenu ? (
+              <div className="burger" onClick={() => setBurgerMenu(true)}>
+                <span></span>
               </div>
+            ) : (
+              <>
+                <div className="burger__menu">
+                  <div
+                    className="burger__close"
+                    onClick={() => setBurgerMenu(false)}
+                  >
+                    <span></span>
+                  </div>
+                  <ul className="header__navbar burger__menu-content__navbar">
+                    {headerNavigation.map((link) => {
+                      return (
+                        <li
+                          key={link.id}
+                          className="header__navbar-list burger__menu-content__navbar-list"
+                        >
+                          <NavLink
+                            to={link.link}
+                            className="burger__menu-content__navbar-list-link"
+                            onClick={() => setBurgerMenu(false)}
+                          >
+                            {link.name}
+                          </NavLink>
+                        </li>
+                      );
+                    })}
+
+                    <LogOutBurgerMenuStyle onClick={logout}>
+                      Log out
+                    </LogOutBurgerMenuStyle>
+                  </ul>
+                </div>
+              </>
             )}
-
-            <p> {currentProfilePage?.fullName} </p>
-
-            <LogOutStyle onClick={logout}>Log out</LogOutStyle>
-          </HeaderRightStyle>
+          </>
         ) : (
           <NavLinkStyle>
             <NavLink to="/login">
@@ -222,45 +252,6 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
               <p>Log in</p>
             </NavLink>
           </NavLinkStyle>
-        )}
-
-        {!burgerMenu ? (
-          <div className="burger" onClick={() => setBurgerMenu(true)}>
-            <span></span>
-          </div>
-        ) : (
-          <>
-            <div className="burger__menu">
-              <div
-                className="burger__close"
-                onClick={() => setBurgerMenu(false)}
-              >
-                <span></span>
-              </div>
-              <ul className="header__navbar burger__menu-content__navbar">
-                {headerNavigation.map((link) => {
-                  return (
-                    <li
-                      key={link.id}
-                      className="header__navbar-list burger__menu-content__navbar-list"
-                    >
-                      <NavLink
-                        to={link.link}
-                        className="burger__menu-content__navbar-list-link"
-                        onClick={() => setBurgerMenu(false)}
-                      >
-                        {link.name}
-                      </NavLink>
-                    </li>
-                  );
-                })}
-
-                <LogOutBurgerMenuStyle onClick={logout}>
-                  Log out
-                </LogOutBurgerMenuStyle>
-              </ul>
-            </div>
-          </>
         )}
       </HeaderStyle>
     </>

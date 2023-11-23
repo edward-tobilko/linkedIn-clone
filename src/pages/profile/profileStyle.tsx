@@ -6,6 +6,10 @@ import { themeVars } from "../../utils/vars/themeVars";
 export const ProfileStyle = styled.main`
   width: 100%;
   max-width: 820px;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint1200}) {
+    max-width: 650px;
+  }
 `;
 
 // CreatePostForm component

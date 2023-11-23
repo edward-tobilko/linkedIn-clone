@@ -3,28 +3,24 @@ import styled from "styled-components";
 import { themeVars } from "../../utils/vars/themeVars";
 
 export const HeaderStyle = styled.header`
-  position: relative;
   min-height: 85px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 20px;
+  background: ${themeVars.colors.headerBackgroundColor};
 
-  .fixed__header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-
-    background: rgba(24, 41, 54, 0.62);
-    /* animation: showHeader 0.5s ease; */
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 
   /* Burger */
   .burger {
     display: none;
   }
+
   .burger__menu {
     display: none;
   }
@@ -188,10 +184,13 @@ export const HeaderLeftStyle = styled.div`
   .bxs-id-card {
     font-size: 35px;
     padding-right: 10px;
+  }
 
-    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
-      display: none;
-    }
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
 
@@ -271,6 +270,11 @@ export const HeaderRightStyle = styled.div`
   p {
     color: ${themeVars.colors.lightGreyColor};
     padding: 0 15px;
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+      padding: 0 5px;
+      font-size: 14px;
+    }
   }
 `;
 
