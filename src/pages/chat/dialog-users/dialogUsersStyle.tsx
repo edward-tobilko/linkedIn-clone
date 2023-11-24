@@ -37,6 +37,26 @@ export const DialogUsersStyle = styled.div`
     font-size: 14px;
     color: ${themeVars.colors.whiteColor};
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    height: 400px;
+
+    .notification {
+      bottom: 10px;
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    width: 100%;
+
+    .notification {
+      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+  }
 `;
 
 export const DialogUserStyle = styled.li`
@@ -88,6 +108,30 @@ export const DialogUserStyle = styled.li`
 
       &-msg {
         /* filter: blur(2px); */
+      }
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    padding: 10px;
+
+    .dialog__user {
+      padding: 10px;
+
+      &-header {
+        padding-bottom: 5px;
+
+        &-link {
+          font-size: 13px;
+        }
+      }
+
+      &-content {
+        padding-top: 10px;
+
+        &-msg {
+          font-size: 13px;
+        }
       }
     }
   }

@@ -4,6 +4,8 @@ import { themeVars } from "../../utils/vars/themeVars";
 
 // Sidebar component
 export const SidebarStyle = styled.aside`
+  position: relative;
+
   .show__sidebarBtn {
     display: none;
 
@@ -22,13 +24,10 @@ export const SidebarStyle = styled.aside`
       background: initial;
       border: none;
 
-      position: absolute;
+      position: fixed;
       left: -15px;
       bottom: 20px;
-    }
-
-    @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
-      left: -30px;
+      z-index: 1000;
     }
   }
 
@@ -89,6 +88,18 @@ export const SidebarStyle = styled.aside`
         &:hover {
           background-color: ${themeVars.colors.lightGreyColor};
           opacity: 0.7;
+        }
+      }
+
+      @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+        padding: 30px 0;
+
+        &:before {
+          top: 60%;
+        }
+
+        &:after {
+          bottom: 20%;
         }
       }
     }
@@ -230,6 +241,14 @@ export const SidebarStyle = styled.aside`
         .button:hover:before {
           bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
         }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+          padding-bottom: 15px;
+
+          &:after {
+            display: none;
+          }
+        }
       }
 
       &__action {
@@ -273,9 +292,16 @@ export const SidebarStyle = styled.aside`
     left: 0;
     align-items: flex-start;
     height: 500px;
+    width: 300px;
 
     @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
       top: 130px;
+      height: 400px;
+      width: 250px;
+    }
+
+    @media screen and (max-width: ${themeVars.breakpoints.breakpoint320}) {
+      height: 350px;
     }
   }
 
@@ -288,5 +314,18 @@ export const SidebarStyle = styled.aside`
 
   .css-1exqwzz-MuiSnackbarContent-message {
     padding: 0;
+  }
+`;
+
+export const SidebarBackgroundStyle = styled.div`
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
   }
 `;

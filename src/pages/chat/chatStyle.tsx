@@ -11,4 +11,8 @@ export const ChatStyle = styled.div`
     display: flex;
     position: relative;
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    padding: 15px;
+  }
 `;

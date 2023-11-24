@@ -20,12 +20,13 @@ export const PostsItem: FC<PostItemProps> = ({ user }) => {
             <AvatarImgStyle
               width="50px"
               height="50px"
-              src="https://place-hold.it/70"
+              src="https://place-hold.it/50"
               alt=""
               position={false}
               bottom="0"
               left="0"
               display={true}
+              zIndex="1"
             />
 
             <PostsItemAboutStyle>

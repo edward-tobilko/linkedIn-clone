@@ -49,6 +49,18 @@ export const ChatUsersStyle = styled.div`
       text-decoration: underline;
     }
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    height: 400px;
+
+    a {
+      font-size: 13px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    display: none;
+  }
 `;
 
 export const ChatUserStyle = styled.div`
@@ -70,5 +82,9 @@ export const ChatUserStyle = styled.div`
 
   &:last-child:after {
     display: none;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    margin-bottom: 25px;
   }
 `;

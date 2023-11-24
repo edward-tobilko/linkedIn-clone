@@ -24,6 +24,7 @@ export const ChatUser: FC<IChatUserProps> = ({ chatUser }) => {
         bottom="0"
         left="0"
         display={true}
+        zIndex="1"
       />
       <NavLink to={pathChatUser}>{chatUser.name}</NavLink>
     </ChatUserStyle>

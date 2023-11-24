@@ -23,6 +23,7 @@ export const DialogUser: FC<{
         bottom="0"
         left="0"
         display={true}
+        zIndex="1"
       />
 
       <div className="dialog__user">

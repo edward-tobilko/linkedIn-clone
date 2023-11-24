@@ -29,8 +29,18 @@ export const CreateMessagePostStyle = styled.div`
         color: ${themeVars.colors.whiteColor};
         padding: 5px 10px;
         outline: none;
+
         &:focus {
           border-bottom: 1px solid ${themeVars.colors.orangeColor};
+        }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+          font-size: 13px;
+        }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+          font-size: 12px;
+          height: 20px;
         }
       }
     }
@@ -74,6 +84,20 @@ export const CreateMessagePostStyle = styled.div`
           transform: translateY(-50%);
           left: 0;
         }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+          width: 34px;
+          height: 34px;
+          margin-right: 10px;
+
+          img {
+            width: 15px;
+            height: 15px;
+
+            top: 10px;
+            left: 10px;
+          }
+        }
       }
 
       button {
@@ -95,7 +119,17 @@ export const CreateMessagePostStyle = styled.div`
           filter: brightness(75%);
           cursor: auto;
         }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+          width: 34px;
+          height: 34px;
+          font-size: 12px;
+        }
       }
     }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    padding: 5px 0 5px 10px;
   }
 `;

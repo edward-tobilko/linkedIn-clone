@@ -29,6 +29,7 @@ export const PostsItemDescriptionStyle = styled.div`
 
 export const PostsItemAboutStyle = styled.div`
   padding-left: 10px;
+
   h2 {
     font-weight: 600;
     font-size: 15px;
@@ -36,15 +37,31 @@ export const PostsItemAboutStyle = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
     span {
       color: ${themeVars.colors.lightGreyColor};
       padding-left: 5px;
       font-size: 13px;
     }
   }
+
   p {
     font-size: 12px;
     color: ${themeVars.colors.lightGreyColor};
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    h2 {
+      font-size: 13px;
+
+      span {
+        font-size: 11px;
+      }
+    }
+
+    p {
+      font-size: 11.5px;
+    }
   }
 `;
 
@@ -58,6 +75,10 @@ export const PostsItemAddressStyle = styled.div`
   p {
     font-size: 14px;
     color: ${themeVars.colors.whiteColor};
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    display: none;
   }
 `;
 

@@ -348,12 +348,6 @@ export const ContainerStyle = styled.div`
   margin: 90px auto 20px;
   padding: 0 15px;
   position: relative;
-
-  &.darken__background {
-    @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
-      background-color: ${themeVars.colors.errorColor};
-    }
-  }
 `;
 
 // Avatar img component
@@ -364,6 +358,7 @@ export const AvatarImgStyle = styled.img<{
   left: string;
   position: boolean;
   display: boolean;
+  zIndex?: string;
 }>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -373,9 +368,12 @@ export const AvatarImgStyle = styled.img<{
   position: ${(props) => (props.position ? "absolute" : "none")};
   bottom: ${(props) => props.bottom};
   left: ${(props) => props.left};
+  z-index: 1;
 
   @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
     display: ${({ display }) => (display ? "initial" : "none")};
+    width: ${({ zIndex, width }) => (zIndex ? "30px" : width)};
+    height: ${({ zIndex, height }) => (zIndex ? "30px" : height)};
   }
 `;
 

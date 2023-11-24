@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import { CardProfilePropsType } from "../../pages/profile/profileTypes";
 
-import { SidebarStyle } from "./sidebarStyle";
+import { SidebarBackgroundStyle, SidebarStyle } from "./sidebarStyle";
 import { SlideProps, Snackbar, Slide, Button } from "@mui/material";
 
 import { MdVisibility } from "react-icons/md";
@@ -97,10 +97,27 @@ const Sidebar: FC<CardProfilePropsType> = ({
     setShowSidebar(false);
   };
 
+  //? При відкритому sidebar - блокуємо скрол
+  useEffect(() => {
+    if (showSidebar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    window.addEventListener("scroll", () => {});
+
+    return () => {
+      window.removeEventListener("scroll", () => {});
+    };
+  }, [showSidebar]);
+
   if (!currentProfilePage) return <SocialContentLoader />;
 
   return (
     <>
+      {showSidebar && <SidebarBackgroundStyle />}
+
       <SidebarStyle>
         <Button
           onClick={handleClick(TransitionLeft)}
