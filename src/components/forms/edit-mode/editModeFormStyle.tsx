@@ -23,6 +23,7 @@ export const EditModeFormStyle = styled.section`
     background: ${themeVars.colors.headerBackgroundColor};
     padding: 20px;
     border-radius: 15px;
+    width: 700px;
 
     &-title {
       text-align: center;
@@ -102,5 +103,85 @@ export const EditModeFormStyle = styled.section`
     color: ${themeVars.colors.errorColor};
     padding-top: 10px;
     text-align: center;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    .edit__mode {
+      width: 500px;
+    }
+
+    .edit__mode-form {
+      width: 450px;
+    }
+
+    .edit__mode-form-field:nth-child(4) {
+      max-width: 100%;
+    }
+
+    .error {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    .edit__mode {
+      width: 380px;
+    }
+
+    .edit__mode-form {
+      width: 350px;
+    }
+
+    .edit__mode-title {
+      font-size: 17px;
+    }
+
+    .edit__mode-form-field {
+      grid-template-rows: repeat(3, 22px);
+    }
+
+    .error {
+      padding-top: 20px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    .edit__mode {
+      width: 300px;
+    }
+
+    .edit__mode-form {
+      width: 270px;
+    }
+
+    .edit__mode-title {
+      font-size: 15px;
+    }
+
+    .error {
+      font-size: 12px;
+    }
+
+    .edit__mode-form-field-label {
+      max-width: 100px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint320}) {
+    .edit__mode {
+      width: 250px;
+    }
+
+    .edit__mode-form {
+      width: 220px;
+    }
+
+    .edit__mode-title {
+      font-size: 13px;
+    }
+
+    .edit__mode-form-field {
+      row-gap: 0;
+    }
   }
 `;

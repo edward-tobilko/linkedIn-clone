@@ -168,6 +168,8 @@ const UserProfile: FC<ProfileContentPropsType> = ({
                 bottom="-60px"
                 left="50px"
                 display={true}
+                width100px={true}
+                width70px={true}
               />
             </div>
 

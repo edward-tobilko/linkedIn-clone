@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
 
 import { themeVars } from "./utils/vars/themeVars";
 
@@ -358,7 +358,9 @@ export const AvatarImgStyle = styled.img<{
   left: string;
   position: boolean;
   display: boolean;
-  zIndex?: string;
+  width100px?: boolean;
+  width30px?: boolean;
+  width70px?: boolean;
 }>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -368,12 +370,36 @@ export const AvatarImgStyle = styled.img<{
   position: ${(props) => (props.position ? "absolute" : "none")};
   bottom: ${(props) => props.bottom};
   left: ${(props) => props.left};
-  z-index: 1;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    display: ${({ display }) => (display ? "initial" : "none")};
+
+    ${({ width100px }) =>
+      width100px &&
+      css`
+        width: 100px;
+        height: 100px;
+        bottom: -50px;
+      `}
+  }
 
   @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
     display: ${({ display }) => (display ? "initial" : "none")};
-    width: ${({ zIndex, width }) => (zIndex ? "30px" : width)};
-    height: ${({ zIndex, height }) => (zIndex ? "30px" : height)};
+
+    ${({ width70px }) =>
+      width70px &&
+      css`
+        width: 70px;
+        height: 70px;
+        bottom: -30px;
+      `}
+
+    ${({ width30px }) =>
+      width30px &&
+      css`
+        width: 30px;
+        height: 30px;
+      `}
   }
 `;
 

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { RemoveBtn } from "./RemoveBtn";
+import { themeVars } from "../../../../utils/vars/themeVars";
 
 export const SocialUsersItemRemoveBtn = styled(RemoveBtn)`
   position: absolute;
@@ -51,5 +52,9 @@ export const EditModeRemoveBtn = styled(RemoveBtn)`
 
   &:hover {
     opacity: 1;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    top: 4%;
   }
 `;

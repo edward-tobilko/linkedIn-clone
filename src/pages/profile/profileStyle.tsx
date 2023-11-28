@@ -101,6 +101,10 @@ export const CardProfileEditorStyle = styled.label<{
   &:hover {
     filter: brightness(85%);
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    top: ${({ $sidebarTop }) => ($sidebarTop ? "46%" : "-5%")};
+  }
 `;
 
 // UserProfile component
@@ -176,6 +180,44 @@ export const UserProfileStyle = styled.div`
       &-editing {
         position: relative;
       }
+
+      @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+        padding: 50px 5px 10px 5px;
+      }
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    width: 650px;
+
+    .user__profile {
+      &-content {
+        &-about {
+          padding-left: 15px;
+
+          &-name {
+            font-size: 17px;
+          }
+
+          &-descriptions {
+            padding-bottom: 5px;
+            padding-top: 40px;
+
+            &-title {
+              font-size: 15px;
+              padding: 7px 0;
+
+              span {
+                padding-left: 5px;
+              }
+
+              i {
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -187,6 +229,13 @@ export const ContactsStyle = styled.div`
   .title {
     font-size: 25px;
     padding: 16px 0;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    .title {
+      font-size: 20px;
+      padding: 12px 0;
+    }
   }
 `;
 
@@ -212,6 +261,21 @@ export const ContactItemStyle = styled.li`
       padding-left: 7px;
     }
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    font-size: 16px;
+
+    p {
+      .link {
+        font-size: 13px;
+      }
+
+      span {
+        font-size: 12px;
+        padding-left: 5px;
+      }
+    }
+  }
 `;
 
 export const WrapperImgStyle = styled.img<{ bg: string }>`
@@ -222,4 +286,20 @@ export const WrapperImgStyle = styled.img<{ bg: string }>`
   background-size: 100% 100%;
   background-position: center;
   box-sizing: border-box;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    height: 250px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    height: 200px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    height: 150px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint320}) {
+    height: 130px;
+  }
 `;
