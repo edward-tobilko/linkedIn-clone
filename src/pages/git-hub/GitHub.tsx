@@ -1,5 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { ComponentType, FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 import { GitHubStyle } from "./gitHubStyle";
 
@@ -15,6 +17,7 @@ import { GitHubSkeleton } from "../../components/UI/loaders/gitHub-loaders/GitHu
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 const GitHub: FC = () => {
   let initialSearchUserState = "edward-tobilko";
@@ -87,4 +90,9 @@ const GitHub: FC = () => {
   );
 };
 
-export default GitHub;
+export default compose(
+  connect(null, { fetchCurrentUserPageTC }),
+
+  //? HOC для перенаправлення сторінки на login, якщо користувач не зареєстрований
+  withAuthRedirectHOC,
+)(GitHub) as ComponentType;

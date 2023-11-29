@@ -64,6 +64,6 @@ const Chat: FC = () => {
 export default compose(
   connect(null, { fetchCurrentUserPageTC }),
 
-  //? HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
+  //? HOC для перенаправлення сторінки на login, якщо користувач не зареєстрований
   withAuthRedirectHOC,
 )(Chat) as ComponentType;

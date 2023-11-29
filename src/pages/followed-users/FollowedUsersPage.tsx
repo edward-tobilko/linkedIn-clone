@@ -1,8 +1,11 @@
 import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "redux";
 
 import { useFetching } from "../../hooks/useFetching";
 import { useTypeDispatch, useTypeSelector } from "../../hooks/useTypeSelector";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 
@@ -26,7 +29,7 @@ const FollowedUsersPage: FC = () => {
 
   useEffect(() => {
     fetching();
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   return (
     <div>
@@ -37,4 +40,7 @@ const FollowedUsersPage: FC = () => {
   );
 };
 
-export default FollowedUsersPage;
+export default compose(
+  connect(null, { fetchCurrentUserPageTC }),
+  withAuthRedirectHOC,
+)(FollowedUsersPage);

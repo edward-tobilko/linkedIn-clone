@@ -194,6 +194,14 @@ export const HeaderLeftStyle = styled.div`
   }
 `;
 
+export const SearchUsersStyle = styled.div`
+  display: block;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    display: none;
+  }
+`;
+
 export const HeaderCenterStyle = styled.div`
   ul {
     display: inline-flex;

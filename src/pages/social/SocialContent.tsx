@@ -12,7 +12,11 @@ import {
 import { RootState } from "../../redux/store";
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 
-import { SocialUsersListStyle, SocialStyle } from "./socialStyle";
+import {
+  SocialUsersListStyle,
+  SocialStyle,
+  SocialSearchUsersStyle,
+} from "./socialStyle";
 
 import {
   MapDispatchToPropsType,
@@ -40,6 +44,7 @@ import {
   searchTermSelector,
   filteredUsersSelector,
 } from "../../utils/selectors/socialSelectors";
+import SearchInput from "../../components/forms/search-input/SearchInput";
 
 const mapStateToProps = (state: RootState): SocialContentProps => {
   return {
@@ -127,6 +132,20 @@ const SocialContent: FC<SocialContentProps> = ({
     );
   };
 
+  const onSocialSearchTermChanged = (
+    socialSearchedTerm: string,
+    socialFilteredFriends: null | boolean,
+  ) => {
+    dispatch(
+      fetchSocialUsersTC(
+        currentPage,
+        usersCount,
+        socialSearchedTerm,
+        socialFilteredFriends,
+      ),
+    );
+  };
+
   //? 1 - Спочатку синхронізуємо (відображаємо) дані з BLL
   useEffect(() => {
     const result: any = {};
@@ -173,6 +192,10 @@ const SocialContent: FC<SocialContentProps> = ({
       )}
 
       <SocialStyle>
+        <SocialSearchUsersStyle>
+          <SearchInput onSearchTermChanged={onSocialSearchTermChanged} />
+        </SocialSearchUsersStyle>
+
         <Pagination
           totalUsersCount={totalUsersCount}
           usersCount={usersCount}

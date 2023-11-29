@@ -51,4 +51,18 @@ export const PaginationStyle = styled.div`
       transform: scale(1.5);
     }
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint320}) {
+    max-width: 250px;
+
+    p {
+      width: 12px;
+      height: 12px;
+      padding: 10px;
+
+      span {
+        font-size: 13px;
+      }
+    }
+  }
 `;

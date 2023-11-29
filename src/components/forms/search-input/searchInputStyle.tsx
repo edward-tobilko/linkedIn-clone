@@ -27,23 +27,23 @@ export const SearchFormStyle = styled.form`
       background: ${themeVars.colors.greyColor};
     }
   }
-
-  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
-    display: none;
-  }
 `;
 
 export const SearchInputStyle = styled.input`
   background: ${themeVars.colors.greyColor};
   border: 0;
   box-shadow: none;
-  min-width: 180px;
+  width: 180px;
   color: ${themeVars.colors.whiteColor};
   height: 26px;
   border-radius: 6px;
   font-size: 13px;
   padding-left: 37px;
   font-weight: 300;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    width: 120px;
+  }
 `;
 
 export const SelectStyle = styled.select`
@@ -61,5 +61,11 @@ export const SelectStyle = styled.select`
 
   option {
     background-color: grey;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    width: 90px;
+    font-size: 11px;
+    margin-left: 5px;
   }
 `;

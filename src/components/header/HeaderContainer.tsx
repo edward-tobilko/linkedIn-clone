@@ -13,6 +13,7 @@ import {
   LogOutStyle,
   NavLinkStyle,
   LogOutBurgerMenuStyle,
+  SearchUsersStyle,
 } from "./headerStyles";
 import { AvatarImgStyle } from "../../rootStyles";
 
@@ -37,9 +38,10 @@ import SearchInput from "../forms/search-input/SearchInput";
 
 const headerNavigation: HeaderNavigationType[] = [
   { id: uuidv4(), link: "/profile", name: "Profile" },
+  { id: uuidv4(), link: "/user-profile", name: "User profile" },
   { id: uuidv4(), link: "/users", name: "Social" },
   { id: uuidv4(), link: "/chat", name: "Chat" },
-  { id: uuidv4(), link: "/todo-lists", name: "ToDoLists" },
+  { id: uuidv4(), link: "/todo-lists", name: "Todo lists" },
   { id: uuidv4(), link: "/git-hub", name: "GitHub" },
 ];
 
@@ -142,7 +144,9 @@ const HeaderContainer: FC<HeaderContainerProps> = ({
       <HeaderStyle ref={node} className="header">
         <HeaderLeftStyle>
           <i className="bx bxs-id-card"></i>
-          <SearchInput onSearchTermChanged={onSearchTermChanged} />
+          <SearchUsersStyle>
+            <SearchInput onSearchTermChanged={onSearchTermChanged} />
+          </SearchUsersStyle>
         </HeaderLeftStyle>
 
         <HeaderCenterStyle>

@@ -90,57 +90,57 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
           <div className="social__network-header">
             <h1>Network management</h1>
 
-            <div className="header__management">
-              <li className="header__management-list">
+            <ul className="social__network-header__management">
+              <li className="social__network-header__management-list">
                 <p>
                   <i className="bx bxs-contact"></i>
-                  <span className="header__management-title">All users</span>
+                  <span>All users</span>
                 </p>
 
-                <span className="header__management-count">
+                <span className="social__network-header__management-count">
                   {totalUsersCount}
                 </span>
               </li>
-              <li className="header__management-list">
+              <li className="social__network-header__management-list">
                 <p>
                   <i className="bx bx-dialpad"></i>
-                  <span className="header__management-title">Pages</span>
+                  <span>Pages</span>
                 </p>
 
-                <span className="header__management-count">
+                <span className="social__network-header__management-count">
                   {result.totalPagesCount}
                 </span>
               </li>
-              <li className="header__management-list">
+              <li className="social__network-header__management-list">
                 <p>
                   <i className="bx bx-user-check"></i>
-                  <span className="header__management-title">
-                    Followed users
-                  </span>
+                  <span>Followed users</span>
                 </p>
 
-                <span className="header__management-count">
+                <span className="social__network-header__management-count">
                   {filteredUsers.length > 0 ? (
                     <> {filteredUsers.length} </>
                   ) : null}
                 </span>
               </li>
-              <li className="header__management-list">
+              <li className="social__network-header__management-list">
                 <p>
                   <i className="bx bx-hash"></i>
-                  <span className="header__management-title">Hash-tags</span>
+                  <span>Hash-tags</span>
                 </p>
               </li>
-            </div>
+            </ul>
           </div>
 
           <div className="social__network-contacts">
-            <h1 className="contacts__title">Add personal contacts</h1>
-            <p className="contacts__subtitle">
+            <h1 className="social__network-contacts__title">
+              Add personal contacts
+            </h1>
+            <p className="social__network-contacts__subtitle">
               We will periodically import and store your contacts to help you
               and other people make connections. You choose who to contact and
               whom to invite.
-              <a href="#" className="contacts__learnMore">
+              <a href="#" className="learnMore">
                 Learn more
               </a>
             </p>
@@ -149,8 +149,8 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
 
             <SocialNetworkBtn>Continue</SocialNetworkBtn>
 
-            <p className="contacts__options">
-              <a href="#" className="contacts__options-link">
+            <p className="social__network-contacts__options">
+              <a href="#" className="social__network-contacts__options-link">
                 More options
               </a>
             </p>
@@ -167,7 +167,7 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
               ))}
             </ul>
 
-            <div className="footer__copyright">
+            <div className="social__network-footer__copyright">
               <i className="bx bxs-id-card"></i>
               <span>My own App Corporation &#169; 2023</span>
             </div>
@@ -179,7 +179,98 @@ const SocialNetworkManagement: FC<SocialNetworkManagementProps> = ({
           onClose={handleClose}
           TransitionComponent={transition || undefined}
           key={transition ? transition.name : ""}
-          // message={<SocialNetworkStyle />}
+          message={
+            <div className="social__network visible">
+              <div className="social__network-header">
+                <h1>Network management</h1>
+
+                <ul className="social__network-header__management">
+                  <li className="social__network-header__management-list">
+                    <p>
+                      <i className="bx bxs-contact"></i>
+                      <span>All users</span>
+                    </p>
+
+                    <span className="social__network-header__management-count">
+                      {totalUsersCount}
+                    </span>
+                  </li>
+                  <li className="social__network-header__management-list">
+                    <p>
+                      <i className="bx bx-dialpad"></i>
+                      <span>Pages</span>
+                    </p>
+
+                    <span className="social__network-header__management-count">
+                      {result.totalPagesCount}
+                    </span>
+                  </li>
+                  <li className="social__network-header__management-list">
+                    <p>
+                      <i className="bx bx-user-check"></i>
+                      <span>Followed users</span>
+                    </p>
+
+                    <span className="social__network-header__management-count">
+                      {filteredUsers.length > 0 ? (
+                        <> {filteredUsers.length} </>
+                      ) : null}
+                    </span>
+                  </li>
+                  <li className="social__network-header__management-list">
+                    <p>
+                      <i className="bx bx-hash"></i>
+                      <span>Hash-tags</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="social__network-contacts">
+                <h1 className="social__network-contacts__title">
+                  Add personal contacts
+                </h1>
+                <p className="social__network-contacts__subtitle">
+                  We will periodically import and store your contacts to help
+                  you and other people make connections. You choose who to
+                  contact and whom to invite.
+                  <a href="#" className="learnMore">
+                    Learn more
+                  </a>
+                </p>
+
+                <SocialNetworkInput />
+
+                <SocialNetworkBtn>Continue</SocialNetworkBtn>
+
+                <p className="social__network-contacts__options">
+                  <a
+                    href="#"
+                    className="social__network-contacts__options-link"
+                  >
+                    More options
+                  </a>
+                </p>
+              </div>
+
+              <div className="social__network-footer">
+                <ul>
+                  {socialNetworkManagementInfo.map((item) => (
+                    <li key={item.id}>
+                      <a href="#" target="blank">
+                        {item.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="social__network-footer__copyright">
+                  <i className="bx bxs-id-card"></i>
+                  <span>My own App Corporation &#169; 2023</span>
+                </div>
+              </div>
+            </div>
+          }
         />
       </SocialNetworkStyle>
     </>

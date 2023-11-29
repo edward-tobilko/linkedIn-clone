@@ -1,6 +1,8 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, ComponentType } from "react";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { connect } from "react-redux";
+import { compose } from "redux";
 
 import { Grid, Box, Typography, useTheme } from "@mui/material";
 
@@ -12,6 +14,7 @@ import {
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { useFetching } from "../../hooks/useFetching";
+import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 import ToDoList from "./ToDoList";
@@ -165,7 +168,7 @@ const ToDoLists: FC = () => {
 
   useEffect(() => {
     fetching();
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -257,4 +260,9 @@ const ToDoLists: FC = () => {
   );
 };
 
-export default ToDoLists;
+export default compose(
+  connect(null, { fetchCurrentUserPageTC }),
+
+  //? HOC для перенаправлення сторінки на <NotFound />, якщо користувач не зареєстрований
+  withAuthRedirectHOC,
+)(ToDoLists) as ComponentType;

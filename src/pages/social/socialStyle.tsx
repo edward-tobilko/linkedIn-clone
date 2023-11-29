@@ -10,6 +10,22 @@ export const SocialStyle = styled.div`
   width: 100%;
 `;
 
+export const SocialSearchUsersStyle = styled.div`
+  display: none;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto 20px;
+  }
+`;
+
 export const SocialUsersListStyle = styled.ul`
   display: flex;
   justify-content: space-around;
@@ -26,6 +42,14 @@ export const SocialUsersListStyle = styled.ul`
   @media screen and (max-width: ${themeVars.breakpoints.breakpoint1200}) {
     padding: 20px 0;
     max-width: 650px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    max-width: 500px;
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+    max-width: 300px;
   }
 `;
 
@@ -47,10 +71,6 @@ export const SocialUserItemStyle = styled.li`
   border-radius: 20px;
   overflow: hidden;
   margin-top: 15px;
-
-  &:nth-child(-n + 3) {
-    margin-top: 0;
-  }
 
   .cardSocial {
     position: relative;
