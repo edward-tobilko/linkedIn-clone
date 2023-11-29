@@ -163,7 +163,7 @@ export const EditModeFormStyle = styled.section`
     }
 
     .edit__mode-form-field-label {
-      max-width: 100px;
+      max-width: 60px;
     }
   }
 
@@ -178,10 +178,6 @@ export const EditModeFormStyle = styled.section`
 
     .edit__mode-title {
       font-size: 13px;
-    }
-
-    .edit__mode-form-field {
-      row-gap: 0;
     }
   }
 `;

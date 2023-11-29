@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 
 import { ServerErrorStyle } from "./rootStyles";
+import { ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 import Chat from "./pages/chat/Chat";
 import ToDoLists from "./pages/todo-lists/ToDoLists";
@@ -52,6 +54,19 @@ const AppRoutesContainer = compose<ComponentType>(
     },
   ),
 );
+
+//? Theme provider for "Material UI" media endpoints
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 420,
+      md: 768,
+      lg: 1200,
+      xl: 1440,
+    },
+  },
+});
 
 const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
   const [isServerErrorVisible, setIsServerErrorVisible] = useState(false);
@@ -113,7 +128,14 @@ const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
         <Route path="users" element={<Social />} />
         <Route path="followed-users" element={<FollowedUsersPage />} />
         <Route path="chat" element={<Chat />} />
-        <Route path="todo-lists" element={<ToDoLists />} />
+        <Route
+          path="todo-lists"
+          element={
+            <ThemeProvider theme={theme}>
+              <ToDoLists />
+            </ThemeProvider>
+          }
+        />
         <Route path="git-hub" element={<GitHub />} />
         <Route path="login" element={<Auth />} />
         <Route path="not-found" element={<NotFound />} />

@@ -39,8 +39,13 @@ export const CreateMessagePostStyle = styled.div`
         }
 
         @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
-          font-size: 12px;
+          font-size: 11px;
+        }
+
+        @media screen and (max-width: ${themeVars.breakpoints.breakpoint320}) {
+          padding: 0;
           height: 20px;
+          font-size: 9px;
         }
       }
     }
@@ -126,10 +131,14 @@ export const CreateMessagePostStyle = styled.div`
           font-size: 12px;
         }
       }
+
+      @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
+        width: 80px;
+      }
     }
   }
 
   @media screen and (max-width: ${themeVars.breakpoints.breakpoint420}) {
-    padding: 5px 0 5px 10px;
+    padding: 10px 0px 10px 5px;
   }
 `;

@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import { Grid, Box, Typography } from "@mui/material";
+import { Grid, Box, Typography, useTheme } from "@mui/material";
 
 import {
   FilteredTasksType,
@@ -43,6 +43,7 @@ const ToDoLists: FC = () => {
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
+  const breakpoints = useTheme();
 
   if (!userId) {
     userId = 29793;
@@ -176,54 +177,81 @@ const ToDoLists: FC = () => {
           textAlign: "center",
           paddingBottom: "10px",
           fontWeight: 600,
+
+          [breakpoints.breakpoints.down("sm")]: {
+            fontSize: "17px",
+          },
         }}
       >
         Add new Todo Item
       </Typography>
 
-      <AddTodoItemForm addTodoLayout={addTodoList} />
+      <Box sx={{ textAlign: "center", paddingBottom: "30px" }}>
+        <AddTodoItemForm addTodoLayout={addTodoList} />
+      </Box>
 
       <Box
         sx={{
           width: "100%",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           flexDirection: "row",
+          flexWrap: "wrap",
+
+          [breakpoints.breakpoints.between("xs", "lg")]: {
+            justifyContent: "center",
+          },
         }}
       >
-        {todoLists.map((todoList) => {
-          let filteredTasksById = tasksObject[todoList.id];
+        {todoLists.length === 0 ? (
+          <Typography
+            variant="h1"
+            sx={{
+              textTransform: "uppercase",
+              fontSize: "23px",
+              fontWeight: 600,
+              color: "#f10d0d",
+              width: "100%",
+              textAlign: "center",
+            }}
+          >
+            Lists are empty...
+          </Typography>
+        ) : (
+          todoLists.map((todoList) => {
+            let filteredTasksById = tasksObject[todoList.id];
 
-          if (todoList.filterTasks === "checked") {
-            filteredTasksById = filteredTasksById.filter(
-              (filteredTask) => filteredTask.isDone === true,
+            if (todoList.filterTasks === "checked") {
+              filteredTasksById = filteredTasksById.filter(
+                (filteredTask) => filteredTask.isDone === true,
+              );
+            }
+
+            if (todoList.filterTasks === "empty") {
+              filteredTasksById = filteredTasksById.filter(
+                (filteredTask) => filteredTask.isDone === false,
+              );
+            }
+
+            return (
+              <Grid key={todoList.id}>
+                <ToDoList
+                  title={todoList.title}
+                  filterTasks={todoList.filterTasks}
+                  todoListId={todoList.id}
+                  filteredTasks={filteredTasksById}
+                  addTodo={addTodo}
+                  removeTodo={removeTodo}
+                  handleChangeStatus={handleChangeStatus}
+                  changeFilterTasks={changeFilterTasks}
+                  removeTodoList={removeTodoList}
+                  changeEditTaskName={changeEditTaskName}
+                  changeEditTodoTitle={changeEditTodoTitle}
+                />
+              </Grid>
             );
-          }
-
-          if (todoList.filterTasks === "empty") {
-            filteredTasksById = filteredTasksById.filter(
-              (filteredTask) => filteredTask.isDone === false,
-            );
-          }
-
-          return (
-            <Grid key={todoList.id}>
-              <ToDoList
-                title={todoList.title}
-                filterTasks={todoList.filterTasks}
-                todoListId={todoList.id}
-                filteredTasks={filteredTasksById}
-                addTodo={addTodo}
-                removeTodo={removeTodo}
-                handleChangeStatus={handleChangeStatus}
-                changeFilterTasks={changeFilterTasks}
-                removeTodoList={removeTodoList}
-                changeEditTaskName={changeEditTaskName}
-                changeEditTodoTitle={changeEditTodoTitle}
-              />
-            </Grid>
-          );
-        })}
+          })
+        )}
       </Box>
     </Box>
   );

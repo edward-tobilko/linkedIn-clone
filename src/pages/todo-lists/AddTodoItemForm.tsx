@@ -41,45 +41,43 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
   };
 
   return (
-    <>
-      <Box sx={{ textAlign: "center", paddingBottom: "50px" }}>
-        <TextField
-          variant="filled"
-          label="Type your todo"
-          value={todo}
-          error={!!error}
-          helperText={error}
-          color="secondary"
-          onKeyUp={onKeyPressHandler}
-          onChange={handleTodoChange}
-          sx={{
-            "& .MuiInputBase-input": {
-              background: "#ffffff",
-              color: "#000000",
-              borderRadius: "4px",
-              height: "15px",
-            },
-            "& label": {
-              fontSize: "14px",
-              lineHeight: 1,
-              color: "rgba(0, 0, 0, 0.7)",
-            },
-            "& .MuiFormHelperText-root": {
-              textAlign: "center",
-              paddingTop: "5px",
-              fontSize: "13px",
-            },
-          }}
-        />
+    <Box>
+      <TextField
+        variant="filled"
+        label="Type your todo"
+        value={todo}
+        error={!!error}
+        helperText={error}
+        color="secondary"
+        onKeyUp={onKeyPressHandler}
+        onChange={handleTodoChange}
+        sx={{
+          "& .MuiInputBase-input": {
+            background: "#ffffff",
+            color: "#000000",
+            borderRadius: "4px",
+            height: "15px",
+          },
+          "& label": {
+            fontSize: "14px",
+            lineHeight: 1,
+            color: "rgba(0, 0, 0, 0.7)",
+          },
+          "& .MuiFormHelperText-root": {
+            textAlign: "center",
+            paddingTop: "5px",
+            fontSize: "13px",
+          },
+        }}
+      />
 
-        <CustomButton
-          data-testid="custom-button"
-          onClick={addTodoHandler}
-          variant="contained"
-          endIcon={<AddIcon />}
-        />
-      </Box>
-    </>
+      <CustomButton
+        data-testid="custom-button"
+        onClick={addTodoHandler}
+        variant="contained"
+        endIcon={<AddIcon />}
+      />
+    </Box>
   );
 };
 

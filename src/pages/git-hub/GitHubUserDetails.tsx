@@ -39,7 +39,7 @@ const Timer: FC<TimerType> = ({
 };
 
 const GitHubUserDetails: FC<GitHubUserDetailsType> = ({ selectedUser }) => {
-  const initialStartSeconds = 10;
+  const initialStartSeconds = 1000;
 
   const [userDetails, setUserDetails] = useState<UsersType | null>(null);
   const [seconds, setSeconds] = useState(initialStartSeconds);
