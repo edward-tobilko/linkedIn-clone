@@ -27,7 +27,7 @@ import { SocialContentLoader } from "../../components/UI/loaders/social-loaders/
 import SocialUsersList from "./SocialUsersList";
 import { Error } from "../../components/UI/error/Error";
 import { Pagination } from "../../components/UI/paginations/Pagination";
-import SocialNetworkManagement from "./social-sidebar/SocialNetworkManagement";
+import SocialNetwork from "./social-sidebar/SocialNetwork";
 
 import {
   socialUsersReselector,
@@ -165,7 +165,7 @@ const SocialContent: FC<SocialContentProps> = ({
   return (
     <>
       {isAuth && (
-        <SocialNetworkManagement
+        <SocialNetwork
           totalUsersCount={totalUsersCount}
           usersCount={usersCount}
           socialUsers={socialUsers}

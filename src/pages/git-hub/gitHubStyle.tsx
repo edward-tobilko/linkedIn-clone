@@ -30,9 +30,56 @@ export const GitHubStyle = styled.div`
       width: 100%;
     }
   }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint992}) {
+    .container__details {
+      max-width: 400px;
+
+      img {
+        width: inherit;
+      }
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    .container {
+      max-width: 220px;
+    }
+
+    .container__details {
+      max-width: 300px;
+    }
+  }
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint576}) {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+
+    .container {
+      margin-top: 25px;
+      text-align: center;
+
+      &__menu {
+        svg {
+          width: 220px;
+        }
+      }
+    }
+  }
 `;
 
 export const GitHubSearchUsersStyle = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: ${themeVars.breakpoints.breakpoint768}) {
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    input {
+      margin-bottom: 10px;
+    }
+  }
 `;

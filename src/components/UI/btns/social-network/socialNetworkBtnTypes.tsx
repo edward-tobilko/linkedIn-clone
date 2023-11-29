@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
 
-export type SocialNetworkManagementBtnProps = {
+export type SocialNetworkBtnProps = {
   children: ReactNode;
 };

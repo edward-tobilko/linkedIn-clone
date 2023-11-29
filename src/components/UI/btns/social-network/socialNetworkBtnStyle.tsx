@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { themeVars } from "../../../../utils/vars/themeVars";
 
-export const SocialNetworkManagementBtnStyle = styled.button`
+export const SocialNetworkBtnStyle = styled.button`
   background: inherit;
   border: 1.5px solid ${themeVars.colors.blueColor};
   color: ${themeVars.colors.blueColor};

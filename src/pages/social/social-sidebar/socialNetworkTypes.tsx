@@ -1,3 +1,5 @@
+import { SlideProps } from "@mui/material";
+
 import { SocialUserType } from "../../../redux/reducers/social-reducer/socialReducerTypes";
 
 type SocialNetworkManagementInfoType = {
@@ -12,4 +14,10 @@ type SocialNetworkManagementProps = {
   socialUsers: SocialUserType[];
 };
 
-export { SocialNetworkManagementInfoType, SocialNetworkManagementProps };
+type TransitionPropsType = Omit<SlideProps, "direction">;
+
+export {
+  SocialNetworkManagementInfoType,
+  SocialNetworkManagementProps,
+  TransitionPropsType,
+};
