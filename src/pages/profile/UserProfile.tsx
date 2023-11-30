@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useParams } from "react-router-dom";
 
 import {
   CardProfileEditorStyle,
@@ -29,10 +30,12 @@ import {
 import { useMyContext } from "../../context/Context";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
+import { useFetching } from "../../hooks/useFetching";
 
 import { RootState } from "../../redux/store";
 import {
   downloadSmallPhotoTC,
+  fetchCurrentUserPageTC,
   profileEditModeTC,
   setLoadingAC,
 } from "../../redux/reducers/profile-reducer/profileReducer";
@@ -67,6 +70,7 @@ const UserProfile: FC<ProfileContentPropsType> = ({
   loading,
 }) => {
   const dispatch = useTypeDispatch();
+  let { userId } = useParams() as any;
 
   const {
     localLoading,
@@ -74,6 +78,14 @@ const UserProfile: FC<ProfileContentPropsType> = ({
     setLocalLoading,
     setProfileEditMode,
   }: any = useMyContext();
+
+  if (!userId) {
+    userId = 29793;
+  }
+
+  const { fetching } = useFetching(async () => {
+    dispatch(fetchCurrentUserPageTC(userId));
+  });
 
   const downloadPhoto = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length) {
@@ -119,6 +131,10 @@ const UserProfile: FC<ProfileContentPropsType> = ({
   useEffect(() => {
     authForm.reset(currentProfilePage || {});
   }, [currentProfilePage, authForm]);
+
+  useEffect(() => {
+    fetching();
+  }, [dispatch, userId]);
 
   return (
     <FormProvider {...authForm}>
