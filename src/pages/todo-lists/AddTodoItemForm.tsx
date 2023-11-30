@@ -16,29 +16,9 @@ const CustomButton = styled(Button)({
   },
 });
 
-const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
+const AddTodoItemForm: FC<AddTodoItemFormType> = () => {
   const [todo, setTodo] = useState("");
   const [error, setError] = useState<string | null>(null);
-
-  const handleTodoChange = (event: ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-
-    setTodo(event.currentTarget.value);
-    setError(null);
-  };
-
-  function addTodoHandler() {
-    if (todo.trim() !== "") {
-      addTodoLayout(todo);
-      setTodo("");
-    } else {
-      setError("This field is required");
-    }
-  }
-
-  const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.ctrlKey) addTodoHandler();
-  };
 
   return (
     <Box>
@@ -49,8 +29,6 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
         error={!!error}
         helperText={error}
         color="secondary"
-        onKeyUp={onKeyPressHandler}
-        onChange={handleTodoChange}
         sx={{
           "& .MuiInputBase-input": {
             background: "#ffffff",
@@ -73,7 +51,6 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
 
       <CustomButton
         data-testid="custom-button"
-        onClick={addTodoHandler}
         variant="contained"
         endIcon={<AddIcon />}
       />

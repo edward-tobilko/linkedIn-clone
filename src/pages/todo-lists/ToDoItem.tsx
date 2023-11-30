@@ -7,25 +7,7 @@ import { ToDoItemType } from "./todoListsTypes";
 
 import { EditInputTaskName } from "./EditInputTaskName";
 
-const ToDoItem: FC<ToDoItemType> = ({
-  task,
-  todoListId,
-  handleChangeStatus,
-  changeEditTaskName,
-  removeTodo,
-}) => {
-  const onChangeHandlerStatus = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(
-      task.id + event.currentTarget.checked + todoListId + " changed",
-    );
-
-    handleChangeStatus(task.id, event.currentTarget.checked, todoListId);
-  };
-
-  function handleEditTaskName(newValue: string) {
-    changeEditTaskName(task.id, newValue, todoListId);
-  }
-
+const ToDoItem: FC<ToDoItemType> = () => {
   return (
     <Box
       sx={{
@@ -33,18 +15,14 @@ const ToDoItem: FC<ToDoItemType> = ({
         justifyContent: "space-between",
         alignItems: "center",
         padding: "5px",
-        opacity: task.isDone ? 0.6 : 1,
+        // opacity: task.isDone ? 0.6 : 1,
       }}
     >
-      <Checkbox checked={task.isDone} onChange={onChangeHandlerStatus} />
+      <Checkbox />
 
-      <EditInputTaskName name={task.name} handleEdit={handleEditTaskName} />
+      <EditInputTaskName />
 
-      <IconButton
-        aria-label="delete"
-        size="large"
-        onClick={() => removeTodo(task.id, todoListId)}
-      >
+      <IconButton aria-label="delete" size="large">
         <DeleteIcon
           sx={{
             "& path": {

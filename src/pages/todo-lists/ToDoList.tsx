@@ -17,29 +17,8 @@ const CustomFilterBtn = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ToDoList: FC<ToDoListType> = ({
-  filteredTasks,
-  filterTasks,
-  title,
-  todoListId,
-  addTodo,
-  removeTodo,
-  handleChangeStatus,
-  changeFilterTasks,
-  removeTodoList,
-  changeEditTaskName,
-  changeEditTodoTitle,
-}) => {
+const ToDoList: FC<ToDoListType> = () => {
   const breakpoints = useTheme();
-
-  //? Функція-обгортка для додавання списків та задач
-  function addTodoLayout(name: string) {
-    addTodo(name, todoListId);
-  }
-
-  function handleEditTodoTitle(newTitle: string) {
-    changeEditTodoTitle(todoListId, newTitle);
-  }
 
   return (
     <Box
@@ -59,16 +38,11 @@ const ToDoList: FC<ToDoListType> = ({
         },
       }}
     >
-      <Button
-        variant="outlined"
-        startIcon={<DeleteIcon />}
-        color="warning"
-        onClick={() => removeTodoList(todoListId)}
-      >
+      <Button variant="outlined" startIcon={<DeleteIcon />} color="warning">
         Remove todo list
       </Button>
 
-      <EditInputTaskName name={title} handleEdit={handleEditTodoTitle} />
+      <EditInputTaskName />
 
       <Box
         sx={{
@@ -79,54 +53,16 @@ const ToDoList: FC<ToDoListType> = ({
           height: "100%",
         }}
       >
-        <AddTodoItemForm addTodoLayout={addTodoLayout} />
+        <AddTodoItemForm />
 
         <Box sx={{ overflow: "auto" }}>
-          {filteredTasks.length === 0 ? (
-            <Typography
-              variant="h5"
-              sx={{
-                fontSize: "17px",
-                textAlign: "center",
-                fontWeight: 600,
-                color: "red",
-              }}
-            >
-              Todos are empty...
-            </Typography>
-          ) : (
-            filteredTasks.map((task) => (
-              <ToDoItem
-                key={task.id}
-                task={task}
-                todoListId={todoListId}
-                handleChangeStatus={handleChangeStatus}
-                changeEditTaskName={changeEditTaskName}
-                removeTodo={removeTodo}
-              />
-            ))
-          )}
+          <ToDoItem />
         </Box>
 
         <Box>
-          <CustomFilterBtn
-            variant={filterTasks === "all" ? "contained" : "outlined"}
-            onClick={() => changeFilterTasks("all", todoListId)}
-          >
-            All
-          </CustomFilterBtn>
-          <CustomFilterBtn
-            variant={filterTasks === "checked" ? "contained" : "outlined"}
-            onClick={() => changeFilterTasks("checked", todoListId)}
-          >
-            Checked
-          </CustomFilterBtn>
-          <CustomFilterBtn
-            variant={filterTasks === "empty" ? "contained" : "outlined"}
-            onClick={() => changeFilterTasks("empty", todoListId)}
-          >
-            Empty
-          </CustomFilterBtn>
+          <CustomFilterBtn>All</CustomFilterBtn>
+          <CustomFilterBtn>Checked</CustomFilterBtn>
+          <CustomFilterBtn>Empty</CustomFilterBtn>
         </Box>
       </Box>
     </Box>

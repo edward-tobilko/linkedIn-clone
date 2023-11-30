@@ -4,35 +4,10 @@ import { EditInputTaskNameType } from "./todoListsTypes";
 
 import { TextField } from "@mui/material";
 
-export const EditInputTaskName: FC<EditInputTaskNameType> = ({
-  name,
-  handleEdit,
-}) => {
+export const EditInputTaskName: FC<EditInputTaskNameType> = () => {
   const [editName, setEditName] = useState(false);
   const [editedValue, setEditedValue] = useState("");
   const [error, setError] = useState<string | null>(null);
-
-  function activateEditMode() {
-    setEditName(true);
-    setEditedValue(name);
-  }
-
-  function activateViewMode() {
-    if (editedValue.trim() !== "") {
-      handleEdit(editedValue);
-      setEditedValue("");
-      setEditName(false);
-    } else {
-      setError("This field is required");
-    }
-  }
-
-  function handleEditModeChange(event: ChangeEvent<HTMLInputElement>) {
-    event.preventDefault();
-
-    setEditedValue(event.currentTarget.value);
-    setError(null);
-  }
 
   return (
     <>
@@ -40,8 +15,6 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
         <TextField
           variant="filled"
           value={editedValue}
-          onChange={handleEditModeChange}
-          onBlur={activateViewMode}
           autoFocus={true}
           error={!!error}
           helperText={error}
@@ -71,9 +44,7 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
           data-testid="error-message"
         />
       ) : (
-        <p style={{ margin: "15px 0" }} onDoubleClick={activateEditMode}>
-          {name}
-        </p>
+        <p style={{ margin: "15px 0" }}>Title</p>
       )}
     </>
   );

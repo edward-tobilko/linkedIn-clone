@@ -28,8 +28,14 @@ const FollowedUsersPage: FC = () => {
   });
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     fetching();
-  }, [dispatch, userId]);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [dispatch, userId, fetching]);
 
   return (
     <div>
