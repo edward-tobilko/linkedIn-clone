@@ -33,8 +33,7 @@ export const SidebarStyle = styled.aside`
 
   .sidebar {
     position: relative;
-    max-width: 280px;
-    width: 100%;
+    width: 280px;
 
     &-followers {
       background-color: ${themeVars.colors.headerBackgroundColor};
