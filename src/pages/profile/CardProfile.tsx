@@ -63,7 +63,9 @@ export const CardProfile: FC<CardProfilePropsType> = ({
         />
 
         <h1 className="cardProfile__desc-suptitle">
-          <NavLink to="/user-profile"> {currentProfilePage?.fullName} </NavLink>
+          <NavLink to={`/user-profile/${currentProfilePage.userId}`}>
+            {currentProfilePage?.fullName}
+          </NavLink>
         </h1>
 
         {currentProfilePage?.aboutMe?.length > 0 ? (
