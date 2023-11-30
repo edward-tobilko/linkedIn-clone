@@ -124,7 +124,7 @@ const AppRoutes: FC<AppRoutesProps> = ({ initialized, serverError }) => {
           <Route path="profile" element={<Profile />} />
           <Route index path="/" element={<Navigate to={"/profile"} />} />
         </Route>
-        <Route path="user-profile" element={<UserProfile />} />
+        <Route path="user-profile/:userId" element={<UserProfile />} />
         <Route path="users" element={<Social />} />
         <Route path="followed-users" element={<FollowedUsersPage />} />
         <Route path="chat" element={<Chat />} />
