@@ -2,7 +2,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import { instance } from "../../api/API";
 
-import { AddRemoveTodoListsApiType, ToDoListsType } from "./todoListsTypes";
+import {
+  AddRemoveTodoListsApiType,
+  ReorderTodoListType,
+  ToDoListsType,
+} from "./todoListsTypes";
+import { ResultCodesEnum } from "../../api/apiTypes";
 
 export const todosAPI = {
   async fetchTodoListsApi() {
@@ -56,6 +61,28 @@ export const todosAPI = {
       console.error("Error updating todo list:", error);
 
       throw error;
+    }
+  },
+
+  //! todo /todo-lists/{todolistId}/reorder
+  async reorderTodoList(todolistId: string, putAfterItemId: string) {
+    try {
+      const response = await instance.put<ReorderTodoListType>(
+        `todo-lists/${todolistId}/reorder`,
+        {
+          putAfterItemId,
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error reordering todo list:", error);
+
+      return {
+        resultCode: -1,
+        messages: ["An error occurred while reordering todo list."],
+        data: {},
+      };
     }
   },
 };

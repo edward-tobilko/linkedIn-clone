@@ -17,6 +17,7 @@ import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
 import ToDoList from "./ToDoList";
 import AddTodoItemForm from "./AddTodoItemForm";
+import { ResultCodesEnum } from "../../api/apiTypes";
 
 const ToDoLists: FC = () => {
   const [todoLists, setTodoLists] = useState<Array<ToDoListsType>>([]);
@@ -38,9 +39,13 @@ const ToDoLists: FC = () => {
   const addTodoList = async (value: string) => {
     try {
       const newTodoListApi = await todosAPI.addTodoListApi(value);
-      const newTodoList = newTodoListApi.data.item;
 
-      setTodoLists([...todoLists, newTodoList]);
+      if (newTodoListApi.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+        const newTodoList = newTodoListApi.data.item;
+        setTodoLists([...todoLists, newTodoList]);
+      } else {
+        console.error("Some error occured:", newTodoListApi.messages);
+      }
     } catch (error) {
       console.error("Error adding todo list:", error);
     }
@@ -48,17 +53,33 @@ const ToDoLists: FC = () => {
 
   const removeTodoList = async (todolistId: string) => {
     try {
-      await todosAPI.removeTodoListApi(todolistId);
+      const response = await todosAPI.removeTodoListApi(todolistId);
 
-      setTodoLists(todoLists.filter((todoList) => todoList.id !== todolistId));
+      if (response.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+        setTodoLists(
+          todoLists.filter((todoList) => todoList.id !== todolistId),
+        );
+      } else {
+        console.error("Some error occured:", response.messages);
+      }
     } catch (error) {
       console.error("Error removing todo list:", error);
     }
   };
 
-  const updateTodoList = async (todolistId: string, newTitle: string) => {
+  const updateTodoListTitle = async (todolistId: string, newTitle: string) => {
     try {
       await todosAPI.updateTodoList(todolistId, newTitle);
+
+      const todoList = todoLists.find(
+        (editedTodo) => editedTodo.id === todolistId,
+      );
+
+      if (todoList) {
+        todoList.title = newTitle;
+
+        setTodoLists([...todoLists]);
+      }
     } catch (error) {
       console.error("Error updating todo list:", error);
     }
@@ -141,6 +162,7 @@ const ToDoLists: FC = () => {
                   todolistId={todoList.id}
                   title={todoList.title}
                   removeTodoList={removeTodoList}
+                  updateTodoListTitle={updateTodoListTitle}
                 />
               </Grid>
             );

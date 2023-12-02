@@ -8,6 +8,12 @@ type AddRemoveTodoListsApiType = {
   messages: string[];
 };
 
+type ReorderTodoListType = {
+  resultCode: ResultCodesEnum;
+  messages: string[];
+  data: any;
+};
+
 type ToDoListsType = {
   id: string;
   title: string;
@@ -19,6 +25,7 @@ type ToDoListType = {
   title: string;
   todolistId: string;
   removeTodoList: (todolistId: string) => void;
+  updateTodoListTitle: (todolistId: string, newTitle: string) => void;
 };
 
 type AddTodoItemFormType = {
@@ -27,6 +34,7 @@ type AddTodoItemFormType = {
 
 type EditInputTaskNameType = {
   title: string;
+  updateTodoListTitleHandler?: (newTitle: string) => void;
 };
 
 type ToDoItemType = {
@@ -35,6 +43,7 @@ type ToDoItemType = {
 
 export {
   AddRemoveTodoListsApiType,
+  ReorderTodoListType,
   ToDoListType,
   ToDoListsType,
   AddTodoItemFormType,
