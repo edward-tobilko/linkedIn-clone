@@ -53,7 +53,7 @@ type TodoTaskType = {
   startDate: Date;
   deadline: Date;
   id: string;
-  todoListId: string;
+  todoListId?: string;
   order: number;
   addedDate: Date;
 };

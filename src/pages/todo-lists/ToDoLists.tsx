@@ -116,9 +116,11 @@ const ToDoLists: FC = () => {
       const newTodoTaskApi = await todosAPI.addTodoTaskApi(todolistId, value);
 
       if (newTodoTaskApi.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-        const newTodoTask = newTodoTaskApi.data;
+        debugger;
 
         let tasks = tasksObject[todolistId];
+
+        const newTodoTask = newTodoTaskApi.data;
 
         let newTasks = [...tasks, newTodoTask];
 
