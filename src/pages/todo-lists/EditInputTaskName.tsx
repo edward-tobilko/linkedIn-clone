@@ -14,7 +14,7 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
 
   const activatedEditMode = () => {
     setEditTitle(true);
-    setEditedValue(title);
+    setEditedValue(title!);
   };
 
   const changeEditModeHandler = (e: ChangeEvent<HTMLInputElement>) => {

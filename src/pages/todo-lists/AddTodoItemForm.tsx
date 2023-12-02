@@ -16,14 +16,14 @@ const CustomButton = styled(Button)({
   },
 });
 
-const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoList }) => {
+const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
   const [todo, setTodo] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const addNewTodoList = () => {
     if (todo.trim() !== "") {
-      if (addTodoList) {
-        addTodoList(todo);
+      if (addTodoLayout) {
+        addTodoLayout(todo);
 
         setTodo("");
       } else {

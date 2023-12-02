@@ -1,14 +1,15 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { ReorderTodoListType, ToDoListType } from "./todoListsTypes";
 
-import { Button, styled, Box, useTheme } from "@mui/material";
+import { Button, styled, Box, useTheme, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+import { todosAPI } from "./todosAPI";
 
 import AddTodoItemForm from "./AddTodoItemForm";
 import { EditInputTaskName } from "./EditInputTaskName";
 import ToDoItem from "./ToDoItem";
-import { todosAPI } from "./todosAPI";
 
 const CustomFilterBtn = styled(Button)(({ theme }) => ({
   margin: "0 10px",
@@ -21,8 +22,11 @@ const CustomFilterBtn = styled(Button)(({ theme }) => ({
 const ToDoList: FC<ToDoListType> = ({
   title,
   todolistId,
+  filteredTasks,
   removeTodoList,
   updateTodoListTitle,
+  getTodoTasks,
+  addTodoTaskAsync,
 }) => {
   const [putAfterItemId, setPutAfterItemId] = useState<string>(""); //! todo /todo-lists/{todolistId}/reorder
   const [reorderTodoList, setReorderTodoList] =
@@ -36,10 +40,21 @@ const ToDoList: FC<ToDoListType> = ({
 
   //! todo /todo-lists/{todolistId}/reorder
   const handleReorder = async () => {
-    const response = await todosAPI.reorderTodoList(todolistId, putAfterItemId);
+    const response = await todosAPI.reorderTodoListApi(
+      todolistId,
+      putAfterItemId,
+    );
 
     setReorderTodoList(response);
   };
+
+  const addTodoTask = (newTask: string) => {
+    addTodoTaskAsync(todolistId, newTask);
+  };
+
+  useEffect(() => {
+    getTodoTasks(todolistId);
+  }, [todolistId]);
 
   return (
     <>
@@ -106,10 +121,26 @@ const ToDoList: FC<ToDoListType> = ({
             height: "100%",
           }}
         >
-          <AddTodoItemForm />
+          <AddTodoItemForm addTodoLayout={addTodoTask} />
 
           <Box sx={{ overflow: "auto" }}>
-            <ToDoItem title={title} />
+            {filteredTasks?.length === 0 ? (
+              <Typography
+                variant="h5"
+                sx={{
+                  fontSize: "17px",
+                  textAlign: "center",
+                  fontWeight: 600,
+                  color: "red",
+                }}
+              >
+                Todos are empty...
+              </Typography>
+            ) : (
+              filteredTasks?.map((filteredTask) => (
+                <ToDoItem key={filteredTask.id} filteredTask={filteredTask} />
+              ))
+            )}
           </Box>
 
           <Box>

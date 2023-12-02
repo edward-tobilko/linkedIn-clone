@@ -7,7 +7,7 @@ import { ToDoItemType } from "./todoListsTypes";
 
 import { EditInputTaskName } from "./EditInputTaskName";
 
-const ToDoItem: FC<ToDoItemType> = ({ title }) => {
+const ToDoItem: FC<ToDoItemType> = ({ filteredTask }) => {
   return (
     <Box
       sx={{
@@ -20,7 +20,7 @@ const ToDoItem: FC<ToDoItemType> = ({ title }) => {
     >
       <Checkbox />
 
-      <EditInputTaskName title={title} />
+      <EditInputTaskName />
 
       <IconButton aria-label="delete" size="large">
         <DeleteIcon

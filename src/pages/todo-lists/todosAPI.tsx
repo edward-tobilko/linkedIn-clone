@@ -4,8 +4,10 @@ import { instance } from "../../api/API";
 
 import {
   AddRemoveTodoListsApiType,
+  AddRemoveTodoTaskApiType,
   ReorderTodoListType,
   ToDoListsType,
+  TodoTasksType,
 } from "./todoListsTypes";
 import { ResultCodesEnum } from "../../api/apiTypes";
 
@@ -50,7 +52,7 @@ export const todosAPI = {
     }
   },
 
-  async updateTodoList(todolistId: string, newTitle: string) {
+  async updateTodoListApi(todolistId: string, newTitle: string) {
     try {
       const response = await instance.put(`todo-lists/${todolistId}`, {
         title: newTitle,
@@ -65,7 +67,7 @@ export const todosAPI = {
   },
 
   //! todo /todo-lists/{todolistId}/reorder
-  async reorderTodoList(todolistId: string, putAfterItemId: string) {
+  async reorderTodoListApi(todolistId: string, putAfterItemId: string) {
     try {
       const response = await instance.put<ReorderTodoListType>(
         `todo-lists/${todolistId}/reorder`,
@@ -79,9 +81,54 @@ export const todosAPI = {
       console.error("Error reordering todo list:", error);
 
       return {
-        resultCode: -1,
+        resultCode: ResultCodesEnum.ResultCodeError,
         messages: ["An error occurred while reordering todo list."],
         data: {},
+      };
+    }
+  },
+
+  async fetchTodoTasksApi(todolistId: string) {
+    try {
+      const response = await instance.get<TodoTasksType>(
+        `todo-lists/${todolistId}/tasks`,
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching todo tasks:", error);
+
+      throw error;
+    }
+  },
+
+  async addTodoTaskApi(todolistId: string, title: string) {
+    try {
+      const response = await instance.post<AddRemoveTodoTaskApiType>(
+        `todo-lists/${todolistId}/tasks`,
+        {
+          description: "",
+          title: title,
+          completed: false,
+          status: 0,
+          priority: 0,
+          startDate: new Date(),
+          deadline: null,
+          id: todolistId,
+          todoListId: todolistId,
+          order: 0,
+          addedDate: new Date(),
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching todo tasks:", error);
+
+      return {
+        data: {},
+        resultCode: ResultCodesEnum.ResultCodeError,
+        messages: ["Something wrong"],
       };
     }
   },
