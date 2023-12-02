@@ -1,24 +1,27 @@
 import { FC, useState, useEffect, ComponentType } from "react";
 import { useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
+import { ToDoListsType } from "./todoListsTypes";
+
 import { Grid, Box, Typography, useTheme } from "@mui/material";
 
-import { TasksObjectType, ToDoListsType } from "./todoListsTypes";
+import { todosAPI } from "./todosAPI";
+
+import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 
 import { useTypeDispatch } from "../../hooks/useTypeSelector";
 import { useFetching } from "../../hooks/useFetching";
 import { withAuthRedirectHOC } from "../../hocs/withAuthRedirectHOC";
 
-import { fetchCurrentUserPageTC } from "../../redux/reducers/profile-reducer/profileReducer";
 import ToDoList from "./ToDoList";
 import AddTodoItemForm from "./AddTodoItemForm";
 
 const ToDoLists: FC = () => {
   const [todoLists, setTodoLists] = useState<Array<ToDoListsType>>([]);
-  // const [tasksObject, setTasksObject] = useState<TasksObjectType>();
+  // const [tasksObject, setTasksObject] = useState();
+  console.log(todoLists);
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
@@ -31,6 +34,50 @@ const ToDoLists: FC = () => {
   const { fetching } = useFetching(async () => {
     dispatch(fetchCurrentUserPageTC(userId));
   });
+
+  const addTodoList = async (value: string) => {
+    try {
+      const newTodoListApi = await todosAPI.addTodoListApi(value);
+      const newTodoList = newTodoListApi.data.item;
+
+      setTodoLists([...todoLists, newTodoList]);
+    } catch (error) {
+      console.error("Error adding todo list:", error);
+    }
+  };
+
+  const removeTodoList = async (todolistId: string) => {
+    try {
+      await todosAPI.removeTodoListApi(todolistId);
+
+      setTodoLists(todoLists.filter((todoList) => todoList.id !== todolistId));
+    } catch (error) {
+      console.error("Error removing todo list:", error);
+    }
+  };
+
+  const updateTodoList = async (todolistId: string, newTitle: string) => {
+    try {
+      await todosAPI.updateTodoList(todolistId, newTitle);
+    } catch (error) {
+      console.error("Error updating todo list:", error);
+    }
+  };
+
+  useEffect(() => {
+    const getTodoLists = async () => {
+      try {
+        const todoListsApi = await todosAPI.fetchTodoListsApi();
+        setTodoLists(todoListsApi);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log("Server error", error.message);
+        }
+      }
+    };
+
+    getTodoLists();
+  }, []);
 
   useEffect(() => {
     fetching();
@@ -56,7 +103,7 @@ const ToDoLists: FC = () => {
       </Typography>
 
       <Box sx={{ textAlign: "center", paddingBottom: "30px" }}>
-        <AddTodoItemForm />
+        <AddTodoItemForm addTodoList={addTodoList} />
       </Box>
 
       <Box
@@ -87,10 +134,14 @@ const ToDoLists: FC = () => {
             Lists are empty...
           </Typography>
         ) : (
-          todoLists.map((todoList) => {
+          todoLists?.map((todoList) => {
             return (
-              <Grid key={todoList.id}>
-                <ToDoList />
+              <Grid key={todoList?.id}>
+                <ToDoList
+                  todolistId={todoList.id}
+                  title={todoList.title}
+                  removeTodoList={removeTodoList}
+                />
               </Grid>
             );
           })

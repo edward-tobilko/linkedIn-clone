@@ -17,7 +17,7 @@ const CustomFilterBtn = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ToDoList: FC<ToDoListType> = () => {
+const ToDoList: FC<ToDoListType> = ({ title, todolistId, removeTodoList }) => {
   const breakpoints = useTheme();
 
   return (
@@ -38,11 +38,16 @@ const ToDoList: FC<ToDoListType> = () => {
         },
       }}
     >
-      <Button variant="outlined" startIcon={<DeleteIcon />} color="warning">
+      <Button
+        variant="outlined"
+        startIcon={<DeleteIcon />}
+        color="warning"
+        onClick={() => removeTodoList(todolistId)}
+      >
         Remove todo list
       </Button>
 
-      <EditInputTaskName />
+      <EditInputTaskName title={title} />
 
       <Box
         sx={{
@@ -56,7 +61,7 @@ const ToDoList: FC<ToDoListType> = () => {
         <AddTodoItemForm />
 
         <Box sx={{ overflow: "auto" }}>
-          <ToDoItem />
+          <ToDoItem title={title} />
         </Box>
 
         <Box>

@@ -1,34 +1,43 @@
-type TasksType = {
-  id: string;
-  name: string;
-  isDone: boolean;
-};
+import { ResultCodesEnum } from "../../api/apiTypes";
 
-type TasksObjectType = {
-  [key: string]: Array<TasksType>;
+type AddRemoveTodoListsApiType = {
+  data: {
+    item: ToDoListsType;
+  };
+  resultCode: ResultCodesEnum;
+  messages: string[];
 };
 
 type ToDoListsType = {
   id: string;
   title: string;
-  addedDate: string;
+  addedDate: Date;
   order: number;
 };
 
-type ToDoListType = {};
+type ToDoListType = {
+  title: string;
+  todolistId: string;
+  removeTodoList: (todolistId: string) => void;
+};
 
-type AddTodoItemFormType = {};
+type AddTodoItemFormType = {
+  addTodoList?: (value: string) => void;
+};
 
-type EditInputTaskNameType = {};
+type EditInputTaskNameType = {
+  title: string;
+};
 
-type ToDoItemType = {};
+type ToDoItemType = {
+  title: string;
+};
 
 export {
-  TasksType,
+  AddRemoveTodoListsApiType,
   ToDoListType,
   ToDoListsType,
   AddTodoItemFormType,
-  TasksObjectType,
   EditInputTaskNameType,
   ToDoItemType,
 };

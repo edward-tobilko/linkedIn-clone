@@ -4,7 +4,7 @@ import { EditInputTaskNameType } from "./todoListsTypes";
 
 import { TextField } from "@mui/material";
 
-export const EditInputTaskName: FC<EditInputTaskNameType> = () => {
+export const EditInputTaskName: FC<EditInputTaskNameType> = ({ title }) => {
   const [editName, setEditName] = useState(false);
   const [editedValue, setEditedValue] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +44,7 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = () => {
           data-testid="error-message"
         />
       ) : (
-        <p style={{ margin: "15px 0" }}>Title</p>
+        <p style={{ margin: "15px 0" }}> {title} </p>
       )}
     </>
   );
