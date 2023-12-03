@@ -109,7 +109,7 @@ const ToDoList: FC<ToDoListType> = ({
 
         <EditInputTaskName
           title={title}
-          updateTodoListTitleHandler={updateTodoListTitleHandler}
+          updateTodoTitleHandler={updateTodoListTitleHandler}
         />
 
         <Box
@@ -138,7 +138,7 @@ const ToDoList: FC<ToDoListType> = ({
               </Typography>
             ) : (
               filteredTasks?.map((filteredTask) => (
-                <ToDoItem key={filteredTask.id} filteredTask={filteredTask} />
+                <ToDoItem key={filteredTask.id} title={filteredTask.title} />
               ))
             )}
           </Box>

@@ -20,15 +20,13 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
   const [todo, setTodo] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const addNewTodoList = () => {
+  const addNewTodoHandler = () => {
     if (todo.trim() !== "") {
-      if (addTodoLayout) {
-        addTodoLayout(todo);
+      addTodoLayout(todo);
 
-        setTodo("");
-      } else {
-        setError("This field is required");
-      }
+      setTodo("");
+    } else {
+      setError("This field is required");
     }
   };
 
@@ -40,7 +38,7 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
   };
 
   const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.ctrlKey) addNewTodoList();
+    if (event.ctrlKey) addNewTodoHandler();
   };
 
   return (
@@ -78,7 +76,7 @@ const AddTodoItemForm: FC<AddTodoItemFormType> = ({ addTodoLayout }) => {
         data-testid="custom-button"
         variant="contained"
         endIcon={<AddIcon />}
-        onClick={addNewTodoList}
+        onClick={addNewTodoHandler}
       />
     </Box>
   );

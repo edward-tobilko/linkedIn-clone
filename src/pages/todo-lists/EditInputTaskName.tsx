@@ -6,7 +6,7 @@ import { TextField } from "@mui/material";
 
 export const EditInputTaskName: FC<EditInputTaskNameType> = ({
   title,
-  updateTodoListTitleHandler,
+  updateTodoTitleHandler,
 }) => {
   const [editTitle, setEditTitle] = useState(false);
   const [editedValue, setEditedValue] = useState("");
@@ -14,7 +14,7 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
 
   const activatedEditMode = () => {
     setEditTitle(true);
-    setEditedValue(title!);
+    setEditedValue(title);
   };
 
   const changeEditModeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +26,10 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
 
   const activateViewChangedMode = () => {
     if (editedValue.trim() !== "") {
-      if (updateTodoListTitleHandler) {
-        updateTodoListTitleHandler(editedValue);
+      if (updateTodoTitleHandler) {
+        updateTodoTitleHandler(editedValue);
       }
+
       setEditedValue("");
       setEditTitle(false);
     } else {

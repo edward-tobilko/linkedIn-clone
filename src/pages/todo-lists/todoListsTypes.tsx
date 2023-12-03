@@ -36,12 +36,12 @@ type AddTodoItemFormType = {
 };
 
 type EditInputTaskNameType = {
-  title?: string;
-  updateTodoListTitleHandler?: (newTitle: string) => void;
+  title: string;
+  updateTodoTitleHandler?: (newTitle: string) => void;
 };
 
 type ToDoItemType = {
-  filteredTask: any;
+  title: string;
 };
 
 type TodoTaskType = {

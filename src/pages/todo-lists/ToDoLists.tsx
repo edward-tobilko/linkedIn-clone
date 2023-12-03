@@ -94,6 +94,8 @@ const ToDoLists: FC = () => {
     }
   };
 
+  const updateTodoTaskTitle = () => {};
+
   // Functions for todo tasks
   const addTodoTaskAsync = async (
     todolistId: string,
