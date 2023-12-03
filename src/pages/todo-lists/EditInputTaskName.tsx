@@ -26,9 +26,7 @@ export const EditInputTaskName: FC<EditInputTaskNameType> = ({
 
   const activateViewChangedMode = () => {
     if (editedValue.trim() !== "") {
-      if (updateTodoTitleHandler) {
-        updateTodoTitleHandler(editedValue);
-      }
+      updateTodoTitleHandler(editedValue);
 
       setEditedValue("");
       setEditTitle(false);

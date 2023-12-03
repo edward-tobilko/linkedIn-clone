@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-import { TasksObjectType, ToDoListsType, TodoTaskType } from "./todoListsTypes";
+import { TasksObjectType, ToDoListsType } from "./todoListsTypes";
 
-import { Grid, Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 import { todosAPI } from "./todosAPI";
 
@@ -24,6 +24,7 @@ const ToDoLists: FC = () => {
   const [tasksObject, setTasksObject] = useState<TasksObjectType>({});
   const [totalCount, setTotalCount] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
+
   console.log(tasksObject);
 
   let { userId } = useParams() as any;
@@ -48,13 +49,22 @@ const ToDoLists: FC = () => {
 
         setTodoLists((prevTodoLists) => [...prevTodoLists, newTodoList]);
         setTasksObject({ ...tasksObject, [newTodoList.id]: [] });
-
-        console.log(newTodoList);
       } else {
-        console.error("Some error occured:", newTodoListApi.messages);
+        console.error("Some error occurred:", newTodoListApi.messages);
       }
     } catch (error) {
       console.error("Error adding todo list:", error);
+    }
+  };
+
+  const getTodoLists = async () => {
+    try {
+      const todoListsData = await todosAPI.fetchTodoListsApi();
+      setTodoLists(todoListsData);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Server error", error.message);
+      }
     }
   };
 
@@ -63,13 +73,13 @@ const ToDoLists: FC = () => {
       const response = await todosAPI.removeTodoListApi(todolistId);
 
       if (response.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-        const filteredTodoLists = todoLists.filter(
+        const filteredTodoList = todoLists.filter(
           (todoList) => todoList.id !== todolistId,
         );
 
-        setTodoLists(filteredTodoLists);
+        setTodoLists(filteredTodoList);
       } else {
-        console.error("Some error occured:", response.messages);
+        console.error("Some error occurred:", response.messages);
       }
     } catch (error) {
       console.error("Error removing todo list:", error);
@@ -94,8 +104,6 @@ const ToDoLists: FC = () => {
     }
   };
 
-  const updateTodoTaskTitle = () => {};
-
   // Functions for todo tasks
   const addTodoTaskAsync = async (
     todolistId: string,
@@ -116,7 +124,7 @@ const ToDoLists: FC = () => {
           } as TasksObjectType;
         });
       } else {
-        console.error("Some error occured:", newTodoTaskApi.messages);
+        console.error("Some error occurred:", newTodoTaskApi.messages);
       }
     } catch (error) {
       console.error("Error adding todo list:", error);
@@ -143,18 +151,52 @@ const ToDoLists: FC = () => {
     }
   };
 
-  useEffect(() => {
-    const getTodoLists = async () => {
-      try {
-        const todoListsData = await todosAPI.fetchTodoListsApi();
-        setTodoLists(todoListsData);
-      } catch (error) {
-        if (error instanceof Error) {
-          console.error("Server error", error.message);
-        }
-      }
-    };
+  const updateTodoTaskTitle = async (
+    todolistId: string,
+    taskId: string,
+    newTitle: string,
+  ) => {
+    try {
+      await todosAPI.updateTodoTaskApi(todolistId, taskId, newTitle);
 
+      let tasks = tasksObject[todolistId];
+
+      const todoTask = tasks.find((editedTask) => editedTask.id === taskId);
+
+      if (todoTask) {
+        todoTask.title = newTitle;
+
+        setTasksObject((prevTaskObject) => ({ ...prevTaskObject }));
+      }
+    } catch (error) {
+      console.error("Error updating todo task:", error);
+    }
+  };
+
+  const removeTodoTask = async (todolistId: string, taskId: string) => {
+    try {
+      const response = await todosAPI.removeTodoTaskApi(todolistId, taskId);
+
+      if (response.resultCode === ResultCodesEnum.ResultCodeSuccess) {
+        let tasks = tasksObject[todolistId];
+
+        const filteredTodoTask = tasks.filter(
+          (filteredTask) => filteredTask.id !== taskId,
+        );
+
+        setTasksObject((prevTasksObject) => ({
+          ...prevTasksObject,
+          [todolistId]: filteredTodoTask,
+        }));
+      } else {
+        console.error("Some error occurred:", response.messages);
+      }
+    } catch (error) {
+      console.error("Error removing todo task:", error);
+    }
+  };
+
+  useEffect(() => {
     getTodoLists();
   }, []);
 
@@ -217,17 +259,18 @@ const ToDoLists: FC = () => {
             let filteredTasksById = tasksObject[todoList.id];
 
             return (
-              <Grid key={todoList?.id}>
-                <ToDoList
-                  todolistId={todoList.id}
-                  title={todoList.title}
-                  removeTodoList={removeTodoList}
-                  updateTodoListTitle={updateTodoListTitle}
-                  getTodoTasks={getTodoTasks}
-                  addTodoTaskAsync={addTodoTaskAsync}
-                  filteredTasks={filteredTasksById}
-                />
-              </Grid>
+              <ToDoList
+                key={todoList?.id}
+                todolistId={todoList.id}
+                title={todoList.title}
+                filteredTasks={filteredTasksById}
+                removeTodoList={removeTodoList}
+                updateTodoListTitle={updateTodoListTitle}
+                getTodoTasks={getTodoTasks}
+                addTodoTaskAsync={addTodoTaskAsync}
+                updateTodoTaskTitle={updateTodoTaskTitle}
+                removeTodoTask={removeTodoTask}
+              />
             );
           })
         )}

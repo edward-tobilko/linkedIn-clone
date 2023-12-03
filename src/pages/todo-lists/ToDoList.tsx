@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 
-import { ReorderTodoListType, ToDoListType } from "./todoListsTypes";
+import { ReorderTodoListApiType, ToDoListType } from "./todoListsTypes";
 
 import { Button, styled, Box, useTheme, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -27,10 +27,12 @@ const ToDoList: FC<ToDoListType> = ({
   updateTodoListTitle,
   getTodoTasks,
   addTodoTaskAsync,
+  updateTodoTaskTitle,
+  removeTodoTask,
 }) => {
   const [putAfterItemId, setPutAfterItemId] = useState<string>(""); //! todo /todo-lists/{todolistId}/reorder
   const [reorderTodoList, setReorderTodoList] =
-    useState<ReorderTodoListType | null>(null); //! todo /todo-lists/{todolistId}/reorder
+    useState<ReorderTodoListApiType | null>(null); //! todo /todo-lists/{todolistId}/reorder
 
   const breakpoints = useTheme();
 
@@ -48,8 +50,9 @@ const ToDoList: FC<ToDoListType> = ({
     setReorderTodoList(response);
   };
 
-  const addTodoTask = (newTask: string) => {
-    addTodoTaskAsync(todolistId, newTask);
+  const addTodoTask = async (newTask: string) => {
+    await addTodoTaskAsync(todolistId, newTask);
+    await getTodoTasks(todolistId);
   };
 
   useEffect(() => {
@@ -137,9 +140,18 @@ const ToDoList: FC<ToDoListType> = ({
                 Todos are empty...
               </Typography>
             ) : (
-              filteredTasks?.map((filteredTask) => (
-                <ToDoItem key={filteredTask.id} title={filteredTask.title} />
-              ))
+              filteredTasks?.map((filteredTask) => {
+                return (
+                  <ToDoItem
+                    key={filteredTask.id}
+                    title={filteredTask.title}
+                    filteredTask={filteredTask}
+                    todolistId={todolistId}
+                    updateTodoTaskTitle={updateTodoTaskTitle}
+                    removeTodoTask={removeTodoTask}
+                  />
+                );
+              })
             )}
           </Box>
 

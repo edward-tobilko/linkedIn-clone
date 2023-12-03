@@ -5,7 +5,7 @@ import { instance } from "../../api/API";
 import {
   AddRemoveTodoListsApiType,
   AddRemoveTodoTaskApiType,
-  ReorderTodoListType,
+  ReorderTodoListApiType,
   ToDoListsType,
   TodoTaskType,
   TodoTasksType,
@@ -70,7 +70,7 @@ export const todosAPI = {
   //! todo /todo-lists/{todolistId}/reorder
   async reorderTodoListApi(todolistId: string, putAfterItemId: string) {
     try {
-      const response = await instance.put<ReorderTodoListType>(
+      const response = await instance.put<ReorderTodoListApiType>(
         `todo-lists/${todolistId}/reorder`,
         {
           putAfterItemId,
@@ -145,6 +145,47 @@ export const todosAPI = {
       }
 
       return { items: [], totalCount: 0, error: "Failed to fetch tasks" };
+    }
+  },
+
+  async updateTodoTaskApi(
+    todolistId: string,
+    taskId: string,
+    newTitle: string,
+  ) {
+    try {
+      const response = await instance.put<AddRemoveTodoTaskApiType>(
+        `todo-lists/${todolistId}/tasks/${taskId}`,
+        {
+          title: newTitle,
+          description: "",
+          completed: false,
+          status: 0,
+          priority: 0,
+          startDate: new Date(),
+          deadline: new Date(),
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error updating todo task:", error);
+
+      throw error;
+    }
+  },
+
+  async removeTodoTaskApi(todolistId: string, taskId: string) {
+    try {
+      const response = await instance.delete<AddRemoveTodoTaskApiType>(
+        `todo-lists/${todolistId}/tasks/${taskId}`,
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error removing todo task:", error);
+
+      throw error;
     }
   },
 };

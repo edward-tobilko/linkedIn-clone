@@ -8,10 +8,16 @@ type AddRemoveTodoListsApiType = {
   messages: string[];
 };
 
-type ReorderTodoListType = {
+type AddRemoveTodoTaskApiType = {
+  data: {};
+  resultCode: ResultCodesEnum;
+  messages: Array<string>;
+};
+
+type ReorderTodoListApiType = {
   resultCode: ResultCodesEnum;
   messages: string[];
-  data: any;
+  data: Object;
 };
 
 type ToDoListsType = {
@@ -26,7 +32,13 @@ type ToDoListType = {
   todolistId: string;
   filteredTasks: Array<TodoTaskType>;
   removeTodoList: (todolistId: string) => void;
+  removeTodoTask: (todolistId: string, taskId: string) => void;
   updateTodoListTitle: (todolistId: string, newTitle: string) => void;
+  updateTodoTaskTitle: (
+    todolistId: string,
+    taskId: string,
+    newTitle: string,
+  ) => void;
   getTodoTasks: (todolistId: string) => void;
   addTodoTaskAsync: (todolistId: string, value: string) => void;
 };
@@ -37,11 +49,19 @@ type AddTodoItemFormType = {
 
 type EditInputTaskNameType = {
   title: string;
-  updateTodoTitleHandler?: (newTitle: string) => void;
+  updateTodoTitleHandler: (newTitle: string) => void;
 };
 
 type ToDoItemType = {
   title: string;
+  todolistId: string;
+  filteredTask: TodoTaskType;
+  updateTodoTaskTitle: (
+    todolistId: string,
+    taskId: string,
+    newTitle: string,
+  ) => void;
+  removeTodoTask: (todolistId: string, taskId: string) => void;
 };
 
 type TodoTaskType = {
@@ -64,14 +84,6 @@ type TodoTasksType = {
   error: string;
 };
 
-type AddRemoveTodoTaskApiType = {
-  data: {
-    item: TodoTaskType;
-  };
-  resultCode: ResultCodesEnum;
-  messages: Array<string>;
-};
-
 type TasksObjectType = {
   [key: string]: TodoTaskType[];
 };
@@ -79,7 +91,7 @@ type TasksObjectType = {
 export {
   AddRemoveTodoListsApiType,
   AddRemoveTodoTaskApiType,
-  ReorderTodoListType,
+  ReorderTodoListApiType,
   ToDoListType,
   ToDoListsType,
   AddTodoItemFormType,
