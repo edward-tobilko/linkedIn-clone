@@ -7,6 +7,7 @@ import {
   AddRemoveTodoTaskApiType,
   ReorderTodoListType,
   ToDoListsType,
+  TodoTaskType,
   TodoTasksType,
 } from "./todoListsTypes";
 import { ResultCodesEnum } from "../../api/apiTypes";
@@ -88,20 +89,6 @@ export const todosAPI = {
     }
   },
 
-  async fetchTodoTasksApi(todolistId: string) {
-    try {
-      const response = await instance.get<TodoTasksType>(
-        `todo-lists/${todolistId}/tasks`,
-      );
-
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching todo tasks:", error);
-
-      throw error;
-    }
-  },
-
   async addTodoTaskApi(todolistId: string, title: string) {
     try {
       const response = await instance.post<AddRemoveTodoTaskApiType>(
@@ -114,8 +101,8 @@ export const todosAPI = {
           priority: 0,
           startDate: new Date(),
           deadline: null,
-          id: todolistId,
-          // todoListId: "1231",
+          id: uuidv4(),
+          todoListId: todolistId,
           order: 0,
           addedDate: new Date(),
         },
@@ -130,6 +117,34 @@ export const todosAPI = {
         resultCode: ResultCodesEnum.ResultCodeError,
         messages: ["Something wrong"],
       };
+    }
+  },
+
+  async fetchTodoTasksApi(
+    todolistId: string,
+    count: number = 10,
+    page: number = 1,
+  ): Promise<{
+    items: Array<TodoTaskType>;
+    totalCount: number;
+    error: string;
+  }> {
+    try {
+      const response = await instance.get<TodoTasksType>(
+        `todo-lists/${todolistId}/tasks?count=${count}&page=${page}`,
+      );
+
+      if (response.data.error) {
+        throw new Error("Failed to fetch tasks");
+      }
+
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching todo tasks:", error.message);
+      }
+
+      return { items: [], totalCount: 0, error: "Failed to fetch tasks" };
     }
   },
 };

@@ -60,8 +60,8 @@ type TodoTaskType = {
 
 type TodoTasksType = {
   items: Array<TodoTaskType>;
-  // totalCount: number;
-  // error: string;
+  totalCount: number;
+  error: string;
 };
 
 type AddRemoveTodoTaskApiType = {

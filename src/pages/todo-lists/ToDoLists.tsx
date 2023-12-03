@@ -2,7 +2,6 @@ import { FC, useState, useEffect, ComponentType } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { v4 as uuidv4 } from "uuid";
 
 import { TasksObjectType, ToDoListsType, TodoTaskType } from "./todoListsTypes";
 
@@ -21,14 +20,11 @@ import AddTodoItemForm from "./AddTodoItemForm";
 import { ResultCodesEnum } from "../../api/apiTypes";
 
 const ToDoLists: FC = () => {
-  let todoListID1 = uuidv4();
-  let todoListID2 = uuidv4();
-
   const [todoLists, setTodoLists] = useState<Array<ToDoListsType>>([]);
-  const [tasksObject, setTasksObject] = useState<TasksObjectType>({
-    [todoListID1]: [],
-    [todoListID2]: [],
-  });
+  const [tasksObject, setTasksObject] = useState<TasksObjectType>({});
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
+  console.log(tasksObject);
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
@@ -53,7 +49,7 @@ const ToDoLists: FC = () => {
         setTodoLists((prevTodoLists) => [...prevTodoLists, newTodoList]);
         setTasksObject({ ...tasksObject, [newTodoList.id]: [] });
 
-        console.log(value);
+        console.log(newTodoList);
       } else {
         console.error("Some error occured:", newTodoListApi.messages);
       }
@@ -99,39 +95,49 @@ const ToDoLists: FC = () => {
   };
 
   // Functions for todo tasks
-  const getTodoTasks = async (todolistId: string) => {
-    try {
-      const todoTasksData = await todosAPI.fetchTodoTasksApi(todolistId);
-
-      // console.log(todoTasksData.items);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error("Server error", error.message);
-      }
-    }
-  };
-
-  const addTodoTaskAsync = async (todolistId: string, value: string) => {
+  const addTodoTaskAsync = async (
+    todolistId: string,
+    value: string,
+  ): Promise<void> => {
     try {
       const newTodoTaskApi = await todosAPI.addTodoTaskApi(todolistId, value);
 
       if (newTodoTaskApi.resultCode === ResultCodesEnum.ResultCodeSuccess) {
-        debugger;
+        setTasksObject((prevTaskObject) => {
+          let tasks = prevTaskObject[todolistId] || []; //? || [] - This prevents the "undefined is not iterable" error.
+          let newTodoTask = newTodoTaskApi.data;
+          let newTasks = [...tasks, newTodoTask];
 
-        let tasks = tasksObject[todolistId];
-
-        const newTodoTask = newTodoTaskApi.data;
-
-        let newTasks = [...tasks, newTodoTask];
-
-        // tasksObject[todolistId] = newTasks;
-
-        setTasksObject({ ...tasksObject });
+          return {
+            ...prevTaskObject,
+            [todolistId]: newTasks,
+          } as TasksObjectType;
+        });
       } else {
         console.error("Some error occured:", newTodoTaskApi.messages);
       }
     } catch (error) {
       console.error("Error adding todo list:", error);
+    }
+  };
+
+  const getTodoTasks = async (todolistId: string) => {
+    try {
+      const todoTasksData = await todosAPI.fetchTodoTasksApi(todolistId);
+
+      if (todoTasksData.error) {
+        throw new Error(todoTasksData.error);
+      }
+
+      setTasksObject((prevTaskObject) => {
+        return { ...prevTaskObject, [todolistId]: todoTasksData.items };
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching tasks:", error.message);
+
+        setError("Failed to fetch tasks");
+      }
     }
   };
 
@@ -207,7 +213,6 @@ const ToDoLists: FC = () => {
         ) : (
           todoLists?.map((todoList) => {
             let filteredTasksById = tasksObject[todoList.id];
-            console.log(filteredTasksById);
 
             return (
               <Grid key={todoList?.id}>
