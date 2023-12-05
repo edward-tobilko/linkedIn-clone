@@ -78,6 +78,10 @@ const ToDoLists: FC = () => {
         );
 
         setTodoLists(filteredTodoList);
+
+        //? Видаляємо свойство об'єкта
+        delete tasksObject[todolistId];
+        setTasksObject({ ...tasksObject });
       } else {
         console.error("Some error occurred:", response.messages);
       }
@@ -180,9 +184,11 @@ const ToDoLists: FC = () => {
       if (response.resultCode === ResultCodesEnum.ResultCodeSuccess) {
         let tasks = tasksObject[todolistId];
 
-        const filteredTodoTask = tasks.filter(
-          (filteredTask) => filteredTask.id !== taskId,
-        );
+        const filteredTodoTask = tasks.filter((filteredTask) => {
+          console.log(filteredTask.id);
+
+          return filteredTask.id !== taskId;
+        });
 
         setTasksObject((prevTasksObject) => ({
           ...prevTasksObject,

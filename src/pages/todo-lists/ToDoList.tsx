@@ -140,11 +140,10 @@ const ToDoList: FC<ToDoListType> = ({
                 Todos are empty...
               </Typography>
             ) : (
-              filteredTasks?.map((filteredTask) => {
+              filteredTasks?.map((filteredTask, index) => {
                 return (
                   <ToDoItem
-                    key={filteredTask.id}
-                    title={filteredTask.title}
+                    key={filteredTask.id || index}
                     filteredTask={filteredTask}
                     todolistId={todolistId}
                     updateTodoTaskTitle={updateTodoTaskTitle}

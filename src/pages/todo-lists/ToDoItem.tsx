@@ -8,7 +8,6 @@ import { ToDoItemType } from "./todoListsTypes";
 import { EditInputTaskName } from "./EditInputTaskName";
 
 const ToDoItem: FC<ToDoItemType> = ({
-  title,
   filteredTask,
   todolistId,
   updateTodoTaskTitle,
@@ -27,7 +26,7 @@ const ToDoItem: FC<ToDoItemType> = ({
       <Checkbox />
 
       <EditInputTaskName
-        title={title}
+        title={filteredTask.title}
         updateTodoTitleHandler={(newTitle: string) =>
           updateTodoTaskTitle(todolistId, filteredTask.id, newTitle)
         }

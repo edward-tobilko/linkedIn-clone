@@ -24,16 +24,13 @@ export const todosAPI = {
       const response = await instance.post<AddRemoveTodoListsApiType>(
         "todo-lists",
         {
-          id: uuidv4(),
           title: title,
-          addedDate: new Date(),
-          order: 0,
         },
       );
 
       return response.data;
     } catch (error) {
-      console.error("Error adding todo list:", error);
+      console.error("Server error adding todo list:", error);
 
       throw error;
     }
@@ -47,7 +44,7 @@ export const todosAPI = {
 
       return response.data;
     } catch (error) {
-      console.error("Error removing todo list:", error);
+      console.error("Server error removing todo list:", error);
 
       throw error;
     }
@@ -61,7 +58,7 @@ export const todosAPI = {
 
       return response.data;
     } catch (error) {
-      console.error("Error updating todo list:", error);
+      console.error("Server error updating todo list:", error);
 
       throw error;
     }
@@ -79,7 +76,7 @@ export const todosAPI = {
 
       return response.data;
     } catch (error) {
-      console.error("Error reordering todo list:", error);
+      console.error("Server error reordering todo list:", error);
 
       return {
         resultCode: ResultCodesEnum.ResultCodeError,
@@ -94,23 +91,13 @@ export const todosAPI = {
       const response = await instance.post<AddRemoveTodoTaskApiType>(
         `todo-lists/${todolistId}/tasks`,
         {
-          description: "",
           title: title,
-          completed: false,
-          status: 0,
-          priority: 0,
-          startDate: new Date(),
-          deadline: null,
-          id: uuidv4(),
-          todoListId: todolistId,
-          order: 0,
-          addedDate: new Date(),
         },
       );
 
       return response.data;
     } catch (error) {
-      console.error("Error fetching todo tasks:", error);
+      console.error("Server error fetching todo tasks:", error);
 
       return {
         data: {},
@@ -141,7 +128,7 @@ export const todosAPI = {
       return response.data;
     } catch (error) {
       if (error instanceof Error) {
-        console.error("Error fetching todo tasks:", error.message);
+        console.error("Server error fetching todo tasks:", error.message);
       }
 
       return { items: [], totalCount: 0, error: "Failed to fetch tasks" };
@@ -169,7 +156,7 @@ export const todosAPI = {
 
       return response.data;
     } catch (error) {
-      console.error("Error updating todo task:", error);
+      console.error("Server error updating todo task:", error);
 
       throw error;
     }
@@ -181,9 +168,11 @@ export const todosAPI = {
         `todo-lists/${todolistId}/tasks/${taskId}`,
       );
 
+      console.log(response.data);
+
       return response.data;
     } catch (error) {
-      console.error("Error removing todo task:", error);
+      console.error("Server error removing todo task:", error);
 
       throw error;
     }

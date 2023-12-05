@@ -53,7 +53,6 @@ type EditInputTaskNameType = {
 };
 
 type ToDoItemType = {
-  title: string;
   todolistId: string;
   filteredTask: TodoTaskType;
   updateTodoTaskTitle: (
