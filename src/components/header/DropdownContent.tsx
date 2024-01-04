@@ -14,30 +14,6 @@ import { DropdownContentProps, LinksTypes } from "./headerTypes";
 import LogoutBtn from "../UI/btns/logout-btn/LogoutBtn";
 import DropDownLoader from "../UI/loaders/dropdown-loader/DropDownLoader";
 
-const links: LinksTypes[] = [
-  {
-    id: uuidv4(),
-    path: "user-profile",
-    name: "Profile",
-    description: "Account",
-    icon: <CgProfile />,
-  },
-  {
-    id: uuidv4(),
-    path: "todo-lists",
-    name: "ToDoLists",
-    description: "ToDo lists description",
-    icon: <i className="bx bx-list-check"></i>,
-  },
-  {
-    id: uuidv4(),
-    path: "git-hub",
-    name: "GitHub",
-    description: "Fetch users from GitHub API",
-    icon: <FiCreditCard />,
-  },
-];
-
 export const DropdownContent: FC<DropdownContentProps> = ({
   setIsClicked,
   logout,
@@ -45,6 +21,30 @@ export const DropdownContent: FC<DropdownContentProps> = ({
   email,
   loading,
 }) => {
+  const links: LinksTypes[] = [
+    {
+      id: uuidv4(),
+      path: `user-profile/${currentProfilePage.userId}`,
+      name: "Profile",
+      description: "Account",
+      icon: <CgProfile />,
+    },
+    {
+      id: uuidv4(),
+      path: "todo-lists",
+      name: "ToDoLists",
+      description: "ToDo lists description",
+      icon: <i className="bx bx-list-check"></i>,
+    },
+    {
+      id: uuidv4(),
+      path: "git-hub",
+      name: "GitHub",
+      description: "Fetch users from GitHub API",
+      icon: <FiCreditCard />,
+    },
+  ];
+
   return (
     <DropdownContentStyle>
       <div className="profile">
