@@ -1,5 +1,7 @@
 import { ResultCodesEnum } from "../../api/apiTypes";
 
+type FilteredTasksType = "all" | "checked" | "empty";
+
 type AddRemoveTodoListsApiType = {
   data: {
     item: ToDoListsType;
@@ -31,6 +33,7 @@ type ToDoListType = {
   title: string;
   todolistId: string;
   filteredTasks: Array<TodoTaskType>;
+  filterTasks: string;
   removeTodoList: (todolistId: string) => void;
   removeTodoTask: (todolistId: string, taskId: string) => void;
   updateTodoListTitle: (todolistId: string, newTitle: string) => void;
@@ -38,9 +41,14 @@ type ToDoListType = {
     todolistId: string,
     taskId: string,
     newTitle: string,
+    completed?: boolean,
   ) => void;
   getTodoTasks: (todolistId: string) => void;
   addTodoTaskAsync: (todolistId: string, value: string) => void;
+  changeFilterTasks: (
+    todolistId: string,
+    filterTasks: FilteredTasksType,
+  ) => void;
 };
 
 type AddTodoItemFormType = {
@@ -59,6 +67,7 @@ type ToDoItemType = {
     todolistId: string,
     taskId: string,
     newTitle: string,
+    completed?: boolean,
   ) => void;
   removeTodoTask: (todolistId: string, taskId: string) => void;
 };
@@ -88,6 +97,7 @@ type TasksObjectType = {
 };
 
 export {
+  FilteredTasksType,
   AddRemoveTodoListsApiType,
   AddRemoveTodoTaskApiType,
   ReorderTodoListApiType,

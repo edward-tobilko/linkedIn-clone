@@ -23,12 +23,14 @@ const ToDoList: FC<ToDoListType> = ({
   title,
   todolistId,
   filteredTasks,
+  filterTasks,
   removeTodoList,
   updateTodoListTitle,
   getTodoTasks,
   addTodoTaskAsync,
   updateTodoTaskTitle,
   removeTodoTask,
+  changeFilterTasks,
 }) => {
   const [putAfterItemId, setPutAfterItemId] = useState<string>(""); //! todo /todo-lists/{todolistId}/reorder
   const [reorderTodoList, setReorderTodoList] =
@@ -141,6 +143,12 @@ const ToDoList: FC<ToDoListType> = ({
               </Typography>
             ) : (
               filteredTasks?.map((filteredTask, index) => {
+                if (filteredTask.description === "checked")
+                  filteredTask.completed = true;
+
+                if (filteredTask.description === "empty")
+                  filteredTask.completed = false;
+
                 return (
                   <ToDoItem
                     key={filteredTask.id || index}
@@ -155,9 +163,24 @@ const ToDoList: FC<ToDoListType> = ({
           </Box>
 
           <Box>
-            <CustomFilterBtn>All</CustomFilterBtn>
-            <CustomFilterBtn>Checked</CustomFilterBtn>
-            <CustomFilterBtn>Empty</CustomFilterBtn>
+            <CustomFilterBtn
+              variant={filterTasks === "all" ? "contained" : "outlined"}
+              onClick={() => changeFilterTasks(todolistId, "all")}
+            >
+              All
+            </CustomFilterBtn>
+            <CustomFilterBtn
+              variant={filterTasks === "checked" ? "contained" : "outlined"}
+              onClick={() => changeFilterTasks(todolistId, "checked")}
+            >
+              Checked
+            </CustomFilterBtn>
+            <CustomFilterBtn
+              variant={filterTasks === "empty" ? "contained" : "outlined"}
+              onClick={() => changeFilterTasks(todolistId, "empty")}
+            >
+              Empty
+            </CustomFilterBtn>
           </Box>
         </Box>
       </Box>

@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-import { TasksObjectType, ToDoListsType } from "./todoListsTypes";
+import {
+  FilteredTasksType,
+  TasksObjectType,
+  ToDoListsType,
+} from "./todoListsTypes";
 
 import { Box, Typography, useTheme } from "@mui/material";
 
@@ -22,10 +26,9 @@ import { ResultCodesEnum } from "../../api/apiTypes";
 const ToDoLists: FC = () => {
   const [todoLists, setTodoLists] = useState<Array<ToDoListsType>>([]);
   const [tasksObject, setTasksObject] = useState<TasksObjectType>({});
+  let [filterTasks, setFilterTasks] = useState("all");
   const [totalCount, setTotalCount] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
-
-  console.log(tasksObject);
 
   let { userId } = useParams() as any;
   const dispatch = useTypeDispatch();
@@ -109,6 +112,26 @@ const ToDoLists: FC = () => {
   };
 
   // Functions for todo tasks
+  const getTodoTasks = async (todolistId: string) => {
+    try {
+      const todoTasksData = await todosAPI.fetchTodoTasksApi(todolistId);
+
+      if (todoTasksData.error) {
+        throw new Error(todoTasksData.error);
+      }
+
+      setTasksObject((prevTaskObject) => {
+        return { ...prevTaskObject, [todolistId]: todoTasksData.items };
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error fetching tasks:", error.message);
+
+        setError("Failed to fetch tasks");
+      }
+    }
+  };
+
   const addTodoTaskAsync = async (
     todolistId: string,
     value: string,
@@ -135,40 +158,27 @@ const ToDoLists: FC = () => {
     }
   };
 
-  const getTodoTasks = async (todolistId: string) => {
-    try {
-      const todoTasksData = await todosAPI.fetchTodoTasksApi(todolistId);
-
-      if (todoTasksData.error) {
-        throw new Error(todoTasksData.error);
-      }
-
-      setTasksObject((prevTaskObject) => {
-        return { ...prevTaskObject, [todolistId]: todoTasksData.items };
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error("Error fetching tasks:", error.message);
-
-        setError("Failed to fetch tasks");
-      }
-    }
-  };
-
   const updateTodoTaskTitle = async (
     todolistId: string,
     taskId: string,
-    newTitle: string,
+    newTitle?: string,
+    completed?: boolean,
   ) => {
     try {
-      await todosAPI.updateTodoTaskApi(todolistId, taskId, newTitle);
+      await todosAPI.updateTodoTaskApi(
+        todolistId,
+        taskId,
+        newTitle!,
+        completed!,
+      );
 
       let tasks = tasksObject[todolistId];
 
       const todoTask = tasks.find((editedTask) => editedTask.id === taskId);
 
       if (todoTask) {
-        todoTask.title = newTitle;
+        todoTask.title = newTitle!;
+        todoTask.completed = completed!;
 
         setTasksObject((prevTaskObject) => ({ ...prevTaskObject }));
       }
@@ -200,6 +210,20 @@ const ToDoLists: FC = () => {
     } catch (error) {
       console.error("Error removing todo task:", error);
     }
+  };
+
+  const changeFilterTasks = (
+    todolistId: string,
+    filteredTasks: FilteredTasksType,
+  ) => {
+    const todoList = todoLists.find((list) => list.id === todolistId);
+
+    if (todoList) {
+      filterTasks = filteredTasks;
+      setFilterTasks(filterTasks);
+    }
+
+    console.log(todoList);
   };
 
   useEffect(() => {
@@ -262,7 +286,21 @@ const ToDoLists: FC = () => {
           </Typography>
         ) : (
           todoLists?.map((todoList) => {
-            let filteredTasksById = tasksObject[todoList.id];
+            let filteredTasksById = tasksObject[todoList.id]?.filter((task) => {
+              if (filterTasks === "all") {
+                return true;
+              }
+
+              if (filterTasks === "checked" && task.completed) {
+                return true;
+              }
+
+              if (filterTasks === "empty" && !task.completed) {
+                return true;
+              }
+
+              return false;
+            });
 
             return (
               <ToDoList
@@ -270,12 +308,14 @@ const ToDoLists: FC = () => {
                 todolistId={todoList.id}
                 title={todoList.title}
                 filteredTasks={filteredTasksById}
+                filterTasks={filterTasks}
                 removeTodoList={removeTodoList}
                 updateTodoListTitle={updateTodoListTitle}
                 getTodoTasks={getTodoTasks}
                 addTodoTaskAsync={addTodoTaskAsync}
                 updateTodoTaskTitle={updateTodoTaskTitle}
                 removeTodoTask={removeTodoTask}
+                changeFilterTasks={changeFilterTasks}
               />
             );
           })

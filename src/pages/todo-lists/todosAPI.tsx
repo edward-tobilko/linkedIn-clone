@@ -13,6 +13,7 @@ import {
 import { ResultCodesEnum } from "../../api/apiTypes";
 
 export const todosAPI = {
+  // Lists
   async fetchTodoListsApi() {
     return await instance
       .get<ToDoListsType[]>("todo-lists")
@@ -86,27 +87,7 @@ export const todosAPI = {
     }
   },
 
-  async addTodoTaskApi(todolistId: string, title: string) {
-    try {
-      const response = await instance.post<AddRemoveTodoTaskApiType>(
-        `todo-lists/${todolistId}/tasks`,
-        {
-          title: title,
-        },
-      );
-
-      return response.data;
-    } catch (error) {
-      console.error("Server error fetching todo tasks:", error);
-
-      return {
-        data: {},
-        resultCode: ResultCodesEnum.ResultCodeError,
-        messages: ["Something wrong"],
-      };
-    }
-  },
-
+  // Tasks
   async fetchTodoTasksApi(
     todolistId: string,
     count: number = 10,
@@ -135,18 +116,40 @@ export const todosAPI = {
     }
   },
 
+  async addTodoTaskApi(todolistId: string, title: string) {
+    try {
+      const response = await instance.post<AddRemoveTodoTaskApiType>(
+        `todo-lists/${todolistId}/tasks`,
+        {
+          title: title,
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Server error fetching todo tasks:", error);
+
+      return {
+        data: {},
+        resultCode: ResultCodesEnum.ResultCodeError,
+        messages: ["Something wrong"],
+      };
+    }
+  },
+
   async updateTodoTaskApi(
     todolistId: string,
     taskId: string,
     newTitle: string,
+    completed: boolean,
   ) {
     try {
       const response = await instance.put<AddRemoveTodoTaskApiType>(
         `todo-lists/${todolistId}/tasks/${taskId}`,
         {
           title: newTitle,
-          description: "",
-          completed: false,
+          description: "all",
+          completed: completed,
           status: 0,
           priority: 0,
           startDate: new Date(),

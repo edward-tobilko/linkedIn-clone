@@ -20,10 +20,20 @@ const ToDoItem: FC<ToDoItemType> = ({
         justifyContent: "space-between",
         alignItems: "center",
         padding: "5px",
-        // opacity: task.isDone ? 0.6 : 1,
+        opacity: filteredTask.completed ? 0.6 : 1,
       }}
     >
-      <Checkbox />
+      <Checkbox
+        checked={filteredTask.completed}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          updateTodoTaskTitle(
+            todolistId,
+            filteredTask.id,
+            filteredTask.title,
+            event.currentTarget.checked,
+          )
+        }
+      />
 
       <EditInputTaskName
         title={filteredTask.title}
