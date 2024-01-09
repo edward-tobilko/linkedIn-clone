@@ -34,6 +34,7 @@ import {
   OwnPropsType,
   ProfileContentPropsType,
 } from "./profileTypes";
+import InfoBlock from "./InfoBlock";
 
 //? Lazy loading of components
 const Sidebar = lazy(() => import("../../components/sidebar/Sidebar"));
@@ -94,7 +95,9 @@ const ProfileContent: FC<ProfileContentPropsType> = ({
               <CreatePostFormList />
             </CreatePostStyle>
 
-            <PostsList postUsers={postUsers} />
+            {/* <PostsList postUsers={postUsers} /> */}
+
+            <InfoBlock />
           </>
         )}
       </ProfileStyle>

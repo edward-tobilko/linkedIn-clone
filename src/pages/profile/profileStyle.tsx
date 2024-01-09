@@ -303,3 +303,52 @@ export const WrapperImgStyle = styled.img<{ bg: string }>`
     height: 130px;
   }
 `;
+
+// InfoBlock component
+export const InfoBlockStyle = styled.div`
+  margin: 20px 0;
+  padding: 20px 30px;
+  background: ${themeVars.colors.headerBackgroundColor};
+  border-radius: 12px;
+
+  .title {
+    font-size: 20px;
+  }
+
+  .email {
+    font-weight: 600;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
+  .password {
+    font-weight: 600;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
+  .own__profile {
+    &-link {
+      color: ${themeVars.colors.blueColor};
+      text-decoration: none;
+    }
+  }
+
+  .github__repo {
+    &-link {
+      color: ${themeVars.colors.blueColor};
+      text-decoration: none;
+    }
+  }
+
+  .conclusion {
+    &-link {
+      color: ${themeVars.colors.blueColor};
+      text-decoration: none;
+    }
+  }
+`;
