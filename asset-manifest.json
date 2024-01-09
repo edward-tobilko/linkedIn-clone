@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/linkedIn-clone/static/js/main.c64c8b44.js",
+    "main.js": "/linkedIn-clone/static/js/main.8c07d14d.js",
     "static/js/250.93373d49.chunk.js": "/linkedIn-clone/static/js/250.93373d49.chunk.js",
-    "static/js/162.dc2a1354.chunk.js": "/linkedIn-clone/static/js/162.dc2a1354.chunk.js",
+    "static/js/162.b848f343.chunk.js": "/linkedIn-clone/static/js/162.b848f343.chunk.js",
     "static/js/856.7eb0cf65.chunk.js": "/linkedIn-clone/static/js/856.7eb0cf65.chunk.js",
     "index.html": "/linkedIn-clone/index.html",
     "static/media/error_icon.svg": "/linkedIn-clone/static/media/error_icon.fe683a0d552835feb6cca4ac2686db98.svg",
     "static/media/unFollowUser_icon.svg": "/linkedIn-clone/static/media/unFollowUser_icon.5e61daa4237d18efce1db3595eb19bda.svg",
     "static/media/followUser_icon.svg": "/linkedIn-clone/static/media/followUser_icon.7ede9a76aa853664b4408b6a1cb0b61a.svg",
     "static/media/remove_icon.svg": "/linkedIn-clone/static/media/remove_icon.efeb16dadb2dc83929524d1bbb7f6dcd.svg",
-    "main.c64c8b44.js.map": "/linkedIn-clone/static/js/main.c64c8b44.js.map",
+    "main.8c07d14d.js.map": "/linkedIn-clone/static/js/main.8c07d14d.js.map",
     "250.93373d49.chunk.js.map": "/linkedIn-clone/static/js/250.93373d49.chunk.js.map",
-    "162.dc2a1354.chunk.js.map": "/linkedIn-clone/static/js/162.dc2a1354.chunk.js.map",
+    "162.b848f343.chunk.js.map": "/linkedIn-clone/static/js/162.b848f343.chunk.js.map",
     "856.7eb0cf65.chunk.js.map": "/linkedIn-clone/static/js/856.7eb0cf65.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.c64c8b44.js"
+    "static/js/main.8c07d14d.js"
   ]
 }
