@@ -16,7 +16,7 @@ import { useShowSidebar } from "../../hooks/useDarkMode";
 type TransitionPropsType = Omit<SlideProps, "direction">;
 
 // UI time elements
-function UITimeElements() {
+const UITimeElements = () => {
   const [seconds, setSeconds] = React.useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
@@ -69,7 +69,7 @@ function UITimeElements() {
       </div>
     </>
   );
-}
+};
 
 function TransitionLeft(props: TransitionPropsType) {
   return <Slide {...props} direction="right" />;
@@ -146,7 +146,9 @@ const Sidebar: FC<CardProfilePropsType> = ({
           </div>
 
           <div className="sidebar-elements">
-            <div className="sidebar-elements__time">{UITimeElements()}</div>
+            <div className="sidebar-elements__time">
+              <UITimeElements />
+            </div>
 
             <div className="sidebar-elements__action">
               <i className="bx bxs-bookmark"></i> <span>My elements</span>
@@ -182,7 +184,9 @@ const Sidebar: FC<CardProfilePropsType> = ({
               </div>
 
               <div className="sidebar-elements">
-                <div className="sidebar-elements__time">{UITimeElements()}</div>
+                <div className="sidebar-elements__time">
+                  <UITimeElements />
+                </div>
 
                 <div className="sidebar-elements__action">
                   <i className="bx bxs-bookmark"></i> <span>My elements</span>
