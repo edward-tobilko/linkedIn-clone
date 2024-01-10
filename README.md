@@ -24,7 +24,7 @@ const instance = axios.create({
 
 ---
 
-### Installation
+:heavy_check_mark: ### Installation
 
 - [x] clone project
 
