@@ -49,4 +49,4 @@ npm run start
 - Jest Tests
 - Git / GitHub
 
-If you like this project don't forget to turn on a star for it.
+If you :+1: this project don't forget to turn on a :star: for it.
