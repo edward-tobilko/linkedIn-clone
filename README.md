@@ -8,7 +8,7 @@ Welcome to the Samurai Social Network - a powerful social platform built with Re
 
 #### Data and Authorization for the project:
 
-- Email: ***1992eduard777clone@gmail.com***
+- Email: **1992eduard777clone@gmail.com**
 - Password: **_1q2w3e4r_**
 - My own profile is userId: **_29793_**
 - [My profile in this project](https://edward-tobilko.github.io/linkedIn-clone/#/user-profile/29793)
@@ -24,7 +24,7 @@ const instance = axios.create({
 
 ---
 
-### Installation
+### :heavy_check_mark:Installation
 
 - [x] clone project
 
@@ -46,6 +46,7 @@ npm run start
 - Responsive Design
 - RestAPI / Axios
 - Authorization / Captcha / Pagination / WebSocket Chat
+- Jest Tests
 - Git / GitHub
 
-If you like this project don't forget to turn on a star for it.
+If you :+1: this project don't forget to turn on a :star: for it.
