@@ -86,4 +86,4 @@ const AuthForm: FC<AuthFormProps> = ({
   );
 };
 
-export default AuthForm;
+export default AuthForm; 
