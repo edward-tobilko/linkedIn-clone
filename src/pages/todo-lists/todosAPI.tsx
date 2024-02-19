@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 import { instance } from "../../api/API";
 
 import {
@@ -175,9 +173,11 @@ export const todosAPI = {
 
       return response.data;
     } catch (error) {
-      console.error("Server error removing todo task:", error);
-
-      throw error;
+      return {
+        data: {},
+        resultCode: ResultCodesEnum.ResultCodeError,
+        messages: ["Server error removing todo task:", error],
+      };
     }
   },
 };

@@ -50,7 +50,7 @@ const ToDoLists: FC = () => {
       if (newTodoListApi.resultCode === ResultCodesEnum.ResultCodeSuccess) {
         const newTodoList = newTodoListApi.data.item;
 
-        setTodoLists((prevTodoLists) => [...prevTodoLists, newTodoList]);
+        setTodoLists((prevTodoLists) => [newTodoList, ...prevTodoLists]);
         setTasksObject({ ...tasksObject, [newTodoList.id]: [] });
       } else {
         console.error("Some error occurred:", newTodoListApi.messages);
@@ -188,6 +188,7 @@ const ToDoLists: FC = () => {
   };
 
   const removeTodoTask = async (todolistId: string, taskId: string) => {
+    debugger;
     try {
       const response = await todosAPI.removeTodoTaskApi(todolistId, taskId);
 
