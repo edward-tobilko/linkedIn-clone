@@ -21,8 +21,7 @@ export const instance = axios.create({
   timeout: 0,
   withCredentials: true, //? завдяки цьому параметру cookie робить запит на інший домен
   headers: {
-    "API-KEY": "",
-    Authorization: "",
+    "API-KEY": "5fa4dfc4-2064-42ad-b7e8-4d24ffa78ea5",
   },
 });
 
